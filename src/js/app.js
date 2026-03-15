@@ -3,6 +3,7 @@
 ========================================================= */
 
 import { renderAppShell } from "./ui/layout/render-app-shell.js";
+import { renderHeader } from "./ui/layout/render-header.js";
 
 const appRoot = document.getElementById("app");
 
@@ -12,4 +13,7 @@ if (!appRoot) {
   );
 } else {
   renderAppShell(appRoot);
+
+  const headerRoot = document.getElementById("site-header");
+  renderHeader(headerRoot);
 }
