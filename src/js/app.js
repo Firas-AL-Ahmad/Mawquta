@@ -22,12 +22,12 @@ import {
 import { getQiblaByCoords } from "./services/qibla.service.js";
 import { searchCitySuggestions } from "./services/location-search.service.js";
 
-import { renderTodayPrayers } from "./ui/render-prayers.js";
-import { renderNextPrayerCountdown } from "./ui/render-countdown.js";
-import { renderWeekPreview } from "./ui/render-week.js";
-import { renderRamadanCountdown } from "./ui/render-ramadan.js";
-import { renderQibla } from "./ui/render-qibla.js";
-import { renderCitySuggestions } from "./ui/render-city-suggestions.js";
+import { renderTodayPrayers } from "./ui/widgets/render-prayers.js";
+import { renderNextPrayerCountdown } from "./ui/widgets/render-countdown.js";
+import { renderWeekPreview } from "./ui/widgets/render-week.js";
+import { renderRamadanCountdown } from "./ui/widgets/render-ramadan.js";
+import { renderQibla } from "./ui/widgets/render-qibla.js";
+import { renderCitySuggestions } from "./ui/widgets/render-city-suggestions.js";
 
 /* =========================================================
    Storage Helpers

@@ -1,0 +1,4 @@
+export function renderAppShell() {
+  return '';
+}
+
