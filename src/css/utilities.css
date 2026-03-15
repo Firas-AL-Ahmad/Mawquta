@@ -1,24 +1,29 @@
-/* utilities.css */
+/* utilities.css - minimal helper utilities only */
+.hidden {
+  display: none !important;
+}
+
+.visually-hidden,
+.sr-only {
+  position: absolute !important;
+  inline-size: 1px;
+  block-size: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
 .text-muted {
-  color: var(--text-muted) !important;
+  color: var(--color-text-muted) !important;
 }
 
-/* Highlight style for "next prayer" card */
-.is-next {
-  border-color: color-mix(in srgb, var(--accent) 55%, var(--border));
-  box-shadow:
-    0 0 0 2px color-mix(in srgb, var(--accent) 25%, transparent),
-    var(--shadow);
-}
-
-/* Highlight style for "today" in week preview */
-.week-today {
-  border-width: 2px;
-  border-color: var(--accent);
-}
-
-/* Highlight style for selected day in week preview */
-.week-selected {
-  border-width: 2px;
-  border-color: var(--primary);
+.is-active {
+  border-color: var(--color-primary) !important;
 }

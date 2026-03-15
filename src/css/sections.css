@@ -1,1 +1,27 @@
-/* sections.css */
+/* sections.css - lightweight section hooks only */
+.site-header,
+.prayer-section,
+.qibla-section,
+.ramadan-section,
+.site-footer {
+  padding-block: var(--section-padding-block);
+}
+
+.site-header {
+  background-color: var(--color-surface);
+  border-block-end: 1px solid var(--color-border);
+}
+
+.prayer-section,
+.ramadan-section {
+  background-color: transparent;
+}
+
+.qibla-section {
+  background-color: var(--color-surface-muted);
+}
+
+.site-footer {
+  background-color: var(--color-surface);
+  border-block-start: 1px solid var(--color-border);
+}
