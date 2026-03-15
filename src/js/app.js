@@ -4,6 +4,7 @@
 
 import { renderAppShell } from "./ui/layout/render-app-shell.js";
 import { renderHeader } from "./ui/layout/render-header.js";
+import { renderPrayerSection } from "./ui/sections/render-prayer-section.js";
 
 const appRoot = document.getElementById("app");
 
@@ -16,4 +17,7 @@ if (!appRoot) {
 
   const headerRoot = document.getElementById("site-header");
   renderHeader(headerRoot);
+
+  const prayerRoot = document.getElementById("prayer-section");
+  renderPrayerSection(prayerRoot);
 }
