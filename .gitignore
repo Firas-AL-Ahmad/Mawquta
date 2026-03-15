@@ -36,3 +36,4 @@ ehthumbs.db
 *.log
 .vercel
 .env*.local
+.Sprint*
