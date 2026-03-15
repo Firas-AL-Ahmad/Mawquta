@@ -37,3 +37,4 @@ ehthumbs.db
 .vercel
 .env*.local
 .Sprint*
+.PROJECT_HANDOFF.md
