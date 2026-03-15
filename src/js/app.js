@@ -1,17 +1,15 @@
 /* =========================================================
-   S1-T2 Temporary App Bootstrap (Shell-Only Mode)
+   S1-T4 App Bootstrap (Render App Shell)
 ========================================================= */
+
+import { renderAppShell } from "./ui/layout/render-app-shell.js";
 
 const appRoot = document.getElementById("app");
 
 if (!appRoot) {
-  throw new Error(
-    '[S1-T2] Missing #app mount root. Ensure src/index.html includes <div id="app"></div>.',
+  console.warn(
+    '[S1-T4] Missing #app mount root. Ensure src/index.html includes <div id="app"></div>.',
   );
+} else {
+  renderAppShell(appRoot);
 }
-
-// TODO(S1-T4): Replace this temporary shell-only bootstrap with full page composition
-// using ui/layout/render-app-shell.js and section renderers.
-console.info(
-  "[S1-T2] Shell-only mode active. Full UI rendering is deferred to S1-T4.",
-);
