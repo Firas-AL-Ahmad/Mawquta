@@ -1,4 +1,5 @@
 import { renderPrayerCards } from "../widgets/render-prayers.js";
+import { renderPrayerWeek } from "../widgets/render-week.js";
 
 export function renderPrayerSection(rootElement) {
   if (!rootElement) {
@@ -43,11 +44,18 @@ export function renderPrayerSection(rootElement) {
       <div class="prayer-section__daily">
         <div class="prayer-cards-root"></div>
       </div>
+
+      <div class="prayer-section__week">
+        <div class="prayer-week-root"></div>
+      </div>
     </div>
   `;
 
   const prayerCardsRoot = rootElement.querySelector(".prayer-cards-root");
   renderPrayerCards(prayerCardsRoot);
+
+  const prayerWeekRoot = rootElement.querySelector(".prayer-week-root");
+  renderPrayerWeek(prayerWeekRoot);
 
   return rootElement;
 }
