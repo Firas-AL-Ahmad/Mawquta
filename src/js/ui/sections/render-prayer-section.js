@@ -1,3 +1,5 @@
+import { renderPrayerCards } from "../widgets/render-prayers.js";
+
 export function renderPrayerSection(rootElement) {
   if (!rootElement) {
     return null;
@@ -37,8 +39,15 @@ export function renderPrayerSection(rootElement) {
           <div class="prayer-hero-card__visual" aria-hidden="true"></div>
         </article>
       </div>
+
+      <div class="prayer-section__daily">
+        <div class="prayer-cards-root"></div>
+      </div>
     </div>
   `;
+
+  const prayerCardsRoot = rootElement.querySelector(".prayer-cards-root");
+  renderPrayerCards(prayerCardsRoot);
 
   return rootElement;
 }
