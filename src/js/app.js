@@ -6,6 +6,7 @@ import { renderAppShell } from "./ui/layout/render-app-shell.js";
 import { renderHeader } from "./ui/layout/render-header.js";
 import { renderPrayerSection } from "./ui/sections/render-prayer-section.js";
 import { renderQiblaSection } from "./ui/sections/render-qibla-section.js";
+import { renderRamadanSection } from "./ui/sections/render-ramadan-section.js";
 
 const appRoot = document.getElementById("app");
 
@@ -24,4 +25,7 @@ if (!appRoot) {
 
   const qiblaRoot = document.getElementById("qibla-section");
   renderQiblaSection(qiblaRoot);
+
+  const ramadanRoot = document.getElementById("ramadan-section");
+  renderRamadanSection(ramadanRoot);
 }
