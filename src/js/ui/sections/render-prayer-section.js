@@ -12,6 +12,7 @@ const FALLBACK_SECTION_DATA = {
     note: "تعذر تحميل بيانات الصلاة حالياً. يرجى المحاولة لاحقاً.",
   },
   dailyPrayers: [],
+  weeklyRows: [],
 };
 
 export function renderPrayerSection(
@@ -82,7 +83,7 @@ export function renderPrayerSection(
   });
 
   const prayerWeekRoot = rootElement.querySelector(".prayer-week-root");
-  renderPrayerWeek(prayerWeekRoot);
+  renderPrayerWeek(prayerWeekRoot, sectionData?.weeklyRows);
 
   return rootElement;
 }
