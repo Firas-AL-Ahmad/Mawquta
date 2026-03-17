@@ -10,6 +10,7 @@
 }
 
 .site-header {
+  padding-block: var(--space-6);
   background-color: var(--color-surface);
   border-block-end: 1px solid var(--color-border);
 }
@@ -19,14 +20,28 @@
   position: absolute;
   inset-inline: 0;
   inset-block-end: 0;
-  block-size: 1.125rem;
+  block-size: 0.875rem;
   pointer-events: none;
   background: linear-gradient(
     180deg,
     transparent 0%,
-    color-mix(in srgb, var(--color-primary-soft) 36%, transparent) 100%
+    color-mix(in srgb, var(--color-primary-soft) 24%, transparent) 100%
   );
   z-index: -1;
+}
+
+.prayer-section {
+  padding-block-start: calc(var(--section-padding-block) + var(--space-1));
+}
+
+.qibla-section,
+.ramadan-section {
+  padding-block-start: calc(var(--section-padding-block) - var(--space-1));
+}
+
+.site-footer {
+  padding-block-start: var(--space-8);
+  padding-block-end: var(--space-6);
 }
 
 .prayer-section,
@@ -52,7 +67,7 @@
   border-radius: 50%;
   background: radial-gradient(
     circle,
-    color-mix(in srgb, var(--color-primary) 12%, transparent) 0%,
+    color-mix(in srgb, var(--color-primary) 9%, transparent) 0%,
     transparent 70%
   );
 }
@@ -65,7 +80,7 @@
   border-radius: 50%;
   background: radial-gradient(
     circle,
-    color-mix(in srgb, var(--color-primary-soft) 78%, transparent) 0%,
+    color-mix(in srgb, var(--color-primary-soft) 62%, transparent) 0%,
     transparent 72%
   );
 }
@@ -78,9 +93,42 @@
   border-radius: 50%;
   background: radial-gradient(
     circle,
-    color-mix(in srgb, var(--color-accent) 10%, transparent) 0%,
+    color-mix(in srgb, var(--color-accent) 8%, transparent) 0%,
     transparent 70%
   );
+}
+
+.prayer-section__inner,
+.qibla-section__inner,
+.ramadan-section__inner {
+  display: grid;
+  gap: var(--space-8);
+}
+
+.prayer-section__inner {
+  gap: var(--space-10);
+}
+
+.prayer-section__heading,
+.qibla-section__heading,
+.ramadan-section__heading {
+  margin-block-end: 0;
+}
+
+.prayer-section__intro,
+.qibla-section__intro,
+.ramadan-section__intro {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.prayer-section__meta {
+  justify-content: flex-start;
+  gap: var(--space-2);
+}
+
+.prayer-section__week {
+  margin-block-start: calc(var(--space-2) * -1);
 }
 
 .qibla-section {
@@ -95,10 +143,10 @@
 .site-footer::before {
   inset-inline: 0;
   inset-block-start: 0;
-  block-size: clamp(5rem, 14vw, 8rem);
+  block-size: clamp(4rem, 12vw, 6.5rem);
   background: linear-gradient(
     180deg,
-    color-mix(in srgb, var(--color-primary-soft) 46%, transparent) 0%,
+    color-mix(in srgb, var(--color-primary-soft) 30%, transparent) 0%,
     transparent 100%
   );
 }

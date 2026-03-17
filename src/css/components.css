@@ -103,6 +103,19 @@
   letter-spacing: var(--H2-letterSpacing);
 }
 
+.section-heading__eyebrow {
+  margin-block-end: var(--space-2);
+  color: var(--color-primary);
+  font-family: var(--Label-fontFamily), "Segoe UI", Tahoma, Arial, sans-serif;
+  font-size: var(--Label-fontSize);
+  font-weight: var(--Label-fontWeight);
+  line-height: var(--Label-lineHeight);
+}
+
+.section-heading__title + .section-heading__subtitle {
+  margin-block-start: var(--space-2);
+}
+
 .section-heading__subtitle {
   color: var(--color-text-muted);
   font-family: var(--Caption-fontFamily), "Segoe UI", Tahoma, Arial, sans-serif;
