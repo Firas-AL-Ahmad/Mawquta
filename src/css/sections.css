@@ -5,6 +5,8 @@
 .ramadan-section,
 .site-footer {
   padding-block: var(--section-padding-block);
+  position: relative;
+  isolation: isolate;
 }
 
 .site-header {
@@ -12,9 +14,73 @@
   border-block-end: 1px solid var(--color-border);
 }
 
+.site-header::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: 0;
+  block-size: 1.125rem;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    color-mix(in srgb, var(--color-primary-soft) 36%, transparent) 100%
+  );
+  z-index: -1;
+}
+
 .prayer-section,
 .ramadan-section {
   background-color: transparent;
+}
+
+.prayer-section::before,
+.qibla-section::before,
+.ramadan-section::before,
+.site-footer::before {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.prayer-section::before {
+  inline-size: min(46rem, 85vw);
+  block-size: min(26rem, 58vw);
+  inset-inline-end: max(-10rem, -10vw);
+  inset-block-start: clamp(-11rem, -9vw, -7rem);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--color-primary) 12%, transparent) 0%,
+    transparent 70%
+  );
+}
+
+.qibla-section::before {
+  inline-size: min(40rem, 82vw);
+  block-size: min(22rem, 52vw);
+  inset-inline-start: max(-11rem, -8vw);
+  inset-block-start: clamp(-8rem, -6vw, -4rem);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--color-primary-soft) 78%, transparent) 0%,
+    transparent 72%
+  );
+}
+
+.ramadan-section::before {
+  inline-size: min(36rem, 80vw);
+  block-size: min(21rem, 54vw);
+  inset-inline-end: max(-9rem, -8vw);
+  inset-block-start: clamp(-8rem, -6vw, -4rem);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--color-accent) 10%, transparent) 0%,
+    transparent 70%
+  );
 }
 
 .qibla-section {
@@ -24,4 +90,15 @@
 .site-footer {
   background-color: var(--color-surface);
   border-block-start: 1px solid var(--color-border);
+}
+
+.site-footer::before {
+  inset-inline: 0;
+  inset-block-start: 0;
+  block-size: clamp(5rem, 14vw, 8rem);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--color-primary-soft) 46%, transparent) 0%,
+    transparent 100%
+  );
 }
