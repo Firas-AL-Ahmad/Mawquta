@@ -1,29 +1,46 @@
-const DAILY_PRAYER_CARDS = [
-  { name: "الفجر", time: "04:37", featured: true },
-  { name: "الشروق", time: "06:02" },
-  { name: "الظهر", time: "12:18" },
-  { name: "العصر", time: "15:47" },
-  { name: "المغرب", time: "18:31" },
-  { name: "العشاء", time: "19:56" },
-];
+const FALLBACK_MESSAGE = "مواقيت اليوم غير متاحة حالياً.";
 
-export function renderPrayerCards(rootElement) {
+export function renderPrayerCards(rootElement, prayers = [], options = {}) {
   if (!rootElement) {
     return null;
   }
 
-  const cardsMarkup = DAILY_PRAYER_CARDS.map(({ name, time, featured }) => {
-    const featuredClass = featured ? " prayer-card--featured" : "";
+  const { featuredKey = "" } = options;
 
-    return `
-      <article class="card prayer-card${featuredClass}">
-        <div class="prayer-card__content">
-          <p class="prayer-card__name">${name}</p>
-          <p class="prayer-card__time">${time}</p>
-        </div>
-      </article>
+  const safePrayers = Array.isArray(prayers)
+    ? prayers.filter((prayer) => prayer && prayer.label)
+    : [];
+
+  if (!safePrayers.length) {
+    rootElement.innerHTML = `
+      <div class="prayer-cards" aria-label="Daily prayer times">
+        <article class="card prayer-card prayer-card--fallback" aria-live="polite">
+          <div class="prayer-card__content">
+            <p class="prayer-card__name">${FALLBACK_MESSAGE}</p>
+          </div>
+        </article>
+      </div>
     `;
-  }).join("");
+
+    return rootElement;
+  }
+
+  const cardsMarkup = safePrayers
+    .map(({ key, label, time }) => {
+      const isFeatured = featuredKey && key === featuredKey;
+      const featuredClass = isFeatured ? " prayer-card--featured" : "";
+      const safeTime = time || "--:--";
+
+      return `
+        <article class="card prayer-card${featuredClass}">
+          <div class="prayer-card__content">
+            <p class="prayer-card__name">${label}</p>
+            <p class="prayer-card__time">${safeTime}</p>
+          </div>
+        </article>
+      `;
+    })
+    .join("");
 
   rootElement.innerHTML = `
     <div class="prayer-cards" aria-label="Daily prayer times">

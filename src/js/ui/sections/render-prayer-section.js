@@ -1,10 +1,37 @@
 import { renderPrayerCards } from "../widgets/render-prayers.js";
 import { renderPrayerWeek } from "../widgets/render-week.js";
 
-export function renderPrayerSection(rootElement) {
+const FALLBACK_SECTION_DATA = {
+  meta: {
+    location: "الموقع غير متاح حالياً",
+    date: "التاريخ غير متاح حالياً",
+  },
+  featured: {
+    label: "المواقيت غير متاحة",
+    time: "--:--",
+    note: "تعذر تحميل بيانات الصلاة حالياً. يرجى المحاولة لاحقاً.",
+  },
+  dailyPrayers: [],
+};
+
+export function renderPrayerSection(
+  rootElement,
+  sectionData = FALLBACK_SECTION_DATA,
+) {
   if (!rootElement) {
     return null;
   }
+
+  const metaLocation =
+    sectionData?.meta?.location || FALLBACK_SECTION_DATA.meta.location;
+  const metaDate = sectionData?.meta?.date || FALLBACK_SECTION_DATA.meta.date;
+
+  const featuredLabel =
+    sectionData?.featured?.label || FALLBACK_SECTION_DATA.featured.label;
+  const featuredTime =
+    sectionData?.featured?.time || FALLBACK_SECTION_DATA.featured.time;
+  const featuredNote =
+    sectionData?.featured?.note || FALLBACK_SECTION_DATA.featured.note;
 
   rootElement.innerHTML = `
     <div class="prayer-section__inner container">
@@ -20,9 +47,9 @@ export function renderPrayerSection(rootElement) {
         </div>
 
         <div class="prayer-section__meta meta-row" aria-label="Prayer section context">
-          <span class="prayer-section__location">دمشق، سوريا</span>
+          <span class="prayer-section__location">${metaLocation}</span>
           <span class="prayer-section__divider" aria-hidden="true">•</span>
-          <span class="prayer-section__date">الجمعة، 15 رمضان 1447</span>
+          <span class="prayer-section__date">${metaDate}</span>
         </div>
       </div>
 
@@ -30,11 +57,9 @@ export function renderPrayerSection(rootElement) {
         <article class="card prayer-hero-card" aria-label="Featured prayer summary">
           <div class="prayer-hero-card__content">
             <p class="prayer-hero-card__label">الصلاة القادمة</p>
-            <h2 class="prayer-hero-card__title">الفجر</h2>
-            <p class="prayer-hero-card__time">04:37</p>
-            <p class="prayer-hero-card__note">
-              هذا عرض ثابت تجريبي، وسيتم ربط التوقيت الفعلي والعدّاد التنازلي في مرحلة لاحقة.
-            </p>
+            <h2 class="prayer-hero-card__title">${featuredLabel}</h2>
+            <p class="prayer-hero-card__time">${featuredTime}</p>
+            <p class="prayer-hero-card__note">${featuredNote}</p>
           </div>
 
           <div class="prayer-hero-card__visual" aria-hidden="true"></div>
@@ -52,7 +77,9 @@ export function renderPrayerSection(rootElement) {
   `;
 
   const prayerCardsRoot = rootElement.querySelector(".prayer-cards-root");
-  renderPrayerCards(prayerCardsRoot);
+  renderPrayerCards(prayerCardsRoot, sectionData?.dailyPrayers, {
+    featuredKey: sectionData?.featured?.key,
+  });
 
   const prayerWeekRoot = rootElement.querySelector(".prayer-week-root");
   renderPrayerWeek(prayerWeekRoot);
