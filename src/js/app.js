@@ -27,13 +27,21 @@ const LOCATION_TYPE_CITY = "city";
 const HEADER_LOCATION_FALLBACK_LABEL = "اختر المدينة";
 const QIBLA_NOTE_RUNTIME_BY_CITY = "الدرجة محسوبة حسب موقع المدينة المختارة.";
 const QIBLA_NOTE_UNAVAILABLE = "تعذر تحديد اتجاه القبلة حالياً لهذه المدينة.";
+const RAMADAN_DAY_FALLBACK_TEXT = "اليوم الرمضاني غير متاح حالياً";
+const RAMADAN_TIME_FALLBACK_TEXT = "--:--";
+const RAMADAN_NOTE_RUNTIME =
+  "القيم المعروضة مرتبطة بالمدينة والتاريخ الحاليين.";
+const RAMADAN_NOTE_PARTIAL = "بعض معلومات رمضان غير متاحة حالياً.";
+const RAMADAN_NOTE_UNAVAILABLE = "تعذر تحميل بيانات رمضان حالياً.";
 let prayerLiveIntervalId = null;
 let prayerRefreshRequestId = 0;
 let qiblaRefreshRequestId = 0;
+let ramadanRefreshRequestId = 0;
 
 let appHeaderRoot = null;
 let appPrayerRoot = null;
 let appQiblaRoot = null;
+let appRamadanRoot = null;
 
 function formatTodayContextDate() {
   try {
@@ -280,17 +288,79 @@ function startPrayerLiveBinding(prayerRoot, prayerSectionData) {
 
 function normalizeTime(timeStr) {
   if (typeof timeStr !== "string") {
-    return "--:--";
+    return RAMADAN_TIME_FALLBACK_TEXT;
   }
 
   const match = /^(\d{1,2}):(\d{2})/.exec(timeStr.trim());
   if (!match) {
-    return "--:--";
+    return RAMADAN_TIME_FALLBACK_TEXT;
   }
 
   const hh = match[1].padStart(2, "0");
   const mm = match[2];
   return `${hh}:${mm}`;
+}
+
+function isRamadanHijriMonth(hijriMonth) {
+  const monthNumber = Number(hijriMonth?.number);
+  if (Number.isFinite(monthNumber)) {
+    return monthNumber === 9;
+  }
+
+  const monthAr = String(hijriMonth?.ar || "").trim();
+  const monthEn = String(hijriMonth?.en || "")
+    .trim()
+    .toLowerCase();
+
+  return monthAr.includes("رمضان") || monthEn === "ramadan";
+}
+
+function mapRamadanDayText(weekDayEntry) {
+  const hijriMonth = weekDayEntry?.date?.hijri?.month;
+  const hijriDay = String(weekDayEntry?.date?.hijri?.day || "").trim();
+
+  if (!isRamadanHijriMonth(hijriMonth) || !hijriDay) {
+    return RAMADAN_DAY_FALLBACK_TEXT;
+  }
+
+  return `اليوم ${hijriDay}`;
+}
+
+function mapImsakText(timings) {
+  const imsakText = normalizeTime(timings?.Imsak);
+  if (imsakText !== RAMADAN_TIME_FALLBACK_TEXT) {
+    return imsakText;
+  }
+
+  return normalizeTime(timings?.Fajr);
+}
+
+function createHonestFallbackRamadanSectionData() {
+  return {
+    dayText: RAMADAN_DAY_FALLBACK_TEXT,
+    imsakText: RAMADAN_TIME_FALLBACK_TEXT,
+    iftarText: RAMADAN_TIME_FALLBACK_TEXT,
+    note: RAMADAN_NOTE_UNAVAILABLE,
+  };
+}
+
+function mapRamadanSectionData(weekDayEntry) {
+  const timings = weekDayEntry?.timings || {};
+  const dayText = mapRamadanDayText(weekDayEntry);
+  const imsakText = mapImsakText(timings);
+  const iftarText = normalizeTime(timings?.Maghrib);
+
+  const hasFullData =
+    dayText !== RAMADAN_DAY_FALLBACK_TEXT &&
+    imsakText !== RAMADAN_TIME_FALLBACK_TEXT &&
+    iftarText !== RAMADAN_TIME_FALLBACK_TEXT;
+
+  return {
+    dayText,
+    imsakText,
+    iftarText,
+    note: hasFullData ? RAMADAN_NOTE_RUNTIME : RAMADAN_NOTE_PARTIAL,
+  };
 }
 
 function parseGregorianDate(gregorianDateString) {
@@ -503,6 +573,36 @@ async function buildPrayerSectionData(activeLocation) {
   }
 }
 
+async function buildRamadanSectionData(activeLocation) {
+  const fallbackData = createHonestFallbackRamadanSectionData();
+  const strictLocation = toStrictCityLocation(activeLocation);
+
+  if (!strictLocation) {
+    return fallbackData;
+  }
+
+  try {
+    const currentWeekData = await getCurrentWeekByCity(
+      strictLocation.city,
+      strictLocation.country,
+    );
+
+    const todayEntry =
+      Array.isArray(currentWeekData) && currentWeekData.length > 0
+        ? currentWeekData[0]
+        : null;
+
+    if (!todayEntry) {
+      return fallbackData;
+    }
+
+    return mapRamadanSectionData(todayEntry);
+  } catch (error) {
+    console.warn("[S2-T6] Failed to load ramadan runtime data:", error);
+    return fallbackData;
+  }
+}
+
 async function refreshPrayerSectionByLocation(location) {
   if (!appPrayerRoot) {
     return;
@@ -542,6 +642,24 @@ async function refreshQiblaSectionByLocation(location) {
   }
 
   renderQiblaSection(appQiblaRoot, qiblaSectionData);
+}
+
+async function refreshRamadanSectionByLocation(location) {
+  if (!appRamadanRoot) {
+    return;
+  }
+
+  const activeLocation = resolveActivePrayerLocation({
+    selectedLocation: location,
+  });
+  const requestId = ++ramadanRefreshRequestId;
+  const ramadanSectionData = await buildRamadanSectionData(activeLocation);
+
+  if (requestId !== ramadanRefreshRequestId) {
+    return;
+  }
+
+  renderRamadanSection(appRamadanRoot, ramadanSectionData);
 }
 
 async function selectCityLocationViaPromptFallback() {
@@ -776,6 +894,7 @@ function bindHeaderLocationTrigger() {
       setStoredLocation(strictSelectedLocation);
       await refreshPrayerSectionByLocation(strictSelectedLocation);
       await refreshQiblaSectionByLocation(strictSelectedLocation);
+      await refreshRamadanSectionByLocation(strictSelectedLocation);
     } finally {
       locationTrigger.disabled = false;
     }
@@ -795,8 +914,8 @@ async function bootstrapApp() {
   appQiblaRoot = document.getElementById("qibla-section");
   await refreshQiblaSectionByLocation();
 
-  const ramadanRoot = document.getElementById("ramadan-section");
-  renderRamadanSection(ramadanRoot);
+  appRamadanRoot = document.getElementById("ramadan-section");
+  await refreshRamadanSectionByLocation();
 
   const footerRoot = document.getElementById("site-footer");
   renderFooter(footerRoot);
