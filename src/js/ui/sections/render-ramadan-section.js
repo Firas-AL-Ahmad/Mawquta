@@ -1,14 +1,30 @@
 const DEFAULT_RAMADAN_SECTION_DATA = {
+  state: "unavailable",
   dayText: "اليوم الرمضاني غير متاح حالياً",
   imsakText: "--:--",
   iftarText: "--:--",
   note: "تعذر تحميل بيانات رمضان حالياً.",
 };
 
+function resolveRamadanState(state) {
+  if (
+    state === "loading" ||
+    state === "ready" ||
+    state === "partial" ||
+    state === "unavailable"
+  ) {
+    return state;
+  }
+
+  return DEFAULT_RAMADAN_SECTION_DATA.state;
+}
+
 function toRamadanSectionViewModel(inputData) {
   if (!inputData || typeof inputData !== "object") {
     return { ...DEFAULT_RAMADAN_SECTION_DATA };
   }
+
+  const state = resolveRamadanState(inputData.state);
 
   const dayText =
     typeof inputData.dayText === "string" && inputData.dayText.trim().length > 0
@@ -33,6 +49,7 @@ function toRamadanSectionViewModel(inputData) {
       : DEFAULT_RAMADAN_SECTION_DATA.note;
 
   return {
+    state,
     dayText,
     imsakText,
     iftarText,
@@ -60,11 +77,11 @@ export function renderRamadanSection(rootElement, data) {
       </div>
 
       <div class="ramadan-section__body">
-        <article class="card ramadan-card" aria-label="ملخص رمضان">
+        <article class="card ramadan-card ramadan-card--${viewModel.state}" aria-label="ملخص رمضان">
           <div class="ramadan-card__content">
             <p class="ramadan-card__label">اليوم الرمضاني</p>
             <h3 class="ramadan-card__day">${viewModel.dayText}</h3>
-            <p class="ramadan-card__note">
+            <p class="ramadan-card__note ramadan-card__note--${viewModel.state}">
               ${viewModel.note}
             </p>
           </div>

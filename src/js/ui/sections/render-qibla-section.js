@@ -1,8 +1,17 @@
 const DEFAULT_QIBLA_VIEW_MODEL = {
+  state: "unavailable",
   degreeText: "غير متاح",
   note: "تعذر تحديد اتجاه القبلة حالياً لهذه المدينة.",
   needleRotation: null,
 };
+
+function resolveQiblaState(state) {
+  if (state === "loading" || state === "ready" || state === "unavailable") {
+    return state;
+  }
+
+  return DEFAULT_QIBLA_VIEW_MODEL.state;
+}
 
 function normalizeQiblaViewModel(viewModel) {
   const fallback = { ...DEFAULT_QIBLA_VIEW_MODEL };
@@ -24,8 +33,10 @@ function normalizeQiblaViewModel(viewModel) {
 
   const rotation = Number(viewModel.needleRotation);
   const needleRotation = Number.isFinite(rotation) ? rotation : null;
+  const state = resolveQiblaState(viewModel.state);
 
   return {
+    state,
     degreeText,
     note,
     needleRotation,
@@ -58,11 +69,11 @@ export function renderQiblaSection(rootElement, viewModel) {
       </div>
 
       <div class="qibla-section__body">
-        <article class="card qibla-card" aria-label="ملخص اتجاه القبلة">
+        <article class="card qibla-card qibla-card--${qibla.state}" aria-label="ملخص اتجاه القبلة">
           <div class="qibla-card__content">
             <p class="qibla-card__label">اتجاه القبلة</p>
             <h3 class="qibla-card__degree">${qibla.degreeText}</h3>
-            <p class="qibla-card__note">${qibla.note}</p>
+            <p class="qibla-card__note qibla-card__note--${qibla.state}">${qibla.note}</p>
           </div>
 
           <div class="qibla-card__visual" aria-hidden="true">

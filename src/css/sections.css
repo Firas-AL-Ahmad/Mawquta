@@ -150,3 +150,26 @@
     transparent 100%
   );
 }
+
+/* S2-T7: calm state modifiers (minimal and semantic) */
+.prayer-hero-card__note--loading,
+.qibla-card__note--loading,
+.ramadan-card__note--loading {
+  color: var(--color-text-muted);
+}
+
+.prayer-hero-card__note--partial,
+.qibla-card__note--unavailable,
+.ramadan-card__note--partial,
+.ramadan-card__note--unavailable {
+  color: color-mix(in srgb, var(--color-text-muted) 92%, black);
+}
+
+.prayer-card--fallback,
+.prayer-week__row--fallback td {
+  color: var(--color-text-muted);
+}
+
+.prayer-week__row--loading td {
+  color: var(--color-text-muted);
+}

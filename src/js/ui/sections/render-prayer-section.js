@@ -2,6 +2,7 @@ import { renderPrayerCards } from "../widgets/render-prayers.js";
 import { renderPrayerWeek } from "../widgets/render-week.js";
 
 const FALLBACK_SECTION_DATA = {
+  state: "unavailable",
   meta: {
     location: "الموقع غير متاح حالياً",
     date: "التاريخ غير متاح حالياً",
@@ -16,6 +17,19 @@ const FALLBACK_SECTION_DATA = {
   weeklyRows: [],
 };
 
+function resolvePrayerSectionState(state) {
+  if (
+    state === "loading" ||
+    state === "ready" ||
+    state === "partial" ||
+    state === "unavailable"
+  ) {
+    return state;
+  }
+
+  return FALLBACK_SECTION_DATA.state;
+}
+
 export function renderPrayerSection(
   rootElement,
   sectionData = FALLBACK_SECTION_DATA,
@@ -27,6 +41,7 @@ export function renderPrayerSection(
   const metaLocation =
     sectionData?.meta?.location || FALLBACK_SECTION_DATA.meta.location;
   const metaDate = sectionData?.meta?.date || FALLBACK_SECTION_DATA.meta.date;
+  const sectionState = resolvePrayerSectionState(sectionData?.state);
 
   const featuredLabel =
     sectionData?.featured?.label || FALLBACK_SECTION_DATA.featured.label;
@@ -58,12 +73,12 @@ export function renderPrayerSection(
       </div>
 
       <div class="prayer-section__hero">
-        <article class="card prayer-hero-card" aria-label="Featured prayer summary">
+        <article class="card prayer-hero-card prayer-hero-card--${sectionState}" aria-label="Featured prayer summary">
           <div class="prayer-hero-card__content">
             <p class="prayer-hero-card__label">الصلاة القادمة</p>
             <h2 class="prayer-hero-card__title" data-prayer-featured-label>${featuredLabel}</h2>
             <p class="prayer-hero-card__time" data-prayer-featured-time>${featuredTime}</p>
-            <p class="prayer-hero-card__note" data-prayer-featured-countdown aria-live="polite">${featuredCountdownText}</p>
+            <p class="prayer-hero-card__note prayer-hero-card__note--${sectionState}" data-prayer-featured-countdown aria-live="polite">${featuredCountdownText}</p>
           </div>
 
           <div class="prayer-hero-card__visual" aria-hidden="true"></div>
@@ -83,10 +98,13 @@ export function renderPrayerSection(
   const prayerCardsRoot = rootElement.querySelector(".prayer-cards-root");
   renderPrayerCards(prayerCardsRoot, sectionData?.dailyPrayers, {
     featuredKey: sectionData?.featured?.key,
+    state: sectionState,
   });
 
   const prayerWeekRoot = rootElement.querySelector(".prayer-week-root");
-  renderPrayerWeek(prayerWeekRoot, sectionData?.weeklyRows);
+  renderPrayerWeek(prayerWeekRoot, sectionData?.weeklyRows, {
+    state: sectionState === "loading" ? "loading" : sectionData?.weekState,
+  });
 
   return rootElement;
 }
@@ -128,6 +146,7 @@ export function updatePrayerSectionFeaturedState(
     const prayerCardsRoot = rootElement.querySelector(".prayer-cards-root");
     renderPrayerCards(prayerCardsRoot, dailyPrayers, {
       featuredKey: featured?.key,
+      state: dailyPrayers.length > 0 ? "ready" : "unavailable",
     });
   }
 

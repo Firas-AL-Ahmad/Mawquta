@@ -25,10 +25,14 @@ const PRAYER_LIVE_TICK_MS = 1000;
 const LOCATION_PICKER_DEBOUNCE_MS = 300;
 const LOCATION_TYPE_CITY = "city";
 const HEADER_LOCATION_FALLBACK_LABEL = "اختر المدينة";
+const PRAYER_FEATURED_LABEL_LOADING = "جاري تحميل المواقيت";
+const PRAYER_FEATURED_NOTE_LOADING = "جاري التحقق من الصلاة القادمة...";
 const QIBLA_NOTE_RUNTIME_BY_CITY = "الدرجة محسوبة حسب موقع المدينة المختارة.";
+const QIBLA_NOTE_LOADING = "جاري تحميل اتجاه القبلة...";
 const QIBLA_NOTE_UNAVAILABLE = "تعذر تحديد اتجاه القبلة حالياً لهذه المدينة.";
 const RAMADAN_DAY_FALLBACK_TEXT = "اليوم الرمضاني غير متاح حالياً";
 const RAMADAN_TIME_FALLBACK_TEXT = "--:--";
+const RAMADAN_NOTE_LOADING = "جاري تحميل بيانات رمضان...";
 const RAMADAN_NOTE_RUNTIME =
   "القيم المعروضة مرتبطة بالمدينة والتاريخ الحاليين.";
 const RAMADAN_NOTE_PARTIAL = "بعض معلومات رمضان غير متاحة حالياً.";
@@ -42,6 +46,10 @@ let appHeaderRoot = null;
 let appPrayerRoot = null;
 let appQiblaRoot = null;
 let appRamadanRoot = null;
+
+let hasPrayerRenderedOnce = false;
+let hasQiblaRenderedOnce = false;
+let hasRamadanRenderedOnce = false;
 
 function formatTodayContextDate() {
   try {
@@ -58,6 +66,8 @@ function formatTodayContextDate() {
 
 function createHonestFallbackPrayerSectionData() {
   return {
+    state: "unavailable",
+    weekState: "unavailable",
     meta: {
       location: "الموقع غير متاح حالياً",
       date: formatTodayContextDate(),
@@ -67,6 +77,25 @@ function createHonestFallbackPrayerSectionData() {
       label: "المواقيت غير متاحة",
       time: "--:--",
       countdownText: "تعذر تحميل العد التنازلي حالياً.",
+    },
+    dailyPrayers: [],
+    weeklyRows: [],
+  };
+}
+
+function createLoadingPrayerSectionData(activeLocation) {
+  return {
+    state: "loading",
+    weekState: "loading",
+    meta: {
+      location: formatLocationLabel(activeLocation) || "جاري تحديد الموقع...",
+      date: formatTodayContextDate(),
+    },
+    featured: {
+      key: "",
+      label: PRAYER_FEATURED_LABEL_LOADING,
+      time: "--:--",
+      countdownText: PRAYER_FEATURED_NOTE_LOADING,
     },
     dailyPrayers: [],
     weeklyRows: [],
@@ -337,10 +366,21 @@ function mapImsakText(timings) {
 
 function createHonestFallbackRamadanSectionData() {
   return {
+    state: "unavailable",
     dayText: RAMADAN_DAY_FALLBACK_TEXT,
     imsakText: RAMADAN_TIME_FALLBACK_TEXT,
     iftarText: RAMADAN_TIME_FALLBACK_TEXT,
     note: RAMADAN_NOTE_UNAVAILABLE,
+  };
+}
+
+function createLoadingRamadanSectionData() {
+  return {
+    state: "loading",
+    dayText: "جاري تحميل اليوم الرمضاني...",
+    imsakText: RAMADAN_TIME_FALLBACK_TEXT,
+    iftarText: RAMADAN_TIME_FALLBACK_TEXT,
+    note: RAMADAN_NOTE_LOADING,
   };
 }
 
@@ -355,11 +395,24 @@ function mapRamadanSectionData(weekDayEntry) {
     imsakText !== RAMADAN_TIME_FALLBACK_TEXT &&
     iftarText !== RAMADAN_TIME_FALLBACK_TEXT;
 
+  const hasAnyData =
+    dayText !== RAMADAN_DAY_FALLBACK_TEXT ||
+    imsakText !== RAMADAN_TIME_FALLBACK_TEXT ||
+    iftarText !== RAMADAN_TIME_FALLBACK_TEXT;
+
+  const state = hasFullData ? "ready" : hasAnyData ? "partial" : "unavailable";
+
   return {
+    state,
     dayText,
     imsakText,
     iftarText,
-    note: hasFullData ? RAMADAN_NOTE_RUNTIME : RAMADAN_NOTE_PARTIAL,
+    note:
+      state === "ready"
+        ? RAMADAN_NOTE_RUNTIME
+        : state === "partial"
+          ? RAMADAN_NOTE_PARTIAL
+          : RAMADAN_NOTE_UNAVAILABLE,
   };
 }
 
@@ -462,10 +515,21 @@ function mapWeeklyRows(weekDays) {
 
 function mapPrayerSectionData(overview, activeLocation, weeklyRows = []) {
   const safePrayers = Array.isArray(overview?.prayers) ? overview.prayers : [];
+  const safeWeeklyRows = Array.isArray(weeklyRows) ? weeklyRows : [];
   const nextPrayer = getNextPrayerFromPrayers(safePrayers, new Date());
   const metaLocationLabel = formatLocationLabel(activeLocation);
+  const hasDaily = safePrayers.length > 0;
+  const hasWeekly = safeWeeklyRows.length > 0;
+
+  const sectionState = !hasDaily
+    ? "unavailable"
+    : hasWeekly
+      ? "ready"
+      : "partial";
 
   return {
+    state: sectionState,
+    weekState: hasWeekly ? "ready" : "unavailable",
     meta: {
       location: metaLocationLabel || "الموقع غير متاح حالياً",
       date: formatTodayContextDate(),
@@ -474,14 +538,24 @@ function mapPrayerSectionData(overview, activeLocation, weeklyRows = []) {
       ...mapFeaturedPrayer(nextPrayer),
     },
     dailyPrayers: safePrayers,
-    weeklyRows,
+    weeklyRows: safeWeeklyRows,
   };
 }
 
 function createHonestFallbackQiblaSectionData() {
   return {
+    state: "unavailable",
     degreeText: "غير متاح",
     note: QIBLA_NOTE_UNAVAILABLE,
+    needleRotation: null,
+  };
+}
+
+function createLoadingQiblaSectionData() {
+  return {
+    state: "loading",
+    degreeText: "--",
+    note: QIBLA_NOTE_LOADING,
     needleRotation: null,
   };
 }
@@ -530,6 +604,7 @@ async function buildQiblaSectionData(activeLocation) {
     const roundedDirection = Math.round(direction);
 
     return {
+      state: "ready",
       degreeText: toQiblaDegreeText(roundedDirection),
       note: QIBLA_NOTE_RUNTIME_BY_CITY,
       needleRotation: roundedDirection,
@@ -616,13 +691,28 @@ async function refreshPrayerSectionByLocation(location) {
   clearPrayerLiveInterval();
 
   const requestId = ++prayerRefreshRequestId;
-  const prayerSectionData = await buildPrayerSectionData(activeLocation);
+
+  if (!hasPrayerRenderedOnce) {
+    renderPrayerSection(
+      appPrayerRoot,
+      createLoadingPrayerSectionData(activeLocation),
+    );
+  }
+
+  let prayerSectionData = createHonestFallbackPrayerSectionData();
+
+  try {
+    prayerSectionData = await buildPrayerSectionData(activeLocation);
+  } catch (error) {
+    console.warn("[S2-T7] Unexpected prayer refresh failure:", error);
+  }
 
   if (requestId !== prayerRefreshRequestId) {
     return;
   }
 
   renderPrayerSection(appPrayerRoot, prayerSectionData);
+  hasPrayerRenderedOnce = true;
   startPrayerLiveBinding(appPrayerRoot, prayerSectionData);
 }
 
@@ -635,13 +725,25 @@ async function refreshQiblaSectionByLocation(location) {
     selectedLocation: location,
   });
   const requestId = ++qiblaRefreshRequestId;
-  const qiblaSectionData = await buildQiblaSectionData(activeLocation);
+
+  if (!hasQiblaRenderedOnce) {
+    renderQiblaSection(appQiblaRoot, createLoadingQiblaSectionData());
+  }
+
+  let qiblaSectionData = createHonestFallbackQiblaSectionData();
+
+  try {
+    qiblaSectionData = await buildQiblaSectionData(activeLocation);
+  } catch (error) {
+    console.warn("[S2-T7] Unexpected qibla refresh failure:", error);
+  }
 
   if (requestId !== qiblaRefreshRequestId) {
     return;
   }
 
   renderQiblaSection(appQiblaRoot, qiblaSectionData);
+  hasQiblaRenderedOnce = true;
 }
 
 async function refreshRamadanSectionByLocation(location) {
@@ -653,13 +755,25 @@ async function refreshRamadanSectionByLocation(location) {
     selectedLocation: location,
   });
   const requestId = ++ramadanRefreshRequestId;
-  const ramadanSectionData = await buildRamadanSectionData(activeLocation);
+
+  if (!hasRamadanRenderedOnce) {
+    renderRamadanSection(appRamadanRoot, createLoadingRamadanSectionData());
+  }
+
+  let ramadanSectionData = createHonestFallbackRamadanSectionData();
+
+  try {
+    ramadanSectionData = await buildRamadanSectionData(activeLocation);
+  } catch (error) {
+    console.warn("[S2-T7] Unexpected ramadan refresh failure:", error);
+  }
 
   if (requestId !== ramadanRefreshRequestId) {
     return;
   }
 
   renderRamadanSection(appRamadanRoot, ramadanSectionData);
+  hasRamadanRenderedOnce = true;
 }
 
 async function selectCityLocationViaPromptFallback() {
@@ -892,9 +1006,11 @@ function bindHeaderLocationTrigger() {
       }
 
       setStoredLocation(strictSelectedLocation);
-      await refreshPrayerSectionByLocation(strictSelectedLocation);
-      await refreshQiblaSectionByLocation(strictSelectedLocation);
-      await refreshRamadanSectionByLocation(strictSelectedLocation);
+      await Promise.allSettled([
+        refreshPrayerSectionByLocation(strictSelectedLocation),
+        refreshQiblaSectionByLocation(strictSelectedLocation),
+        refreshRamadanSectionByLocation(strictSelectedLocation),
+      ]);
     } finally {
       locationTrigger.disabled = false;
     }
@@ -909,13 +1025,14 @@ async function bootstrapApp() {
   bindHeaderLocationTrigger();
 
   appPrayerRoot = document.getElementById("prayer-section");
-  await refreshPrayerSectionByLocation();
-
   appQiblaRoot = document.getElementById("qibla-section");
-  await refreshQiblaSectionByLocation();
-
   appRamadanRoot = document.getElementById("ramadan-section");
-  await refreshRamadanSectionByLocation();
+
+  await Promise.allSettled([
+    refreshPrayerSectionByLocation(),
+    refreshQiblaSectionByLocation(),
+    refreshRamadanSectionByLocation(),
+  ]);
 
   const footerRoot = document.getElementById("site-footer");
   renderFooter(footerRoot);
