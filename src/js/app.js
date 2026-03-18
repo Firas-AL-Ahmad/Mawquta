@@ -15,6 +15,7 @@ import {
   getNextPrayerFromPrayers,
   getTodayPrayerOverviewByCity,
 } from "./services/prayer.service.js";
+import { getQiblaByCoords } from "./services/qibla.service.js";
 import { getCurrentWeekByCity } from "./services/week.service.js";
 import { searchCitySuggestions } from "./services/location-search.service.js";
 import { renderCitySuggestions } from "./ui/widgets/render-city-suggestions.js";
@@ -24,11 +25,15 @@ const PRAYER_LIVE_TICK_MS = 1000;
 const LOCATION_PICKER_DEBOUNCE_MS = 300;
 const LOCATION_TYPE_CITY = "city";
 const HEADER_LOCATION_FALLBACK_LABEL = "اختر المدينة";
+const QIBLA_NOTE_RUNTIME_BY_CITY = "الدرجة محسوبة حسب موقع المدينة المختارة.";
+const QIBLA_NOTE_UNAVAILABLE = "تعذر تحديد اتجاه القبلة حالياً لهذه المدينة.";
 let prayerLiveIntervalId = null;
 let prayerRefreshRequestId = 0;
+let qiblaRefreshRequestId = 0;
 
 let appHeaderRoot = null;
 let appPrayerRoot = null;
+let appQiblaRoot = null;
 
 function formatTodayContextDate() {
   try {
@@ -64,6 +69,29 @@ function isNonEmptyString(value) {
   return typeof value === "string" && value.trim().length > 0;
 }
 
+function toFiniteNumberOrNull(value) {
+  const num = Number(value);
+  return Number.isFinite(num) ? num : null;
+}
+
+function normalizeOptionalLatitude(value) {
+  const latitude = toFiniteNumberOrNull(value);
+  if (latitude === null) {
+    return null;
+  }
+
+  return latitude >= -90 && latitude <= 90 ? latitude : null;
+}
+
+function normalizeOptionalLongitude(value) {
+  const longitude = toFiniteNumberOrNull(value);
+  if (longitude === null) {
+    return null;
+  }
+
+  return longitude >= -180 && longitude <= 180 ? longitude : null;
+}
+
 function toStrictCityLocation(locationLike) {
   if (!locationLike || locationLike.type !== LOCATION_TYPE_CITY) {
     return null;
@@ -76,11 +104,25 @@ function toStrictCityLocation(locationLike) {
     return null;
   }
 
-  return {
+  const latitude = normalizeOptionalLatitude(
+    locationLike.latitude ?? locationLike.lat,
+  );
+  const longitude = normalizeOptionalLongitude(
+    locationLike.longitude ?? locationLike.lon,
+  );
+
+  const location = {
     type: LOCATION_TYPE_CITY,
     city,
     country,
   };
+
+  if (latitude !== null && longitude !== null) {
+    location.latitude = latitude;
+    location.longitude = longitude;
+  }
+
+  return location;
 }
 
 function getDefaultCityLocation() {
@@ -366,6 +408,68 @@ function mapPrayerSectionData(overview, activeLocation, weeklyRows = []) {
   };
 }
 
+function createHonestFallbackQiblaSectionData() {
+  return {
+    degreeText: "غير متاح",
+    note: QIBLA_NOTE_UNAVAILABLE,
+    needleRotation: null,
+  };
+}
+
+function resolveLocationCoords(locationLike) {
+  const strictLocation = toStrictCityLocation(locationLike);
+  if (!strictLocation) {
+    return null;
+  }
+
+  const latitude = normalizeOptionalLatitude(strictLocation.latitude);
+  const longitude = normalizeOptionalLongitude(strictLocation.longitude);
+
+  if (latitude === null || longitude === null) {
+    return null;
+  }
+
+  return { latitude, longitude };
+}
+
+function toQiblaDegreeText(direction) {
+  const normalizedDirection = toFiniteNumberOrNull(direction);
+  if (normalizedDirection === null) {
+    return "غير متاح";
+  }
+
+  return `${Math.round(normalizedDirection)}°`;
+}
+
+async function buildQiblaSectionData(activeLocation) {
+  const fallbackData = createHonestFallbackQiblaSectionData();
+  const coords = resolveLocationCoords(activeLocation);
+
+  if (!coords) {
+    return fallbackData;
+  }
+
+  try {
+    const qiblaData = await getQiblaByCoords(coords.latitude, coords.longitude);
+    const direction = toFiniteNumberOrNull(qiblaData?.direction);
+
+    if (direction === null) {
+      return fallbackData;
+    }
+
+    const roundedDirection = Math.round(direction);
+
+    return {
+      degreeText: toQiblaDegreeText(roundedDirection),
+      note: QIBLA_NOTE_RUNTIME_BY_CITY,
+      needleRotation: roundedDirection,
+    };
+  } catch (error) {
+    console.warn("[S2-T5] Failed to load qibla runtime data:", error);
+    return fallbackData;
+  }
+}
+
 async function buildPrayerSectionData(activeLocation) {
   const fallbackData = createHonestFallbackPrayerSectionData();
   const strictLocation = toStrictCityLocation(activeLocation);
@@ -392,11 +496,7 @@ async function buildPrayerSectionData(activeLocation) {
       console.warn("[S2-T2] Failed to load weekly prayer runtime data:", error);
     }
 
-    return mapPrayerSectionData(
-      prayerOverview,
-      strictLocation,
-      weeklyRows,
-    );
+    return mapPrayerSectionData(prayerOverview, strictLocation, weeklyRows);
   } catch (error) {
     console.warn("[S2-T1] Failed to load prayer section runtime data:", error);
     return fallbackData;
@@ -408,7 +508,9 @@ async function refreshPrayerSectionByLocation(location) {
     return;
   }
 
-  const activeLocation = resolveActivePrayerLocation({ selectedLocation: location });
+  const activeLocation = resolveActivePrayerLocation({
+    selectedLocation: location,
+  });
   syncHeaderLocationLabel(activeLocation);
 
   clearPrayerLiveInterval();
@@ -424,6 +526,24 @@ async function refreshPrayerSectionByLocation(location) {
   startPrayerLiveBinding(appPrayerRoot, prayerSectionData);
 }
 
+async function refreshQiblaSectionByLocation(location) {
+  if (!appQiblaRoot) {
+    return;
+  }
+
+  const activeLocation = resolveActivePrayerLocation({
+    selectedLocation: location,
+  });
+  const requestId = ++qiblaRefreshRequestId;
+  const qiblaSectionData = await buildQiblaSectionData(activeLocation);
+
+  if (requestId !== qiblaRefreshRequestId) {
+    return;
+  }
+
+  renderQiblaSection(appQiblaRoot, qiblaSectionData);
+}
+
 async function selectCityLocationViaPromptFallback() {
   const query = window.prompt("اكتب اسم المدينة للبحث عنها:");
   if (!isNonEmptyString(query)) {
@@ -431,7 +551,9 @@ async function selectCityLocationViaPromptFallback() {
   }
 
   try {
-    const suggestions = await searchCitySuggestions(query.trim(), { maxRows: 8 });
+    const suggestions = await searchCitySuggestions(query.trim(), {
+      maxRows: 8,
+    });
 
     if (!Array.isArray(suggestions) || suggestions.length === 0) {
       window.alert("لم يتم العثور على نتائج مطابقة.");
@@ -443,11 +565,16 @@ async function selectCityLocationViaPromptFallback() {
         type: LOCATION_TYPE_CITY,
         city: suggestions[0]?.city,
         country: suggestions[0]?.country,
+        latitude: suggestions[0]?.lat,
+        longitude: suggestions[0]?.lon,
       });
     }
 
     const choicesText = suggestions
-      .map((suggestion, index) => `${index + 1}) ${suggestion?.label || "مدينة غير معروفة"}`)
+      .map(
+        (suggestion, index) =>
+          `${index + 1}) ${suggestion?.label || "مدينة غير معروفة"}`,
+      )
       .join("\n");
 
     const indexInput = window.prompt(
@@ -461,6 +588,8 @@ async function selectCityLocationViaPromptFallback() {
       type: LOCATION_TYPE_CITY,
       city: picked?.city,
       country: picked?.country,
+      latitude: picked?.lat,
+      longitude: picked?.lon,
     });
   } catch (error) {
     console.warn("[S2-T4] Failed to search city suggestions:", error);
@@ -516,7 +645,9 @@ function selectCityLocationViaDialog() {
 
     const searchInput = dialog.querySelector("input[name='city-search']");
     const statusElement = dialog.querySelector("[data-location-search-status]");
-    const suggestionsContainer = dialog.querySelector("[data-location-suggestions]");
+    const suggestionsContainer = dialog.querySelector(
+      "[data-location-suggestions]",
+    );
 
     let debounceId = null;
     let searchToken = 0;
@@ -560,7 +691,9 @@ function selectCityLocationViaDialog() {
           const currentToken = ++searchToken;
 
           try {
-            const suggestions = await searchCitySuggestions(query, { maxRows: 8 });
+            const suggestions = await searchCitySuggestions(query, {
+              maxRows: 8,
+            });
 
             if (currentToken !== searchToken) {
               return;
@@ -573,20 +706,26 @@ function selectCityLocationViaDialog() {
             }
 
             statusElement.textContent = "اختر مدينتك من النتائج:";
-            renderCitySuggestions(suggestionsContainer, suggestions, (picked) => {
-              const selectedLocation = toStrictCityLocation({
-                type: LOCATION_TYPE_CITY,
-                city: picked?.city,
-                country: picked?.country,
-              });
+            renderCitySuggestions(
+              suggestionsContainer,
+              suggestions,
+              (picked) => {
+                const selectedLocation = toStrictCityLocation({
+                  type: LOCATION_TYPE_CITY,
+                  city: picked?.city,
+                  country: picked?.country,
+                  latitude: picked?.lat,
+                  longitude: picked?.lon,
+                });
 
-              if (!selectedLocation) {
-                return;
-              }
+                if (!selectedLocation) {
+                  return;
+                }
 
-              settle(selectedLocation);
-              dialog.close();
-            });
+                settle(selectedLocation);
+                dialog.close();
+              },
+            );
           } catch (error) {
             if (currentToken !== searchToken) {
               return;
@@ -636,6 +775,7 @@ function bindHeaderLocationTrigger() {
 
       setStoredLocation(strictSelectedLocation);
       await refreshPrayerSectionByLocation(strictSelectedLocation);
+      await refreshQiblaSectionByLocation(strictSelectedLocation);
     } finally {
       locationTrigger.disabled = false;
     }
@@ -652,8 +792,8 @@ async function bootstrapApp() {
   appPrayerRoot = document.getElementById("prayer-section");
   await refreshPrayerSectionByLocation();
 
-  const qiblaRoot = document.getElementById("qibla-section");
-  renderQiblaSection(qiblaRoot);
+  appQiblaRoot = document.getElementById("qibla-section");
+  await refreshQiblaSectionByLocation();
 
   const ramadanRoot = document.getElementById("ramadan-section");
   renderRamadanSection(ramadanRoot);
