@@ -5,12 +5,21 @@
 import { renderAppShell } from "./ui/layout/render-app-shell.js";
 import { renderHeader } from "./ui/layout/render-header.js";
 import { renderFooter } from "./ui/layout/render-footer.js";
-import { renderPrayerSection } from "./ui/sections/render-prayer-section.js";
+import {
+  renderPrayerSection,
+  updatePrayerSectionFeaturedState,
+} from "./ui/sections/render-prayer-section.js";
 import { renderQiblaSection } from "./ui/sections/render-qibla-section.js";
 import { renderRamadanSection } from "./ui/sections/render-ramadan-section.js";
-import { getTodayPrayerOverviewByCity } from "./services/prayer.service.js";
+import {
+  getNextPrayerFromPrayers,
+  getTodayPrayerOverviewByCity,
+} from "./services/prayer.service.js";
 import { getCurrentWeekByCity } from "./services/week.service.js";
 import { CONFIG } from "./config.js";
+
+const PRAYER_LIVE_TICK_MS = 1000;
+let prayerLiveIntervalId = null;
 
 function formatTodayContextDate() {
   try {
@@ -32,13 +41,82 @@ function createHonestFallbackPrayerSectionData() {
       date: formatTodayContextDate(),
     },
     featured: {
+      key: "",
       label: "المواقيت غير متاحة",
       time: "--:--",
-      note: "تعذر تحميل بيانات الصلاة حالياً. يرجى المحاولة لاحقاً.",
+      countdownText: "تعذر تحميل العد التنازلي حالياً.",
     },
     dailyPrayers: [],
     weeklyRows: [],
   };
+}
+
+function pad2(value) {
+  return String(value).padStart(2, "0");
+}
+
+function formatRemainingAsHms(remainingMs) {
+  if (!Number.isFinite(remainingMs) || remainingMs < 0) {
+    return null;
+  }
+
+  const totalSeconds = Math.floor(remainingMs / 1000);
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
+  return `${pad2(hours)}:${pad2(minutes)}:${pad2(seconds)}`;
+}
+
+function mapFeaturedPrayer(nextPrayer) {
+  const countdownValue = formatRemainingAsHms(nextPrayer?.remainingMs);
+
+  return {
+    key: nextPrayer?.key || "",
+    label: nextPrayer?.label || "المواقيت غير متاحة",
+    time: nextPrayer?.time || "--:--",
+    countdownText: countdownValue
+      ? `الوقت المتبقي: ${countdownValue}`
+      : "تعذر تحديد الوقت المتبقي حالياً.",
+  };
+}
+
+function clearPrayerLiveInterval() {
+  if (prayerLiveIntervalId) {
+    clearInterval(prayerLiveIntervalId);
+    prayerLiveIntervalId = null;
+  }
+}
+
+function startPrayerLiveBinding(prayerRoot, prayerSectionData) {
+  const prayers = Array.isArray(prayerSectionData?.dailyPrayers)
+    ? prayerSectionData.dailyPrayers
+    : [];
+
+  if (!prayerRoot || prayers.length === 0) {
+    return;
+  }
+
+  clearPrayerLiveInterval();
+
+  let previousFeaturedKey = prayerSectionData?.featured?.key || "";
+
+  const syncFeaturedState = () => {
+    const nextPrayer = getNextPrayerFromPrayers(prayers, new Date());
+    const featured = mapFeaturedPrayer(nextPrayer);
+    const shouldRefreshCards = featured.key !== previousFeaturedKey;
+
+    updatePrayerSectionFeaturedState(prayerRoot, {
+      featured,
+      dailyPrayers: prayers,
+      shouldRefreshCards,
+    });
+
+    previousFeaturedKey = featured.key;
+  };
+
+  syncFeaturedState();
+  prayerLiveIntervalId = setInterval(syncFeaturedState, PRAYER_LIVE_TICK_MS);
 }
 
 function normalizeTime(timeStr) {
@@ -155,7 +233,7 @@ function mapWeeklyRows(weekDays) {
 
 function mapPrayerSectionData(overview, city, country, weeklyRows = []) {
   const safePrayers = Array.isArray(overview?.prayers) ? overview.prayers : [];
-  const nextPrayer = overview?.nextPrayer ?? null;
+  const nextPrayer = getNextPrayerFromPrayers(safePrayers, new Date());
 
   return {
     meta: {
@@ -164,12 +242,7 @@ function mapPrayerSectionData(overview, city, country, weeklyRows = []) {
       date: formatTodayContextDate(),
     },
     featured: {
-      key: nextPrayer?.key,
-      label: nextPrayer?.label || "المواقيت غير متاحة",
-      time: nextPrayer?.time || "--:--",
-      note: nextPrayer
-        ? "تم عرض الصلاة القادمة وفق بيانات اليوم المتاحة."
-        : "تعذر تحديد الصلاة القادمة حالياً.",
+      ...mapFeaturedPrayer(nextPrayer),
     },
     dailyPrayers: safePrayers,
     weeklyRows,
@@ -224,6 +297,7 @@ async function bootstrapApp() {
   const prayerRoot = document.getElementById("prayer-section");
   const prayerSectionData = await buildPrayerSectionData();
   renderPrayerSection(prayerRoot, prayerSectionData);
+  startPrayerLiveBinding(prayerRoot, prayerSectionData);
 
   const qiblaRoot = document.getElementById("qibla-section");
   renderQiblaSection(qiblaRoot);

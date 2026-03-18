@@ -52,6 +52,10 @@ function timeToDateToday(hhmm, now = new Date()) {
 
 // Get the next upcoming prayer from a list of prayers with times
 function getNextPrayer(prayers, now = new Date()) {
+  if (!Array.isArray(prayers) || prayers.length === 0) {
+    return null;
+  }
+
   for (const p of prayers) {
     const dt = timeToDateToday(p.time, now);
     if (dt > now) {
@@ -73,6 +77,16 @@ function getNextPrayer(prayers, now = new Date()) {
     ...first,
     remainingMs: dtTomorrow.getTime() - now.getTime(),
   };
+}
+
+// Recompute next prayer from an already available prayers array.
+// Pure helper with no side effects.
+export function getNextPrayerFromPrayers(prayers, now = new Date()) {
+  if (!Array.isArray(prayers) || prayers.length === 0) {
+    return null;
+  }
+
+  return getNextPrayer(prayers, now);
 }
 
 // Build prayers array from timings object

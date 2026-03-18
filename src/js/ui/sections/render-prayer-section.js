@@ -7,9 +7,10 @@ const FALLBACK_SECTION_DATA = {
     date: "التاريخ غير متاح حالياً",
   },
   featured: {
+    key: "",
     label: "المواقيت غير متاحة",
     time: "--:--",
-    note: "تعذر تحميل بيانات الصلاة حالياً. يرجى المحاولة لاحقاً.",
+    countdownText: "العد التنازلي غير متاح حالياً.",
   },
   dailyPrayers: [],
   weeklyRows: [],
@@ -31,8 +32,10 @@ export function renderPrayerSection(
     sectionData?.featured?.label || FALLBACK_SECTION_DATA.featured.label;
   const featuredTime =
     sectionData?.featured?.time || FALLBACK_SECTION_DATA.featured.time;
-  const featuredNote =
-    sectionData?.featured?.note || FALLBACK_SECTION_DATA.featured.note;
+  const featuredCountdownText =
+    sectionData?.featured?.countdownText ||
+    sectionData?.featured?.note ||
+    FALLBACK_SECTION_DATA.featured.countdownText;
 
   rootElement.innerHTML = `
     <div class="prayer-section__inner container">
@@ -58,9 +61,9 @@ export function renderPrayerSection(
         <article class="card prayer-hero-card" aria-label="Featured prayer summary">
           <div class="prayer-hero-card__content">
             <p class="prayer-hero-card__label">الصلاة القادمة</p>
-            <h2 class="prayer-hero-card__title">${featuredLabel}</h2>
-            <p class="prayer-hero-card__time">${featuredTime}</p>
-            <p class="prayer-hero-card__note">${featuredNote}</p>
+            <h2 class="prayer-hero-card__title" data-prayer-featured-label>${featuredLabel}</h2>
+            <p class="prayer-hero-card__time" data-prayer-featured-time>${featuredTime}</p>
+            <p class="prayer-hero-card__note" data-prayer-featured-countdown aria-live="polite">${featuredCountdownText}</p>
           </div>
 
           <div class="prayer-hero-card__visual" aria-hidden="true"></div>
@@ -84,6 +87,49 @@ export function renderPrayerSection(
 
   const prayerWeekRoot = rootElement.querySelector(".prayer-week-root");
   renderPrayerWeek(prayerWeekRoot, sectionData?.weeklyRows);
+
+  return rootElement;
+}
+
+export function updatePrayerSectionFeaturedState(
+  rootElement,
+  { featured = {}, dailyPrayers = [], shouldRefreshCards = false } = {},
+) {
+  if (!rootElement) {
+    return null;
+  }
+
+  const featuredLabelElement = rootElement.querySelector(
+    "[data-prayer-featured-label]",
+  );
+  const featuredTimeElement = rootElement.querySelector(
+    "[data-prayer-featured-time]",
+  );
+  const featuredCountdownElement = rootElement.querySelector(
+    "[data-prayer-featured-countdown]",
+  );
+
+  if (featuredLabelElement) {
+    featuredLabelElement.textContent =
+      featured?.label || FALLBACK_SECTION_DATA.featured.label;
+  }
+
+  if (featuredTimeElement) {
+    featuredTimeElement.textContent =
+      featured?.time || FALLBACK_SECTION_DATA.featured.time;
+  }
+
+  if (featuredCountdownElement) {
+    featuredCountdownElement.textContent =
+      featured?.countdownText || FALLBACK_SECTION_DATA.featured.countdownText;
+  }
+
+  if (shouldRefreshCards) {
+    const prayerCardsRoot = rootElement.querySelector(".prayer-cards-root");
+    renderPrayerCards(prayerCardsRoot, dailyPrayers, {
+      featuredKey: featured?.key,
+    });
+  }
 
   return rootElement;
 }
