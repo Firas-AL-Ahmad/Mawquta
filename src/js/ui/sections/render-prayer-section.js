@@ -60,7 +60,7 @@ export function renderPrayerSection(
             <p class="section-heading__eyebrow">مواقيت الصلاة</p>
             <h1 class="section-heading__title">ابقَ على صلة بصلاتك أينما كنت</h1>
             <p class="section-heading__subtitle">
-              عرض واضح وهادئ لمواقيت اليوم بواجهة عربية عملية ومهيأة للربط بالبيانات الفعلية لاحقًا.
+              عرض واضح وهادئ لمواقيت اليوم بواجهة عربية عملية مرتبطة بالبيانات المتاحة لحظيًا.
             </p>
           </div>
         </div>

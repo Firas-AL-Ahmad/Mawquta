@@ -1,7 +1,4 @@
-import {
-  getTimingsByCoords,
-  getTimingsByCityAndCountry,
-} from "../api/aladhan.api.js";
+import { getTimingsByCityAndCountry } from "../api/aladhan.api.js";
 
 const PRAYER_ORDER = ["Fajr", "Sunrise", "Dhuhr", "Asr", "Maghrib", "Isha"];
 
@@ -98,19 +95,6 @@ function buildPrayersFromTimings(timings) {
   }));
 }
 
-// Get today's prayer overview (prayers + next) by coordinates
-export async function getTodayPrayerOverviewByCoords(latitude, longitude) {
-  const timings = await getTimingsByCoords(latitude, longitude);
-
-  const prayers = buildPrayersFromTimings(timings);
-  const nextPrayer = getNextPrayer(prayers);
-
-  return {
-    prayers,
-    nextPrayer,
-  };
-}
-
 // Get today's prayer overview (prayers + next) by city and country
 export async function getTodayPrayerOverviewByCity(city, country) {
   const timings = await getTimingsByCityAndCountry(city, country);
@@ -122,11 +106,4 @@ export async function getTodayPrayerOverviewByCity(city, country) {
     prayers,
     nextPrayer,
   };
-}
-
-// Build prayer view model from timings object
-export function buildPrayerViewModelFromTimings(timings) {
-  const prayers = buildPrayersFromTimings(timings);
-  const nextPrayer = getNextPrayer(prayers);
-  return { prayers, nextPrayer };
 }

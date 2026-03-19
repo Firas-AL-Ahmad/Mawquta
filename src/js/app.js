@@ -1,5 +1,5 @@
 /* =========================================================
-   S1-T4 App Bootstrap (Render App Shell)
+   App Runtime Bootstrap & Orchestration
 ========================================================= */
 
 import { renderAppShell } from "./ui/layout/render-app-shell.js";
@@ -605,7 +605,7 @@ async function buildQiblaSectionData(activeLocation) {
       needleRotation: roundedDirection,
     };
   } catch (error) {
-    console.warn("[S2-T5] Failed to load qibla runtime data:", error);
+    console.warn("[Runtime] Failed to load qibla runtime data:", error);
     return fallbackData;
   }
 }
@@ -639,12 +639,18 @@ async function buildPrayerSectionData(
 
       weeklyRows = mapWeeklyRows(currentWeekData);
     } catch (error) {
-      console.warn("[S2-T2] Failed to load weekly prayer runtime data:", error);
+      console.warn(
+        "[Runtime] Failed to load weekly prayer runtime data:",
+        error,
+      );
     }
 
     return mapPrayerSectionData(prayerOverview, strictLocation, weeklyRows);
   } catch (error) {
-    console.warn("[S2-T1] Failed to load prayer section runtime data:", error);
+    console.warn(
+      "[Runtime] Failed to load prayer section runtime data:",
+      error,
+    );
     return fallbackData;
   }
 }
@@ -676,7 +682,7 @@ async function buildRamadanSectionData(
 
     return mapRamadanSectionData(todayEntry);
   } catch (error) {
-    console.warn("[S2-T6] Failed to load ramadan runtime data:", error);
+    console.warn("[Runtime] Failed to load ramadan runtime data:", error);
     return fallbackData;
   }
 }
@@ -834,7 +840,7 @@ async function selectCityLocationViaPromptFallback() {
       longitude: picked?.lon,
     });
   } catch (error) {
-    console.warn("[S2-T4] Failed to search city suggestions:", error);
+    console.warn("[Runtime] Failed to search city suggestions:", error);
     return null;
   }
 }
@@ -975,7 +981,7 @@ function selectCityLocationViaDialog() {
 
             statusElement.textContent = "تعذر تحميل نتائج المدن حالياً.";
             renderCitySuggestions(suggestionsContainer, []);
-            console.warn("[S2-T4] City suggestions search failed:", error);
+            console.warn("[Runtime] City suggestions search failed:", error);
           }
         }, LOCATION_PICKER_DEBOUNCE_MS);
       });
@@ -1044,7 +1050,7 @@ const appRoot = document.getElementById("app");
 
 if (!appRoot) {
   console.warn(
-    '[S1-T4] Missing #app mount root. Ensure src/index.html includes <div id="app"></div>.',
+    '[Runtime] Missing #app mount root. Ensure src/index.html includes <div id="app"></div>.',
   );
 } else {
   bootstrapApp();
