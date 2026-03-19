@@ -23,6 +23,7 @@ import { CONFIG } from "./config.js";
 
 const PRAYER_LIVE_TICK_MS = 1000;
 const LOCATION_PICKER_DEBOUNCE_MS = 300;
+const CALM_REFRESH_LOADING_DELAY_MS = 220;
 const LOCATION_TYPE_CITY = "city";
 const HEADER_LOCATION_FALLBACK_LABEL = "اختر المدينة";
 const PRAYER_FEATURED_LABEL_LOADING = "جاري تحميل المواقيت";
@@ -38,18 +39,12 @@ const RAMADAN_NOTE_RUNTIME =
 const RAMADAN_NOTE_PARTIAL = "بعض معلومات رمضان غير متاحة حالياً.";
 const RAMADAN_NOTE_UNAVAILABLE = "تعذر تحميل بيانات رمضان حالياً.";
 let prayerLiveIntervalId = null;
-let prayerRefreshRequestId = 0;
-let qiblaRefreshRequestId = 0;
-let ramadanRefreshRequestId = 0;
+let locationRefreshCycleId = 0;
 
 let appHeaderRoot = null;
 let appPrayerRoot = null;
 let appQiblaRoot = null;
 let appRamadanRoot = null;
-
-let hasPrayerRenderedOnce = false;
-let hasQiblaRenderedOnce = false;
-let hasRamadanRenderedOnce = false;
 
 function formatTodayContextDate() {
   try {
@@ -615,7 +610,10 @@ async function buildQiblaSectionData(activeLocation) {
   }
 }
 
-async function buildPrayerSectionData(activeLocation) {
+async function buildPrayerSectionData(
+  activeLocation,
+  { sharedWeekDataPromise } = {},
+) {
   const fallbackData = createHonestFallbackPrayerSectionData();
   const strictLocation = toStrictCityLocation(activeLocation);
 
@@ -632,10 +630,13 @@ async function buildPrayerSectionData(activeLocation) {
     let weeklyRows = [];
 
     try {
-      const currentWeekData = await getCurrentWeekByCity(
-        strictLocation.city,
-        strictLocation.country,
-      );
+      const currentWeekData = sharedWeekDataPromise
+        ? await sharedWeekDataPromise
+        : await getCurrentWeekByCity(
+            strictLocation.city,
+            strictLocation.country,
+          );
+
       weeklyRows = mapWeeklyRows(currentWeekData);
     } catch (error) {
       console.warn("[S2-T2] Failed to load weekly prayer runtime data:", error);
@@ -648,7 +649,10 @@ async function buildPrayerSectionData(activeLocation) {
   }
 }
 
-async function buildRamadanSectionData(activeLocation) {
+async function buildRamadanSectionData(
+  activeLocation,
+  { sharedWeekDataPromise } = {},
+) {
   const fallbackData = createHonestFallbackRamadanSectionData();
   const strictLocation = toStrictCityLocation(activeLocation);
 
@@ -657,10 +661,9 @@ async function buildRamadanSectionData(activeLocation) {
   }
 
   try {
-    const currentWeekData = await getCurrentWeekByCity(
-      strictLocation.city,
-      strictLocation.country,
-    );
+    const currentWeekData = sharedWeekDataPromise
+      ? await sharedWeekDataPromise
+      : await getCurrentWeekByCity(strictLocation.city, strictLocation.country);
 
     const todayEntry =
       Array.isArray(currentWeekData) && currentWeekData.length > 0
@@ -678,102 +681,109 @@ async function buildRamadanSectionData(activeLocation) {
   }
 }
 
-async function refreshPrayerSectionByLocation(location) {
-  if (!appPrayerRoot) {
+function renderCalmLoadingTransition(activeLocation, cycleId) {
+  if (cycleId !== locationRefreshCycleId) {
+    return;
+  }
+
+  syncHeaderLocationLabel(activeLocation);
+  clearPrayerLiveInterval();
+
+  renderPrayerSection(
+    appPrayerRoot,
+    createLoadingPrayerSectionData(activeLocation),
+  );
+  renderQiblaSection(appQiblaRoot, createLoadingQiblaSectionData());
+  renderRamadanSection(appRamadanRoot, createLoadingRamadanSectionData());
+}
+
+async function refreshRuntimeByLocation(
+  location,
+  { immediateLoading = false } = {},
+) {
+  if (!appPrayerRoot || !appQiblaRoot || !appRamadanRoot) {
     return;
   }
 
   const activeLocation = resolveActivePrayerLocation({
     selectedLocation: location,
   });
-  syncHeaderLocationLabel(activeLocation);
+  const cycleId = ++locationRefreshCycleId;
 
-  clearPrayerLiveInterval();
+  if (!activeLocation) {
+    syncHeaderLocationLabel(null);
+    clearPrayerLiveInterval();
+    renderPrayerSection(appPrayerRoot, createHonestFallbackPrayerSectionData());
+    renderQiblaSection(appQiblaRoot, createHonestFallbackQiblaSectionData());
+    renderRamadanSection(
+      appRamadanRoot,
+      createHonestFallbackRamadanSectionData(),
+    );
+    return;
+  }
 
-  const requestId = ++prayerRefreshRequestId;
+  const sharedWeekDataPromise = getCurrentWeekByCity(
+    activeLocation.city,
+    activeLocation.country,
+  );
 
-  if (!hasPrayerRenderedOnce) {
-    renderPrayerSection(
-      appPrayerRoot,
-      createLoadingPrayerSectionData(activeLocation),
+  let didRenderLoading = false;
+  let loadingTimerId = null;
+
+  const commitLoadingTransition = () => {
+    if (didRenderLoading || cycleId !== locationRefreshCycleId) {
+      return;
+    }
+
+    didRenderLoading = true;
+    renderCalmLoadingTransition(activeLocation, cycleId);
+  };
+
+  if (immediateLoading) {
+    commitLoadingTransition();
+  } else {
+    loadingTimerId = window.setTimeout(
+      commitLoadingTransition,
+      CALM_REFRESH_LOADING_DELAY_MS,
     );
   }
 
-  let prayerSectionData = createHonestFallbackPrayerSectionData();
+  const [prayerResult, qiblaResult, ramadanResult] = await Promise.allSettled([
+    buildPrayerSectionData(activeLocation, { sharedWeekDataPromise }),
+    buildQiblaSectionData(activeLocation),
+    buildRamadanSectionData(activeLocation, { sharedWeekDataPromise }),
+  ]);
 
-  try {
-    prayerSectionData = await buildPrayerSectionData(activeLocation);
-  } catch (error) {
-    console.warn("[S2-T7] Unexpected prayer refresh failure:", error);
+  if (loadingTimerId) {
+    clearTimeout(loadingTimerId);
   }
 
-  if (requestId !== prayerRefreshRequestId) {
+  if (cycleId !== locationRefreshCycleId) {
     return;
   }
+
+  syncHeaderLocationLabel(activeLocation);
+
+  const prayerSectionData =
+    prayerResult.status === "fulfilled"
+      ? prayerResult.value
+      : createHonestFallbackPrayerSectionData();
+
+  const qiblaSectionData =
+    qiblaResult.status === "fulfilled"
+      ? qiblaResult.value
+      : createHonestFallbackQiblaSectionData();
+
+  const ramadanSectionData =
+    ramadanResult.status === "fulfilled"
+      ? ramadanResult.value
+      : createHonestFallbackRamadanSectionData();
 
   renderPrayerSection(appPrayerRoot, prayerSectionData);
-  hasPrayerRenderedOnce = true;
-  startPrayerLiveBinding(appPrayerRoot, prayerSectionData);
-}
-
-async function refreshQiblaSectionByLocation(location) {
-  if (!appQiblaRoot) {
-    return;
-  }
-
-  const activeLocation = resolveActivePrayerLocation({
-    selectedLocation: location,
-  });
-  const requestId = ++qiblaRefreshRequestId;
-
-  if (!hasQiblaRenderedOnce) {
-    renderQiblaSection(appQiblaRoot, createLoadingQiblaSectionData());
-  }
-
-  let qiblaSectionData = createHonestFallbackQiblaSectionData();
-
-  try {
-    qiblaSectionData = await buildQiblaSectionData(activeLocation);
-  } catch (error) {
-    console.warn("[S2-T7] Unexpected qibla refresh failure:", error);
-  }
-
-  if (requestId !== qiblaRefreshRequestId) {
-    return;
-  }
-
   renderQiblaSection(appQiblaRoot, qiblaSectionData);
-  hasQiblaRenderedOnce = true;
-}
-
-async function refreshRamadanSectionByLocation(location) {
-  if (!appRamadanRoot) {
-    return;
-  }
-
-  const activeLocation = resolveActivePrayerLocation({
-    selectedLocation: location,
-  });
-  const requestId = ++ramadanRefreshRequestId;
-
-  if (!hasRamadanRenderedOnce) {
-    renderRamadanSection(appRamadanRoot, createLoadingRamadanSectionData());
-  }
-
-  let ramadanSectionData = createHonestFallbackRamadanSectionData();
-
-  try {
-    ramadanSectionData = await buildRamadanSectionData(activeLocation);
-  } catch (error) {
-    console.warn("[S2-T7] Unexpected ramadan refresh failure:", error);
-  }
-
-  if (requestId !== ramadanRefreshRequestId) {
-    return;
-  }
-
   renderRamadanSection(appRamadanRoot, ramadanSectionData);
-  hasRamadanRenderedOnce = true;
+
+  startPrayerLiveBinding(appPrayerRoot, prayerSectionData);
 }
 
 async function selectCityLocationViaPromptFallback() {
@@ -1006,11 +1016,7 @@ function bindHeaderLocationTrigger() {
       }
 
       setStoredLocation(strictSelectedLocation);
-      await Promise.allSettled([
-        refreshPrayerSectionByLocation(strictSelectedLocation),
-        refreshQiblaSectionByLocation(strictSelectedLocation),
-        refreshRamadanSectionByLocation(strictSelectedLocation),
-      ]);
+      await refreshRuntimeByLocation(strictSelectedLocation);
     } finally {
       locationTrigger.disabled = false;
     }
@@ -1028,11 +1034,7 @@ async function bootstrapApp() {
   appQiblaRoot = document.getElementById("qibla-section");
   appRamadanRoot = document.getElementById("ramadan-section");
 
-  await Promise.allSettled([
-    refreshPrayerSectionByLocation(),
-    refreshQiblaSectionByLocation(),
-    refreshRamadanSectionByLocation(),
-  ]);
+  await refreshRuntimeByLocation(undefined, { immediateLoading: true });
 
   const footerRoot = document.getElementById("site-footer");
   renderFooter(footerRoot);
