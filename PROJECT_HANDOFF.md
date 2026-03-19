@@ -1,487 +1,459 @@
 # PROJECT_HANDOFF
 
-## 1) Executive Summary
+## 1. Executive Summary
 
-Mawquta is a client-first Islamic prayer times web app (Arabic-first UI) built with modular vanilla JavaScript and Bootstrap, deployed as static assets plus a single Vercel serverless endpoint for city autocomplete (`/api/geocode`). The app currently delivers core daily value (today’s prayer times, next-prayer countdown, weekly preview, Qibla direction, and Ramadan countdown) and is structurally organized into API/service/UI/util layers.
+**What this project is (Confirmed):** Mawquta is an Arabic-first Islamic prayer web application built as a static frontend (`src/`) plus one Vercel serverless API function (`api/geocode.js`).
 
-The codebase is **functional but mid-maturity**: core flows are implemented and readable, but testing is absent, some documented features are not implemented, and there are legacy/dead artifacts (unused state module, empty util files, README drift, and minor CSS/config issues). Another engineer can safely continue from this point with a short hardening pass.
+**Main purpose (Confirmed):** Provide city-based prayer times, next-prayer countdown, weekly prayer table, qibla direction, and Ramadan daily summary/countdown data.
 
----
+**Maturity level (Inferred):** Early production-ready prototype. Core user flow works, architecture is modular, but engineering hardening is incomplete.
 
-## 2) What the Project Does
+**Codebase health (Confirmed/Inferred):**
 
-**Confirmed:**
+- **Strengths:** Clean folder layering (`api/services/ui/utils`), defensive fallbacks in runtime, strong input guards in API wrappers.
+- **Weaknesses:** No tests, no CI/lint setup, multiple placeholder/legacy files, and documentation drift versus actual implementation.
 
-- Displays prayer times for today using either:
-  - browser coordinates (`navigator.geolocation`) or
-  - user-picked city/country (from autocomplete suggestions).
-- Shows next prayer and a live HH:MM:SS countdown.
-- Shows current week prayer preview (7-day slice, crossing month boundary when needed).
-- Shows Qibla direction (degrees + compass needle).
-- Shows countdown to next Ramadan using Hijri/Gregorian conversion endpoints.
-- Persists selected location in `localStorage`.
+**Main risks/uncertainties:**
 
-**Inferred/needs verification against product intent:**
-
-- README claims broader feature set (theme toggle UI, Asma Al-Husna screens, date converter UI, etc.) than current rendered UI provides.
+- **Confirmed:** reliance on external APIs and browser runtime (`window.axios`, `fetch`, `localStorage`, geolocation).
+- **Confirmed:** serverless endpoint requires `GEONAMES_USERNAME`.
+- **Needs verification:** intended long-term architecture direction (current orchestrator approach vs legacy centralized state pattern).
 
 ---
 
-## 3) Current Implementation Status and Maturity
+## 2. Project Snapshot
 
-**Maturity assessment:** Early production / advanced prototype.
-
-**Implemented and wired end-to-end:**
-
-- Prayer timings retrieval + rendering.
-- Countdown timer with interval cleanup.
-- Weekly calendar slicing and rendering.
-- Qibla retrieval + render.
-- Ramadan countdown service + render.
-- City autocomplete via backend proxy endpoint.
-
-**Partially implemented / present but unused:**
-
-- Extended AlAdhan API wrappers for Asma Al-Husna, additional calendar/date conversion endpoints.
-- `src/js/state/app.state.js` observer-based state store (not imported by runtime).
-
-**Not implemented in current UI (despite docs mentioning):**
-
-- 99 Names UI.
-- Date conversion UI.
-- Explicit theme toggle button/controls.
-- Test suite.
+| Item                 | Value                                                               | Confidence |
+| -------------------- | ------------------------------------------------------------------- | ---------- |
+| Project name         | `mawquta` (`package.json`)                                          | Confirmed  |
+| App type             | Static SPA-like frontend + serverless API endpoint                  | Confirmed  |
+| Main languages       | JavaScript (ES Modules), HTML, CSS                                  | Confirmed  |
+| Frameworks           | No JS framework; custom modular vanilla JS                          | Confirmed  |
+| Libraries            | `axios` dependency; runtime expects `window.axios`                  | Confirmed  |
+| Package manager      | npm (`package-lock.json`)                                           | Confirmed  |
+| Build tools          | No bundler configured; static serving via `serve` / Vercel rewrites | Confirmed  |
+| Runtime environments | Browser + Vercel Serverless Function runtime                        | Confirmed  |
+| Frontend entry point | `src/index.html` -> `src/js/app.js`                                 | Confirmed  |
+| Backend entry point  | `api/geocode.js`                                                    | Confirmed  |
+| Config/environment   | `src/js/config.js` + Vercel env (`process.env.GEONAMES_USERNAME`)   | Confirmed  |
 
 ---
 
-## 4) Full Tech Stack
-
-| Layer                   | Technology                                       | Status                       |
-| ----------------------- | ------------------------------------------------ | ---------------------------- |
-| Frontend                | HTML5, CSS3, Vanilla ES Modules                  | Confirmed                    |
-| UI framework            | Bootstrap 5.3.3 RTL (CDN)                        | Confirmed (`src/index.html`) |
-| HTTP client             | Axios (via global `window.axios` from CDN)       | Confirmed                    |
-| Runtime APIs            | Browser Geolocation API, `fetch`, `localStorage` | Confirmed                    |
-| Primary external API    | AlAdhan v1 (`https://api.aladhan.com/v1`)        | Confirmed                    |
-| Reverse geocoding       | BigDataCloud reverse-geocode endpoint            | Confirmed                    |
-| City search provider    | GeoNames (`secure.geonames.org`)                 | Confirmed                    |
-| Backend edge/serverless | Vercel function (`api/geocode.js`)               | Confirmed                    |
-| Deployment routing      | `vercel.json` rewrites                           | Confirmed                    |
-| Package manager         | npm                                              | Confirmed                    |
-| Tests                   | None configured (`npm test` placeholder)         | Confirmed                    |
-
----
-
-## 5) Important Folder and File Structure
+## 3. Repository / Folder Structure
 
 ```text
 .
 ├─ api/
-│  └─ geocode.js                # Vercel serverless autocomplete proxy to GeoNames
+│  └─ geocode.js                 # Vercel function for city autocomplete proxy
 ├─ src/
-│  ├─ index.html                # Main page shell + script/style includes
-│  ├─ css/
-│  │  ├─ main.css               # App component styling
-│  │  └─ themes.css             # Theme tokens (light/dark variable sets)
+│  ├─ index.html                 # HTML shell and JS/CSS entry loading
+│  ├─ css/                       # Tokenized styles and section/component layout
 │  ├─ js/
-│  │  ├─ app.js                 # Runtime orchestrator / entry module
-│  │  ├─ config.js              # App constants and external endpoints
-│  │  ├─ api/                   # Low-level API adapters
-│  │  ├─ services/              # Domain logic
-│  │  ├─ ui/                    # Renderers
-│  │  ├─ utils/                 # Helpers/validation/cache
-│  │  └─ state/app.state.js     # Legacy/unused centralized store
-│  └─ assets/                   # icons/lottie/etc. (light usage currently)
-├─ Postman/
-│  └─ AlAdhan API-Mawquta Collection.json
-├─ vercel.json
+│  │  ├─ app.js                  # Main runtime orchestrator
+│  │  ├─ config.js               # Constants/endpoints/defaults
+│  │  ├─ api/                    # External API adapters (AlAdhan/GeoNames/Location)
+│  │  ├─ services/               # Domain logic (prayer/qibla/week/ramadan/search)
+│  │  ├─ ui/                     # Renderers (layout, sections, widgets)
+│  │  ├─ utils/                  # Validation/cache/date helpers
+│  │  └─ state/legacy/           # Legacy state store (not active runtime)
+│  └─ assets/                    # Icons/lottie/illustration assets
+├─ Postman/                      # API collection artifact
+├─ Sprint 01/, Sprint 02/        # Planning/blueprint documentation
 ├─ package.json
+├─ vercel.json
 └─ README.md
 ```
 
----
+Relationship summary:
 
-## 6) Architecture Overview
-
-The active architecture is a **thin UI shell + orchestrator (`app.js`) + service layer + API adapters** pattern.
-
-- `app.js` is effectively the controller and state owner (`activeLocation`, modal state).
-- Services encapsulate business logic (prayer view model creation, week slicing, Ramadan calculations, qibla normalization).
-- API adapters isolate external endpoint details and input validation.
-- UI modules are mostly pure renderers.
-- Persistence/caching rely on `localStorage` directly (plus TTL wrapper in `cache.util.js`).
-
-**Note:** A separate observer-based `AppState` architecture exists in code but is not used by the running app.
+- `app.js` coordinates service calls and delegates rendering to `ui/*`.
+- `services/*` depend on `api/*` and `utils/*`.
+- `api/geocode.js` supports frontend location search (`location-search.service.js`).
 
 ---
 
-## 7) Feature / Module Breakdown
+## 4. Architecture Overview
 
-### A. Location selection
+**Architectural style (Confirmed):** Layered modular frontend (orchestrator + service + adapter + renderer), with one BFF-like edge endpoint for geocoding.
 
-- `btnLocate` → geolocation → reverse geocode city/country → save location.
-- `btnPickCity` modal → typeahead suggestions via `/api/geocode` → pick one suggestion → save location.
+**Main subsystems:**
 
-### B. Today prayer timings + next prayer
+1. **UI composition subsystem** (`ui/layout`, `ui/sections`, `ui/widgets`).
+2. **Runtime orchestration subsystem** (`src/js/app.js`) controlling lifecycle and refresh cycles.
+3. **Domain/service subsystem** (`services/*`) for prayer/week/qibla/ramadan/search logic.
+4. **External integration subsystem** (`api/*`, `api/geocode.js`).
+5. **Utility/persistence subsystem** (`utils/*`, localStorage caching).
 
-- By coords: `getTodayPrayerOverviewByCoords`.
-- By city: `getTodayPrayerOverviewByCity`.
-- Renders list + next prayer card.
+**Boundaries:**
 
-### C. Next prayer countdown
+- Frontend calls third-party APIs directly for prayer/qibla/calendar.
+- Frontend calls internal `/api/geocode` for GeoNames autocomplete.
 
-- `render-countdown.js` maintains a module-level single interval.
-- Auto-calls `init(activeLocation)` when countdown reaches zero.
+**Patterns in use (Confirmed/Inferred):**
 
-### D. Week preview
-
-- `week.service.js` fetches monthly calendar and returns 7 days from today.
-- Handles month rollover by fetching next month.
-- Uses local cache with TTL.
-
-### E. Qibla
-
-- `qibla.service.js` validates and normalizes direction.
-- UI shows compass arrow and degree.
-
-### F. Ramadan countdown
-
-- Converts today Gregorian → Hijri month/year.
-- Computes next Ramadan Hijri start (`01-09-YYYY`).
-- Converts to Gregorian and computes remaining days.
+- Functional modules with pure-ish mappers.
+- Defensive fallback rendering states (`loading/ready/partial/unavailable`).
+- Soft cancellation by refresh cycle IDs in `app.js`.
+- Legacy observer state-store exists but is not wired.
 
 ---
 
-## 8) Critical Files and Their Purpose
+## 5. Detailed Module Breakdown
 
-| File                                 | Purpose                                                                 | Criticality |
-| ------------------------------------ | ----------------------------------------------------------------------- | ----------- |
-| `src/js/app.js`                      | Main bootstrap + event wiring + orchestrated data loading and rendering | High        |
-| `src/js/config.js`                   | External endpoint/base URLs, defaults, cache TTL, GeoNames config       | High        |
-| `src/js/api/aladhan.api.js`          | AlAdhan API client wrappers                                             | High        |
-| `src/js/api/location.api.js`         | Browser geolocation + reverse geocoding adapter                         | High        |
-| `src/js/services/prayer.service.js`  | Prayer model transformation + next prayer logic                         | High        |
-| `src/js/services/week.service.js`    | 7-day slicing, cache-aware calendar fetch                               | High        |
-| `src/js/services/ramadan.service.js` | Ramadan countdown domain logic                                          | Medium-High |
-| `src/js/ui/*`                        | Render logic for each widget                                            | High        |
-| `api/geocode.js`                     | Serverless proxy for city autocomplete + env-based GeoNames auth        | High        |
-| `vercel.json`                        | Runtime routing for static frontend + API function                      | High        |
+### `src/js/app.js` (Runtime Controller)
 
----
+- **Responsibility:** bootstrap app shell, manage location selection, orchestrate concurrent data refresh, and update sections.
+- **Key dependencies:** layout/section renderers, prayer/week/qibla/location services, `CONFIG`.
+- **Inputs:** user actions (location trigger/search), stored location, default config.
+- **Outputs:** DOM updates for header/prayer/qibla/ramadan sections.
+- **Side effects:** localStorage writes (`ms_location`), timers (`setInterval`, `setTimeout`), network calls via services.
 
-## 9) Application Runtime Flow
+### `src/js/services/prayer.service.js`
 
-1. `src/index.html` loads Bootstrap/Axios CDNs and `js/app.js` (module).
-2. `bootstrap()` in `app.js`:
-   - resolves location from `localStorage` or `CONFIG.DEFAULT_LOCATION`;
-   - binds modal DOM + input listeners;
-   - calls `init(activeLocation)`.
-3. `init()` performs independent safe blocks:
-   - today prayers + next prayer;
-   - qibla;
-   - week preview;
-   - Ramadan countdown.
-4. UI interaction triggers re-init:
-   - Refresh button (with cache bypass for week).
-   - Use my location.
-   - Pick city and save.
-   - Countdown expiry callback.
+- **Responsibility:** convert API timings into ordered prayer view model and compute next prayer.
+- **Dependencies:** `api/aladhan.api.js`.
+- **Side effects:** none (except delegated network in API adapter).
 
-The code is resilient: each section in `init()` is in its own `try/catch` to degrade gracefully if one upstream call fails.
+### `src/js/services/week.service.js`
 
----
+- **Responsibility:** produce fixed 7-day week data, including month rollover handling.
+- **Dependencies:** monthly calendar API wrappers + cache util + config TTL.
+- **Side effects:** localStorage cache set/get/remove via `cache.util.js`.
 
-## 10) Data Flow
+### `src/js/services/qibla.service.js`
 
-### Prayer times path
+- **Responsibility:** retrieve and validate qibla direction from API.
 
-User location -> `prayer.service` -> `aladhan.api` -> AlAdhan endpoint -> normalized prayer array + next prayer -> `render-prayers` + `render-countdown`.
+### `src/js/services/ramadan.service.js`
 
-### Week path
+- **Responsibility:** derive days until next Ramadan via Gregorian/Hijri conversion APIs.
+- **Note:** currently imported helper `getLocalISODate` appears unused.
 
-Location + current date -> `week.service` -> monthly calendar (cached per city/coords+month) -> 7-day slice -> `render-week` -> day select -> rebuild today panel from selected day timings.
+### `src/js/services/location-search.service.js`
 
-### City suggestions path
+- **Responsibility:** call internal `/api/geocode` endpoint and normalize suggestions.
 
-Input text -> `location-search.service` -> `/api/geocode` (Vercel) -> GeoNames -> filtered/deduped city list -> `render-city-suggestions`.
+### `api/geocode.js` (Serverless)
 
-### Qibla path
-
-Coords -> `qibla.service` -> AlAdhan qibla endpoint -> degree -> `render-qibla`.
-
-### Ramadan path
-
-Current date -> AlAdhan conversion endpoints -> computed day delta -> `render-ramadan`.
+- **Responsibility:** secure GeoNames lookup with env-backed username, filter/map/dedupe results.
+- **Side effects:** external HTTP request + response cache headers.
 
 ---
 
-## 11) APIs / Routes / Interfaces
+## 6. File-Level Critical Analysis
 
-### Public frontend route behavior (`vercel.json`)
-
-- `/api/(.*)` -> `/api/$1`
-- `/` -> `/src/index.html`
-- `/(.*)` -> `/src/$1`
-
-### Internal app API adapters
-
-**AlAdhan (`src/js/api/aladhan.api.js`)**
-
-- Timings: `/timings`, `/timingsByCity`, `/timingsByAddress`
-- Calendar: `/calendar`, `/calendarByCity`, `/calendarByAddress`
-- Qibla: `/qibla/{lat}/{lon}` (+ `/compass` variant)
-- Asma: `/asmaAlHusna`, `/asmaAlHusna/{index}`
-- Date conversion: `/gToH`, `/hToG`, `/gToHCalendar`, `/hToGCalendar`
-
-**Location (`src/js/api/location.api.js`)**
-
-- Browser geolocation (`navigator.geolocation.getCurrentPosition`)
-- BigDataCloud `/reverse-geocode-client`
-
-### Serverless endpoint
-
-`api/geocode.js`
-
-- Input query: `q`, `limit`, `lang`
-- Env dependency: `GEONAMES_USERNAME`
-- Output: `{ ok, results[] }`
-- Includes sort by population, validation, dedupe, and cache headers.
+| Path                              | Purpose                                          | Why it matters                              | Related files                               |
+| --------------------------------- | ------------------------------------------------ | ------------------------------------------- | ------------------------------------------- |
+| `src/index.html`                  | App shell mount and module script import         | Hard runtime entrypoint                     | `src/js/app.js`, `src/css/main.css`         |
+| `src/js/app.js`                   | Central lifecycle and rendering orchestrator     | Most behavioral risk concentrated here      | all services and section renderers          |
+| `src/js/config.js`                | Endpoints/default city/method/cache/storage keys | Controls runtime behavior and integrations  | API/service modules                         |
+| `src/js/api/aladhan.api.js`       | AlAdhan adapter surface                          | External dependency contract and validation | prayer/week/qibla/ramadan services          |
+| `src/js/services/week.service.js` | Weekly data extraction + TTL cache               | Primary data transformation complexity      | `cache.util.js`, `aladhan.api.js`           |
+| `api/geocode.js`                  | Autocomplete backend proxy                       | Required for city search in deployed mode   | `location-search.service.js`, `vercel.json` |
+| `vercel.json`                     | Route rewrites for static+API behavior           | Determines prod routing correctness         | `src/`, `api/`                              |
 
 ---
 
-## 12) Database / Storage Layer
+## 7. Application Flow / Runtime Flow
 
-There is **no database**.
-
-Storage used:
-
-- `localStorage` for user-selected location (`CONFIG.STORAGE_KEY` = `ms_location`).
-- `localStorage` TTL cache for monthly calendar payloads (`cache.util.js`).
-
-Cache key strategy (`week.service.js`):
-
-- coords: rounded lat/lon to 4 decimals + year-month.
-- city: `city|country` + year-month.
+1. **Startup (Confirmed):** `src/index.html` mounts `#app` and loads `app.js` (ES module).
+2. **Initialization (Confirmed):** `bootstrapApp()` renders app shell/header, binds location trigger, renders sections with loading/fallback transitions.
+3. **Config loading (Confirmed):** static import from `config.js`.
+4. **Execution lifecycle (Confirmed):** `refreshRuntimeByLocation()` runs prayer/qibla/ramadan builders in parallel (`Promise.allSettled`).
+5. **Location flow (Confirmed):** dialog search -> `/api/geocode` suggestions -> choose city -> persist -> refresh all sections.
+6. **Error handling (Confirmed):** per-module `try/catch` with graceful fallback view models; warnings via `console.warn`.
+7. **Logging/monitoring (Confirmed):** console logging only; no telemetry provider.
+8. **Auth/background jobs (Confirmed):** no auth, no queues, no schedulers.
 
 ---
 
-## 13) State Management
+## 8. Data Flow
 
-### Active runtime state (confirmed)
+**Entry points:**
 
-- Local mutable module variables in `app.js`:
-  - `activeLocation`
-  - modal/autocomplete variables (`pickedCitySuggestion`, DOM refs)
+- User input (city query, city selection click).
+- Browser localStorage (stored location + cached calendars).
+- External APIs (AlAdhan, GeoNames, BigDataCloud).
 
-### Legacy state module (confirmed but unused)
+**Validation/parsing layers (Confirmed):**
 
-- `src/js/state/app.state.js` defines observer-based centralized store.
-- Not imported anywhere in current runtime.
-- Contains references likely incompatible with current config (`CONFIG.DEFAULT_THEME`, `CONFIG.API.DEFAULT_METHOD`, `DateUtil`) and would likely fail if executed as-is.
+- `validation.util.js` guards API adapter inputs.
+- `app.js` includes strict city/coord normalization.
 
----
+**Transformations:**
 
-## 14) External Services and Integrations
+- Timings -> normalized `HH:MM` prayer rows.
+- Month calendar arrays -> fixed 7-day subset.
+- API qibla response -> degree text + compass rotation.
 
-| Service       | Purpose                                                      | Integration mode              |
-| ------------- | ------------------------------------------------------------ | ----------------------------- |
-| AlAdhan API   | Prayer timings, calendar, Qibla, Hijri/Gregorian conversions | Client-side Axios             |
-| BigDataCloud  | Reverse geocoding lat/lon -> city/country                    | Client-side Axios             |
-| GeoNames      | City autocomplete search                                     | Through Vercel `/api/geocode` |
-| Bootstrap CDN | UI framework                                                 | Static CDN include            |
-| Axios CDN     | HTTP client global                                           | Static CDN include            |
+**Storage/read path:** `localStorage` for `ms_location`; cache payloads with `expiryTimestamp`.
 
----
+**Caching:** local, TTL-based, keyed by city/coords + year-month.
 
-## 15) Config / Env / Deployment Assumptions
+**Simplified E2E flow A (city selection):**
+User clicks location button -> search query debounced -> `/api/geocode` -> pick suggestion -> store city -> run prayer/qibla/ramadan/week fetch -> render all sections -> start live countdown updates.
 
-### Config (`src/js/config.js`)
-
-- `BASE_URL`, `BIG_DATA_CLOUD_API`
-- prayer `METHOD` (default `2`)
-- cache TTL (6h)
-- GeoNames base + username
-- storage key and default location.
-
-### Env (`.env` and serverless)
-
-- Serverless function expects `GEONAMES_USERNAME` in environment.
-- `.env` currently contains Vercel OIDC token and GeoNames username locally.
-
-### Deployment
-
-- Designed for Vercel static + serverless deployment via rewrites.
-
-**Risk:** `GEONAMES_USERNAME` is also hardcoded in frontend config, which reduces secrecy benefits of server-side env.
+**Simplified E2E flow B (runtime tick):**
+Loaded prayers -> `startPrayerLiveBinding()` interval every 1s -> recompute next prayer -> update featured card/countdown text -> refresh prayer cards when featured prayer changes.
 
 ---
 
-## 16) Build / Run / Test / Developer Workflow
+## 9. API / Interface Surface
 
-From `package.json`:
+### HTTP Routes
 
-- `npm run dev` -> `npx serve src -l 3000`
-- `npm run vercel:dev` -> `vercel dev`
-- `npm test` -> placeholder that exits with error.
+| Interface          | Purpose                  | Inputs               | Outputs             | Dependencies                   |
+| ------------------ | ------------------------ | -------------------- | ------------------- | ------------------------------ |
+| `GET /api/geocode` | City autocomplete proxy  | `q`, `limit`, `lang` | `{ ok, results[] }` | GeoNames + `GEONAMES_USERNAME` |
+| `/` (rewrite)      | Frontend entry           | None                 | `src/index.html`    | `vercel.json`                  |
+| `/(.*)` (rewrite)  | Static asset passthrough | Path                 | `src/*` files       | `vercel.json`                  |
 
-Expected local workflows:
+### Client API wrappers (`src/js/api/aladhan.api.js`)
 
-1. Static-only preview: `npm run dev` (but `/api/geocode` won’t exist unless separately proxied).
-2. Full local parity with serverless route: `npm run vercel:dev`.
+- Timings: `getTimingsByCityAndCountry`, `getTimingsByCoords`, etc.
+- Calendar: `getMonthlyCalendarByCity`, `getMonthlyCalendarByCoords`, etc.
+- Qibla: `getQiblaDirectionByCoords`, `getQiblaCompassBlobByCoords`.
+- Additional wrappers (Asma/date conversion) exist but are not currently wired in active UI.
 
----
+### CLI Interface
 
-## 17) Testing and Quality Signals
-
-**Confirmed:**
-
-- No automated tests.
-- No lint config present.
-- No CI config in tracked files.
-
-**Quality positives:**
-
-- Layered separation is readable.
-- Input validation helpers used in API adapters.
-- `init()` is fault-isolated by feature block.
-- Countdown renderer prevents timer accumulation.
-
-**Quality gaps:**
-
-- Behavior correctness depends on manual testing.
-- Some drift between docs and implementation.
-- Some dead/empty files and stale module references.
+- No first-class CLI app; npm scripts: `dev`, `vercel:dev`, `test` placeholder.
 
 ---
 
-## 18) TODOs, Incomplete Areas, Dead Code, Technical Debt
+## 10. Database / Persistence Layer
 
-### Confirmed technical debt
+**Database technology:** None.
 
-1. **Unused legacy state module:** `src/js/state/app.state.js` not integrated.
-2. **Empty utility files:** `src/js/utils/dom.util.js`, `src/js/utils/time.util.js`.
-3. **Unused API wrappers:** several functions in `aladhan.api.js` are exported but not consumed in runtime.
-4. **README drift:** documented architecture/feature list and file tree do not fully match current source behavior.
-5. **Theme token bug in CSS:** `src/css/themes.css` uses `-bg-:` instead of `--bg:` in light theme root; this likely breaks intended light background variable fallback.
-6. **Secrets hygiene issue:** sensitive token present in local `.env`; ensure it is rotated if exposed and never committed.
+**Persistence model (Confirmed):** Browser localStorage only.
 
-### Inferred incomplete product areas
+- `ms_location` (selected city/country/coords when available).
+- Calendar cache entries with TTL metadata.
 
-- Asma Al-Husna and date converter likely planned but currently not surfaced.
-- Theme toggle UX appears planned but absent in active markup/event flow.
+**Migrations/ORM/entities:** Not applicable.
 
 ---
 
-## 19) Risks, Gaps, and Unknowns
+## 11. State Management
 
-### Risks
+**Active state approach (Confirmed):**
 
-- Upstream API dependency risk (AlAdhan/BigDataCloud/GeoNames availability/rate limits).
-- Credential exposure risk if env handling remains lax.
-- Runtime inconsistency if app is served without Vercel function support.
+- Local module state in `app.js` (root references, interval IDs, refresh cycle IDs).
+- DOM as primary rendered state source.
 
-### Gaps
+**Legacy state approach (Confirmed):**
 
-- No test coverage.
-- No explicit error telemetry.
-- No schema contracts/types.
+- `src/js/state/legacy/app.state.js` defines an observer store but is unused and references outdated config keys.
 
-### Unknowns / Needs verification
+**State risks (Inferred):**
 
-- Intended production hosting model beyond Vercel (if any).
-- Whether hardcoded GeoNames username in `config.js` is temporary.
-- Whether legacy `AppState` should be revived or deleted.
+- Potential divergence if legacy store is partially reintroduced without full refactor.
 
 ---
 
-## 20) Guidance for Another AI Continuing Development
+## 12. External Dependencies & Integrations
 
-1. **Stabilize before feature expansion:**
-   - Fix CSS variable typo (`--bg`).
-   - Decide single source of truth for state (`app.js` local state vs `AppState`).
-   - Remove or integrate unused modules.
-2. **Security/config hardening:**
-   - Move all GeoNames credentials to server env only.
-   - Ensure `.env` secrets are rotated and not exposed.
-3. **Align docs with reality:**
-   - Update README to actual current features and structure.
-4. **Add baseline quality gates:**
-   - Add lint + formatter + minimal smoke tests (at least service-level unit tests).
-5. **Then implement missing promised features:**
-   - Asma Al-Husna UI, date converters, explicit theme toggle, notifications/offline as roadmap items.
+| Dependency   | Where used                            | Why used                                  |
+| ------------ | ------------------------------------- | ----------------------------------------- |
+| AlAdhan API  | `src/js/api/aladhan.api.js`           | Prayer/calendar/qibla/hijri conversions   |
+| GeoNames     | `api/geocode.js`                      | City autocomplete search                  |
+| BigDataCloud | `src/js/api/location.api.js`          | Reverse geocoding lat/lon to city/country |
+| Axios        | API modules via `window.axios.create` | HTTP abstraction                          |
+| Vercel       | `vercel.json`, `api/geocode.js`       | Hosting + serverless route                |
+
+**Integration risk (Confirmed):** frontend assumes `window.axios` exists at runtime.
 
 ---
 
-## 21) Quick Reference Tables
+## 13. Configuration, Secrets, and Environments
 
-### Entry points
+**Config files:** `src/js/config.js`, `vercel.json`, `package.json`.
 
-| Type             | File             | Notes                                         |
-| ---------------- | ---------------- | --------------------------------------------- |
-| Frontend entry   | `src/index.html` | Loads Bootstrap/Axios CDN and `src/js/app.js` |
-| JS runtime entry | `src/js/app.js`  | Bootstraps app and binds all interactions     |
-| Backend endpoint | `api/geocode.js` | Vercel serverless city autocomplete proxy     |
+**Environment variables discovered:**
 
-### Core feature to module mapping
+- `GEONAMES_USERNAME` in `api/geocode.js` (required for serverless autocomplete).
 
-| Feature               | Service                      | API adapter      | UI renderer                  |
-| --------------------- | ---------------------------- | ---------------- | ---------------------------- |
-| Today prayers         | `prayer.service.js`          | `aladhan.api.js` | `render-prayers.js`          |
-| Next prayer countdown | `prayer.service.js`          | `aladhan.api.js` | `render-countdown.js`        |
-| Week preview          | `week.service.js`            | `aladhan.api.js` | `render-week.js`             |
-| Qibla                 | `qibla.service.js`           | `aladhan.api.js` | `render-qibla.js`            |
-| Ramadan countdown     | `ramadan.service.js`         | `aladhan.api.js` | `render-ramadan.js`          |
-| City autocomplete     | `location-search.service.js` | `/api/geocode`   | `render-city-suggestions.js` |
+**Secrets handling pattern:**
 
-### Local storage keys in active runtime
+- Backend endpoint checks env var.
+- Frontend config also contains hardcoded GeoNames username (`CONFIG.GEONAMES_USERNAME`) for direct `geonames.api.js` usage.
 
-| Key           | Source                              | Purpose                                 |
-| ------------- | ----------------------------------- | --------------------------------------- |
-| `ms_location` | `CONFIG.STORAGE_KEY`                | Persist selected location object        |
-| `cal:*` keys  | `week.service.js` + `cache.util.js` | TTL cache of monthly calendar responses |
+**Risk classification:**
+
+- **Confirmed:** secret-like username appears in client config and server env path simultaneously.
+- **Needs verification:** whether direct frontend GeoNames integration is intentionally deprecated in favor of `/api/geocode`.
 
 ---
 
-## 22) Important File Index
+## 14. Build, Run, and Developer Workflow
 
-### High-priority read order for onboarding
+**Install:** `npm install`
 
-1. `src/js/app.js`
-2. `src/js/config.js`
-3. `src/js/services/prayer.service.js`
-4. `src/js/services/week.service.js`
-5. `src/js/services/qibla.service.js`
-6. `src/js/services/ramadan.service.js`
-7. `src/js/api/aladhan.api.js`
-8. `src/js/api/location.api.js`
-9. `api/geocode.js`
-10. `src/index.html`
-11. `src/js/ui/*.js`
+**Run (static):** `npm run dev` -> serves `src` on port 3000.
 
-### Additional context files
+**Run (with serverless):** `npm run vercel:dev`.
 
-- `vercel.json`
-- `README.md` (use cautiously; partially outdated relative to current code)
-- `Postman/AlAdhan API-Mawquta Collection.json`
+**Build command:** none configured.
+
+**Test command:** `npm test` currently fails intentionally (`"no test specified"`).
+
+**Lint/format/typecheck:** no scripts/config discovered.
+
+**Docker/devcontainer:** none discovered.
 
 ---
 
-## Appendix: Confirmed vs Inferred Summary
+## 15. Testing & Quality
 
-### Confirmed from source
+**Test frameworks:** none in project code.
 
-- App is modular vanilla JS + Bootstrap + Axios CDN.
-- Runtime features currently active: today timings, countdown, week, qibla, Ramadan, city autocomplete.
-- Vercel rewrites and serverless geocode function are configured.
-- No tests; placeholder `npm test`.
-- Legacy `AppState` exists but is not used.
+**Test organization/coverage:** no test directories or CI test jobs.
 
-### Inferred
+**Static analysis:** no ESLint/Prettier config at repository root.
 
-- Product scope broader than currently delivered UI (from README + extra API wrappers).
-- Current branch appears in transition from older architecture to lean orchestrator model.
+**Quality impression (Inferred):** runtime logic is thoughtfully defensive but relies on manual verification.
+
+---
+
+## 16. Current Progress Assessment
+
+**Appears complete (Confirmed):**
+
+- Main user flow for city selection and runtime section refresh.
+- Prayer feature card + live countdown updates.
+- Qibla and Ramadan section runtime data mapping.
+
+**Partially implemented (Confirmed/Inferred):**
+
+- Architecture includes extra modules/features not wired in active flow (legacy state, some widgets/services).
+
+**TODO/FIXME markers:**
+
+- No meaningful TODO/FIXME markers found in `src/` application code.
+
+**Mocks/stubs/placeholders (Confirmed):**
+
+- Many UI component/interactions files return empty strings/undefined.
+- Legacy state module likely stale vs current config shape.
+
+**Dead/deprecated code risk (Inferred):** medium; placeholders and legacy artifacts can mislead future changes.
+
+---
+
+## 17. Known Issues / Risks / Gaps
+
+### Confirmed from code
+
+- No automated testing or CI gates.
+- Runtime depends on external APIs and global `window.axios` availability.
+- Placeholder modules exist in `ui/components`, `ui/interactions`, and `ui/sections/render-location-modal.js`.
+- Legacy state store is disconnected from current runtime.
+
+### Strongly inferred
+
+- Documentation (`README.md`) overstates currently active features relative to wired runtime.
+- Team is mid-transition from earlier architecture artifacts to current orchestrator-centric model.
 
 ### Needs verification
 
-- Intended final architecture direction (retain local orchestrator vs revive centralized store).
-- Production secret management policy and whether any leaked token has been rotated.
+- Whether Asma/date-conversion interfaces are planned for near-term UI delivery.
+- Whether frontend GeoNames direct client should be removed completely.
+- Production non-Vercel deployment path and expected behavior for `/api/geocode` in local static mode.
+
+---
+
+## 18. AI Handoff Guidance
+
+**Read first (in order):**
+
+1. `src/js/app.js`
+2. `src/js/services/*`
+3. `src/js/api/aladhan.api.js`
+4. `api/geocode.js`
+5. `src/js/config.js`
+
+**Danger zones:**
+
+- `refreshRuntimeByLocation()` concurrency/cycle logic in `app.js`.
+- Time normalization and next-prayer logic in `prayer.service.js`.
+- Week slicing and cache key strategy in `week.service.js`.
+
+**Safe entry points for new features:**
+
+- Add new section renderer under `ui/sections` + corresponding service.
+- Extend `services/*` with pure data mappers before touching orchestration.
+
+**Likely next development steps:**
+
+1. Add baseline tests (service-level unit tests first).
+2. Remove or formalize placeholder/legacy modules.
+3. Unify GeoNames strategy (serverless-only recommended).
+4. Align README to shipped behavior.
+
+**Questions to ask human before major changes:**
+
+- Should legacy state store be revived or deleted?
+- Should direct client API usage be moved behind backend for consistency/security?
+- Which roadmap features are priority: Asma/date conversion/theme toggle?
+
+**Recommended strategy:** small, behavior-preserving refactors + tests before new feature breadth.
+
+---
+
+## 19. Quick Reference
+
+### Key entry points
+
+- Frontend: `src/index.html`, `src/js/app.js`
+- Backend: `api/geocode.js`
+
+### Key modules
+
+- Prayer: `services/prayer.service.js`, `ui/sections/render-prayer-section.js`
+- Week: `services/week.service.js`, `ui/widgets/render-week.js`
+- Qibla: `services/qibla.service.js`, `ui/sections/render-qibla-section.js`
+- Ramadan: `services/ramadan.service.js`, `ui/sections/render-ramadan-section.js`
+
+### Important commands
+
+- `npm install`
+- `npm run dev`
+- `npm run vercel:dev`
+
+### Important env vars
+
+- `GEONAMES_USERNAME` (serverless geocode function)
+
+### Important routes/services
+
+- `GET /api/geocode`
+- AlAdhan API wrappers in `src/js/api/aladhan.api.js`
+
+### Important database entities
+
+- Not applicable (no DB).
+
+---
+
+## 20. Appendix: Important File Index
+
+| Path                                           | Role                                       | Importance | Notes                                         |
+| ---------------------------------------------- | ------------------------------------------ | ---------- | --------------------------------------------- |
+| `src/index.html`                               | Frontend mount and asset loading           | High       | Must provide `#app` and module import         |
+| `src/js/app.js`                                | Runtime orchestration                      | Critical   | Handles all core flows and state transitions  |
+| `src/js/config.js`                             | Runtime constants                          | High       | Endpoint/method/default location/storage keys |
+| `src/js/api/aladhan.api.js`                    | External prayer/qibla/calendar API adapter | High       | Largest integration surface                   |
+| `src/js/services/prayer.service.js`            | Prayer VM + next-prayer logic              | High       | Time-sensitive behavior                       |
+| `src/js/services/week.service.js`              | Week slicing + cache integration           | High       | Key transformation logic                      |
+| `src/js/services/qibla.service.js`             | Qibla business validation                  | Medium     | Depends on API response quality               |
+| `src/js/services/ramadan.service.js`           | Ramadan countdown computation              | Medium     | Date conversion chain                         |
+| `src/js/services/location-search.service.js`   | City suggestions API consumer              | High       | Directly tied to user location flow           |
+| `src/js/ui/sections/render-prayer-section.js`  | Prayer section renderer                    | High       | Includes featured updates                     |
+| `src/js/ui/sections/render-qibla-section.js`   | Qibla section renderer                     | High       | State-sensitive rendering                     |
+| `src/js/ui/sections/render-ramadan-section.js` | Ramadan section renderer                   | High       | State-sensitive rendering                     |
+| `src/js/utils/validation.util.js`              | Input contract enforcement                 | High       | Prevents invalid API calls                    |
+| `src/js/utils/cache.util.js`                   | TTL cache wrapper for localStorage         | Medium     | Used by weekly calendar flow                  |
+| `api/geocode.js`                               | Serverless geocode proxy                   | Critical   | Production city search dependency             |
+| `vercel.json`                                  | Rewrite/routing behavior                   | Critical   | Determines app/API serving topology           |
+| `README.md`                                    | Project documentation                      | Medium     | Partially out-of-sync with runtime            |
+| `src/js/state/legacy/app.state.js`             | Legacy observer state store                | Medium     | Not active; likely stale                      |

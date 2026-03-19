@@ -12,6 +12,14 @@ import {
 // import axios from "axios";
 
 // Axios instance creation
+// Check if axios is available on window (loaded via CDN)
+if (!window.axios) {
+  throw new Error(
+    "Axios is not available on window. Make sure it is loaded before aladhan.api.js",
+  );
+}
+
+// Create an axios instance with base URL and default params
 const axiosInstance = window.axios.create({
   baseURL: CONFIG.BASE_URL,
   timeout: 10000,
