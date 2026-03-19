@@ -59,6 +59,8 @@ If this variable is missing, city search endpoint returns an error response.
 
 - Routing assumptions are defined in `vercel.json`.
 - The project behavior currently depends on Vercel-style rewrites for serving `src/index.html`, static assets under `src/`, and `/api/*` functions.
+- The active city-search runtime path is `GET /api/geocode` (serverless), not direct client calls to GeoNames.
+- `GEONAMES_USERNAME` should be configured in the server/deployment environment only for `api/geocode.js`.
 
 ## Runtime Dependency Notes
 
