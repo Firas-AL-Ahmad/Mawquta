@@ -25,7 +25,17 @@ const PRAYER_LIVE_TICK_MS = 1000;
 const LOCATION_PICKER_DEBOUNCE_MS = 300;
 const CALM_REFRESH_LOADING_DELAY_MS = 220;
 const LOCATION_TYPE_CITY = "city";
-const HEADER_LOCATION_FALLBACK_LABEL = "اختر المدينة";
+const HEADER_LOCATION_FALLBACK_LABEL =
+  "\u062F\u0645\u0634\u0642\u060C \u0633\u0648\u0631\u064A\u0627";
+const HEADER_LANGUAGE_DEFAULT_CODE = "ar";
+const HEADER_LANGUAGE_LABELS = {
+  ar: "\u0627\u0644\u0639\u0631\u0628\u064A\u0629",
+  en: "English",
+};
+const HEADER_LANGUAGE_FLAGS = {
+  ar: "./assets/icons/Header/flag-SY.svg",
+  en: "./assets/icons/Header/flag-US.svg",
+};
 const PRAYER_FEATURED_LABEL_LOADING = "جاري تحميل المواقيت";
 const PRAYER_FEATURED_NOTE_LOADING = "جاري التحقق من الصلاة القادمة...";
 const QIBLA_NOTE_RUNTIME_BY_CITY = "الدرجة محسوبة حسب موقع المدينة المختارة.";
@@ -997,6 +1007,124 @@ function selectCityLocationViaDialog() {
   });
 }
 
+function bindHeaderLanguageMenu() {
+  if (!appHeaderRoot) {
+    return;
+  }
+
+  const pickerElement = appHeaderRoot.querySelector(
+    ".site-header__language-picker",
+  );
+  const triggerElement = appHeaderRoot.querySelector(
+    ".site-header__language-trigger",
+  );
+  const menuElement = appHeaderRoot.querySelector(
+    ".site-header__language-menu",
+  );
+  const labelElement = appHeaderRoot.querySelector(
+    ".site-header__language-label",
+  );
+  const flagElement = appHeaderRoot.querySelector(".site-header__flag");
+
+  if (
+    !pickerElement ||
+    !triggerElement ||
+    !menuElement ||
+    !labelElement ||
+    !flagElement
+  ) {
+    return;
+  }
+
+  const optionElements = Array.from(
+    menuElement.querySelectorAll(".site-header__language-option"),
+  );
+
+  if (optionElements.length === 0) {
+    return;
+  }
+
+  const closeMenu = () => {
+    menuElement.hidden = true;
+    triggerElement.setAttribute("aria-expanded", "false");
+    pickerElement.classList.remove("is-open");
+  };
+
+  const openMenu = () => {
+    menuElement.hidden = false;
+    triggerElement.setAttribute("aria-expanded", "true");
+    pickerElement.classList.add("is-open");
+  };
+
+  const applyLanguageSelection = (languageCode) => {
+    const normalizedLanguageCode =
+      typeof languageCode === "string" && languageCode.trim()
+        ? languageCode.trim().toLowerCase()
+        : HEADER_LANGUAGE_DEFAULT_CODE;
+
+    const selectedLanguageCode = HEADER_LANGUAGE_LABELS[normalizedLanguageCode]
+      ? normalizedLanguageCode
+      : HEADER_LANGUAGE_DEFAULT_CODE;
+
+    optionElements.forEach((optionElement) => {
+      const optionLanguageCode = String(optionElement.dataset.language || "")
+        .trim()
+        .toLowerCase();
+      const isSelected = optionLanguageCode === selectedLanguageCode;
+
+      optionElement.classList.toggle("is-selected", isSelected);
+      optionElement.setAttribute("aria-checked", isSelected ? "true" : "false");
+    });
+
+    labelElement.textContent =
+      HEADER_LANGUAGE_LABELS[selectedLanguageCode] ||
+      HEADER_LANGUAGE_LABELS[HEADER_LANGUAGE_DEFAULT_CODE];
+
+    flagElement.src =
+      HEADER_LANGUAGE_FLAGS[selectedLanguageCode] ||
+      HEADER_LANGUAGE_FLAGS[HEADER_LANGUAGE_DEFAULT_CODE];
+  };
+
+  triggerElement.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (menuElement.hidden) {
+      openMenu();
+    } else {
+      closeMenu();
+    }
+  });
+
+  optionElements.forEach((optionElement) => {
+    optionElement.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      applyLanguageSelection(optionElement.dataset.language);
+      closeMenu();
+    });
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!pickerElement.contains(event.target)) {
+      closeMenu();
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      closeMenu();
+    }
+  });
+
+  const initiallySelectedOption = optionElements.find((optionElement) =>
+    optionElement.classList.contains("is-selected"),
+  );
+
+  applyLanguageSelection(initiallySelectedOption?.dataset.language);
+  closeMenu();
+}
+
 function bindHeaderLocationTrigger() {
   if (!appHeaderRoot) {
     return;
@@ -1034,6 +1162,7 @@ async function bootstrapApp() {
 
   appHeaderRoot = document.getElementById("site-header");
   renderHeader(appHeaderRoot);
+  bindHeaderLanguageMenu();
   bindHeaderLocationTrigger();
 
   appPrayerRoot = document.getElementById("prayer-section");
