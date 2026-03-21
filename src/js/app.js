@@ -19,6 +19,7 @@ import { getQiblaByCoords } from "./services/qibla.service.js";
 import { getCurrentWeekByCity } from "./services/week.service.js";
 import { searchCitySuggestions } from "./services/location-search.service.js";
 import { renderCitySuggestions } from "./ui/widgets/render-city-suggestions.js";
+import { bindNavInteractions } from "./ui/interactions/nav.interactions.js";
 import { CONFIG } from "./config.js";
 
 const PRAYER_LIVE_TICK_MS = 1000;
@@ -1162,6 +1163,7 @@ async function bootstrapApp() {
 
   appHeaderRoot = document.getElementById("site-header");
   renderHeader(appHeaderRoot);
+  bindNavInteractions(appHeaderRoot);
   bindHeaderLanguageMenu();
   bindHeaderLocationTrigger();
 
