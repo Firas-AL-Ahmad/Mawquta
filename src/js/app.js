@@ -5,6 +5,7 @@
 import { renderAppShell } from "./ui/layout/render-app-shell.js";
 import { renderHeader } from "./ui/layout/render-header.js";
 import { renderFooter } from "./ui/layout/render-footer.js";
+import { renderHeroSection } from "./ui/sections/render-hero-section.js";
 import {
   renderPrayerSection,
   updatePrayerSectionFeaturedState,
@@ -53,6 +54,7 @@ let prayerLiveIntervalId = null;
 let locationRefreshCycleId = 0;
 
 let appHeaderRoot = null;
+let appHeroRoot = null;
 let appPrayerRoot = null;
 let appQiblaRoot = null;
 let appRamadanRoot = null;
@@ -1168,8 +1170,11 @@ async function bootstrapApp() {
   bindHeaderLocationTrigger();
 
   appPrayerRoot = document.getElementById("prayer-section");
+  appHeroRoot = document.getElementById("hero-section");
   appQiblaRoot = document.getElementById("qibla-section");
   appRamadanRoot = document.getElementById("ramadan-section");
+
+  renderHeroSection(appHeroRoot);
 
   await refreshRuntimeByLocation(undefined, { immediateLoading: true });
 
