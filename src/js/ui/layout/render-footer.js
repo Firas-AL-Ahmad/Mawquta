@@ -4,35 +4,54 @@ export function renderFooter(rootElement) {
   }
 
   rootElement.innerHTML = `
-    <div class="site-footer__inner container">
-      <div class="site-footer__top">
-        <div class="site-footer__brand">
-          <a href="#app-shell" class="site-footer__brand-link" aria-label="العودة إلى أعلى الصفحة">
-            <span class="site-footer__brand-text">مَوْقُوتًا</span>
+    <div class="container-xl px-3 px-sm-4 px-lg-5">
+      <div class="row g-4">
+        <div class="col-12 col-md-4">
+          <a href="#hero-section" class="footer-brand" aria-label="مواقتا">
+            <span class="footer-brand__logo" aria-hidden="true">م</span>
+            <span class="footer-brand__name">مواقتا</span>
           </a>
-          <p class="site-footer__summary">
-            واجهة عربية هادئة لمتابعة مواقيت الصلاة، اتجاه القبلة، وملخص رمضان ضمن تجربة واضحة ومهيأة للتطوير لاحقًا.
-          </p>
+          <p class="footer-desc">موقع متخصص لمواقيت الصلاة والأذان والقبلة لجميع مدن العالم. نوفر بيانات دقيقة معتمدة على أفضل طرق الحساب الفلكي.</p>
         </div>
 
-        <nav class="site-footer__nav" aria-label="روابط أقسام الصفحة">
-          <a href="#prayer-section" class="site-footer__link">مواقيت الصلاة</a>
-          <a href="#qibla-section" class="site-footer__link">القبلة</a>
-          <a href="#ramadan-section" class="site-footer__link">رمضان</a>
-        </nav>
+        <div class="col-6 col-md-2 offset-md-1">
+          <p class="footer-heading">الموقع</p>
+          <ul class="footer-links">
+            <li><a href="#hero-section">الرئيسية</a></li>
+            <li><a href="#prayer-section">الصلاة</a></li>
+            <li><a href="#qibla-section">القبلة</a></li>
+            <li><a href="#ramadan-section">رمضان</a></li>
+          </ul>
+        </div>
 
-        <div class="site-footer__meta">
-          <p class="site-footer__note">
-            قد تختلف المواقيت ونتائج الحساب باختلاف المدينة وطريقة الحساب المعتمدة.
-          </p>
-          <a href="#" class="site-footer__external-link" aria-label="رابط GitHub (مرجع ثابت في هذه المرحلة)">
-            GitHub
-          </a>
+        <div class="col-6 col-md-2">
+          <p class="footer-heading">المعلومات</p>
+          <ul class="footer-links">
+            <li><a href="#">عن مواقتا</a></li>
+            <li><a href="#">الخصوصية</a></li>
+            <li><a href="#">الشروط</a></li>
+            <li><a href="#">الأسئلة الشائعة</a></li>
+          </ul>
+        </div>
+
+        <div class="col-12 col-md-3">
+          <p class="footer-heading">تواصل معنا</p>
+          <div class="footer-contact">
+            <p>البريد: info@mawquta.app</p>
+            <p>دمشق، سوريا</p>
+          </div>
         </div>
       </div>
 
-      <div class="site-footer__bottom">
-        <p class="site-footer__copyright">© Mawquta — Static UI Phase</p>
+      <div class="footer-divider"></div>
+
+      <div class="footer-bottom">
+        <p>© 2026 مواقتا — جميع الحقوق محفوظة</p>
+        <div class="footer-social" aria-label="وسائل التواصل الاجتماعي">
+          <a href="#" aria-label="تويتر">X</a>
+          <a href="#" aria-label="فيسبوك">f</a>
+          <a href="#" aria-label="إنستغرام">in</a>
+        </div>
       </div>
     </div>
   `;

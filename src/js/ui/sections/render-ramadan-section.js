@@ -1,104 +1,82 @@
-const DEFAULT_RAMADAN_SECTION_DATA = {
-  state: "unavailable",
-  dayText: "اليوم الرمضاني غير متاح حالياً",
-  imsakText: "--:--",
-  iftarText: "--:--",
-  note: "تعذر تحميل بيانات رمضان حالياً.",
+import {
+  renderRamadanCountdown,
+  renderRamadanMonthTable,
+} from "../widgets/render-ramadan.js";
+
+const DEFAULT_RAMADAN_VIEW_MODEL = {
+  monthLabel: "رمضان 2026",
+  note: "آخر تحديث: عند تحميل الصفحة / الآن / وقت فعلي محفوظ",
+  today: {
+    dayLabel: "اليوم 15",
+    imsakText: "04:12",
+    iftarText: "18:42",
+    countdown: { hours: "02", minutes: "16", seconds: "44" },
+    progress: 77,
+  },
+  monthTable: {
+    rangeText: "01 مارس – 30 مارس 2026",
+  },
 };
 
-function resolveRamadanState(state) {
-  if (
-    state === "loading" ||
-    state === "ready" ||
-    state === "partial" ||
-    state === "unavailable"
-  ) {
-    return state;
-  }
-
-  return DEFAULT_RAMADAN_SECTION_DATA.state;
-}
-
-function toRamadanSectionViewModel(inputData) {
-  if (!inputData || typeof inputData !== "object") {
-    return { ...DEFAULT_RAMADAN_SECTION_DATA };
-  }
-
-  const state = resolveRamadanState(inputData.state);
-
-  const dayText =
-    typeof inputData.dayText === "string" && inputData.dayText.trim().length > 0
-      ? inputData.dayText.trim()
-      : DEFAULT_RAMADAN_SECTION_DATA.dayText;
-
-  const imsakText =
-    typeof inputData.imsakText === "string" &&
-    inputData.imsakText.trim().length > 0
-      ? inputData.imsakText.trim()
-      : DEFAULT_RAMADAN_SECTION_DATA.imsakText;
-
-  const iftarText =
-    typeof inputData.iftarText === "string" &&
-    inputData.iftarText.trim().length > 0
-      ? inputData.iftarText.trim()
-      : DEFAULT_RAMADAN_SECTION_DATA.iftarText;
-
-  const note =
-    typeof inputData.note === "string" && inputData.note.trim().length > 0
-      ? inputData.note.trim()
-      : DEFAULT_RAMADAN_SECTION_DATA.note;
+function normalizeRamadanViewModel(viewModel) {
+  const model = viewModel && typeof viewModel === "object" ? viewModel : {};
 
   return {
-    state,
-    dayText,
-    imsakText,
-    iftarText,
-    note,
+    monthLabel:
+      typeof model.monthLabel === "string" && model.monthLabel.trim()
+        ? model.monthLabel.trim()
+        : DEFAULT_RAMADAN_VIEW_MODEL.monthLabel,
+    note:
+      typeof model.note === "string" && model.note.trim()
+        ? model.note.trim()
+        : DEFAULT_RAMADAN_VIEW_MODEL.note,
+    today:
+      model.today && typeof model.today === "object"
+        ? model.today
+        : DEFAULT_RAMADAN_VIEW_MODEL.today,
+    monthTable:
+      model.monthTable && typeof model.monthTable === "object"
+        ? model.monthTable
+        : DEFAULT_RAMADAN_VIEW_MODEL.monthTable,
   };
 }
 
-export function renderRamadanSection(rootElement, data) {
+export function renderRamadanSection(rootElement, data = DEFAULT_RAMADAN_VIEW_MODEL) {
   if (!rootElement) {
     return null;
   }
 
-  const viewModel = toRamadanSectionViewModel(data);
+  const viewModel = normalizeRamadanViewModel(data);
 
   rootElement.innerHTML = `
-    <div class="ramadan-section__inner container">
-      <div class="ramadan-section__intro">
-        <div class="section-heading ramadan-section__heading">
-          <p class="section-heading__eyebrow">رمضان</p>
-          <h2 class="section-heading__title">ملخص هادئ وواضح لمعلومات رمضان</h2>
-          <p class="section-heading__subtitle">
-            ملخص يومي مختصر يعرض اليوم الرمضاني ووقتَي الإمساك والإفطار حسب المدينة المختارة.
-          </p>
+    <section class="ramadan-sec" id="ramadan" aria-label="مواقيت رمضان">
+      <div class="container-xl px-3 px-sm-4 px-lg-5">
+        <div class="ramadan-head">
+          <div class="ramadan-city">
+            <div class="ramadan-eyebrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3v6l4 2"/><circle cx="12" cy="12" r="9"/></svg>
+              <span>شهر رمضان المبارك</span>
+            </div>
+            <h2 class="ramadan-month" data-ramadan-month>${viewModel.monthLabel}</h2>
+            <span class="ramadan-meta">${viewModel.note}</span>
+          </div>
+          <span class="ramadan-badge">شهر رمضان</span>
         </div>
+
+        <div class="ramadan-tabs" role="tablist">
+          <button type="button" class="r-tab r-tab--active" role="tab" aria-selected="true" data-ramadan-tab="today">اليوم الحالي</button>
+          <button type="button" class="r-tab" role="tab" aria-selected="false" data-ramadan-tab="week">إمساكية</button>
+          <button type="button" class="r-tab" role="tab" aria-selected="false" data-ramadan-tab="month">شهرية</button>
+        </div>
+
+        ${renderRamadanCountdown(viewModel.today)}
       </div>
+    </section>
 
-      <div class="ramadan-section__body">
-        <article class="card ramadan-card ramadan-card--${viewModel.state}" aria-label="ملخص رمضان">
-          <div class="ramadan-card__content">
-            <p class="ramadan-card__label">اليوم الرمضاني</p>
-            <h3 class="ramadan-card__day">${viewModel.dayText}</h3>
-            <p class="ramadan-card__note ramadan-card__note--${viewModel.state}">
-              ${viewModel.note}
-            </p>
-          </div>
+    <hr class="sec-divider" />
 
-          <div class="ramadan-card__meta">
-            <div class="ramadan-card__meta-item">
-              <span class="ramadan-card__meta-label">الإمساك</span>
-              <span class="ramadan-card__meta-value">${viewModel.imsakText}</span>
-            </div>
-
-            <div class="ramadan-card__meta-item">
-              <span class="ramadan-card__meta-label">الإفطار</span>
-              <span class="ramadan-card__meta-value">${viewModel.iftarText}</span>
-            </div>
-          </div>
-        </article>
-      </div>
+    <div class="container-xl px-3 px-sm-4 px-lg-5">
+      ${renderRamadanMonthTable(viewModel.monthTable)}
     </div>
   `;
 

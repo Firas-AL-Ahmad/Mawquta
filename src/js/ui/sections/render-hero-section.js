@@ -6,7 +6,7 @@ const DEFAULT_HERO_VIEW_MODEL = {
   hijriDateLabel: "6 رمضان 1448",
   gregorianDateLabel: "10 أيلول 2026",
   nextPrayerLabel: "العصر",
-  nextPrayerTime: "15:42 PM",
+  nextPrayerTime: "04:09 PM",
   countdownLabel: "الوقت المتبقي",
   countdown: {
     hours: "01",
@@ -87,6 +87,27 @@ function normalizeHeroViewModel(viewModel) {
   };
 }
 
+function buildDateRowMarkup(dateLabel) {
+  const normalized = safeText(dateLabel, "");
+  if (!normalized) {
+    return `<span class="date-card__row-r"><span class="date-card__row-num">--</span><span>--</span></span><span class="date-card__row-yr">----</span>`;
+  }
+
+  const parts = normalized.split(/\s+/).filter(Boolean);
+  if (parts.length < 2) {
+    return `<span class="date-card__row-r"><span class="date-card__row-num">${normalized}</span></span><span class="date-card__row-yr">----</span>`;
+  }
+
+  const maybeYear = parts.at(-1);
+  const hasYear = /^\d{3,4}$/.test(maybeYear);
+  const year = hasYear ? maybeYear : "----";
+  const bodyParts = hasYear ? parts.slice(0, -1) : parts;
+  const number = bodyParts[0] || "--";
+  const month = bodyParts.slice(1).join(" ") || "--";
+
+  return `<span class="date-card__row-r"><span class="date-card__row-num">${number}</span><span>${month}</span></span><span class="date-card__row-yr">${year}</span>`;
+}
+
 export function renderHeroSection(rootElement, viewModel) {
   if (!rootElement) {
     return null;
@@ -95,88 +116,131 @@ export function renderHeroSection(rootElement, viewModel) {
   const hero = normalizeHeroViewModel(viewModel);
 
   rootElement.innerHTML = `
-    <div class="hero-section__inner container">
-      <div class="row g-3 g-lg-4 align-items-stretch">
-        <div class="col-12 col-lg-4">
-          <div class="hero-section__right h-100">
-            <div class="hero-section__top">
-              <div class="hero-location-chip" aria-label="الموقع الحالي">
-                <img
-                  class="hero-location-chip__icon"
-                  src="./assets/icons/Header/location-icon.svg"
-                  alt=""
-                  width="24"
-                  height="24"
-                  loading="lazy"
-                  decoding="async"
-                />
-                <span class="hero-location-chip__text" data-hero-location>${hero.locationLabel}</span>
+    <section class="hero" id="hero" aria-label="القسم الرئيسي">
+      <span class="hero__basmala" aria-hidden="true">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</span>
+
+      <div class="hero__inner container-xl px-3 px-sm-4 px-lg-5">
+        <div class="row g-3 g-lg-4 align-items-stretch">
+          <div class="col-12 col-lg-6 d-flex col-hero-right order-2 order-lg-1">
+            <div class="hero-right w-100">
+              <div class="loc-chip" aria-label="الموقع الحالي">
+                <span class="loc-chip__icon" aria-hidden="true"></span>
+                <span class="loc-chip__text" data-hero-location>${hero.locationLabel}</span>
               </div>
 
               <p class="hero-verse" data-hero-verse>${hero.verseText}</p>
+
+              <article class="date-card" aria-label="ملخص اليوم">
+                <div class="date-card__head">
+                  <span class="date-card__head-label">اليوم</span>
+                  <span class="date-card__cal" aria-hidden="true"></span>
+                </div>
+
+                <p class="date-card__day" data-hero-day-label>${hero.dayLabel}</p>
+                <div class="date-card__row" data-hero-hijri-date>${buildDateRowMarkup(hero.hijriDateLabel)}</div>
+                <div class="date-card__row" data-hero-gregorian-date>${buildDateRowMarkup(hero.gregorianDateLabel)}</div>
+              </article>
+
+              <button type="button" class="hero-cta" data-hero-change-city>
+                ${hero.ctaText}
+              </button>
             </div>
-
-            <article class="hero-date-card" aria-label="ملخص اليوم">
-              <p class="hero-date-card__eyebrow">اليوم</p>
-              <p class="hero-date-card__day" data-hero-day-label>${hero.dayLabel}</p>
-              <p class="hero-date-card__row" data-hero-hijri-date>${hero.hijriDateLabel}</p>
-              <p class="hero-date-card__row" data-hero-gregorian-date>${hero.gregorianDateLabel}</p>
-            </article>
-
-            <button type="button" class="hero-section__cta btn btn--primary" data-hero-change-city>
-              ${hero.ctaText}
-            </button>
           </div>
-        </div>
 
-        <div class="col-12 col-lg-8">
-          <div class="hero-section__left h-100">
-            <article class="hero-next-prayer-card h-100" aria-label="الصلاة القادمة">
-              <div class="hero-next-prayer-card__surface" aria-hidden="true"></div>
+          <div class="col-12 col-lg-6 d-flex col-hero-left order-1 order-lg-2">
+            <div class="hero-left w-100">
+              <article class="prayer-card w-100" aria-label="الصلاة القادمة">
+                <div class="prayer-card__gloss" aria-hidden="true"></div>
 
-              <div class="hero-next-prayer-card__header">
-                <p class="hero-next-prayer-card__time" data-hero-next-prayer-time>${hero.nextPrayerTime}</p>
+                <div class="pcard-header">
+                  <p class="pcard-time" data-hero-next-prayer-time>${hero.nextPrayerTime}</p>
 
-                <div class="hero-next-prayer-card__meta">
-                  <span class="hero-next-prayer-card__pill">
-                    <span class="hero-next-prayer-card__pill-dot" aria-hidden="true"></span>
-                    <span class="hero-next-prayer-card__pill-text">الصلاة القادمة</span>
-                  </span>
+                  <div class="pcard-meta">
+                    <span class="pcard-pill">
+                      <span class="pcard-pill__dot" aria-hidden="true"></span>
+                      <span class="pcard-pill__text">الصلاة القادمة</span>
+                    </span>
 
-                  <h1 class="hero-next-prayer-card__title" data-hero-next-prayer-label>${hero.nextPrayerLabel}</h1>
-                </div>
-              </div>
-
-              <section class="hero-countdown" aria-live="polite" aria-label="الوقت المتبقي للصلاة القادمة">
-                <p class="hero-countdown__label">${hero.countdownLabel}</p>
-
-                <div class="hero-countdown__grid" data-hero-countdown>
-                  <div class="hero-countdown__item">
-                    <span class="hero-countdown__value" data-hero-countdown-hours>${hero.countdown.hours}</span>
-                    <span class="hero-countdown__unit">Hr</span>
-                  </div>
-
-                  <span class="hero-countdown__separator" aria-hidden="true">:</span>
-
-                  <div class="hero-countdown__item">
-                    <span class="hero-countdown__value" data-hero-countdown-minutes>${hero.countdown.minutes}</span>
-                    <span class="hero-countdown__unit">Min</span>
-                  </div>
-
-                  <span class="hero-countdown__separator" aria-hidden="true">:</span>
-
-                  <div class="hero-countdown__item">
-                    <span class="hero-countdown__value" data-hero-countdown-seconds>${hero.countdown.seconds}</span>
-                    <span class="hero-countdown__unit">Sec</span>
+                    <h1 class="pcard-name" data-hero-next-prayer-label>${hero.nextPrayerLabel}</h1>
                   </div>
                 </div>
-              </section>
-            </article>
+
+                <section class="countdown" aria-live="polite" aria-label="الوقت المتبقي للصلاة القادمة">
+                  <p class="countdown__label" data-hero-countdown-label>${hero.countdownLabel}</p>
+
+                  <div class="countdown__grid" data-hero-countdown>
+                    <div class="countdown__item">
+                      <span class="countdown__val" data-hero-countdown-hours>${hero.countdown.hours}</span>
+                      <span class="countdown__unit">HR</span>
+                    </div>
+
+                    <span class="countdown__sep" aria-hidden="true">:</span>
+
+                    <div class="countdown__item">
+                      <span class="countdown__val" data-hero-countdown-minutes>${hero.countdown.minutes}</span>
+                      <span class="countdown__unit">MIN</span>
+                    </div>
+
+                    <span class="countdown__sep" aria-hidden="true">:</span>
+
+                    <div class="countdown__item">
+                      <span class="countdown__val" data-hero-countdown-seconds>${hero.countdown.seconds}</span>
+                      <span class="countdown__unit">SEC</span>
+                    </div>
+                  </div>
+                </section>
+              </article>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
+
+    <hr class="sec-divider" />
   `;
+
+  return rootElement;
+}
+
+export function updateHeroSectionLiveState(rootElement, updates = {}) {
+  if (!rootElement) return null;
+
+  const selectors = {
+    location: "[data-hero-location]",
+    verse: "[data-hero-verse]",
+    dayLabel: "[data-hero-day-label]",
+    hijriDate: "[data-hero-hijri-date]",
+    gregorianDate: "[data-hero-gregorian-date]",
+    nextPrayerLabel: "[data-hero-next-prayer-label]",
+    nextPrayerTime: "[data-hero-next-prayer-time]",
+    countdownLabel: "[data-hero-countdown-label]",
+    countdownHours: "[data-hero-countdown-hours]",
+    countdownMinutes: "[data-hero-countdown-minutes]",
+    countdownSeconds: "[data-hero-countdown-seconds]",
+    ctaButton: "[data-hero-change-city]",
+  };
+
+  const setTextContent = (selector, value) => {
+    const el = rootElement.querySelector(selector);
+    if (el && typeof value === "string") {
+      el.textContent = value;
+    }
+  };
+
+  if (updates.locationLabel) setTextContent(selectors.location, updates.locationLabel);
+  if (updates.verseText) setTextContent(selectors.verse, updates.verseText);
+  if (updates.dayLabel) setTextContent(selectors.dayLabel, updates.dayLabel);
+  if (updates.nextPrayerLabel) setTextContent(selectors.nextPrayerLabel, updates.nextPrayerLabel);
+  if (updates.nextPrayerTime) setTextContent(selectors.nextPrayerTime, updates.nextPrayerTime);
+  if (updates.countdownLabel) setTextContent(selectors.countdownLabel, updates.countdownLabel);
+  if (updates.ctaText) setTextContent(selectors.ctaButton, updates.ctaText);
+
+  if (updates.countdown) {
+    const { hours, minutes, seconds } = updates.countdown;
+    if (hours !== undefined) setTextContent(selectors.countdownHours, safeCountdownPart(hours, "00"));
+    if (minutes !== undefined) setTextContent(selectors.countdownMinutes, safeCountdownPart(minutes, "00"));
+    if (seconds !== undefined) setTextContent(selectors.countdownSeconds, safeCountdownPart(seconds, "00"));
+  }
 
   return rootElement;
 }

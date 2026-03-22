@@ -1,154 +1,98 @@
 import { renderPrayerCards } from "../widgets/render-prayers.js";
 import { renderPrayerWeek } from "../widgets/render-week.js";
 
-const FALLBACK_SECTION_DATA = {
-  state: "unavailable",
-  meta: {
-    location: "الموقع غير متاح حالياً",
-    date: "التاريخ غير متاح حالياً",
+const STATIC_PRAYER_SECTION_VIEW_MODEL = {
+  badgeLabel: "اليومية",
+  eyebrowLabel: "مواقيت الصلاة في",
+  locationLabel: "دمشق، سوريا",
+  statusLabel: "آخر تحديث: عند تحميل الصفحة / الآن / وقت فعلي محفوظ",
+  activeKey: "asr",
+  prayers: [
+    { key: "fajr", name: "الفجر", time: "05:11 AM", tone: "fajr", icon: "moon" },
+    { key: "dhuhr", name: "الظهر", time: "12:31 PM", tone: "dhuhr", icon: "sun" },
+    { key: "asr", name: "العصر", time: "04:09 PM", tone: "asr", icon: "sun" },
+    { key: "maghrib", name: "المغرب", time: "06:57 PM", tone: "maghrib", icon: "stars" },
+    { key: "isha", name: "العشاء", time: "08:27 PM", tone: "isha", icon: "moon" },
+  ],
+  week: {
+    weekRange: "مارس 23 – مارس 29، 2026",
   },
-  featured: {
-    key: "",
-    label: "المواقيت غير متاحة",
-    time: "--:--",
-    countdownText: "العد التنازلي غير متاح حالياً.",
-  },
-  dailyPrayers: [],
-  weeklyRows: [],
 };
 
-function resolvePrayerSectionState(state) {
-  if (
-    state === "loading" ||
-    state === "ready" ||
-    state === "partial" ||
-    state === "unavailable"
-  ) {
-    return state;
-  }
-
-  return FALLBACK_SECTION_DATA.state;
+function safeText(value, fallback) {
+  return typeof value === "string" && value.trim().length > 0
+    ? value.trim()
+    : fallback;
 }
 
-export function renderPrayerSection(
-  rootElement,
-  sectionData = FALLBACK_SECTION_DATA,
-) {
+function normalizePrayerSectionViewModel(viewModel) {
+  const model = viewModel && typeof viewModel === "object" ? viewModel : {};
+
+  return {
+    badgeLabel: safeText(model.badgeLabel, STATIC_PRAYER_SECTION_VIEW_MODEL.badgeLabel),
+    eyebrowLabel: safeText(model.eyebrowLabel, STATIC_PRAYER_SECTION_VIEW_MODEL.eyebrowLabel),
+    locationLabel: safeText(model.locationLabel, STATIC_PRAYER_SECTION_VIEW_MODEL.locationLabel),
+    statusLabel: safeText(model.statusLabel, STATIC_PRAYER_SECTION_VIEW_MODEL.statusLabel),
+    activeKey: safeText(model.activeKey, STATIC_PRAYER_SECTION_VIEW_MODEL.activeKey),
+    prayers: Array.isArray(model.prayers) && model.prayers.length
+      ? model.prayers
+      : STATIC_PRAYER_SECTION_VIEW_MODEL.prayers,
+    week: model.week && typeof model.week === "object"
+      ? model.week
+      : STATIC_PRAYER_SECTION_VIEW_MODEL.week,
+  };
+}
+
+export function renderPrayerSection(rootElement, viewModel = STATIC_PRAYER_SECTION_VIEW_MODEL) {
   if (!rootElement) {
     return null;
   }
 
-  const metaLocation =
-    sectionData?.meta?.location || FALLBACK_SECTION_DATA.meta.location;
-  const metaDate = sectionData?.meta?.date || FALLBACK_SECTION_DATA.meta.date;
-  const sectionState = resolvePrayerSectionState(sectionData?.state);
-
-  const featuredLabel =
-    sectionData?.featured?.label || FALLBACK_SECTION_DATA.featured.label;
-  const featuredTime =
-    sectionData?.featured?.time || FALLBACK_SECTION_DATA.featured.time;
-  const featuredCountdownText =
-    sectionData?.featured?.countdownText ||
-    sectionData?.featured?.note ||
-    FALLBACK_SECTION_DATA.featured.countdownText;
+  const model = normalizePrayerSectionViewModel(viewModel);
 
   rootElement.innerHTML = `
-    <div class="prayer-section__inner container">
-      <div class="prayer-section__intro">
-        <div class="section-heading prayer-section__heading">
-          <div class="prayer-section__heading-content">
-            <p class="section-heading__eyebrow">مواقيت الصلاة</p>
-            <h1 class="section-heading__title">ابقَ على صلة بصلاتك أينما كنت</h1>
-            <p class="section-heading__subtitle">
-              عرض واضح وهادئ لمواقيت اليوم بواجهة عربية عملية مرتبطة بالبيانات المتاحة لحظيًا.
-            </p>
+    <section class="daily-sec" id="daily" aria-label="مواقيت الصلاة اليومية">
+      <div class="container-xl px-3 px-sm-4 px-lg-5">
+        <div class="sec-head">
+          <div class="sec-city">
+            <div class="sec-city__eyebrow">
+              <span class="sec-city__eyebrow-icon" aria-hidden="true"></span>
+              <span>${model.eyebrowLabel}</span>
+            </div>
+            <h2 class="sec-city__name" data-daily-city>${model.locationLabel}</h2>
+            <span class="sec-city__meta">${model.statusLabel}</span>
           </div>
+          <span class="sec-badge">${model.badgeLabel}</span>
         </div>
 
-        <div class="prayer-section__meta meta-row" aria-label="Prayer section context">
-          <span class="prayer-section__location">${metaLocation}</span>
-          <span class="prayer-section__divider" aria-hidden="true">•</span>
-          <span class="prayer-section__date">${metaDate}</span>
+        <div class="ps-track" role="list" aria-label="أوقات الصلوات اليومية">
+          ${renderPrayerCards(model.prayers, model.activeKey)}
         </div>
       </div>
+    </section>
 
-      <div class="prayer-section__hero">
-        <article class="card prayer-hero-card prayer-hero-card--${sectionState}" aria-label="Featured prayer summary">
-          <div class="prayer-hero-card__content">
-            <p class="prayer-hero-card__label">الصلاة القادمة</p>
-            <h2 class="prayer-hero-card__title" data-prayer-featured-label>${featuredLabel}</h2>
-            <p class="prayer-hero-card__time" data-prayer-featured-time>${featuredTime}</p>
-            <p class="prayer-hero-card__note prayer-hero-card__note--${sectionState}" data-prayer-featured-countdown aria-live="polite">${featuredCountdownText}</p>
+    <hr class="sec-divider" />
+
+    <section class="weekly-sec" id="weekly" aria-label="مواقيت الصلاة الأسبوعية">
+      <div class="container-xl px-3 px-sm-4 px-lg-5">
+        <div class="sec-head">
+          <div class="sec-city">
+            <div class="sec-city__eyebrow">
+              <span class="sec-city__eyebrow-icon" aria-hidden="true"></span>
+              <span>${model.eyebrowLabel}</span>
+            </div>
+            <h2 class="sec-city__name" data-weekly-city>${model.locationLabel}</h2>
+            <span class="sec-city__meta">${model.statusLabel}</span>
           </div>
+          <span class="sec-badge">الأسبوعية</span>
+        </div>
 
-          <div class="prayer-hero-card__visual" aria-hidden="true"></div>
-        </article>
+        ${renderPrayerWeek(model.week)}
       </div>
+    </section>
 
-      <div class="prayer-section__daily">
-        <div class="prayer-cards-root"></div>
-      </div>
-
-      <div class="prayer-section__week">
-        <div class="prayer-week-root"></div>
-      </div>
-    </div>
+    <hr class="sec-divider" />
   `;
-
-  const prayerCardsRoot = rootElement.querySelector(".prayer-cards-root");
-  renderPrayerCards(prayerCardsRoot, sectionData?.dailyPrayers, {
-    featuredKey: sectionData?.featured?.key,
-    state: sectionState,
-  });
-
-  const prayerWeekRoot = rootElement.querySelector(".prayer-week-root");
-  renderPrayerWeek(prayerWeekRoot, sectionData?.weeklyRows, {
-    state: sectionState === "loading" ? "loading" : sectionData?.weekState,
-  });
-
-  return rootElement;
-}
-
-export function updatePrayerSectionFeaturedState(
-  rootElement,
-  { featured = {}, dailyPrayers = [], shouldRefreshCards = false } = {},
-) {
-  if (!rootElement) {
-    return null;
-  }
-
-  const featuredLabelElement = rootElement.querySelector(
-    "[data-prayer-featured-label]",
-  );
-  const featuredTimeElement = rootElement.querySelector(
-    "[data-prayer-featured-time]",
-  );
-  const featuredCountdownElement = rootElement.querySelector(
-    "[data-prayer-featured-countdown]",
-  );
-
-  if (featuredLabelElement) {
-    featuredLabelElement.textContent =
-      featured?.label || FALLBACK_SECTION_DATA.featured.label;
-  }
-
-  if (featuredTimeElement) {
-    featuredTimeElement.textContent =
-      featured?.time || FALLBACK_SECTION_DATA.featured.time;
-  }
-
-  if (featuredCountdownElement) {
-    featuredCountdownElement.textContent =
-      featured?.countdownText || FALLBACK_SECTION_DATA.featured.countdownText;
-  }
-
-  if (shouldRefreshCards) {
-    const prayerCardsRoot = rootElement.querySelector(".prayer-cards-root");
-    renderPrayerCards(prayerCardsRoot, dailyPrayers, {
-      featuredKey: featured?.key,
-      state: dailyPrayers.length > 0 ? "ready" : "unavailable",
-    });
-  }
 
   return rootElement;
 }

@@ -1,62 +1,43 @@
-const FALLBACK_MESSAGES = {
-  loading: "جاري تحميل مواقيت اليوم...",
-  unavailable: "مواقيت اليوم غير متاحة حالياً.",
-};
+const DEFAULT_PRAYERS = [
+  { key: "fajr", name: "الفجر", time: "05:11 AM", tone: "fajr", icon: "moon" },
+  { key: "dhuhr", name: "الظهر", time: "12:31 PM", tone: "dhuhr", icon: "sun" },
+  { key: "asr", name: "العصر", time: "04:09 PM", tone: "asr", icon: "sun" },
+  { key: "maghrib", name: "المغرب", time: "06:57 PM", tone: "maghrib", icon: "stars" },
+  { key: "isha", name: "العشاء", time: "08:27 PM", tone: "isha", icon: "moon" },
+];
 
-function resolvePrayerCardsState(state) {
-  return state === "loading" ? "loading" : "unavailable";
+function safeText(value, fallback) {
+  return typeof value === "string" && value.trim() ? value.trim() : fallback;
 }
 
-export function renderPrayerCards(rootElement, prayers = [], options = {}) {
-  if (!rootElement) {
-    return null;
-  }
+export function renderPrayerCards(prayers = DEFAULT_PRAYERS, activeKey = "asr") {
+  const safePrayers = Array.isArray(prayers) && prayers.length ? prayers : DEFAULT_PRAYERS;
 
-  const { featuredKey = "", state = "ready" } = options;
-  const resolvedState = resolvePrayerCardsState(state);
-
-  const safePrayers = Array.isArray(prayers)
-    ? prayers.filter((prayer) => prayer && prayer.label)
-    : [];
-
-  if (!safePrayers.length) {
-    const fallbackMessage = FALLBACK_MESSAGES[resolvedState];
-
-    rootElement.innerHTML = `
-      <div class="prayer-cards" aria-label="Daily prayer times">
-        <article class="card prayer-card prayer-card--fallback prayer-card--${resolvedState}" aria-live="polite">
-          <div class="prayer-card__content">
-            <p class="prayer-card__name">${fallbackMessage}</p>
-          </div>
-        </article>
-      </div>
-    `;
-
-    return rootElement;
-  }
-
-  const cardsMarkup = safePrayers
-    .map(({ key, label, time }) => {
-      const isFeatured = featuredKey && key === featuredKey;
-      const featuredClass = isFeatured ? " prayer-card--featured" : "";
-      const safeTime = time || "--:--";
+  return safePrayers
+    .map((prayer) => {
+      const tone = safeText(prayer.tone, "fajr");
+      const icon = safeText(prayer.icon, "moon");
+      const name = safeText(prayer.name, "-");
+      const time = safeText(prayer.time, "--:--");
+      const key = safeText(prayer.key, tone);
+      const isActive = key.toLowerCase() === String(activeKey || "").toLowerCase();
+      const activeClass = isActive ? " ps-card--active" : "";
+      const activeAttrs = isActive
+        ? ' aria-label="صلاة ' + name + ' — الصلاة القادمة" aria-current="true"'
+        : ' aria-label="صلاة ' + name + '"';
 
       return `
-        <article class="card prayer-card${featuredClass}">
-          <div class="prayer-card__content">
-            <p class="prayer-card__name">${label}</p>
-            <p class="prayer-card__time">${safeTime}</p>
+        <article class="ps-card ps-card--${tone}${activeClass}" role="listitem"${activeAttrs}>
+          <div class="ps-card__gloss" aria-hidden="true"></div>
+          <div class="ps-card__top">
+            <span class="ps-card__name">${name}</span>
+            <span class="ps-card__icon"><span class="i-${icon}"></span></span>
+          </div>
+          <div class="ps-card__time-wrap">
+            <span class="ps-card__time">${time}</span>
           </div>
         </article>
       `;
     })
     .join("");
-
-  rootElement.innerHTML = `
-    <div class="prayer-cards" aria-label="Daily prayer times">
-      ${cardsMarkup}
-    </div>
-  `;
-
-  return rootElement;
 }

@@ -1,91 +1,56 @@
+import { renderQibla } from "../widgets/render-qibla.js";
+
 const DEFAULT_QIBLA_VIEW_MODEL = {
-  state: "unavailable",
-  degreeText: "غير متاح",
-  note: "تعذر تحديد اتجاه القبلة حالياً لهذه المدينة.",
-  needleRotation: null,
+  degreeText: "165°",
+  note: "يتم حساب الاتجاه بناءً على الموقع الجغرافي الذي قمت بتحديده",
+  needleRotation: 165,
 };
 
-function resolveQiblaState(state) {
-  if (state === "loading" || state === "ready" || state === "unavailable") {
-    return state;
-  }
-
-  return DEFAULT_QIBLA_VIEW_MODEL.state;
-}
-
 function normalizeQiblaViewModel(viewModel) {
-  const fallback = { ...DEFAULT_QIBLA_VIEW_MODEL };
-
-  if (!viewModel || typeof viewModel !== "object") {
-    return fallback;
-  }
-
-  const degreeText =
-    typeof viewModel.degreeText === "string" &&
-    viewModel.degreeText.trim().length > 0
-      ? viewModel.degreeText.trim()
-      : fallback.degreeText;
-
-  const note =
-    typeof viewModel.note === "string" && viewModel.note.trim().length > 0
-      ? viewModel.note.trim()
-      : fallback.note;
-
-  const rotation = Number(viewModel.needleRotation);
-  const needleRotation = Number.isFinite(rotation) ? rotation : null;
-  const state = resolveQiblaState(viewModel.state);
+  const model = viewModel && typeof viewModel === "object" ? viewModel : {};
 
   return {
-    state,
-    degreeText,
-    note,
-    needleRotation,
+    degreeText:
+      typeof model.degreeText === "string" && model.degreeText.trim()
+        ? model.degreeText.trim()
+        : DEFAULT_QIBLA_VIEW_MODEL.degreeText,
+    note:
+      typeof model.note === "string" && model.note.trim()
+        ? model.note.trim()
+        : DEFAULT_QIBLA_VIEW_MODEL.note,
+    needleRotation:
+      Number.isFinite(Number(model.needleRotation))
+        ? Number(model.needleRotation)
+        : DEFAULT_QIBLA_VIEW_MODEL.needleRotation,
   };
 }
 
-export function renderQiblaSection(rootElement, viewModel) {
+export function renderQiblaSection(rootElement, viewModel = DEFAULT_QIBLA_VIEW_MODEL) {
   if (!rootElement) {
     return null;
   }
 
   const qibla = normalizeQiblaViewModel(viewModel);
-  const directionStyle =
-    qibla.needleRotation === null
-      ? ""
-      : ` style="transform: rotate(${qibla.needleRotation}deg);"`;
 
   rootElement.innerHTML = `
-    <div class="qibla-section__inner container">
-      <div class="qibla-section__intro">
-        <div class="section-heading qibla-section__heading">
-          <div class="qibla-section__heading-content">
-            <p class="section-heading__eyebrow">القبلة</p>
-            <h2 class="section-heading__title">اعرف اتجاه القبلة بسهولة ووضوح</h2>
-            <p class="section-heading__subtitle">
-              يتم عرض اتجاه القبلة بناءً على بيانات الموقع المتاحة حالياً.
-            </p>
+    <section class="qibla-sec" id="qibla" aria-label="اتجاه القبلة">
+      <div class="container-xl px-3 px-sm-4 px-lg-5">
+        <div class="qibla-card">
+          <div class="qibla-card__head">
+            <div class="qibla-card__title">
+              <span class="qibla-card__title-icon" aria-hidden="true"></span>
+              <span>اتجاه القبلة من موقعك الحالي</span>
+            </div>
+            <p class="qibla-card__note">${qibla.note}</p>
+            <span class="qibla-badge">شغّل القبلة</span>
           </div>
+
+          ${renderQibla(qibla)}
         </div>
       </div>
+    </section>
 
-      <div class="qibla-section__body">
-        <article class="card qibla-card qibla-card--${qibla.state}" aria-label="ملخص اتجاه القبلة">
-          <div class="qibla-card__content">
-            <p class="qibla-card__label">اتجاه القبلة</p>
-            <h3 class="qibla-card__degree">${qibla.degreeText}</h3>
-            <p class="qibla-card__note qibla-card__note--${qibla.state}">${qibla.note}</p>
-          </div>
-
-          <div class="qibla-card__visual" aria-hidden="true">
-            <div class="qibla-card__compass-surface">
-              <div class="qibla-card__compass-ring"></div>
-              <div class="qibla-card__direction-mark"${directionStyle}></div>
-              <div class="qibla-card__center-dot"></div>
-            </div>
-          </div>
-        </article>
-      </div>
-    </div>
+    <hr class="sec-divider" />
   `;
 
   return rootElement;
