@@ -161,7 +161,11 @@
   min-height: 90vh;
   display: flex;
   align-items: center;
-  background: linear-gradient(155deg, #faf5ec 0%, #f4ede0 100%);
+  background: linear-gradient(
+    155deg,
+    var(--Decor-Hero-Start) 0%,
+    var(--Decor-Hero-End) 100%
+  );
   position: relative;
   overflow: hidden;
 }
@@ -314,7 +318,12 @@
   min-height: clamp(24rem, 44vw, 42rem);
   border-radius: 22px;
   overflow: hidden;
-  background: linear-gradient(175deg, #dd9730 0%, #a1521c 50%, #6c351b 100%);
+  background: linear-gradient(
+    175deg,
+    var(--Decor-Prayer-Card-Start) 0%,
+    var(--Decor-Prayer-Card-Mid) 50%,
+    var(--Decor-Prayer-Card-End) 100%
+  );
   color: var(--white);
   display: flex;
   flex-direction: column;
@@ -543,19 +552,39 @@
   transform: scale(1.03);
 }
 .ps-card--fajr {
-  background: linear-gradient(160deg, #2c2547 0%, #4a3a72 100%);
+  background: linear-gradient(
+    160deg,
+    var(--Decor-Fajr-Start) 0%,
+    var(--Decor-Fajr-End) 100%
+  );
 }
 .ps-card--dhuhr {
-  background: linear-gradient(160deg, #1a9db5 0%, #3bc8d8 100%);
+  background: linear-gradient(
+    160deg,
+    var(--Decor-Dhuhr-Start) 0%,
+    var(--Decor-Dhuhr-End) 100%
+  );
 }
 .ps-card--asr {
-  background: linear-gradient(160deg, #dd9730 0%, #f8eecd 100%);
+  background: linear-gradient(
+    160deg,
+    var(--Decor-Asr-Start) 0%,
+    var(--Decor-Asr-End) 100%
+  );
 }
 .ps-card--maghrib {
-  background: linear-gradient(160deg, #c0336e 0%, #e8507e 100%);
+  background: linear-gradient(
+    160deg,
+    var(--Decor-Maghrib-Start) 0%,
+    var(--Decor-Maghrib-End) 100%
+  );
 }
 .ps-card--isha {
-  background: linear-gradient(160deg, #2c2547 0%, #6a4a9c 100%);
+  background: linear-gradient(
+    160deg,
+    var(--Decor-Isha-Start) 0%,
+    var(--Decor-Isha-End) 100%
+  );
 }
 .ps-card__gloss {
   position: absolute;

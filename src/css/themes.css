@@ -26,6 +26,23 @@
   --System-Error: #ef4444;
   --System-Info: #38bdf8;
 
+  --Decor-Hero-Start: #f8f4ec;
+  --Decor-Hero-End: #f1ece2;
+  --Decor-Prayer-Card-Start: #dd9730;
+  --Decor-Prayer-Card-Mid: #9d4f1f;
+  --Decor-Prayer-Card-End: #4a3f80;
+
+  --Decor-Fajr-Start: #30275a;
+  --Decor-Fajr-End: #1c254f;
+  --Decor-Dhuhr-Start: #6fd4ee;
+  --Decor-Dhuhr-End: #214974;
+  --Decor-Asr-Start: #e9c35d;
+  --Decor-Asr-End: #24486e;
+  --Decor-Maghrib-Start: #cb4f8a;
+  --Decor-Maghrib-End: #313165;
+  --Decor-Isha-Start: #4b4464;
+  --Decor-Isha-End: #2e385f;
+
   --font-heading: "Reem Kufi", sans-serif;
   --font-body: "Noto Kufi Arabic", sans-serif;
   --font-quote: "Amiri Quran", serif;
