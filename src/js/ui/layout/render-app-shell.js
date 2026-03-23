@@ -9,7 +9,8 @@ export function renderAppShell(rootElement) {
 
       <main class="main-content page-main" id="main-content">
         <section id="hero-section" data-mount="hero-section"></section>
-        <section id="prayer-section" data-mount="prayer-section"></section>
+        <section id="prayer-section" data-mount="daily-prayer-section"></section>
+        <section id="weekly-prayer-section" data-mount="weekly-prayer-section"></section>
         <section id="qibla-section" data-mount="qibla-section"></section>
         <section id="ramadan-section" data-mount="ramadan-section"></section>
       </main>

@@ -72,7 +72,7 @@
 
 .site-header__link--active,
 .site-header__link.active {
-  background: var(--Primary-500);
+  background: var(--Secondary-500);
   color: var(--white);
 }
 
@@ -107,7 +107,7 @@
   background: color-mix(
     in srgb,
     var(--Background-50) 85%,
-    var(--Primary-900) 15%
+    var(--Secondary-900) 15%
   );
 }
 
@@ -152,8 +152,8 @@
 .hdr-toggle:focus-visible {
   outline: none;
   box-shadow:
-    inset 0 0 0 2px var(--Primary-500),
-    0 0 0 2px color-mix(in srgb, var(--Primary-500) 55%, transparent);
+    inset 0 0 0 2px var(--Secondary-500),
+    0 0 0 2px color-mix(in srgb, var(--Secondary-500) 55%, transparent);
 }
 
 .hero {
@@ -222,7 +222,7 @@
 .loc-chip__text {
   font-size: 0.9375rem;
   font-weight: 700;
-  color: var(--Secondary-500);
+  color: var(--Primary-500);
 }
 
 .hero-verse {
@@ -240,7 +240,7 @@
   max-width: clamp(230px, 28vw, 320px);
   padding: 1.125rem 1.25rem;
   border-radius: 14px;
-  border: 1.5px solid var(--Secondary-500);
+  border: 1.5px solid var(--Primary-500);
   background: var(--white);
   box-shadow: 0 4px 18px -4px rgba(18, 66, 53, 0.14);
 }
@@ -269,7 +269,7 @@
 .date-card__day {
   font-size: 0.9375rem;
   font-weight: 700;
-  color: var(--Secondary-500);
+  color: var(--Primary-500);
   margin-bottom: 0.25rem;
 }
 
@@ -493,10 +493,17 @@
     center/contain no-repeat;
 }
 
+.weekly-sec .sec-city__eyebrow-icon {
+  width: 18px;
+  height: 18px;
+  background: url("../assets/icons/Header/location-icon.svg") center/contain
+    no-repeat;
+}
+
 .sec-city__name {
   font-size: clamp(1.5rem, 3.5vw, 2.5rem);
   font-weight: 900;
-  color: var(--Secondary-500);
+  color: var(--Primary-500);
 }
 
 .sec-city__meta {
@@ -512,7 +519,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: var(--Secondary-500);
+  background: var(--Primary-500);
   color: var(--white);
   font-size: clamp(0.8rem, 1.1vw, 0.9375rem);
   font-weight: 700;
@@ -741,6 +748,129 @@
   font-weight: 800;
 }
 
+.weekly-sec .ws-card {
+  border-radius: 20px;
+  border-color: color-mix(
+    in srgb,
+    var(--Primary-900) 12%,
+    var(--Background-50)
+  );
+  box-shadow: 0 3px 14px -8px rgba(18, 66, 53, 0.22);
+}
+
+.weekly-sec .ws-range {
+  padding: 0.65rem 1.1rem;
+  background: color-mix(in srgb, var(--Background-50) 92%, var(--white));
+  border-bottom-color: color-mix(
+    in srgb,
+    var(--Primary-900) 10%,
+    var(--Background-50)
+  );
+}
+
+.weekly-sec .ws-table {
+  direction: rtl;
+  min-width: 700px;
+}
+
+.weekly-sec .ws-table th,
+.weekly-sec .ws-table td {
+  padding: 0.58rem 0.8rem;
+  font-size: 0.8rem;
+  line-height: 1.3;
+}
+
+.weekly-sec .ws-table th {
+  font-weight: 700;
+  color: var(--Primary-700);
+}
+
+.weekly-sec .ws-table td {
+  color: color-mix(in srgb, var(--Primary-900) 72%, var(--Text-600));
+  font-weight: 600;
+}
+
+.weekly-sec .ws-table thead tr {
+  background: color-mix(in srgb, var(--Background-50) 95%, var(--white));
+}
+
+.weekly-sec .ws-table tbody tr {
+  border-bottom-color: color-mix(
+    in srgb,
+    var(--Primary-900) 8%,
+    var(--Background-50)
+  );
+}
+
+.weekly-sec .row--today {
+  background: color-mix(in srgb, var(--Secondary-50) 58%, var(--white));
+}
+
+.weekly-sec .time-pill {
+  border-radius: 9px;
+  padding: 0.24rem 0.75rem;
+  background: var(--Secondary-500);
+  min-width: 4.9rem;
+}
+
+.ws-th-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.36rem;
+}
+
+.th-ic {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+}
+
+.th-ic img,
+.ws-mobile-head-icon img,
+.ws-mobile-meta-icon img,
+.ws-mobile-item-icon img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+}
+
+.ws-mobile-title {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.35rem;
+}
+
+.ws-mobile-date {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.3rem;
+}
+
+.ws-mobile-head-icon,
+.ws-mobile-meta-icon,
+.ws-mobile-item-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 14px;
+}
+
+.ws-mobile-item dt {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.3rem;
+}
+
 .ws-mobile-list,
 .rt-mobile-list {
   gap: 0.75rem;
@@ -941,8 +1071,8 @@
     to top,
     transparent 0%,
     transparent 10%,
-    var(--Secondary-500) 10%,
-    var(--Secondary-500) 100%
+    var(--Primary-500) 10%,
+    var(--Primary-500) 100%
   );
 }
 .compass__centre {
@@ -995,7 +1125,7 @@
 .ramadan-month {
   font-size: clamp(1.25rem, 2.5vw, 2rem);
   font-weight: 900;
-  color: var(--Secondary-500);
+  color: var(--Primary-500);
 }
 .ramadan-meta {
   font-size: 0.75rem;
@@ -1005,7 +1135,7 @@
   padding: 2px 9px;
 }
 .ramadan-badge {
-  background: var(--Secondary-500);
+  background: var(--Primary-500);
   color: var(--white);
   border-radius: var(--rpill);
   padding: 5px 16px;
@@ -1031,7 +1161,7 @@
   font-weight: 700;
 }
 .r-tab--active {
-  background: var(--Primary-500);
+  background: var(--Secondary-500);
   color: var(--white);
 }
 .rcard__times {
@@ -1172,12 +1302,12 @@
   align-items: center;
   gap: 6px;
   background: none;
-  border: 1.5px solid var(--Primary-500);
+  border: 1.5px solid var(--Secondary-500);
   border-radius: var(--rpill);
   padding: 0.5rem 1.75rem;
   font-size: 0.875rem;
   font-weight: 700;
-  color: var(--Primary-500);
+  color: var(--Secondary-500);
 }
 
 .site-footer {
@@ -1196,7 +1326,7 @@
 .footer-brand__logo {
   width: 38px;
   height: 38px;
-  background: var(--Secondary-500);
+  background: var(--Primary-500);
   border-radius: 8px;
   display: flex;
   align-items: center;

@@ -1,7 +1,6 @@
-import { renderDailyPrayerSection } from "./render-daily-prayer-section.js";
-import { renderWeeklyPrayerSection } from "./render-weekly-prayer-section.js";
+import { renderPrayerCards } from "../widgets/render-prayers.js";
 
-const STATIC_PRAYER_SECTION_VIEW_MODEL = {
+const STATIC_DAILY_PRAYER_VIEW_MODEL = {
   badgeLabel: "اليومية",
   eyebrowLabel: "مواقيت الصلاة في",
   locationLabel: "دمشق، سوريا",
@@ -38,9 +37,6 @@ const STATIC_PRAYER_SECTION_VIEW_MODEL = {
       icon: "moon",
     },
   ],
-  week: {
-    weekRange: "مارس 23 – مارس 29، 2026",
-  },
 };
 
 function safeText(value, fallback) {
@@ -49,71 +45,70 @@ function safeText(value, fallback) {
     : fallback;
 }
 
-function normalizePrayerSectionViewModel(viewModel) {
+function normalizeDailyPrayerViewModel(viewModel) {
   const model = viewModel && typeof viewModel === "object" ? viewModel : {};
 
   return {
     badgeLabel: safeText(
       model.badgeLabel,
-      STATIC_PRAYER_SECTION_VIEW_MODEL.badgeLabel,
+      STATIC_DAILY_PRAYER_VIEW_MODEL.badgeLabel,
     ),
     eyebrowLabel: safeText(
       model.eyebrowLabel,
-      STATIC_PRAYER_SECTION_VIEW_MODEL.eyebrowLabel,
+      STATIC_DAILY_PRAYER_VIEW_MODEL.eyebrowLabel,
     ),
     locationLabel: safeText(
       model.locationLabel,
-      STATIC_PRAYER_SECTION_VIEW_MODEL.locationLabel,
+      STATIC_DAILY_PRAYER_VIEW_MODEL.locationLabel,
     ),
     statusLabel: safeText(
       model.statusLabel,
-      STATIC_PRAYER_SECTION_VIEW_MODEL.statusLabel,
+      STATIC_DAILY_PRAYER_VIEW_MODEL.statusLabel,
     ),
     activeKey: safeText(
       model.activeKey,
-      STATIC_PRAYER_SECTION_VIEW_MODEL.activeKey,
+      STATIC_DAILY_PRAYER_VIEW_MODEL.activeKey,
     ),
     prayers:
       Array.isArray(model.prayers) && model.prayers.length
         ? model.prayers
-        : STATIC_PRAYER_SECTION_VIEW_MODEL.prayers,
-    week:
-      model.week && typeof model.week === "object"
-        ? model.week
-        : STATIC_PRAYER_SECTION_VIEW_MODEL.week,
+        : STATIC_DAILY_PRAYER_VIEW_MODEL.prayers,
   };
 }
 
-export function renderPrayerSection(
+export function renderDailyPrayerSection(
   rootElement,
-  viewModel = STATIC_PRAYER_SECTION_VIEW_MODEL,
+  viewModel = STATIC_DAILY_PRAYER_VIEW_MODEL,
 ) {
   if (!rootElement) {
     return null;
   }
 
-  const model = normalizePrayerSectionViewModel(viewModel);
+  const model = normalizeDailyPrayerViewModel(viewModel);
 
-  const dailyRoot = document.createElement("div");
-  const weeklyRoot = document.createElement("div");
+  rootElement.innerHTML = `
+    <section class="daily-sec" id="daily" aria-label="مواقيت الصلاة اليومية">
+      <div class="container-xl px-3 px-sm-4 px-lg-5">
+        <div class="sec-head">
+          <div class="sec-city">
+            <div class="sec-city__eyebrow">
+              <span class="sec-city__eyebrow-icon" aria-hidden="true"></span>
+              <span>${model.eyebrowLabel}</span>
+            </div>
+            <h2 class="sec-city__name" data-daily-city>${model.locationLabel}</h2>
+            <span class="sec-city__meta">${model.statusLabel}</span>
+          </div>
+          <span class="sec-badge">${model.badgeLabel}</span>
+        </div>
 
-  renderDailyPrayerSection(dailyRoot, {
-    badgeLabel: model.badgeLabel,
-    eyebrowLabel: model.eyebrowLabel,
-    locationLabel: model.locationLabel,
-    statusLabel: model.statusLabel,
-    activeKey: model.activeKey,
-    prayers: model.prayers,
-  });
+        <div class="ps-track" role="list" aria-label="أوقات الصلوات اليومية">
+          ${renderPrayerCards(model.prayers, model.activeKey)}
+        </div>
+      </div>
+    </section>
 
-  renderWeeklyPrayerSection(weeklyRoot, {
-    eyebrowLabel: model.eyebrowLabel,
-    locationLabel: model.locationLabel,
-    statusLabel: model.statusLabel,
-    week: model.week,
-  });
-
-  rootElement.innerHTML = `${dailyRoot.innerHTML}${weeklyRoot.innerHTML}`;
+    <hr class="sec-divider" />
+  `;
 
   return rootElement;
 }

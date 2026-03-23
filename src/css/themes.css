@@ -14,7 +14,7 @@
   --Secondary-900: #6c351b;
 
   --Background-0: #f9faf9;
-  --Background-50: #f3f6f5;
+  --Background-50: #F8F7F4;
   --Background-100: #f9faf9;
 
   --Text-0: #ffffff;
@@ -61,7 +61,7 @@
   --color-primary: var(--Primary-500);
   --color-accent: var(--Secondary-500);
   --color-border: color-mix(in srgb, var(--Background-50) 72%, var(--Text-600));
-  --color-focus: var(--Primary-500);
+  --color-focus: var(--Secondary-500);
 
   --Body-fontFamily: var(--font-body);
   --Body-fontSize: 16px;

@@ -27,18 +27,18 @@
 }
 
 .btn--primary {
-  background-color: var(--color-primary);
+  background-color: var(--color-accent);
   color: var(--color-text-inverse);
 }
 
 .btn--primary:hover {
-  background-color: color-mix(in srgb, var(--color-primary) 88%, black);
+  background-color: color-mix(in srgb, var(--color-accent) 88%, black);
 }
 
 .btn--outline {
   background-color: transparent;
-  color: var(--color-primary);
-  border-color: var(--color-primary);
+  color: var(--color-accent);
+  border-color: var(--color-accent);
 }
 
 .btn--ghost {

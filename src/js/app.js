@@ -6,7 +6,8 @@ import { renderAppShell } from "./ui/layout/render-app-shell.js";
 import { renderHeader } from "./ui/layout/render-header.js";
 import { renderFooter } from "./ui/layout/render-footer.js";
 import { renderHeroSection } from "./ui/sections/render-hero-section.js";
-import { renderPrayerSection } from "./ui/sections/render-prayer-section.js";
+import { renderDailyPrayerSection } from "./ui/sections/render-daily-prayer-section.js";
+import { renderWeeklyPrayerSection } from "./ui/sections/render-weekly-prayer-section.js";
 import { renderQiblaSection } from "./ui/sections/render-qibla-section.js";
 import { renderRamadanSection } from "./ui/sections/render-ramadan-section.js";
 import { bindNavInteractions } from "./ui/interactions/nav.interactions.js";
@@ -43,7 +44,8 @@ function bootstrapApp() {
 
   const appHeaderRoot = document.getElementById("site-header");
   const appHeroRoot = document.getElementById("hero-section");
-  const appPrayerRoot = document.getElementById("prayer-section");
+  const appDailyPrayerRoot = document.getElementById("prayer-section");
+  const appWeeklyPrayerRoot = document.getElementById("weekly-prayer-section");
   const appQiblaRoot = document.getElementById("qibla-section");
   const appRamadanRoot = document.getElementById("ramadan-section");
   const appFooterRoot = document.getElementById("site-footer");
@@ -52,7 +54,8 @@ function bootstrapApp() {
   bindNavInteractions(appHeaderRoot);
 
   renderHeroSection(appHeroRoot);
-  renderPrayerSection(appPrayerRoot);
+  renderDailyPrayerSection(appDailyPrayerRoot);
+  renderWeeklyPrayerSection(appWeeklyPrayerRoot);
   renderQiblaSection(appQiblaRoot);
   renderRamadanSection(appRamadanRoot);
   renderFooter(appFooterRoot);

@@ -74,8 +74,22 @@ const DEFAULT_WEEK_ROWS = [
   },
 ];
 
-function headerIcon(svgPath) {
-  return `<span class="th-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="${svgPath}" /></svg>`;
+const WEEKLY_ICON_PATHS = {
+  day: "assets/icons/Weekly-Prayer/today.svg",
+  date: "assets/icons/Weekly-Prayer/date.svg",
+  fajr: "assets/icons/Weekly-Prayer/fajr.svg",
+  dhuhr: "assets/icons/Weekly-Prayer/dhuhr.svg",
+  asr: "assets/icons/Weekly-Prayer/asr.svg",
+  maghrib: "assets/icons/Weekly-Prayer/maghrib.svg",
+  isha: "assets/icons/Weekly-Prayer/isha.svg",
+};
+
+function iconMarkup(iconPath, className = "th-ic") {
+  return `<span class="${className}" aria-hidden="true"><img src="${iconPath}" alt="" loading="lazy" decoding="async" /></span>`;
+}
+
+function headerLabel(label, iconKey) {
+  return `<span class="ws-th-label">${iconMarkup(WEEKLY_ICON_PATHS[iconKey])}<span>${label}</span></span>`;
 }
 
 export function renderPrayerWeek(viewModel = {}) {
@@ -91,13 +105,12 @@ export function renderPrayerWeek(viewModel = {}) {
       return `
         <tr class="${rowClass}">
           <td class="td-day">${row.day || "-"}</td>
-          <td class="td-date">${row.date || "-"}</td>
           <td>${row.fajr || "--:--"}</td>
-          <td>${row.sunrise || "--:--"}</td>
           <td>${row.dhuhr || "--:--"}</td>
           <td class="td--active"><span class="time-pill">${row.asr || "--:--"}</span></td>
           <td>${row.maghrib || "--:--"}</td>
           <td>${row.isha || "--:--"}</td>
+          <td class="td-date">${row.date || "-"}</td>
         </tr>
       `;
     })
@@ -113,19 +126,18 @@ export function renderPrayerWeek(viewModel = {}) {
         <article class="ws-mobile-card" aria-label="مواقيت ${row.day || "-"}">
           <div class="ws-mobile-head">
             <div class="ws-mobile-title-wrap">
-              <h3 class="ws-mobile-title">${row.day || "-"}</h3>
-              <span class="ws-mobile-date">${row.date || "-"}</span>
+              <h3 class="ws-mobile-title">${iconMarkup(WEEKLY_ICON_PATHS.day, "ws-mobile-head-icon")}${row.day || "-"}</h3>
+              <span class="ws-mobile-date">${iconMarkup(WEEKLY_ICON_PATHS.date, "ws-mobile-meta-icon")}${row.date || "-"}</span>
             </div>
             ${todayPill}
           </div>
 
           <dl class="ws-mobile-grid">
-            <div class="ws-mobile-item"><dt>الفجر</dt><dd>${row.fajr || "--:--"}</dd></div>
-            <div class="ws-mobile-item"><dt>الشروق</dt><dd>${row.sunrise || "--:--"}</dd></div>
-            <div class="ws-mobile-item"><dt>الظهر</dt><dd>${row.dhuhr || "--:--"}</dd></div>
-            <div class="ws-mobile-item ws-mobile-item--active"><dt>العصر</dt><dd>${row.asr || "--:--"}</dd></div>
-            <div class="ws-mobile-item"><dt>المغرب</dt><dd>${row.maghrib || "--:--"}</dd></div>
-            <div class="ws-mobile-item"><dt>العشاء</dt><dd>${row.isha || "--:--"}</dd></div>
+            <div class="ws-mobile-item"><dt>${iconMarkup(WEEKLY_ICON_PATHS.fajr, "ws-mobile-item-icon")}الفجر</dt><dd>${row.fajr || "--:--"}</dd></div>
+            <div class="ws-mobile-item"><dt>${iconMarkup(WEEKLY_ICON_PATHS.dhuhr, "ws-mobile-item-icon")}الظهر</dt><dd>${row.dhuhr || "--:--"}</dd></div>
+            <div class="ws-mobile-item ws-mobile-item--active"><dt>${iconMarkup(WEEKLY_ICON_PATHS.asr, "ws-mobile-item-icon")}العصر</dt><dd>${row.asr || "--:--"}</dd></div>
+            <div class="ws-mobile-item"><dt>${iconMarkup(WEEKLY_ICON_PATHS.maghrib, "ws-mobile-item-icon")}المغرب</dt><dd>${row.maghrib || "--:--"}</dd></div>
+            <div class="ws-mobile-item"><dt>${iconMarkup(WEEKLY_ICON_PATHS.isha, "ws-mobile-item-icon")}العشاء</dt><dd>${row.isha || "--:--"}</dd></div>
           </dl>
         </article>
       `;
@@ -143,14 +155,13 @@ export function renderPrayerWeek(viewModel = {}) {
         <table class="ws-table" aria-label="جدول مواقيت الصلاة الأسبوعي">
           <thead>
             <tr>
-              <th>اليوم</th>
-              <th>التاريخ</th>
-              <th>${headerIcon("M12 3v18M3 12h18")}الفجر</span></th>
-              <th>${headerIcon("M3 12h18M12 3v18")}الشروق</span></th>
-              <th>${headerIcon("M12 3v18M3 12h18")}الظهر</span></th>
-              <th>${headerIcon("M3 12h18M12 3v18")}العصر</span></th>
-              <th>${headerIcon("M12 3v18M3 12h18")}المغرب</span></th>
-              <th>${headerIcon("M3 12h18M12 3v18")}العشاء</span></th>
+              <th>${headerLabel("اليوم", "day")}</th>
+              <th>${headerLabel("الفجر", "fajr")}</th>
+              <th>${headerLabel("الظهر", "dhuhr")}</th>
+              <th>${headerLabel("العصر", "asr")}</th>
+              <th>${headerLabel("المغرب", "maghrib")}</th>
+              <th>${headerLabel("العشاء", "isha")}</th>
+              <th>${headerLabel("التاريخ", "date")}</th>
             </tr>
           </thead>
           <tbody>
