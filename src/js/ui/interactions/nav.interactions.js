@@ -7,6 +7,98 @@ const MOBILE_FALLBACK_WIDTH = 992;
 const SCROLL_OFFSET_GAP = 8;
 const SCROLL_SPY_REFERENCE_GAP = 20;
 const COLLAPSE_SCROLL_FALLBACK_MS = 260;
+const LANG_DROPDOWN_SELECTOR = "[data-lang-dropdown]";
+const LANG_TRIGGER_SELECTOR = "[data-lang-trigger]";
+const LANG_MENU_SELECTOR = "[data-lang-menu]";
+const LANG_OPTION_SELECTOR = "[data-lang-option]";
+
+function bindLanguageDropdown(headerRoot) {
+  const langDropdown = headerRoot.querySelector(LANG_DROPDOWN_SELECTOR);
+  if (!(langDropdown instanceof HTMLElement)) {
+    return;
+  }
+
+  const triggerButton = langDropdown.querySelector(LANG_TRIGGER_SELECTOR);
+  const menuElement = langDropdown.querySelector(LANG_MENU_SELECTOR);
+  const optionButtons = Array.from(
+    langDropdown.querySelectorAll(LANG_OPTION_SELECTOR),
+  );
+  const triggerLabel = triggerButton?.querySelector("[data-lang-label]");
+  const triggerCode = triggerButton?.querySelector("[data-lang-code]");
+  const triggerFlag = triggerButton?.querySelector("[data-lang-flag]");
+
+  if (
+    !(triggerButton instanceof HTMLButtonElement) ||
+    !(menuElement instanceof HTMLElement) ||
+    optionButtons.length === 0
+  ) {
+    return;
+  }
+
+  const setOpenState = (isOpen) => {
+    triggerButton.setAttribute("aria-expanded", isOpen ? "true" : "false");
+    menuElement.hidden = !isOpen;
+    langDropdown.classList.toggle("is-open", isOpen);
+  };
+
+  const closeMenu = () => setOpenState(false);
+
+  triggerButton.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    const isExpanded = triggerButton.getAttribute("aria-expanded") === "true";
+    setOpenState(!isExpanded);
+  });
+
+  optionButtons.forEach((optionButton) => {
+    optionButton.addEventListener("click", (event) => {
+      event.preventDefault();
+
+      optionButtons.forEach((buttonElement) => {
+        buttonElement.classList.remove("is-selected");
+        buttonElement.setAttribute("aria-selected", "false");
+      });
+
+      optionButton.classList.add("is-selected");
+      optionButton.setAttribute("aria-selected", "true");
+
+      const selectedLabel = optionButton.getAttribute("data-lang-label");
+      const selectedCode = optionButton.getAttribute("data-lang-code");
+      const selectedFlag = optionButton.getAttribute("data-lang-flag");
+
+      if (triggerLabel && selectedLabel) {
+        triggerLabel.textContent = selectedLabel;
+      }
+
+      if (triggerCode && selectedCode) {
+        triggerCode.textContent = selectedCode;
+      }
+
+      if (triggerFlag instanceof HTMLImageElement && selectedFlag) {
+        triggerFlag.src = selectedFlag;
+      }
+
+      closeMenu();
+    });
+  });
+
+  document.addEventListener("click", (event) => {
+    const eventTarget = event.target;
+    if (!(eventTarget instanceof Node)) {
+      return;
+    }
+
+    if (!langDropdown.contains(eventTarget)) {
+      closeMenu();
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      closeMenu();
+    }
+  });
+}
 
 function toSectionFromLink(linkElement) {
   const href = linkElement?.getAttribute("href");
@@ -225,6 +317,8 @@ export function bindNavInteractions(headerRoot = document) {
   if (!headerRoot) {
     return undefined;
   }
+
+  bindLanguageDropdown(headerRoot);
 
   const navLinks = Array.from(headerRoot.querySelectorAll(NAV_LINK_SELECTOR));
   const headerHashLinks = Array.from(
