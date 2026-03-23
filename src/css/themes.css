@@ -1,77 +1,91 @@
 :root {
-  --g900: #124235;
-  --g700: #1a5c46;
-  --g500: #2e8b64;
-  --g100: #d8ede6;
-  --a500: #c47b2b;
-  --a400: #d4892e;
-  --a200: #f5d9a8;
-  --a100: #fdf0dc;
   --white: #ffffff;
-  --surf: #f8f3ea;
-  --surf2: #f2ece0;
-  --brd: #e4d8c4;
-  --mute: #8a9e96;
-  --dark: #1c2b26;
 
-  --ff: "Cairo", "Segoe UI", Tahoma, sans-serif;
-  --ffv: "Amiri", Georgia, serif;
+  --Primary-50: #effaf5;
+  --Primary-100: #d8f3e5;
+  --Primary-500: #2b9e76;
+  --Primary-700: #17654e;
+  --Primary-900: #124235;
+
+  --Secondary-50: #fdf9ed;
+  --Secondary-100: #f8eecd;
+  --Secondary-500: #dd9730;
+  --Secondary-700: #a1521c;
+  --Secondary-900: #6c351b;
+
+  --Background-0: #f9faf9;
+  --Background-50: #f3f6f5;
+  --Background-100: #f9faf9;
+
+  --Text-0: #ffffff;
+  --Text-600: #475569;
+  --Text-900: #0b1220;
+
+  --System-Success: #22c55e;
+  --System-Warning: #f59e0b;
+  --System-Error: #ef4444;
+  --System-Info: #38bdf8;
+
+  --font-heading: "Reem Kufi", sans-serif;
+  --font-body: "Noto Kufi Arabic", sans-serif;
+  --font-quote: "Amiri Quran", serif;
+
   --tr: 180ms ease;
   --rcard: 16px;
   --rpill: 8px;
 
-  --color-bg: var(--surf);
+  --color-bg: var(--Background-100);
   --color-surface: var(--white);
-  --color-surface-muted: var(--surf2);
+  --color-surface-muted: var(--Background-50);
   --color-card: var(--white);
-  --color-text: var(--dark);
-  --color-text-muted: var(--mute);
-  --color-text-inverse: var(--white);
-  --color-primary: var(--g500);
-  --color-accent: var(--a500);
-  --color-border: var(--brd);
-  --color-focus: var(--g500);
+  --color-text: var(--Text-900);
+  --color-text-muted: var(--Text-600);
+  --color-text-inverse: var(--Text-0);
+  --color-primary: var(--Primary-500);
+  --color-accent: var(--Secondary-500);
+  --color-border: color-mix(in srgb, var(--Background-50) 72%, var(--Text-600));
+  --color-focus: var(--Primary-500);
 
-  --Body-fontFamily: var(--ff);
+  --Body-fontFamily: var(--font-body);
   --Body-fontSize: 16px;
   --Body-fontWeight: 400;
   --Body-lineHeight: 24px;
   --Body-letterSpacing: 0;
 
-  --H1-fontFamily: var(--ff);
+  --H1-fontFamily: var(--font-heading);
   --H1-fontSize: 32px;
-  --H1-fontWeight: 800;
+  --H1-fontWeight: 600;
   --H1-lineHeight: 40px;
   --H1-letterSpacing: 0;
 
-  --H2-fontFamily: var(--ff);
+  --H2-fontFamily: var(--font-heading);
   --H2-fontSize: 24px;
-  --H2-fontWeight: 800;
+  --H2-fontWeight: 600;
   --H2-lineHeight: 32px;
   --H2-letterSpacing: 0;
 
-  --H3-fontFamily: var(--ff);
+  --H3-fontFamily: var(--font-heading);
   --H3-fontSize: 20px;
-  --H3-fontWeight: 700;
+  --H3-fontWeight: 500;
   --H3-lineHeight: 28px;
   --H3-letterSpacing: 0;
 
-  --Label-fontFamily: var(--ff);
+  --Label-fontFamily: var(--font-body);
   --Label-fontSize: 14px;
-  --Label-fontWeight: 600;
+  --Label-fontWeight: 500;
   --Label-lineHeight: 22px;
   --Label-letterSpacing: 0;
 
-  --Caption-fontFamily: var(--ff);
+  --Caption-fontFamily: var(--font-body);
   --Caption-fontSize: 13px;
-  --Caption-fontWeight: 500;
+  --Caption-fontWeight: 400;
   --Caption-lineHeight: 20px;
   --Caption-letterSpacing: 0;
 
-  --Quote-fontFamily: var(--ffv);
+  --Quote-fontFamily: var(--font-quote);
   --Quote-fontSize: 18px;
-  --Quote-fontWeight: 700;
-  --Quote-lineHeight: 30px;
+  --Quote-fontWeight: 400;
+  --Quote-lineHeight: 26px;
   --Quote-letterSpacing: 0;
 
   --space-1: 0.25rem;

@@ -12,9 +12,9 @@ html {
 
 body {
   min-height: 100vh;
-  font-family: var(--ff);
-  background: var(--surf);
-  color: var(--dark);
+  font-family: var(--Body-fontFamily);
+  background: var(--Background-100);
+  color: var(--Text-900);
   direction: rtl;
 }
 
@@ -37,6 +37,6 @@ select {
 }
 
 :focus-visible {
-  outline: 2px solid var(--g500);
+  outline: 2px solid var(--Primary-500);
   outline-offset: 2px;
 }

@@ -8,7 +8,7 @@
   padding: var(--space-2) var(--space-4);
   border: 1px solid transparent;
   border-radius: var(--radius-md);
-  font-family: var(--Label-fontFamily), "Segoe UI", Tahoma, Arial, sans-serif;
+  font-family: var(--Label-fontFamily);
   font-size: var(--Label-fontSize);
   font-weight: var(--Label-fontWeight);
   line-height: var(--Label-lineHeight);
@@ -70,7 +70,7 @@
   border-radius: var(--radius-round);
   border: 1px solid var(--color-border);
   background-color: var(--color-surface-muted);
-  font-family: var(--Label-fontFamily), "Segoe UI", Tahoma, Arial, sans-serif;
+  font-family: var(--Label-fontFamily);
   font-size: var(--Label-fontSize);
   font-weight: var(--Label-fontWeight);
   line-height: var(--Label-lineHeight);
@@ -96,7 +96,7 @@
 }
 
 .section-heading__title {
-  font-family: var(--H2-fontFamily), "Segoe UI", Tahoma, Arial, sans-serif;
+  font-family: var(--H2-fontFamily);
   font-size: var(--H2-fontSize);
   font-weight: var(--H2-fontWeight);
   line-height: var(--H2-lineHeight);
@@ -106,7 +106,7 @@
 .section-heading__eyebrow {
   margin-block-end: var(--space-2);
   color: var(--color-primary);
-  font-family: var(--Label-fontFamily), "Segoe UI", Tahoma, Arial, sans-serif;
+  font-family: var(--Label-fontFamily);
   font-size: var(--Label-fontSize);
   font-weight: var(--Label-fontWeight);
   line-height: var(--Label-lineHeight);
@@ -118,7 +118,7 @@
 
 .section-heading__subtitle {
   color: var(--color-text-muted);
-  font-family: var(--Caption-fontFamily), "Segoe UI", Tahoma, Arial, sans-serif;
+  font-family: var(--Caption-fontFamily);
   font-size: var(--Caption-fontSize);
   font-weight: var(--Caption-fontWeight);
   line-height: var(--Caption-lineHeight);
@@ -131,7 +131,7 @@
   justify-content: space-between;
   gap: var(--space-3);
   color: var(--color-text-muted);
-  font-family: var(--Caption-fontFamily), "Segoe UI", Tahoma, Arial, sans-serif;
+  font-family: var(--Caption-fontFamily);
   font-size: var(--Caption-fontSize);
   font-weight: var(--Caption-fontWeight);
   line-height: var(--Caption-lineHeight);
@@ -155,7 +155,7 @@
 }
 
 .table-shell th {
-  font-family: var(--Label-fontFamily), "Segoe UI", Tahoma, Arial, sans-serif;
+  font-family: var(--Label-fontFamily);
   font-size: var(--Label-fontSize);
   font-weight: var(--Label-fontWeight);
   line-height: var(--Label-lineHeight);
@@ -163,7 +163,7 @@
 }
 
 .table-shell td {
-  font-family: var(--Body-fontFamily), "Segoe UI", Tahoma, Arial, sans-serif;
+  font-family: var(--Body-fontFamily);
   font-size: var(--Body-fontSize);
   font-weight: var(--Body-fontWeight);
   line-height: var(--Body-lineHeight);
@@ -180,7 +180,7 @@
   padding: var(--space-4);
   color: var(--color-text-muted);
   background-color: var(--color-surface-muted);
-  font-family: var(--Caption-fontFamily), "Segoe UI", Tahoma, Arial, sans-serif;
+  font-family: var(--Caption-fontFamily);
   font-size: var(--Caption-fontSize);
   font-weight: var(--Caption-fontWeight);
   line-height: var(--Caption-lineHeight);
