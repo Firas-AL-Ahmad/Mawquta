@@ -7,8 +7,15 @@ export function renderHeader(rootElement) {
     <div class="container-xl px-3 px-sm-4 px-lg-5">
       <div class="site-header__inner">
         <a href="#hero-section" class="site-header__brand" aria-label="مواقتا — الصفحة الرئيسية">
-          <span class="site-header__brand-logo" aria-hidden="true">م</span>
-          <span>مواقتا</span>
+          <img
+            class="site-header__brand-image"
+            src="./assets/icons/Header/header-logo-Light.svg"
+            alt="مواقتا"
+            width="128"
+            height="40"
+            loading="eager"
+            decoding="async"
+          />
         </a>
 
         <button
