@@ -1,13 +1,77 @@
 const DEFAULT_WEEK_RANGE = "مارس 23 – مارس 29، 2026";
 
 const DEFAULT_WEEK_ROWS = [
-  { day: "الاثنين", date: "23/03", fajr: "05:11", sunrise: "06:35", dhuhr: "12:31", asr: "16:09", maghrib: "18:57", isha: "20:27", today: true },
-  { day: "الثلاثاء", date: "24/03", fajr: "05:10", sunrise: "06:34", dhuhr: "12:31", asr: "16:10", maghrib: "18:58", isha: "20:28" },
-  { day: "الأربعاء", date: "25/03", fajr: "05:09", sunrise: "06:32", dhuhr: "12:30", asr: "16:10", maghrib: "18:59", isha: "20:29" },
-  { day: "الخميس", date: "26/03", fajr: "05:08", sunrise: "06:31", dhuhr: "12:30", asr: "16:11", maghrib: "19:00", isha: "20:30" },
-  { day: "الجمعة", date: "27/03", fajr: "05:06", sunrise: "06:30", dhuhr: "12:29", asr: "16:11", maghrib: "19:01", isha: "20:31" },
-  { day: "السبت", date: "28/03", fajr: "05:05", sunrise: "06:28", dhuhr: "12:29", asr: "16:12", maghrib: "19:02", isha: "20:32" },
-  { day: "الأحد", date: "29/03", fajr: "05:04", sunrise: "06:27", dhuhr: "12:28", asr: "16:12", maghrib: "19:03", isha: "20:33" },
+  {
+    day: "الاثنين",
+    date: "23/03",
+    fajr: "05:11",
+    sunrise: "06:35",
+    dhuhr: "12:31",
+    asr: "16:09",
+    maghrib: "18:57",
+    isha: "20:27",
+    today: true,
+  },
+  {
+    day: "الثلاثاء",
+    date: "24/03",
+    fajr: "05:10",
+    sunrise: "06:34",
+    dhuhr: "12:31",
+    asr: "16:10",
+    maghrib: "18:58",
+    isha: "20:28",
+  },
+  {
+    day: "الأربعاء",
+    date: "25/03",
+    fajr: "05:09",
+    sunrise: "06:32",
+    dhuhr: "12:30",
+    asr: "16:10",
+    maghrib: "18:59",
+    isha: "20:29",
+  },
+  {
+    day: "الخميس",
+    date: "26/03",
+    fajr: "05:08",
+    sunrise: "06:31",
+    dhuhr: "12:30",
+    asr: "16:11",
+    maghrib: "19:00",
+    isha: "20:30",
+  },
+  {
+    day: "الجمعة",
+    date: "27/03",
+    fajr: "05:06",
+    sunrise: "06:30",
+    dhuhr: "12:29",
+    asr: "16:11",
+    maghrib: "19:01",
+    isha: "20:31",
+  },
+  {
+    day: "السبت",
+    date: "28/03",
+    fajr: "05:05",
+    sunrise: "06:28",
+    dhuhr: "12:29",
+    asr: "16:12",
+    maghrib: "19:02",
+    isha: "20:32",
+  },
+  {
+    day: "الأحد",
+    date: "29/03",
+    fajr: "05:04",
+    sunrise: "06:27",
+    dhuhr: "12:28",
+    asr: "16:12",
+    maghrib: "19:03",
+    isha: "20:33",
+  },
 ];
 
 function headerIcon(svgPath) {
@@ -16,7 +80,10 @@ function headerIcon(svgPath) {
 
 export function renderPrayerWeek(viewModel = {}) {
   const weekRange = viewModel.weekRange || DEFAULT_WEEK_RANGE;
-  const rows = Array.isArray(viewModel.rows) && viewModel.rows.length ? viewModel.rows : DEFAULT_WEEK_ROWS;
+  const rows =
+    Array.isArray(viewModel.rows) && viewModel.rows.length
+      ? viewModel.rows
+      : DEFAULT_WEEK_ROWS;
 
   const rowMarkup = rows
     .map((row) => {
@@ -32,6 +99,35 @@ export function renderPrayerWeek(viewModel = {}) {
           <td>${row.maghrib || "--:--"}</td>
           <td>${row.isha || "--:--"}</td>
         </tr>
+      `;
+    })
+    .join("");
+
+  const mobileCardsMarkup = rows
+    .map((row) => {
+      const todayPill = row.today
+        ? '<span class="ws-mobile-pill">اليوم</span>'
+        : "";
+
+      return `
+        <article class="ws-mobile-card" aria-label="مواقيت ${row.day || "-"}">
+          <div class="ws-mobile-head">
+            <div class="ws-mobile-title-wrap">
+              <h3 class="ws-mobile-title">${row.day || "-"}</h3>
+              <span class="ws-mobile-date">${row.date || "-"}</span>
+            </div>
+            ${todayPill}
+          </div>
+
+          <dl class="ws-mobile-grid">
+            <div class="ws-mobile-item"><dt>الفجر</dt><dd>${row.fajr || "--:--"}</dd></div>
+            <div class="ws-mobile-item"><dt>الشروق</dt><dd>${row.sunrise || "--:--"}</dd></div>
+            <div class="ws-mobile-item"><dt>الظهر</dt><dd>${row.dhuhr || "--:--"}</dd></div>
+            <div class="ws-mobile-item ws-mobile-item--active"><dt>العصر</dt><dd>${row.asr || "--:--"}</dd></div>
+            <div class="ws-mobile-item"><dt>المغرب</dt><dd>${row.maghrib || "--:--"}</dd></div>
+            <div class="ws-mobile-item"><dt>العشاء</dt><dd>${row.isha || "--:--"}</dd></div>
+          </dl>
+        </article>
       `;
     })
     .join("");
@@ -61,6 +157,10 @@ export function renderPrayerWeek(viewModel = {}) {
             ${rowMarkup}
           </tbody>
         </table>
+      </div>
+
+      <div class="ws-mobile-list" aria-label="مواقيت الصلاة الأسبوعية - عرض الجوال">
+        ${mobileCardsMarkup}
       </div>
     </div>
   `;

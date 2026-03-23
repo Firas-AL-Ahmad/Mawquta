@@ -12,7 +12,15 @@ const DEFAULT_MONTH_ROWS = Array.from({ length: 30 }, (_, index) => {
   const current = day === 15;
   return {
     number: day,
-    dayName: ["الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت", "الأحد"][index % 7],
+    dayName: [
+      "الاثنين",
+      "الثلاثاء",
+      "الأربعاء",
+      "الخميس",
+      "الجمعة",
+      "السبت",
+      "الأحد",
+    ][index % 7],
     date: `${String(day).padStart(2, "0")}/03`,
     imsak: `04:${String((12 + index) % 60).padStart(2, "0")}`,
     iftar: `18:${String((42 + index) % 60).padStart(2, "0")}`,
@@ -35,7 +43,10 @@ export function renderRamadanCountdown(viewModel = {}) {
     },
   };
 
-  const progress = Math.max(0, Math.min(100, safeNum(today.progress, DEFAULT_TODAY.progress)));
+  const progress = Math.max(
+    0,
+    Math.min(100, safeNum(today.progress, DEFAULT_TODAY.progress)),
+  );
 
   return `
     <div class="rcard" id="ramadanTodayCard">
@@ -73,13 +84,18 @@ export function renderRamadanCountdown(viewModel = {}) {
 }
 
 export function renderRamadanMonthTable(viewModel = {}) {
-  const rows = Array.isArray(viewModel.rows) && viewModel.rows.length ? viewModel.rows : DEFAULT_MONTH_ROWS;
+  const rows =
+    Array.isArray(viewModel.rows) && viewModel.rows.length
+      ? viewModel.rows
+      : DEFAULT_MONTH_ROWS;
   const rangeText = viewModel.rangeText || "01 مارس – 30 مارس 2026";
 
   const rowMarkup = rows
     .map((row) => {
       const todayClass = row.today ? "row--today" : "";
-      const todayPill = row.today ? '<span class="rt-today-pill">اليوم</span>' : "";
+      const todayPill = row.today
+        ? '<span class="rt-today-pill">اليوم</span>'
+        : "";
       return `
         <tr class="${todayClass}">
           <td class="td-num">${row.number}</td>
@@ -89,6 +105,31 @@ export function renderRamadanMonthTable(viewModel = {}) {
           <td>${row.iftar}</td>
           <td>${todayPill}</td>
         </tr>
+      `;
+    })
+    .join("");
+
+  const mobileCardsMarkup = rows
+    .map((row) => {
+      const todayPill = row.today
+        ? '<span class="rt-mobile-pill">اليوم</span>'
+        : "";
+
+      return `
+        <article class="rt-mobile-card" aria-label="إمساكية ${row.dayName || "-"}">
+          <div class="rt-mobile-head">
+            <div>
+              <h3 class="rt-mobile-title">اليوم ${row.number || "-"} - ${row.dayName || "-"}</h3>
+              <span class="rt-mobile-date">${row.date || "-"}</span>
+            </div>
+            ${todayPill}
+          </div>
+
+          <dl class="rt-mobile-grid">
+            <div class="rt-mobile-item"><dt>الإمساك</dt><dd>${row.imsak || "--:--"}</dd></div>
+            <div class="rt-mobile-item rt-mobile-item--iftar"><dt>الإفطار</dt><dd>${row.iftar || "--:--"}</dd></div>
+          </dl>
+        </article>
       `;
     })
     .join("");
@@ -126,6 +167,11 @@ export function renderRamadanMonthTable(viewModel = {}) {
             <tbody>${rowMarkup}</tbody>
           </table>
         </div>
+
+        <div class="rt-mobile-list" aria-label="إمساكية رمضان - عرض الجوال">
+          ${mobileCardsMarkup}
+        </div>
+
         <div class="rt-more-btn">
           <button type="button" class="btn-more" data-rt-load-more>
             عرض المزيد
