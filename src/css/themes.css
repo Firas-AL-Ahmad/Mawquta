@@ -5,6 +5,7 @@
   --Primary-100: #d8f3e5;
   --Primary-500: #2b9e76;
   --Primary-700: #17654e;
+  --Primary-800: #0f5233;
   --Primary-900: #124235;
 
   --Secondary-50: #fdf9ed;
@@ -14,8 +15,9 @@
   --Secondary-900: #6c351b;
 
   --Background-0: #f9faf9;
-  --Background-50: #F8F7F4;
+  --Background-50: #f8f7f4;
   --Background-100: #f9faf9;
+  --Background-Hover: #d8e3de;
 
   --Text-0: #ffffff;
   --Text-600: #475569;

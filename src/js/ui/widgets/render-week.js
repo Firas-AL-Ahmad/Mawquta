@@ -102,12 +102,16 @@ export function renderPrayerWeek(viewModel = {}) {
   const rowMarkup = rows
     .map((row) => {
       const rowClass = row.today ? "row--today" : "";
+      const asrCellMarkup = row.today
+        ? `<td class="td--active"><span class="time-pill">${row.asr || "--:--"}</span></td>`
+        : `<td>${row.asr || "--:--"}</td>`;
+
       return `
         <tr class="${rowClass}">
           <td class="td-day">${row.day || "-"}</td>
           <td>${row.fajr || "--:--"}</td>
           <td>${row.dhuhr || "--:--"}</td>
-          <td class="td--active"><span class="time-pill">${row.asr || "--:--"}</span></td>
+          ${asrCellMarkup}
           <td>${row.maghrib || "--:--"}</td>
           <td>${row.isha || "--:--"}</td>
           <td class="td-date">${row.date || "-"}</td>
@@ -121,6 +125,9 @@ export function renderPrayerWeek(viewModel = {}) {
       const todayPill = row.today
         ? '<span class="ws-mobile-pill">اليوم</span>'
         : "";
+      const asrMobileItemClass = row.today
+        ? "ws-mobile-item ws-mobile-item--active"
+        : "ws-mobile-item";
 
       return `
         <article class="ws-mobile-card" aria-label="مواقيت ${row.day || "-"}">
@@ -135,7 +142,7 @@ export function renderPrayerWeek(viewModel = {}) {
           <dl class="ws-mobile-grid">
             <div class="ws-mobile-item"><dt>${iconMarkup(WEEKLY_ICON_PATHS.fajr, "ws-mobile-item-icon")}الفجر</dt><dd>${row.fajr || "--:--"}</dd></div>
             <div class="ws-mobile-item"><dt>${iconMarkup(WEEKLY_ICON_PATHS.dhuhr, "ws-mobile-item-icon")}الظهر</dt><dd>${row.dhuhr || "--:--"}</dd></div>
-            <div class="ws-mobile-item ws-mobile-item--active"><dt>${iconMarkup(WEEKLY_ICON_PATHS.asr, "ws-mobile-item-icon")}العصر</dt><dd>${row.asr || "--:--"}</dd></div>
+            <div class="${asrMobileItemClass}"><dt>${iconMarkup(WEEKLY_ICON_PATHS.asr, "ws-mobile-item-icon")}العصر</dt><dd>${row.asr || "--:--"}</dd></div>
             <div class="ws-mobile-item"><dt>${iconMarkup(WEEKLY_ICON_PATHS.maghrib, "ws-mobile-item-icon")}المغرب</dt><dd>${row.maghrib || "--:--"}</dd></div>
             <div class="ws-mobile-item"><dt>${iconMarkup(WEEKLY_ICON_PATHS.isha, "ws-mobile-item-icon")}العشاء</dt><dd>${row.isha || "--:--"}</dd></div>
           </dl>
@@ -145,23 +152,27 @@ export function renderPrayerWeek(viewModel = {}) {
     .join("");
 
   return `
-    <p class="ws-sub">الصلاوات لسبع أيام قادمة</p>
     <div class="ws-card">
-      <div class="ws-range">
-        <span class="ws-range__icon" aria-hidden="true"></span>
-        <span class="ws-range__text" data-weekly-range>${weekRange}</span>
+      <div class="ws-card-top">
+        <p class="ws-sub">الصلاوات لسبع أيام قادمة</p>
+
+        <div class="ws-range" aria-label="نطاق الأسبوع">
+          <span class="ws-range__icon" aria-hidden="true"></span>
+          <span class="ws-range__text" data-weekly-range>${weekRange}</span>
+        </div>
       </div>
+
       <div class="ws-wrap">
         <table class="ws-table" aria-label="جدول مواقيت الصلاة الأسبوعي">
           <thead>
             <tr>
-              <th>${headerLabel("اليوم", "day")}</th>
-              <th>${headerLabel("الفجر", "fajr")}</th>
-              <th>${headerLabel("الظهر", "dhuhr")}</th>
-              <th>${headerLabel("العصر", "asr")}</th>
-              <th>${headerLabel("المغرب", "maghrib")}</th>
-              <th>${headerLabel("العشاء", "isha")}</th>
-              <th>${headerLabel("التاريخ", "date")}</th>
+              <th scope="col">${headerLabel("اليوم", "day")}</th>
+              <th scope="col">${headerLabel("الفجر", "fajr")}</th>
+              <th scope="col">${headerLabel("الظهر", "dhuhr")}</th>
+              <th scope="col">${headerLabel("العصر", "asr")}</th>
+              <th scope="col">${headerLabel("المغرب", "maghrib")}</th>
+              <th scope="col">${headerLabel("العشاء", "isha")}</th>
+              <th scope="col">${headerLabel("التاريخ", "date")}</th>
             </tr>
           </thead>
           <tbody>
