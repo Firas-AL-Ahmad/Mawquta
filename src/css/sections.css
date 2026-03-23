@@ -267,11 +267,9 @@
   min-height: 90vh;
   display: flex;
   align-items: center;
-  background: linear-gradient(
-    155deg,
-    var(--Decor-Hero-Start) 0%,
-    var(--Decor-Hero-End) 100%
-  );
+  background: transparent;
+  margin: 0;
+  border: none;
   position: relative;
   overflow: hidden;
 }
@@ -600,10 +598,10 @@
 }
 
 .weekly-sec .sec-city__eyebrow-icon {
-  width: 18px;
-  height: 18px;
-  background: url("../assets/icons/Header/location-icon.svg") center/contain
-    no-repeat;
+  width: 24px;
+  height: 24px;
+  background: url("../assets/icons/Weekly-Prayer/Prayer%20Rug.svg")
+    center/contain no-repeat;
 }
 
 .sec-city__name {
@@ -633,12 +631,110 @@
   padding: 6px 20px;
 }
 
+.weekly-sec .weekly-sec__head {
+  margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.weekly-sec {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.weekly-sec > .container-xl {
+  position: relative;
+  z-index: 1;
+}
+
+.weekly-sec::before,
+.weekly-sec::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: bottom;
+}
+
+.weekly-sec::before {
+  left: 0;
+  width: clamp(180px, 22vw, 348px);
+  height: clamp(180px, 22vw, 348px);
+  background-image: url("../assets/icons/Weekly-Prayer/kabah%201.svg");
+}
+
+.weekly-sec::after {
+  right: 0;
+  width: clamp(160px, 20vw, 300px);
+  height: clamp(160px, 20vw, 300px);
+  background-image: url("../assets/icons/Weekly-Prayer/shalat%201.svg");
+}
+
+.weekly-sec .weekly-sec__city {
+  gap: 0.3125rem;
+  align-items: flex-start;
+}
+
+.weekly-sec .weekly-sec__eyebrow {
+  display: inline-flex;
+  align-self: flex-start;
+  justify-content: flex-start;
+  font-size: clamp(0.6875rem, 1vw, 0.8125rem);
+  font-weight: 600;
+  color: var(--Primary-700);
+  gap: 0.5rem;
+  background: var(--white);
+  border-radius: 999px;
+  padding: 0.375rem 0.75rem;
+}
+
+.weekly-sec .weekly-sec__eyebrow .sec-city__eyebrow-icon {
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
+}
+
+.weekly-sec .weekly-sec__name {
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 900;
+  line-height: 1;
+  color: var(--Primary-700);
+  white-space: nowrap;
+  text-align: left;
+}
+
+.weekly-sec .weekly-sec__meta {
+  font-size: clamp(0.625rem, 0.9vw, 0.8125rem);
+  font-weight: 500;
+  color: color-mix(in srgb, var(--Text-600) 85%, var(--Primary-900));
+  background: #e6ebe5;
+  border-radius: 6px;
+  padding: 0.1875rem 0.625rem;
+  text-align: left;
+}
+
+.weekly-sec .weekly-sec__badge {
+  background: var(--Secondary-500);
+  border-radius: 8px;
+  padding: 0.4375rem 1.375rem;
+  font-size: clamp(0.8rem, 1.1vw, 0.9375rem);
+  font-weight: 700;
+  align-self: flex-start;
+  white-space: nowrap;
+}
+
 .daily-sec,
 .weekly-sec,
 .qibla-sec,
 .ramadan-sec,
 .ramadan-table-sec {
   padding-block: clamp(2rem, 4vw, 4rem);
+  margin: 0;
+  border: none;
 }
 
 .ps-track {
@@ -790,8 +886,8 @@
 }
 .ws-range__icon,
 .rt-range__icon {
-  width: 16px;
-  height: 16px;
+  width: 24px;
+  height: 24px;
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2317654e'%3E%3Cpath d='M19 3h-1V1h-2v2H8V1H6v2H5C3.9 3 3 3.9 3 5v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z'/%3E%3C/svg%3E")
     center/contain no-repeat;
 }
@@ -820,7 +916,7 @@
 }
 .ws-table thead tr,
 .rt-table thead tr {
-  background: var(--Background-50);
+  background: var(--Background-Table-Header);
   border-bottom: 1px solid var(--color-border);
 }
 .ws-table tbody tr,
@@ -876,24 +972,33 @@
 
 .weekly-sec .ws-sub {
   margin-bottom: 0;
+  font-family: var(--font-quote);
   font-size: clamp(0.875rem, 1.2vw, 1.0625rem);
   color: var(--Primary-900);
 }
 
 .weekly-sec .ws-range {
-  padding: 0.25rem 0.75rem;
-  border: 1px solid
-    color-mix(in srgb, var(--Primary-900) 10%, var(--color-border));
-  border-radius: 8px;
-  background: var(--Background-50);
-  border-bottom-width: 1px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  background: var(--Weekly-Chip-Background);
+  border: none;
 }
 
 .weekly-sec .ws-range__text {
-  font-size: clamp(0.6875rem, 0.95vw, 0.8125rem);
-  font-weight: 600;
-  color: var(--Primary-700);
+  font-family: var(--Body-fontFamily);
+  font-size: var(--Label-fontSize);
+  line-height: var(--Label-lineHeight);
+  font-weight: var(--Label-fontWeight);
+  color: var(--Weekly-Chip-Text);
   direction: ltr;
+}
+
+.weekly-sec .ws-range__icon {
+  display: none;
 }
 
 .weekly-sec .ws-wrap {
@@ -942,7 +1047,7 @@
 }
 
 .weekly-sec .ws-table thead tr {
-  background: color-mix(in srgb, var(--Background-50) 96%, var(--white));
+  background: var(--Background-Table-Header);
   border-bottom-width: 1.5px;
 }
 
@@ -985,15 +1090,19 @@
   position: relative;
 }
 
-.weekly-sec .row--today::after {
+.weekly-sec .row--today td.td-day {
+  position: relative;
+}
+
+.weekly-sec .row--today td.td-day::before {
   content: "";
   position: absolute;
   inset-block: 0;
-  inset-inline-end: 0;
+  inset-inline-start: 0;
   width: 4px;
   background: var(--Primary-500);
-  border-start-end-radius: 4px;
-  border-end-end-radius: 4px;
+  border-start-start-radius: 4px;
+  border-end-start-radius: 4px;
 }
 
 .weekly-sec .td--active {
@@ -1031,9 +1140,9 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 16px;
-  height: 16px;
-  flex: 0 0 16px;
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
 }
 
 .th-ic img,
@@ -1066,9 +1175,9 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 14px;
-  height: 14px;
-  flex: 0 0 14px;
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
 }
 
 .ws-mobile-item dt {
@@ -1178,7 +1287,7 @@
 }
 
 .qibla-sec {
-  background: var(--Background-50);
+  background: transparent;
 }
 .qibla-card__head {
   display: flex;
@@ -1518,10 +1627,11 @@
 }
 
 .site-footer {
-  background: var(--Primary-900);
-  color: rgba(255, 255, 255, 0.8);
+  background: transparent;
+  color: var(--Text-900);
   padding-block: clamp(2.5rem, 5vw, 4rem) clamp(1.5rem, 3vw, 2.5rem);
-  margin-top: 2rem;
+  margin: 0;
+  border: none;
 }
 .footer-brand {
   display: flex;
@@ -1544,18 +1654,18 @@
 .footer-brand__name {
   font-size: 1.125rem;
   font-weight: 800;
-  color: var(--white);
+  color: var(--Primary-900);
 }
 .footer-desc,
 .footer-contact {
   font-size: 0.8125rem;
   line-height: 1.7;
-  color: rgba(255, 255, 255, 0.65);
+  color: var(--Text-600);
 }
 .footer-heading {
   font-size: 0.875rem;
   font-weight: 700;
-  color: var(--white);
+  color: var(--Primary-900);
   margin-bottom: 0.75rem;
 }
 .footer-links {
@@ -1568,14 +1678,14 @@
 }
 .footer-links a {
   font-size: 0.8125rem;
-  color: rgba(255, 255, 255, 0.65);
+  color: var(--Text-600);
   text-decoration: none;
 }
 .footer-links a:hover {
   color: var(--Secondary-500);
 }
 .footer-divider {
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid var(--color-border);
   margin-block: 1.5rem;
 }
 .footer-bottom {
@@ -1585,7 +1695,7 @@
   gap: 1rem;
   flex-wrap: wrap;
   font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.45);
+  color: var(--Text-600);
 }
 .footer-social {
   display: flex;
@@ -1595,11 +1705,11 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
+  background: color-mix(in srgb, var(--Background-50) 72%, var(--white));
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgba(255, 255, 255, 0.65);
+  color: var(--Primary-700);
   text-decoration: none;
 }
 .footer-social a:hover {
@@ -1607,8 +1717,7 @@
 }
 
 .sec-divider {
-  border: none;
-  border-top: 1px solid var(--color-border);
+  border: 0;
   margin: 0;
 }
 

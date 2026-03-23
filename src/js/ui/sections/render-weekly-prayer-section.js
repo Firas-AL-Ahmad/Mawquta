@@ -51,16 +51,16 @@ export function renderWeeklyPrayerSection(
   rootElement.innerHTML = `
     <section class="weekly-sec" id="weekly" aria-label="مواقيت الصلاة الأسبوعية">
       <div class="container-xl px-3 px-sm-4 px-lg-5">
-        <div class="sec-head">
-          <div class="sec-city">
-            <div class="sec-city__eyebrow">
+        <div class="sec-head weekly-sec__head">
+          <div class="sec-city weekly-sec__city">
+            <div class="sec-city__eyebrow weekly-sec__eyebrow">
               <span class="sec-city__eyebrow-icon" aria-hidden="true"></span>
               <span>${model.eyebrowLabel}</span>
             </div>
-            <h2 class="sec-city__name" data-weekly-city>${model.locationLabel}</h2>
-            <span class="sec-city__meta">${model.statusLabel}</span>
+            <h2 class="sec-city__name weekly-sec__name" data-weekly-city>${model.locationLabel}</h2>
+            <span class="sec-city__meta weekly-sec__meta">${model.statusLabel}</span>
           </div>
-          <span class="sec-badge">الأسبوعية</span>
+          <span class="sec-badge weekly-sec__badge">الأسبوعية</span>
         </div>
 
         ${renderPrayerWeek(model.week)}

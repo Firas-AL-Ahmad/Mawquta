@@ -17,7 +17,11 @@
   --Background-0: #f9faf9;
   --Background-50: #f8f7f4;
   --Background-100: #f9faf9;
+  --Background-Page: #f8f7f4;
+  --Background-Table-Header: #f8fafc;
   --Background-Hover: #d8e3de;
+  --Weekly-Chip-Background: rgba(15, 82, 51, 0.05);
+  --Weekly-Chip-Text: #0f5233;
 
   --Text-0: #ffffff;
   --Text-600: #475569;
@@ -53,7 +57,7 @@
   --rcard: 16px;
   --rpill: 8px;
 
-  --color-bg: var(--Background-100);
+  --color-bg: var(--Background-Page);
   --color-surface: var(--white);
   --color-surface-muted: var(--Background-50);
   --color-card: var(--white);

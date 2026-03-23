@@ -13,7 +13,7 @@ html {
 body {
   min-height: 100vh;
   font-family: var(--Body-fontFamily);
-  background: var(--Background-100);
+  background: var(--Background-Page);
   color: var(--Text-900);
   direction: rtl;
 }
