@@ -4,17 +4,30 @@ export function renderFooter(rootElement) {
   }
 
   rootElement.innerHTML = `
-    <div class="container-xl px-3 px-sm-4 px-lg-5">
-      <div class="row g-4">
-        <div class="col-12 col-md-4">
+    <div class="footer-content container-xl px-3 px-sm-4 px-lg-5">
+      <div class="footer-main-grid">
+        <div class="footer-main-col footer-main-col--brand">
           <a href="#hero-section" class="footer-brand" aria-label="مواقتا">
-            <span class="footer-brand__logo" aria-hidden="true">م</span>
-            <span class="footer-brand__name">مواقتا</span>
+            <img class="footer-brand__logo-img" src="./assets/icons/footer/footer-logo.svg" alt="شعار مواقتا" />
           </a>
-          <p class="footer-desc">موقع متخصص لمواقيت الصلاة والأذان والقبلة لجميع مدن العالم. نوفر بيانات دقيقة معتمدة على أفضل طرق الحساب الفلكي.</p>
+          <p class="footer-desc">موقع بسيط يساعدك على متابعة مواقيت الصلاة، اتجاه القبلة، وإمساكية رمضان بشكل واضح وسهل الاستخدام.</p>
+          <div class="footer-social-inline" aria-label="وسائل التواصل الاجتماعي">
+            <a class="footer-social-inline__item" href="#" aria-label="Instagram">
+              <img src="./assets/icons/footer/instegram.svg" alt="" aria-hidden="true" />
+              <span>@firas_a7mad</span>
+            </a>
+            <a class="footer-social-inline__item" href="#" aria-label="LinkedIn">
+              <img src="./assets/icons/footer/Linkedin.svg" alt="" aria-hidden="true" />
+              <span>Firas AL-Ahmad</span>
+            </a>
+            <a class="footer-social-inline__item" href="#" aria-label="GitHub">
+              <img src="./assets/icons/footer/GitHub.svg" alt="" aria-hidden="true" />
+              <span>Firas AL-Ahmad</span>
+            </a>
+          </div>
         </div>
 
-        <div class="col-6 col-md-2 offset-md-1">
+        <div class="footer-main-col footer-main-col--links">
           <p class="footer-heading">الموقع</p>
           <ul class="footer-links">
             <li><a href="#hero-section">الرئيسية</a></li>
@@ -24,7 +37,7 @@ export function renderFooter(rootElement) {
           </ul>
         </div>
 
-        <div class="col-6 col-md-2">
+        <div class="footer-main-col footer-main-col--info">
           <p class="footer-heading">المعلومات</p>
           <ul class="footer-links">
             <li><a href="#">عن مواقتا</a></li>
@@ -34,25 +47,30 @@ export function renderFooter(rootElement) {
           </ul>
         </div>
 
-        <div class="col-12 col-md-3">
+        <div class="footer-main-col footer-main-col--contact">
           <p class="footer-heading">تواصل معنا</p>
-          <div class="footer-contact">
-            <p>البريد: info@mawquta.app</p>
-            <p>دمشق، سوريا</p>
-          </div>
+          <ul class="footer-contact-list">
+            <li>
+              <a href="mailto:firas.al.ahmad.mail@gmail.com">
+                <img src="./assets/icons/footer/mail-open.svg" alt="" aria-hidden="true" />
+                <span>firas.al.ahmad.mail@gmail.com</span>
+              </a>
+            </li>
+            <li>
+              <a href="tel:+963937302533">
+                <img src="./assets/icons/footer/calling-02.svg" alt="" aria-hidden="true" />
+                <span>+963 937 302 533</span>
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
+      <p class="footer-legal-note">قد تختلف المواقيت المعروضة قليلًا حسب المدينة المختارة والجهة المحلية المعتمدة.</p>
 
-      <div class="footer-divider"></div>
+    </div>
 
-      <div class="footer-bottom">
-        <p>© 2026 مواقتا — جميع الحقوق محفوظة</p>
-        <div class="footer-social" aria-label="وسائل التواصل الاجتماعي">
-          <a href="#" aria-label="تويتر">X</a>
-          <a href="#" aria-label="فيسبوك">f</a>
-          <a href="#" aria-label="إنستغرام">in</a>
-        </div>
-      </div>
+    <div class="footer-bottom">
+      <p>© 2026 Mawquta — تصميم وتطوير: فراس الاحمد</p>
     </div>
   `;
 
