@@ -50,7 +50,7 @@ export function renderWeeklyPrayerSection(
 
   rootElement.innerHTML = `
     <section class="weekly-sec" id="weekly" aria-label="مواقيت الصلاة الأسبوعية">
-      <div class="container-xl px-3 px-sm-4 px-lg-5">
+      <div class="container-xl">
         <div class="sec-head weekly-sec__head">
           <div class="sec-city weekly-sec__city">
             <div class="sec-city__eyebrow weekly-sec__eyebrow">

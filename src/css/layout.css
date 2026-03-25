@@ -1,6 +1,46 @@
 #app,
 .page-shell {
-  min-height: 100vh;
+  min-height: 1080px;
+}
+
+:root {
+  --page-side-margin: 96px;
+}
+
+@media (max-width: 1599.98px) {
+  :root {
+    --page-side-margin: 80px;
+  }
+}
+
+@media (max-width: 1399.98px) {
+  :root {
+    --page-side-margin: 64px;
+  }
+}
+
+@media (max-width: 1199.98px) {
+  :root {
+    --page-side-margin: 48px;
+  }
+}
+
+@media (max-width: 991.98px) {
+  :root {
+    --page-side-margin: 32px;
+  }
+}
+
+@media (max-width: 767.98px) {
+  :root {
+    --page-side-margin: 20px;
+  }
+}
+
+@media (max-width: 575.98px) {
+  :root {
+    --page-side-margin: 16px;
+  }
 }
 
 .page-shell {
@@ -10,4 +50,17 @@
 
 .page-main {
   flex: 1;
+}
+
+.container,
+.container-sm,
+.container-md,
+.container-lg,
+.container-xl,
+.container-xxl,
+.container-fluid {
+  width: auto !important;
+  max-width: none !important;
+  margin-inline: var(--page-side-margin) !important;
+  padding-inline: 0 !important;
 }

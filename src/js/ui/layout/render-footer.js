@@ -4,7 +4,7 @@ export function renderFooter(rootElement) {
   }
 
   rootElement.innerHTML = `
-    <div class="footer-content container-xl px-3 px-sm-4 px-lg-5">
+    <div class="footer-content container-xl">
       <div class="footer-main-grid">
         <div class="footer-main-col footer-main-col--brand">
           <a href="#hero-section" class="footer-brand" aria-label="مواقتا">
@@ -27,42 +27,44 @@ export function renderFooter(rootElement) {
           </div>
         </div>
 
-        <div class="footer-main-col footer-main-col--links">
-          <p class="footer-heading">الموقع</p>
-          <ul class="footer-links">
-            <li><a href="#hero-section">الرئيسية</a></li>
-            <li><a href="#prayer-section">الصلاة</a></li>
-            <li><a href="#qibla-section">القبلة</a></li>
-            <li><a href="#ramadan-section">رمضان</a></li>
-          </ul>
-        </div>
+        <div class="footer-main-col-group">
+          <div class="footer-main-col footer-main-col--contact">
+            <p class="footer-heading">تواصل معنا</p>
+            <ul class="footer-contact-list">
+              <li>
+                <a href="mailto:firas.al.ahmad.mail@gmail.com">
+                  <img src="./assets/icons/footer/mail-open.svg" alt="" aria-hidden="true" />
+                  <span>firas.al.ahmad.mail@gmail.com</span>
+                </a>
+              </li>
+              <li>
+                <a href="tel:+963937302533">
+                  <img src="./assets/icons/footer/calling-02.svg" alt="" aria-hidden="true" />
+                  <span>+963 937 302 533</span>
+                </a>
+              </li>
+            </ul>
+          </div>
 
-        <div class="footer-main-col footer-main-col--info">
-          <p class="footer-heading">المعلومات</p>
-          <ul class="footer-links">
-            <li><a href="#">عن مواقتا</a></li>
-            <li><a href="#">الخصوصية</a></li>
-            <li><a href="#">الشروط</a></li>
-            <li><a href="#">الأسئلة الشائعة</a></li>
-          </ul>
-        </div>
+          <div class="footer-main-col footer-main-col--info">
+            <p class="footer-heading">المعلومات</p>
+            <ul class="footer-links">
+              <li><a href="#">عن مواقتا</a></li>
+              <li><a href="#">الخصوصية</a></li>
+              <li><a href="#">الشروط</a></li>
+              <li><a href="#">الأسئلة الشائعة</a></li>
+            </ul>
+          </div>
 
-        <div class="footer-main-col footer-main-col--contact">
-          <p class="footer-heading">تواصل معنا</p>
-          <ul class="footer-contact-list">
-            <li>
-              <a href="mailto:firas.al.ahmad.mail@gmail.com">
-                <img src="./assets/icons/footer/mail-open.svg" alt="" aria-hidden="true" />
-                <span>firas.al.ahmad.mail@gmail.com</span>
-              </a>
-            </li>
-            <li>
-              <a href="tel:+963937302533">
-                <img src="./assets/icons/footer/calling-02.svg" alt="" aria-hidden="true" />
-                <span>+963 937 302 533</span>
-              </a>
-            </li>
-          </ul>
+          <div class="footer-main-col footer-main-col--links">
+            <p class="footer-heading">الموقع</p>
+            <ul class="footer-links">
+              <li><a href="#hero-section">الرئيسية</a></li>
+              <li><a href="#prayer-section">الصلاة</a></li>
+              <li><a href="#qibla-section">القبلة</a></li>
+              <li><a href="#ramadan-section">رمضان</a></li>
+            </ul>
+          </div>
         </div>
       </div>
       <p class="footer-legal-note">قد تختلف المواقيت المعروضة قليلًا حسب المدينة المختارة والجهة المحلية المعتمدة.</p>
@@ -70,7 +72,7 @@ export function renderFooter(rootElement) {
     </div>
 
     <div class="footer-bottom">
-      <p>© 2026 Mawquta — تصميم وتطوير: فراس الاحمد</p>
+      <p>© 2026 Mawquta. جميع الحقوق محفوظة. تم التطوير بواسطة: فراس الأحمد.</p>
     </div>
   `;
 

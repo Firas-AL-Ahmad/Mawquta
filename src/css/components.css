@@ -4,7 +4,7 @@
   align-items: center;
   justify-content: center;
   gap: var(--space-2);
-  min-height: 2.5rem;
+  min-height: 40px;
   padding: var(--space-2) var(--space-4);
   border: 1px solid transparent;
   border-radius: var(--radius-md);
@@ -78,8 +78,8 @@
 }
 
 .icon-wrap {
-  inline-size: 2.25rem;
-  block-size: 2.25rem;
+  inline-size: 36px;
+  block-size: 36px;
   display: inline-grid;
   place-items: center;
   border-radius: var(--radius-round);
@@ -190,7 +190,7 @@
 .state-block--loading,
 .state-block--empty,
 .state-block--error {
-  min-block-size: 4rem;
+  min-block-size: 64px;
   display: grid;
   place-items: center;
 }

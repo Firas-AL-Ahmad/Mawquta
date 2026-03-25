@@ -34,7 +34,7 @@ export function renderQiblaSection(rootElement, viewModel = DEFAULT_QIBLA_VIEW_M
 
   rootElement.innerHTML = `
     <section class="qibla-sec" id="qibla" aria-label="اتجاه القبلة">
-      <div class="container-xl px-3 px-sm-4 px-lg-5">
+      <div class="container-xl">
         <div class="qibla-card">
           <div class="qibla-card__head">
             <div class="qibla-card__title">

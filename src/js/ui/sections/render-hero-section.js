@@ -119,7 +119,7 @@ export function renderHeroSection(rootElement, viewModel) {
     <section class="hero" id="hero" aria-label="القسم الرئيسي">
       <span class="hero__basmala" aria-hidden="true">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</span>
 
-      <div class="hero__inner container-xl px-3 px-sm-4 px-lg-5">
+      <div class="hero__inner container-xl">
         <div class="row g-3 g-lg-4 align-items-stretch">
           <div class="col-12 col-lg-6 d-flex col-hero-right order-2 order-lg-1">
             <div class="hero-right w-100">

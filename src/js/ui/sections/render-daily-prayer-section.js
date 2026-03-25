@@ -88,7 +88,7 @@ export function renderDailyPrayerSection(
 
   rootElement.innerHTML = `
     <section class="daily-sec" id="daily" aria-label="مواقيت الصلاة اليومية">
-      <div class="container-xl px-3 px-sm-4 px-lg-5">
+      <div class="container-xl">
         <div class="sec-head">
           <div class="sec-city">
             <div class="sec-city__eyebrow">

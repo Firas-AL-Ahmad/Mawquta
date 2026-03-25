@@ -50,7 +50,7 @@ export function renderRamadanSection(rootElement, data = DEFAULT_RAMADAN_VIEW_MO
 
   rootElement.innerHTML = `
     <section class="ramadan-sec" id="ramadan" aria-label="مواقيت رمضان">
-      <div class="container-xl px-3 px-sm-4 px-lg-5">
+      <div class="container-xl">
         <div class="ramadan-head">
           <div class="ramadan-city">
             <div class="ramadan-eyebrow">
@@ -75,7 +75,7 @@ export function renderRamadanSection(rootElement, data = DEFAULT_RAMADAN_VIEW_MO
 
     <hr class="sec-divider" />
 
-    <div class="container-xl px-3 px-sm-4 px-lg-5">
+    <div class="container-xl">
       ${renderRamadanMonthTable(viewModel.monthTable)}
     </div>
   `;

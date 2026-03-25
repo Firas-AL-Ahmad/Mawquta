@@ -11,7 +11,7 @@ html {
 }
 
 body {
-  min-height: 100vh;
+  min-height: 1080px;
   font-family: var(--Body-fontFamily);
   background: var(--Background-Page);
   color: var(--Text-900);

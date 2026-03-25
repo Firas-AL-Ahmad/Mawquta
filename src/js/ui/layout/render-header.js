@@ -4,7 +4,7 @@ export function renderHeader(rootElement) {
   }
 
   rootElement.innerHTML = `
-    <div class="container-xl px-3 px-sm-4 px-lg-5">
+    <div class="container-xl">
       <div class="site-header__inner">
         <a href="#hero-section" class="site-header__brand" aria-label="مواقتا — الصفحة الرئيسية">
           <img
