@@ -176,7 +176,12 @@ function createMobileMenuController(headerRoot) {
       : null;
 
   const syncHeaderOffset = () => {
-    headerRoot.style.setProperty("--header-offset", `${getHeaderHeight()}px`);
+    const headerHeight = `${getHeaderHeight()}px`;
+    headerRoot.style.setProperty("--header-offset", headerHeight);
+    document.documentElement.style.setProperty(
+      "--app-header-height",
+      headerHeight,
+    );
   };
 
   const bootstrapCollapse =

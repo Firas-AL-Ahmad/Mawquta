@@ -29,16 +29,16 @@ export function renderHeader(rootElement) {
           <span></span><span></span><span></span>
         </button>
 
-        <nav class="site-header__nav" id="siteNav" role="navigation" aria-label="القائمة الرئيسية">
+        <nav class="site-header__nav" id="siteNav" role="navigation" aria-label="التنقل الرئيسي">
           <div class="site-header__links">
             <a href="#hero-section" class="site-header__link site-header__link--active">الرئيسية</a>
-            <a href="#prayer-section" class="site-header__link">الصلاة</a>
+            <a href="#prayer-section" class="site-header__link">مواقيت الصلاة</a>
             <a href="#qibla-section" class="site-header__link">القبلة</a>
             <a href="#ramadan-section" class="site-header__link">رمضان</a>
           </div>
 
           <div class="site-header__controls">
-            <button type="button" class="hdr-chip" aria-label="تغيير المدينة">
+            <button type="button" class="hdr-chip site-header__city" aria-label="تغيير المدينة">
               <svg
                 class="hdr-chip__icon"
                 viewBox="0 0 24 24"
@@ -50,7 +50,7 @@ export function renderHeader(rootElement) {
                 <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
                 <circle cx="12" cy="9" r="2.5"/>
               </svg>
-              دمشق، سوريا
+              <span class="hdr-chip__text">دمشق، سوريا</span>
             </button>
 
             <div class="hdr-lang" data-lang-dropdown>
@@ -73,7 +73,7 @@ export function renderHeader(rootElement) {
                   decoding="async"
                   data-lang-flag
                 />
-                <span data-lang-label>العربية</span>
+                <span class="hdr-lang__label" data-lang-label>العربية</span>
                 <span class="hdr-lang__code" data-lang-code>SY</span>
                 <span class="hdr-lang__chevron" aria-hidden="true"></span>
               </button>
@@ -117,7 +117,7 @@ export function renderHeader(rootElement) {
                   aria-selected="false"
                   data-lang-option
                   data-lang-value="en"
-                  data-lang-label="الإنكليزية"
+                  data-lang-label="English"
                   data-lang-code="US"
                   data-lang-flag="./assets/icons/Header/flag-US.svg"
                 >
@@ -130,13 +130,13 @@ export function renderHeader(rootElement) {
                     loading="lazy"
                     decoding="async"
                   />
-                  <span class="hdr-lang__option-label">الإنكليزية</span>
+                  <span class="hdr-lang__option-label">English</span>
                   <span class="hdr-lang__option-code">US</span>
                 </button>
               </div>
             </div>
 
-            <button type="button" class="hdr-chip hdr-chip--icon" aria-label="تبديل النمط">
+            <button type="button" class="hdr-chip hdr-chip--icon" aria-label="تبديل السمة">
               <img
                 class="hdr-chip__icon"
                 src="./assets/icons/Header/header-moon-icon.svg"

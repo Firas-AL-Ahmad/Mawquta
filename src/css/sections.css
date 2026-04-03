@@ -4,14 +4,16 @@
   z-index: var(--z-sticky);
   background: var(--white);
   box-shadow: 0 2px 10px -2px rgba(18, 66, 53, 0.12);
+  backdrop-filter: saturate(1.05);
 }
 
 .site-header__inner {
+  --hdr-touch-size: 42px;
   display: flex;
   align-items: center;
-  gap: 16px;
-  padding-block: 12px;
-  min-height: 62px;
+  gap: clamp(6px, 0.35rem + 0.45vw, 12px);
+  padding-block: clamp(8px, 0.45rem + 0.3vw, 10px);
+  min-height: clamp(54px, 3.15rem + 0.5vw, 58px);
   width: 100%;
   max-width: 1600px;
   margin-inline: auto;
@@ -26,14 +28,15 @@
 
 .site-header__brand-image {
   width: auto;
-  height: 40px;
+  height: clamp(30px, 1.55rem + 0.45vw, 34px);
+  max-inline-size: clamp(96px, 5.35rem + 1.8vw, 112px);
   display: block;
 }
 
 .site-header__nav {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: clamp(6px, 0.25rem + 0.45vw, 12px);
   flex: 1;
   min-width: 0;
 }
@@ -41,19 +44,28 @@
 .site-header__links {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: clamp(1px, 0.06rem + 0.2vw, 4px);
   flex: 1;
   justify-content: center;
   min-width: 0;
+  overflow-x: hidden;
+  scrollbar-width: none;
+}
+
+.site-header__links::-webkit-scrollbar {
+  display: none;
 }
 
 .site-header__link {
-  padding: 6px 16px;
-  border-radius: 24px;
-  font-size: 14.4px;
+  padding-block: 5px;
+  padding-inline: clamp(8px, 0.35rem + 0.45vw, 12px);
+  border-radius: 999px;
+  font-size: clamp(12.5px, 0.74rem + 0.16vw, 14px);
   font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0.01em;
   color: var(--Primary-900);
-  min-height: 44px;
+  min-height: var(--hdr-touch-size);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -68,6 +80,11 @@
   background: var(--Background-50);
 }
 
+.site-header__link:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--Secondary-500);
+}
+
 .site-header__link--active,
 .site-header__link.active {
   background: var(--Secondary-500);
@@ -77,29 +94,38 @@
 .site-header__controls {
   display: flex;
   align-items: center;
-  gap: 8.8px;
+  gap: clamp(4px, 0.2rem + 0.28vw, 8px);
   flex-shrink: 0;
+  min-width: 0;
   margin-inline-start: auto;
+}
+
+.site-header__controls > * {
+  min-width: 0;
 }
 
 .hdr-chip {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   background: var(--Background-50);
   border: none;
-  border-radius: 8px;
-  padding: 6px 12px;
+  border-radius: 9px;
+  padding-block: 4px;
+  padding-inline: clamp(8px, 0.38rem + 0.25vw, 10px);
   font-family: var(--Body-fontFamily);
-  font-size: 13px;
+  font-size: clamp(12px, 0.71rem + 0.14vw, 13px);
   font-weight: 600;
+  line-height: 1.15;
   color: var(--Primary-900);
-  min-height: 44px;
+  min-height: var(--hdr-touch-size);
   cursor: pointer;
   transition:
     background var(--tr),
     box-shadow var(--tr);
   white-space: nowrap;
+  max-inline-size: 100%;
+  overflow: hidden;
 }
 
 .hdr-chip:hover {
@@ -110,32 +136,51 @@
   );
 }
 
+.hdr-chip:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--Secondary-500);
+}
+
+.site-header__city {
+  max-inline-size: clamp(112px, 7.2vw + 36px, 176px);
+}
+
+.hdr-chip__text {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .hdr-chip__icon {
-  width: 18px;
-  height: 18px;
+  width: clamp(14px, 0.82rem + 0.16vw, 16px);
+  height: clamp(14px, 0.82rem + 0.16vw, 16px);
   flex-shrink: 0;
 }
 
 .hdr-chip--icon {
-  width: 40px;
-  height: 40px;
+  width: var(--hdr-touch-size);
+  height: var(--hdr-touch-size);
   padding: 0;
   justify-content: center;
 }
 
 .hdr-lang {
   position: relative;
+  min-width: 0;
 }
 
 .hdr-lang__trigger {
-  gap: 8px;
-  inline-size: 176px;
+  gap: 6px;
+  inline-size: clamp(136px, 11.5vw, 164px);
   justify-content: flex-start;
 }
 
+.hdr-lang__label,
 .hdr-lang__trigger [data-lang-label] {
   flex: 1 1 auto;
   min-width: 0;
+  font-size: inherit;
+  line-height: 1.2;
   text-align: start;
   white-space: nowrap;
   overflow: hidden;
@@ -143,28 +188,28 @@
 }
 
 .hdr-lang__flag {
-  width: 20px;
-  height: 15px;
-  border-radius: 3px;
+  width: 18px;
+  height: 13px;
+  border-radius: 2px;
   object-fit: cover;
   flex-shrink: 0;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06);
 }
 
 .hdr-lang__code {
-  font-size: 11px;
+  font-size: clamp(9.5px, 0.54rem + 0.08vw, 10.5px);
   font-weight: 700;
-  letter-spacing: 0.64px;
+  letter-spacing: 0.05em;
   color: var(--Text-500);
   inline-size: 2ch;
   text-align: center;
 }
 
 .hdr-lang__chevron {
-  width: 7px;
-  height: 7px;
-  border-right: 1.5px solid currentColor;
-  border-bottom: 1.5px solid currentColor;
+  width: 6px;
+  height: 6px;
+  border-right: 1.2px solid currentColor;
+  border-bottom: 1.2px solid currentColor;
   transform: rotate(45deg) translateY(-1px);
   transition: transform var(--tr);
 }
@@ -175,15 +220,15 @@
 
 .hdr-lang__menu {
   position: absolute;
-  top: calc(100% + 8px);
+  top: calc(100% + 4px);
   inset-inline-end: 0;
-  min-width: 200px;
-  max-inline-size: 260px;
-  padding: 6.4px;
+  min-width: 180px;
+  max-inline-size: min(230px, 90vw);
+  padding: 5px;
   border: 1px solid var(--color-border);
-  border-radius: 10px;
+  border-radius: 9px;
   background: var(--white);
-  box-shadow: 0 14px 30px -20px rgba(10, 30, 24, 0.45);
+  box-shadow: 0 12px 24px -20px rgba(10, 30, 24, 0.45);
   z-index: var(--z-dropdown);
 }
 
@@ -195,16 +240,17 @@
   width: 100%;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   border: none;
-  border-radius: 8px;
+  border-radius: 7px;
   background: transparent;
   color: var(--Primary-900);
-  padding: 8px 10px;
+  padding: 7px 9px;
   cursor: pointer;
   font-family: var(--Body-fontFamily);
-  font-size: 13px;
+  font-size: clamp(11.5px, 0.68rem + 0.14vw, 13px);
   font-weight: 600;
+  line-height: 1.3;
   text-align: start;
   transition: background var(--tr);
 }
@@ -225,7 +271,7 @@
 
 .hdr-lang__option-code {
   margin-inline-start: auto;
-  font-size: 11px;
+  font-size: clamp(10px, 0.6rem + 0.08vw, 11px);
   font-weight: 700;
   color: var(--Text-500);
 }
@@ -233,14 +279,14 @@
 .hdr-toggle {
   display: none;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: var(--hdr-touch-size);
+  height: var(--hdr-touch-size);
   background: var(--Background-50);
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
   transition:
     background var(--tr),
@@ -249,7 +295,7 @@
 
 .hdr-toggle span {
   display: block;
-  width: 18px;
+  width: 16px;
   height: 2px;
   background: var(--Primary-900);
   border-radius: 2px;
@@ -263,133 +309,299 @@
 }
 
 .hero {
-  padding-block: 56px;
-  min-height: 972px;
-  display: flex;
-  align-items: center;
-  background: transparent;
-  margin: 0;
-  border: none;
+  --hero-reference-height: 876px;
+  --hero-viewport-height: calc(100dvh - var(--app-header-height, 58px));
+  --hero-height: min(var(--hero-reference-height), var(--hero-viewport-height));
+  --hero-pane-pad-y: clamp(30px, 10.96vh, 96px);
+  --hero-pane-pad-side: clamp(24px, 5vw, 96px);
+  --hero-card-height: clamp(
+    500px,
+    calc(var(--hero-height) - (var(--hero-pane-pad-y) * 2)),
+    684px
+  );
   position: relative;
   overflow: hidden;
+  isolation: isolate;
+  height: var(--hero-height);
+  margin: 0;
+  background: transparent;
+  display: flex;
+  align-items: stretch;
+}
+
+.hero__corner,
+.hero__lantern,
+.hero__center-pattern,
+.hero__basmala {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+.hero__corner {
+  width: 116px;
+  height: 116px;
+  opacity: 0.08;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.hero__corner--top-left {
+  top: 0;
+  left: 116px;
+  background-image: url("../assets/icons/hero-section/top-left-Corners.svg");
+}
+
+.hero__corner--top-right {
+  top: 0;
+  right: 0;
+  background-image: url("../assets/icons/hero-section/top-right-Corners.svg");
+}
+
+.hero__corner--botom-left {
+  bottom: 0;
+  left: 116px;
+  background-image: url("../assets/icons/hero-section/botom-left-Corners.svg");
+}
+
+.hero__corner--botom-right {
+  bottom: 0;
+  right: 0;
+  background-image: url("../assets/icons/hero-section/botom-right-Corners.svg");
+}
+
+.hero__lantern {
+  width: 132px;
+  height: 372px;
+  top: 0;
+  left: 132px;
+  background: url("../assets/icons/hero-section/ramadan-lantern.svg")
+    center/contain no-repeat;
+  opacity: 0.18;
+  z-index: 1;
+}
+
+.hero__center-pattern {
+  width: clamp(440px, 41.67vw, 800px);
+  aspect-ratio: 1 / 1;
+  left: clamp(0px, 37.92vw, 728px);
+  top: clamp(260px, 54.34%, 476px);
+  background: url("../assets/icons/hero-section/center-pattern.svg")
+    center/contain no-repeat;
+  opacity: 0.2;
 }
 
 .hero__basmala {
-  position: absolute;
-  top: 20px;
+  width: 324px;
+  height: 72px;
+  top: 32px;
   left: 50%;
   transform: translateX(-50%);
-  font-family: var(--Quote-fontFamily);
-  font-size: 24px;
-  color: var(--Primary-700);
-  opacity: 0.5;
-  white-space: nowrap;
-  pointer-events: none;
-  z-index: 0;
+  background: url("../assets/icons/hero-section/bism-allah-alrahman-alrahim.svg")
+    center/contain no-repeat;
+  opacity: 1;
+  z-index: 1;
 }
 
 .hero__inner {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   width: 100%;
-  padding-block-start: 56px;
+  height: 100%;
+}
+
+.hero__layout {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  direction: ltr;
+  align-items: stretch;
+}
+
+.hero__pane {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  min-width: 0;
+  height: 100%;
+}
+
+.hero__pane--card {
+  flex: 0 1 clamp(500px, 37.5vw, 720px);
+  justify-content: flex-start;
+  padding-block: var(--hero-pane-pad-y);
+  padding-inline-start: var(--hero-pane-pad-side);
+  padding-inline-end: 8px;
+}
+
+.hero__pane--content {
+  flex: 1 1 auto;
+  justify-content: flex-end;
+  padding-block: var(--hero-pane-pad-y);
+  padding-inline-start: 8px;
+  padding-inline-end: var(--hero-pane-pad-side);
 }
 
 .hero-right {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  justify-content: center;
-  gap: 18px;
+  justify-content: flex-start;
+  gap: 16px;
   height: 100%;
+  width: 100%;
   text-align: right;
+}
+
+.hero-left {
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-start;
+  width: 100%;
+  height: 100%;
 }
 
 .loc-chip {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  justify-content: flex-end;
+  gap: 8px;
   background: var(--white);
-  border-radius: 999px;
-  padding: 5px 14px 5px 10px;
-  box-shadow: 0 2px 8px rgba(18, 66, 53, 0.1);
+  border: none;
+  border-radius: 32px;
+  padding: 8px 16px;
 }
 
 .loc-chip__icon {
-  width: 22px;
-  height: 22px;
+  width: 32px;
+  height: 32px;
   flex-shrink: 0;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23dd9730'%3E%3Cpath d='M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z'/%3E%3C/svg%3E")
+  background: url("../assets/icons/hero-section/hero-location-icon.svg")
     center/contain no-repeat;
 }
 
 .loc-chip__text {
-  font-size: 15px;
+  font-size: clamp(14px, 0.95vw, 16px);
   font-weight: 700;
-  color: var(--Primary-500);
+  color: #dd9730;
+  line-height: 22px;
+  white-space: nowrap;
+}
+
+.hero-verse-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  max-width: min(100%, 814px);
+  padding-block: 32px;
 }
 
 .hero-verse {
-  font-family: var(--font-heading);
-  font-size: 48px;
-  line-height: 1.65;
+  font-family: "Reem Kufi", var(--font-heading);
+  font-size: clamp(32px, 2.5vw, 48px);
+  line-height: 1.5;
   color: var(--Primary-700);
-  font-weight: 700;
+  font-weight: 600;
+  margin: 0;
+  text-align: right;
+  white-space: normal;
+}
+
+.hero-verse__ornament {
+  pointer-events: none;
+  user-select: none;
+  width: 56px;
+  height: 72px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  flex-shrink: 0;
+}
+
+.hero-verse__ornament--right {
+  background-image: url("../assets/icons/hero-section/quran-Pattern-left.svg");
+}
+
+.hero-verse__ornament--left {
+  background-image: url("../assets/icons/hero-section/quran-Pattern-right.svg");
 }
 
 .date-card {
   position: relative;
   overflow: hidden;
-  width: 100%;
-  max-width: 275px;
-  padding: 18px 20px;
-  border-radius: 14px;
-  border: 1.5px solid var(--Primary-500);
+  width: 248px;
+  max-width: 100%;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border-radius: 16px;
+  border: 1px solid #dd9730;
   background: var(--white);
-  box-shadow: 0 4px 18px -4px rgba(18, 66, 53, 0.14);
+  box-shadow: 0 4px 8px -4px rgba(18, 66, 53, 0.16);
+}
+
+.date-card::before {
+  content: "";
+  position: absolute;
+  left: -76px;
+  top: 60px;
+  width: 200px;
+  height: 200px;
+  pointer-events: none;
+  background: url("../assets/icons/hero-section/center-pattern.svg")
+    center/contain no-repeat;
+  opacity: 0.22;
 }
 
 .date-card__head {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  gap: 6px;
-  margin-bottom: 6.4px;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0;
 }
 
 .date-card__head-label {
-  font-size: 18px;
+  font-size: 24px;
   font-weight: 800;
   color: var(--Primary-900);
+  line-height: 24px;
 }
 
 .date-card__cal {
-  width: 20px;
-  height: 20px;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23dd9730'%3E%3Cpath d='M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z'/%3E%3C/svg%3E")
+  width: 32px;
+  height: 32px;
+  background: url("../assets/icons/hero-section/hero-calendar-icon.svg")
     center/contain no-repeat;
 }
 
 .date-card__day {
-  font-size: 15px;
+  font-size: 20px;
   font-weight: 700;
-  color: var(--Primary-500);
-  margin-bottom: 4px;
+  color: #dd9730;
+  line-height: 20px;
+  margin: 0;
 }
 
 .date-card__row {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--Primary-900);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--Text-900);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  line-height: 1.9;
+  line-height: 22px;
+  gap: 8px;
 }
 
 .date-card__row-r {
   display: flex;
-  gap: 4px;
+  gap: 8px;
   align-items: center;
 }
 
@@ -398,63 +610,71 @@
 }
 
 .date-card__row-yr {
-  color: var(--Text-600);
-  font-size: 13px;
-  font-weight: 500;
+  color: var(--Text-900);
+  font-size: 16px;
+  font-weight: 700;
 }
 
 .hero-cta {
-  width: 100%;
-  max-width: 275px;
-  min-height: 50px;
+  width: 248px;
+  max-width: 100%;
+  min-height: 52px;
   border: none;
-  border-radius: 14px;
+  border-radius: 16px;
   background: var(--Secondary-500);
   color: var(--white);
   font-family: var(--Body-fontFamily);
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 700;
+  line-height: 20px;
+  padding: 16px 24px;
+  box-shadow: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition:
+    filter var(--tr),
+    transform var(--tr);
+}
+
+.hero-cta:hover {
+  filter: brightness(0.96);
+}
+
+.hero-cta:active {
+  transform: translateY(1px);
 }
 
 .prayer-card {
   position: relative;
-  width: 100%;
-  min-height: 528px;
-  border-radius: 22px;
+  width: min(100%, 616px);
+  height: var(--hero-card-height);
+  min-height: var(--hero-card-height);
+  border-radius: 24px;
   overflow: hidden;
-  background: linear-gradient(
-    175deg,
-    var(--Decor-Prayer-Card-Start) 0%,
-    var(--Decor-Prayer-Card-Mid) 50%,
-    var(--Decor-Prayer-Card-End) 100%
-  );
+  background: url("../assets/icons/hero-section/curren-prayer-isha.svg")
+    center/cover no-repeat;
   color: var(--white);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 28px;
+  gap: 24px;
+  padding-block: clamp(24px, 5.48vh, 48px);
+  padding-inline: clamp(20px, 1.67vw, 32px);
+  box-shadow: 0 4px 8px -4px rgba(18, 66, 53, 0.16);
 }
 
 .prayer-card__gloss {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background:
-    radial-gradient(
-      circle at 12% 88%,
-      rgba(255, 255, 255, 0.22),
-      transparent 40%
-    ),
-    radial-gradient(
-      circle at 82% 18%,
-      rgba(255, 255, 255, 0.16),
-      transparent 42%
-    ),
-    linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.04) 0%,
-      rgba(255, 255, 255, 0.1) 100%
-    );
+  background: linear-gradient(
+    180deg,
+    rgba(18, 66, 53, 0.04) 0%,
+    rgba(18, 66, 53, 0.01) 33%,
+    rgba(18, 66, 53, 0.12) 100%
+  );
 }
 
 .pcard-header {
@@ -467,102 +687,162 @@
 }
 
 .pcard-time {
-  font-size: 27px;
+  font-family: "Reem Kufi", var(--font-heading);
+  font-size: clamp(30px, 2.1vw, 40px);
   font-weight: 700;
-  line-height: 1;
+  line-height: 40px;
   direction: ltr;
+  margin: 0;
 }
 
 .pcard-meta {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 14px;
+  gap: 24px;
 }
 
 .pcard-pill {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
+  gap: 8px;
   background: var(--white);
-  border: 1.5px solid var(--Secondary-500);
-  border-radius: 999px;
-  padding: 5px 13px 7px;
+  border: 1px solid #dd9730;
+  border-radius: 24px;
+  padding: 8px 16px 16px;
 }
 
 .pcard-pill__dot {
-  width: 8px;
-  height: 8px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
   background: var(--Secondary-500);
 }
 
 .pcard-pill__text {
-  font-family: var(--Quote-fontFamily);
-  font-size: 16.8px;
+  font-family: "Amiri Quran", var(--Body-fontFamily);
+  font-size: clamp(20px, 1.25vw, 24px);
+  font-weight: 400;
   color: var(--Secondary-500);
+  line-height: 18px;
 }
 
 .pcard-name {
-  font-size: 42px;
-  font-weight: 800;
-  line-height: 1;
+  font-size: clamp(36px, 2.5vw, 48px);
+  font-weight: 700;
+  line-height: 48px;
+  margin: 0;
 }
 
 .countdown {
   position: relative;
   z-index: 1;
-  align-self: center;
-  width: 100%;
-  max-width: 320px;
-  display: grid;
-  justify-items: center;
-  gap: 14px;
-  border: 1.5px solid rgba(255, 255, 255, 0.25);
-  background: rgba(255, 255, 255, 0.12);
-  border-radius: 14px;
-  padding: 18px 22px;
+  align-self: flex-start;
+  width: min(100%, 380px);
+  min-height: clamp(148px, 20.55vh, 180px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 24px clamp(16px, 2.5vw, 48px);
+  backdrop-filter: blur(12px);
 }
 
 .countdown__label {
-  font-size: 15px;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.88);
+  font-size: 16px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.96);
+  line-height: 24px;
+  margin: 0;
 }
 
 .countdown__grid {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
-  gap: 15px;
+  gap: 16px;
   direction: ltr;
+  min-height: 84px;
 }
 
 .countdown__item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3px;
+  gap: 8px;
 }
 
 .countdown__val {
-  font-size: 48px;
+  font-family: "Reem Kufi", var(--font-heading);
+  font-size: clamp(44px, 3.34vw, 64px);
   font-weight: 700;
-  line-height: 1;
+  line-height: 64px;
 }
 
 .countdown__unit {
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 700;
-  letter-spacing: 0.96px;
-  opacity: 0.75;
+  letter-spacing: 0;
+  line-height: 12px;
+  opacity: 1;
 }
 
 .countdown__sep {
-  font-size: 40px;
+  font-family: "Reem Kufi", var(--font-heading);
+  font-size: clamp(44px, 3.34vw, 64px);
   font-weight: 600;
-  line-height: 1;
-  opacity: 0.6;
+  line-height: 64px;
+  opacity: 1;
+}
+
+@media (min-width: 1500px) {
+  .hero-verse {
+    white-space: nowrap;
+  }
+}
+
+@media (min-width: 1200px) and (max-width: 1499.98px) {
+  .hero {
+    --hero-pane-pad-y: clamp(28px, 8.2vh, 72px);
+    --hero-pane-pad-side: clamp(28px, 4vw, 72px);
+  }
+
+  .hero__pane--card {
+    flex-basis: min(620px, 42%);
+  }
+
+  .hero__center-pattern {
+    width: clamp(420px, 37vw, 680px);
+    left: clamp(220px, 36vw, 640px);
+    top: clamp(290px, 56%, 470px);
+  }
+
+  .hero-right {
+    gap: 14px;
+  }
+
+  .hero-verse-wrap {
+    gap: 6px;
+    max-width: min(100%, 760px);
+    padding-block: 22px;
+  }
+
+  .hero-verse {
+    font-size: clamp(34px, 2.35vw, 44px);
+    line-height: 1.42;
+  }
+
+  .prayer-card {
+    width: min(100%, 580px);
+  }
+
+  .countdown {
+    width: min(100%, 360px);
+  }
 }
 
 .sec-head {
@@ -597,9 +877,11 @@
     center/contain no-repeat;
 }
 
-.weekly-sec .sec-city__eyebrow-icon {
+.daily-sec .daily-sec__eyebrow .sec-city__eyebrow-icon,
+.weekly-sec .weekly-sec__eyebrow .sec-city__eyebrow-icon {
   width: 24px;
   height: 24px;
+  flex: 0 0 24px;
   background: url("../assets/icons/Weekly-Prayer/Prayer%20Rug.svg")
     center/contain no-repeat;
 }
@@ -631,6 +913,7 @@
   padding: 6px 20px;
 }
 
+.daily-sec .daily-sec__head,
 .weekly-sec .weekly-sec__head {
   margin-bottom: 32px;
   align-items: flex-start;
@@ -674,11 +957,13 @@
   background-image: url("../assets/icons/Weekly-Prayer/shalat%201.svg");
 }
 
+.daily-sec .daily-sec__city,
 .weekly-sec .weekly-sec__city {
   gap: 5px;
   align-items: flex-start;
 }
 
+.daily-sec .daily-sec__eyebrow,
 .weekly-sec .weekly-sec__eyebrow {
   display: inline-flex;
   align-self: flex-start;
@@ -692,12 +977,7 @@
   padding: 6px 12px;
 }
 
-.weekly-sec .weekly-sec__eyebrow .sec-city__eyebrow-icon {
-  width: 24px;
-  height: 24px;
-  flex: 0 0 24px;
-}
-
+.daily-sec .daily-sec__name,
 .weekly-sec .weekly-sec__name {
   font-size: 36px;
   font-weight: 900;
@@ -707,6 +987,7 @@
   text-align: left;
 }
 
+.daily-sec .daily-sec__meta,
 .weekly-sec .weekly-sec__meta {
   font-size: 11.5px;
   font-weight: 500;
@@ -717,6 +998,7 @@
   text-align: left;
 }
 
+.daily-sec .daily-sec__badge,
 .weekly-sec .weekly-sec__badge {
   background: var(--Secondary-500);
   border-radius: 8px;
@@ -1290,126 +1572,407 @@
   background: transparent;
 }
 .qibla-card__head {
+  position: relative;
+  direction: ltr;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
-  padding: 16px 20px;
-  border-bottom: 1px solid var(--color-border);
+  gap: 18px;
+  padding: 16px;
+  border-radius: 16px;
   background: var(--Background-50);
+  min-height: 86px;
+  overflow: hidden;
 }
-.qibla-card__title {
+
+.qibla-card {
+  position: relative;
+  background: #d3dad5;
+  border: none;
+  border-radius: 16px;
+  box-shadow: 0 4px 8px -4px rgba(18, 66, 53, 0.16);
+  padding: 24px;
   display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.qibla-card__heading {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 8px;
+  text-align: right;
+  direction: rtl;
+  margin-inline-start: auto;
+  max-inline-size: min(100%, 640px);
+}
+
+.qibla-city-btn {
+  border: none;
+  border-radius: 8px;
+  background: var(--Secondary-500);
+  color: var(--white);
+  padding: 8px 16px;
+  min-height: 32px;
+  font-family: var(--Body-fontFamily);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    filter var(--tr),
+    transform var(--tr);
+}
+
+.qibla-city-btn:hover {
+  filter: brightness(0.96);
+}
+
+.qibla-city-btn:active {
+  transform: translateY(1px);
+}
+
+.qibla-city-btn:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--Secondary-500) 25%, transparent),
+    0 0 0 4px color-mix(in srgb, var(--Secondary-500) 65%, transparent);
+}
+
+.qibla-card__title {
+  margin: 0;
+  display: inline-flex;
   align-items: center;
   gap: 8px;
+  font-size: clamp(19px, 1.2rem + 0.35vw, 24px);
   font-weight: 700;
-  color: var(--Primary-700);
+  line-height: 1.3;
+  color: var(--Secondary-500);
 }
 .qibla-card__title-icon {
-  width: 20px;
-  height: 20px;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2317654e'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z'/%3E%3C/svg%3E")
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' fill='none'%3E%3Ccircle cx='16' cy='16' r='13.5' stroke='%23124235' stroke-width='2'/%3E%3Cpath d='M16 7l3.8 7.1H12.2L16 7z' fill='%23DD9730'/%3E%3Ccircle cx='16' cy='16' r='2.2' fill='%23124235'/%3E%3C/svg%3E")
     center/contain no-repeat;
 }
 .qibla-card__note {
-  font-size: 12px;
-  color: var(--Text-600);
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  background: rgba(15, 82, 51, 0.08);
+  color: #64748b;
+  border-radius: 100px;
+  padding: 4px 12px;
+  font-size: clamp(12px, 0.72rem + 0.2vw, 14px);
+  font-weight: 400;
+  line-height: 1.6;
+  white-space: nowrap;
 }
-.qibla-badge {
-  background: var(--Primary-500);
-  color: var(--white);
-  border-radius: var(--rpill);
-  padding: 5px 16px;
-  font-size: 13px;
+
+.qibla-card__degree {
+  position: absolute;
+  left: 50%;
+  top: 16px;
+  transform: translateX(-50%);
+  margin: 0;
+  font-family: "Reem Kufi", var(--font-heading);
+  font-size: clamp(36px, 2.25rem + 0.65vw, 48px);
   font-weight: 700;
+  line-height: 1;
+  color: var(--Secondary-500);
+  letter-spacing: 0;
 }
-.compass-wrap {
-  display: flex;
-  justify-content: center;
-  padding: 32px 16px;
-}
-.compass {
+
+.qibla-visual {
   position: relative;
-  width: 225px;
-  height: 225px;
-  border-radius: 50%;
-  border: 3px solid var(--color-border);
-  background: radial-gradient(
-    circle,
-    var(--white) 0%,
-    var(--Background-50) 100%
-  );
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  min-height: 296px;
+  padding: 8px 16px;
+  overflow: hidden;
 }
-.compass__ring {
-  position: absolute;
-  inset: 8px;
+
+.qibla-compass {
+  --qibla-compass-size: clamp(260px, 31vw, 432px);
+  position: relative;
+  width: var(--qibla-compass-size);
+  height: var(--qibla-compass-size);
   border-radius: 50%;
-  border: 1.5px dashed color-mix(in srgb, var(--color-border) 80%, transparent);
+  background: linear-gradient(145deg, #95899b 0%, #7f7485 100%);
+  box-shadow:
+    inset -5px -7px 0 rgba(88, 73, 94, 0.32),
+    inset 5px 7px 0 rgba(184, 175, 189, 0.5);
 }
-.compass__label {
+
+.qibla-compass::before {
+  content: "";
   position: absolute;
-  font-size: 13px;
-  font-weight: 800;
-  color: var(--Primary-700);
+  inset: 18px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 338deg,
+    #e8dfca 0deg,
+    #f3eee2 84deg,
+    #f7f4ec 360deg
+  );
+  box-shadow:
+    inset 0 0 0 1px rgba(139, 126, 143, 0.32),
+    inset 0 -3px 6px rgba(139, 126, 143, 0.2);
 }
-.compass__label--n {
-  top: 6px;
+
+.qibla-compass__label {
+  position: absolute;
+  z-index: 3;
+  font-family: "Fredoka One", var(--Body-fontFamily);
+  font-size: clamp(34px, 2.1rem + 0.45vw, 40px);
+  line-height: 1;
+  font-weight: 400;
+  color: var(--Secondary-500);
+}
+
+.qibla-compass__label--n {
+  top: -5px;
   left: 50%;
   transform: translateX(-50%);
 }
-.compass__label--s {
-  bottom: 6px;
+
+.qibla-compass__label--s {
+  bottom: -8px;
   left: 50%;
   transform: translateX(-50%);
 }
-.compass__label--e {
-  right: 8px;
+
+.qibla-compass__label--e {
+  right: -24px;
   top: 50%;
   transform: translateY(-50%);
 }
-.compass__label--w {
-  left: 8px;
+
+.qibla-compass__label--w {
+  left: -24px;
   top: 50%;
   transform: translateY(-50%);
 }
-.compass__needle {
+
+.qibla-compass__ticks {
   position: absolute;
-  width: 4px;
-  height: 55%;
-  bottom: 50%;
-  left: 50%;
-  transform-origin: bottom center;
-  background: linear-gradient(
-    to top,
-    transparent 0%,
-    transparent 10%,
-    var(--Primary-500) 10%,
-    var(--Primary-500) 100%
-  );
+  inset: 0;
+  z-index: 2;
 }
-.compass__centre {
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
-  background: var(--Primary-700);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--white);
-  z-index: 1;
-}
-.compass__deg {
+
+.qibla-compass__ticks span {
   position: absolute;
-  top: -32px;
   left: 50%;
+  top: 50%;
+  width: 8px;
+  height: clamp(10px, 0.45rem + 0.45vw, 14px);
+  border-radius: 999px;
+  background: #8d8192;
+  transform: translate(-50%, -50%) rotate(0deg)
+    translateY(calc(var(--qibla-compass-size) * -0.37));
+}
+
+.qibla-compass__ticks span:nth-child(2) {
+  transform: translate(-50%, -50%) rotate(45deg)
+    translateY(calc(var(--qibla-compass-size) * -0.37));
+}
+
+.qibla-compass__ticks span:nth-child(3) {
+  transform: translate(-50%, -50%) rotate(90deg)
+    translateY(calc(var(--qibla-compass-size) * -0.37));
+}
+
+.qibla-compass__ticks span:nth-child(4) {
+  transform: translate(-50%, -50%) rotate(135deg)
+    translateY(calc(var(--qibla-compass-size) * -0.37));
+}
+
+.qibla-compass__ticks span:nth-child(5) {
+  transform: translate(-50%, -50%) rotate(180deg)
+    translateY(calc(var(--qibla-compass-size) * -0.37));
+}
+
+.qibla-compass__ticks span:nth-child(6) {
+  transform: translate(-50%, -50%) rotate(225deg)
+    translateY(calc(var(--qibla-compass-size) * -0.37));
+}
+
+.qibla-compass__ticks span:nth-child(7) {
+  transform: translate(-50%, -50%) rotate(270deg)
+    translateY(calc(var(--qibla-compass-size) * -0.37));
+}
+
+.qibla-compass__ticks span:nth-child(8) {
+  transform: translate(-50%, -50%) rotate(315deg)
+    translateY(calc(var(--qibla-compass-size) * -0.37));
+}
+
+.qibla-compass__needle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 2;
+  width: 0;
+  height: 0;
+  transform: translate(-50%, -100%) rotate(var(--needle-rotation, 0deg));
+  transform-origin: 50% 100%;
+}
+
+.qibla-compass__needle::before {
+  content: "";
+  position: absolute;
+  left: -13px;
+  top: -42px;
+  border-left: 13px solid transparent;
+  border-right: 13px solid transparent;
+  border-bottom: 38px solid #fece85;
+}
+
+.qibla-compass__needle::after {
+  content: "";
+  position: absolute;
+  left: -7px;
+  top: -4px;
+  width: 14px;
+  height: calc(var(--qibla-compass-size) * 0.33);
+  background: linear-gradient(180deg, #f5c979 0%, #e0a74f 100%);
+  border-radius: 7px 7px 0 0;
+}
+
+.qibla-compass__kaaba {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 3;
+  width: clamp(54px, 3.2rem + 0.45vw, 66px);
+  height: clamp(66px, 3.9rem + 0.45vw, 76px);
+  transform: translate(-50%, -8%);
+}
+
+.qibla-compass__kaaba-body {
+  position: absolute;
+  inset: 22px 0 0;
+  border-radius: 2px 2px 3px 3px;
+  background: #5b5162;
+}
+
+.qibla-compass__kaaba-roof {
+  position: absolute;
+  inset: 16px 0 auto;
+  height: 8px;
+  border-radius: 2px 2px 0 0;
+  background: #79707f;
+}
+
+.qibla-compass__kaaba-band {
+  position: absolute;
+  inset: 24px 0 auto;
+  height: 8px;
+  background: #f2be64;
+}
+
+.qibla-compass__kaaba-door {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
   transform: translateX(-50%);
-  font-size: 20px;
-  font-weight: 800;
-  color: var(--Primary-700);
+  width: 15px;
+  height: 27px;
+  border-radius: 2px 2px 0 0;
+  background: #7a6f83;
+}
+
+.qibla-visual__decor {
+  position: absolute;
+  opacity: 0.16;
+  pointer-events: none;
+}
+
+.qibla-visual__decor--left {
+  left: 10px;
+  bottom: -6px;
+  width: clamp(130px, 9.5vw, 182px);
+  height: clamp(82px, 6.2vw, 120px);
+  background:
+    radial-gradient(
+      95px 82px at 54% 100%,
+      rgba(83, 114, 106, 0.65) 0 64%,
+      transparent 64%
+    ),
+    radial-gradient(
+      64px 52px at 25% 48%,
+      rgba(83, 114, 106, 0.55) 0 86%,
+      transparent 86%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(123, 111, 92, 0.6) 0 18%,
+      transparent 18% 100%
+    );
+  border-radius: 16px;
+}
+
+.qibla-visual__decor--left::before,
+.qibla-visual__decor--left::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  border-radius: 4px;
+  background: rgba(84, 113, 106, 0.62);
+}
+
+.qibla-visual__decor--left::before {
+  left: -8px;
+  width: 16px;
+  height: 34px;
+}
+
+.qibla-visual__decor--left::after {
+  right: -10px;
+  width: 16px;
+  height: 34px;
+}
+
+.qibla-visual__decor--right {
+  right: 24px;
+  bottom: 12px;
+  width: 96px;
+  height: 148px;
+  border: 6px dotted rgba(184, 162, 139, 0.82);
+  border-radius: 57% 43% 62% 38% / 68% 52% 48% 32%;
+  transform: rotate(13deg);
+}
+
+.qibla-visual__decor--right::before,
+.qibla-visual__decor--right::after {
+  content: "";
+  position: absolute;
+}
+
+.qibla-visual__decor--right::before {
+  right: -2px;
+  top: 38px;
+  width: 48px;
+  height: 77px;
+  border: 6px dotted rgba(184, 162, 139, 0.82);
+  border-radius: 56% 44% 60% 40% / 62% 54% 46% 38%;
+  transform: rotate(8deg);
+}
+
+.qibla-visual__decor--right::after {
+  left: 36px;
+  bottom: -54px;
+  width: 14px;
+  height: 58px;
+  background: linear-gradient(180deg, rgba(184, 162, 139, 0.78), transparent);
+  transform: rotate(18deg);
+  border-radius: 12px;
 }
 
 .ramadan-head {
@@ -2038,12 +2601,163 @@
 }
 
 @media (max-width: 1199.98px) {
-  .site-header__controls {
-    gap: 6.4px;
+  .site-header__nav {
+    gap: clamp(5px, 0.24rem + 0.3vw, 9px);
   }
+
+  .site-header__link {
+    padding-inline: clamp(8px, 0.4rem + 0.25vw, 11px);
+    font-size: clamp(12.5px, 0.72rem + 0.1vw, 13.5px);
+  }
+
+  .site-header__controls {
+    gap: clamp(5px, 0.22rem + 0.22vw, 8px);
+  }
+
+  .site-header__city {
+    max-inline-size: clamp(108px, 16vw, 148px);
+  }
+
   .hdr-chip {
+    font-size: clamp(11.5px, 0.69rem + 0.12vw, 12.5px);
+    padding-block: 4px;
+    padding-inline: clamp(7px, 0.34rem + 0.2vw, 9px);
+  }
+
+  .hdr-lang__trigger {
+    inline-size: clamp(126px, 15vw, 148px);
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .hero {
+    --hero-reference-height: 760px;
+    --hero-pane-pad-y: clamp(24px, 8vh, 64px);
+    --hero-pane-pad-side: clamp(20px, 3.4vw, 48px);
+    --hero-card-height: clamp(
+      440px,
+      calc(var(--hero-height) - (var(--hero-pane-pad-y) * 2)),
+      580px
+    );
+  }
+
+  .hero__layout {
+    gap: 0;
+  }
+
+  .hero__pane--card {
+    flex-basis: min(520px, 44%);
+    padding-inline-end: 16px;
+  }
+
+  .hero__pane--content {
+    padding-inline-start: 0;
+  }
+
+  .hero__center-pattern {
+    width: clamp(360px, 48vw, 580px);
+    left: clamp(180px, 33vw, 420px);
+    top: clamp(320px, 55%, 430px);
+    opacity: 0.14;
+  }
+
+  .hero__basmala {
+    width: 276px;
+    height: 60px;
+    top: 16px;
+  }
+
+  .hero-right {
+    gap: 14px;
+  }
+
+  .hero-verse-wrap {
+    max-width: 100%;
+    gap: 8px;
+    padding-block: 20px;
+  }
+
+  .loc-chip__icon {
+    width: 26px;
+    height: 26px;
+  }
+
+  .loc-chip__text {
+    font-size: 15px;
+  }
+
+  .hero-verse {
+    font-size: 40px;
+    line-height: 1.4;
+    white-space: normal;
+  }
+
+  .date-card,
+  .hero-cta {
+    width: 224px;
+    max-width: 224px;
+  }
+
+  .date-card {
+    padding: 18px 18px 16px;
+  }
+
+  .date-card__head-label {
+    font-size: 22px;
+  }
+
+  .date-card__day {
+    font-size: 18px;
+  }
+
+  .date-card__row,
+  .date-card__row-yr {
+    font-size: 14px;
+  }
+
+  .hero-cta {
+    min-height: 52px;
+    font-size: 15px;
+    padding: 12px 18px;
+  }
+
+  .prayer-card {
+    width: min(100%, 540px);
+    padding-inline: 24px;
+  }
+
+  .pcard-time {
+    font-size: 34px;
+  }
+
+  .pcard-pill__text {
+    font-size: 20px;
+  }
+
+  .pcard-name {
+    font-size: 40px;
+  }
+
+  .countdown {
+    width: min(100%, 340px);
+    padding: 18px 28px;
+  }
+
+  .countdown__label {
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  .countdown__val {
+    font-size: 52px;
+  }
+
+  .countdown__unit {
     font-size: 12px;
-    padding: 5.2px 9.6px;
+  }
+
+  .countdown__sep {
+    font-size: 46px;
   }
 }
 
@@ -2051,21 +2765,25 @@
   .hdr-toggle {
     display: flex;
   }
+
   .site-header__nav {
     display: none;
     flex-direction: column;
     align-items: stretch;
     position: fixed;
-    top: var(--header-offset, 62px);
+    top: var(--header-offset, 60px);
     inset-inline: 0;
-    max-height: calc(100dvh - var(--header-offset, 62px));
+    max-height: calc(
+      100dvh - var(--header-offset, 60px) - env(safe-area-inset-bottom, 0px)
+    );
     overflow-y: auto;
     z-index: calc(var(--z-sticky) + 1);
     direction: rtl;
     background: var(--white);
     border-top: 1px solid var(--color-border);
-    padding: 16px;
-    gap: 12px;
+    padding: clamp(10px, 0.6rem + 0.6vw, 16px);
+    padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+    gap: clamp(9px, 0.45rem + 0.35vw, 12px);
     box-shadow: 0 8px 20px -4px rgba(18, 66, 53, 0.12);
   }
 
@@ -2082,9 +2800,12 @@
   }
 
   .site-header__link {
-    border-radius: 8px;
-    padding: 12px 16px;
-    min-height: 44px;
+    border-radius: 10px;
+    padding-block: 9px;
+    padding-inline: 12px;
+    min-height: var(--hdr-touch-size);
+    justify-content: flex-start;
+    font-size: clamp(13px, 0.78rem + 0.2vw, 14.5px);
   }
 
   .site-header__controls {
@@ -2093,8 +2814,12 @@
     grid-template-columns: 1fr;
     gap: 8px;
     margin-inline-start: 0;
-    padding-top: 12px;
+    padding-top: 10px;
     border-top: 1px solid var(--color-border);
+  }
+
+  .site-header__city {
+    max-inline-size: 100%;
   }
 
   .site-header__controls .hdr-chip {
@@ -2103,8 +2828,8 @@
   }
 
   .site-header__controls .hdr-chip--icon {
-    width: 44px;
-    height: 44px;
+    width: var(--hdr-touch-size);
+    height: var(--hdr-touch-size);
     justify-self: start;
     justify-content: center;
     padding: 0;
@@ -2131,55 +2856,509 @@
 
   .site-header__inner {
     flex-wrap: wrap;
+    align-items: center;
   }
+
   .hero {
-    min-height: auto;
+    height: auto;
     align-items: flex-start;
+    padding-block: 30px 34px;
   }
+
+  .hero__center-pattern,
+  .hero__lantern {
+    display: none;
+  }
+
+  .hero__corner {
+    width: 92px;
+    height: 92px;
+  }
+
+  .hero__basmala {
+    width: 252px;
+    height: 56px;
+    top: 10px;
+  }
+
+  .hero__inner {
+    height: auto;
+    padding-block: 56px 12px;
+  }
+
+  .hero__layout {
+    height: auto;
+    flex-direction: column-reverse;
+    gap: 18px;
+  }
+
+  .hero__pane {
+    height: auto;
+  }
+
+  .hero__pane--card,
+  .hero__pane--content {
+    width: 100%;
+    flex: 1 1 auto;
+    justify-content: stretch;
+    padding-inline: 16px;
+    padding-block: 0;
+  }
+
   .hero-right {
     align-items: stretch;
+    gap: 16px;
   }
+
+  .hero-left {
+    justify-content: center;
+  }
+
+  .loc-chip {
+    align-self: flex-end;
+    padding: 8px 14px 8px 11px;
+  }
+
+  .loc-chip__icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .loc-chip__text {
+    font-size: clamp(14px, 2.1vw, 17px);
+  }
+
+  .hero-verse-wrap {
+    gap: 10px;
+    justify-content: flex-end;
+    max-width: 100%;
+    padding-block: 0;
+  }
+
+  .hero-verse {
+    font-size: clamp(26px, 4vw, 36px);
+    line-height: 1.45;
+    white-space: normal;
+  }
+
   .date-card,
   .hero-cta {
+    width: min(100%, 260px);
     max-width: 100%;
   }
-  .prayer-card {
-    min-height: auto;
-    gap: 28px;
-    padding: 22px 18px;
+
+  .date-card {
+    align-self: flex-end;
+    margin-inline-start: auto;
   }
+
+  .hero-cta {
+    align-self: flex-end;
+    margin-inline-start: auto;
+  }
+
+  .date-card {
+    padding: 16px 18px;
+  }
+
+  .date-card__head-label {
+    font-size: 24px;
+  }
+
+  .date-card__day {
+    font-size: 20px;
+  }
+
+  .date-card__row,
+  .date-card__row-yr {
+    font-size: 16px;
+  }
+
+  .hero-cta {
+    min-height: 54px;
+    font-size: 16px;
+  }
+
+  .prayer-card {
+    width: min(100%, 620px);
+    min-height: 560px;
+    height: auto;
+    gap: 24px;
+    padding: 24px 20px 22px;
+  }
+
   .pcard-header {
     flex-direction: column-reverse;
     align-items: flex-end;
+    gap: 14px;
   }
+
+  .pcard-time {
+    font-size: 32px;
+  }
+
+  .pcard-pill__text {
+    font-size: 20px;
+  }
+
+  .pcard-name {
+    font-size: clamp(34px, 7vw, 46px);
+  }
+
+  .countdown {
+    width: min(100%, 360px);
+    min-height: auto;
+    padding: 14px 18px;
+  }
+
+  .countdown__label {
+    font-size: 16px;
+    line-height: 1.25;
+  }
+
+  .countdown__val {
+    font-size: 42px;
+  }
+
+  .countdown__unit {
+    font-size: 14px;
+  }
+
+  .countdown__sep {
+    font-size: 44px;
+  }
+
   .ps-track {
     overflow-x: auto;
   }
 }
 
-@media (max-width: 575.98px) {
-  .site-header__inner {
+@media (max-width: 767.98px) {
+  .hero {
+    padding-block: 24px 20px;
+  }
+
+  .hero__basmala {
+    width: 214px;
+    height: 48px;
+    top: 8px;
+  }
+
+  .hero__layout {
+    gap: 14px;
+  }
+
+  .hero__pane--card,
+  .hero__pane--content {
+    padding-inline: 14px;
+  }
+
+  .hero-right {
+    gap: 12px;
+  }
+
+  .loc-chip__icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .loc-chip__text {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .hero-verse {
+    font-size: clamp(20px, 5.2vw, 30px);
+    line-height: 1.42;
+  }
+
+  .date-card,
+  .hero-cta {
+    width: min(100%, 240px);
+  }
+
+  .date-card {
+    gap: 12px;
+    padding: 14px 16px;
+  }
+
+  .date-card__head-label {
+    font-size: 22px;
+    line-height: 1.15;
+  }
+
+  .date-card__day {
+    font-size: 18px;
+  }
+
+  .date-card__row,
+  .date-card__row-yr {
+    font-size: 15px;
+  }
+
+  .hero-cta {
+    min-height: 50px;
+    padding: 12px 16px;
+    font-size: 15px;
+  }
+
+  .prayer-card {
+    width: 100%;
+    min-height: 500px;
+    padding: 18px 14px 16px;
+    border-radius: 18px;
+    gap: 16px;
+  }
+
+  .pcard-header {
     gap: 10px;
   }
-  .hero {
-    padding-block: 24px;
+
+  .pcard-time {
+    font-size: 28px;
+    line-height: 1.1;
   }
-  .hero-verse {
-    font-size: 22.4px;
+
+  .pcard-pill {
+    padding: 6px 12px 12px;
   }
-  .prayer-card {
-    border-radius: 16px;
-    padding: 18px 14px;
+
+  .pcard-pill__dot {
+    width: 10px;
+    height: 10px;
   }
-  .countdown__val {
-    font-size: 34px;
+
+  .pcard-pill__text {
+    font-size: 17px;
+    line-height: 1;
   }
+
+  .pcard-name {
+    font-size: clamp(30px, 7vw, 40px);
+    line-height: 1.2;
+  }
+
+  .countdown {
+    width: 100%;
+    padding: 12px 14px;
+    gap: 12px;
+  }
+
+  .countdown__label {
+    font-size: 14px;
+    line-height: 1.3;
+  }
+
   .countdown__grid {
     gap: 10px;
+    min-height: 68px;
+  }
+
+  .countdown__item {
+    gap: 6px;
+  }
+
+  .countdown__val {
+    font-size: clamp(34px, 8vw, 42px);
+    line-height: 1;
+  }
+
+  .countdown__unit {
+    font-size: 12px;
+  }
+
+  .countdown__sep {
+    font-size: clamp(30px, 7vw, 40px);
+    line-height: 1;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .site-header__inner {
+    gap: 6px;
+  }
+
+  .site-header__city,
+  .hdr-lang,
+  .hdr-lang__trigger {
+    max-inline-size: 100%;
+  }
+
+  .site-header__controls {
+    gap: 6px;
+  }
+
+  .site-header__link {
+    font-size: 13px;
+    min-height: 40px;
+  }
+
+  .hdr-chip {
+    font-size: 12.5px;
+  }
+
+  .hdr-lang__code {
+    display: none;
+  }
+
+  .hdr-lang__option {
+    font-size: 12.5px;
+  }
+
+  .site-header__brand-image {
+    max-inline-size: 106px;
+  }
+
+  .hero {
+    height: auto;
+    padding-block: 20px 16px;
+  }
+
+  .hero__corner,
+  .hero__basmala {
+    display: none;
+  }
+
+  .hero__inner {
+    height: auto;
+    padding-block: 0;
+  }
+
+  .hero__layout {
+    height: auto;
+    gap: 16px;
+  }
+
+  .hero__pane--card,
+  .hero__pane--content {
+    padding-inline: 10px;
+  }
+
+  .loc-chip {
+    padding-inline: 10px 12px;
+    padding-block: 7px;
+    min-height: 38px;
+  }
+
+  .loc-chip__icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .loc-chip__text {
+    font-size: 14px;
+    line-height: 1.35;
+  }
+
+  .hero-verse-wrap {
+    gap: 8px;
+    padding-block: 0;
+  }
+
+  .hero-verse__ornament {
+    display: none;
+  }
+
+  .hero-verse {
+    font-size: clamp(18px, 6vw, 24px);
+    line-height: 1.4;
+  }
+
+  .date-card,
+  .hero-cta {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .date-card__head-label {
+    font-size: 20px;
+  }
+
+  .date-card__day {
+    font-size: 18px;
+  }
+
+  .date-card__row,
+  .date-card__row-yr {
+    font-size: 14px;
+  }
+
+  .hero-cta {
+    font-size: 14px;
+    min-height: 46px;
+    padding: 12px 16px;
+  }
+
+  .prayer-card {
+    border-radius: 14px;
+    min-height: auto;
+    height: auto;
+    padding: 16px 12px 14px;
+  }
+
+  .pcard-time {
+    font-size: 26px;
+  }
+
+  .pcard-pill {
+    padding: 6px 10px 10px;
+  }
+
+  .pcard-pill__text {
+    font-size: 14px;
+  }
+
+  .pcard-name {
+    font-size: clamp(28px, 8vw, 34px);
+  }
+
+  .countdown {
+    padding: 12px;
+  }
+
+  .countdown__label {
+    font-size: 16px;
+  }
+
+  .countdown__val {
+    font-size: 30px;
+  }
+
+  .countdown__unit {
+    font-size: 12px;
+  }
+
+  .countdown__sep {
+    font-size: 30px;
+  }
+
+  .countdown__grid {
+    gap: 8px;
   }
   .sec-head {
     flex-direction: column-reverse;
     gap: 8px;
+  }
+
+  .daily-sec .daily-sec__head,
+  .weekly-sec .weekly-sec__head {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    gap: 10px;
+  }
+
+  .daily-sec .daily-sec__city,
+  .weekly-sec .weekly-sec__city {
+    min-inline-size: 0;
+    flex: 1 1 auto;
+  }
+
+  .daily-sec .daily-sec__badge,
+  .weekly-sec .weekly-sec__badge {
+    flex: 0 0 auto;
+    align-self: flex-start;
   }
   .ps-track {
     display: grid;
@@ -2208,12 +3387,535 @@
     border-top: none;
   }
 
-  .compass-wrap {
-    padding: 20px 8px;
+  .qibla-card {
+    padding: 16px;
+    gap: 16px;
   }
 
-  .compass {
-    width: 250px;
-    height: 250px;
+  .qibla-card__head {
+    min-height: 104px;
+    padding: 12px 12px 10px;
+  }
+
+  .qibla-card__heading {
+    gap: 6px;
+  }
+
+  .qibla-card__degree {
+    top: 10px;
+  }
+
+  .qibla-card__title {
+    font-size: clamp(16px, 0.95rem + 0.45vw, 19px);
+  }
+
+  .qibla-card__title-icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .qibla-card__note {
+    max-inline-size: min(100%, 420px);
+    white-space: normal;
+    border-radius: 12px;
+  }
+
+  .qibla-city-btn {
+    min-height: 30px;
+    padding: 7px 12px;
+    font-size: 12px;
+  }
+
+  .qibla-visual {
+    min-height: 246px;
+    padding: 6px 8px;
+  }
+
+  .qibla-compass {
+    --qibla-compass-size: min(100%, 292px);
+  }
+
+  .qibla-compass__label {
+    font-size: clamp(28px, 1.7rem + 0.35vw, 34px);
+  }
+
+  .qibla-compass__label--e {
+    right: -18px;
+  }
+
+  .qibla-compass__label--w {
+    left: -18px;
+  }
+
+  .qibla-visual__decor--left {
+    left: 2px;
+    width: 114px;
+    height: 72px;
+  }
+
+  .qibla-visual__decor--right {
+    right: 8px;
+    width: 74px;
+    height: 118px;
+    border-width: 5px;
+  }
+
+  .qibla-visual__decor--right::before {
+    width: 36px;
+    height: 58px;
+    border-width: 5px;
+  }
+}
+
+@media (max-width: 399.98px) {
+  .site-header__inner {
+    --hdr-touch-size: 38px;
+    gap: 6px;
+  }
+
+  .site-header__link {
+    font-size: 12.5px;
+    padding-inline: 10px;
+  }
+
+  .hdr-chip {
+    padding-inline: 7px;
+  }
+
+  .hero {
+    padding-block: 16px 12px;
+  }
+
+  .hero__pane--card,
+  .hero__pane--content {
+    padding-inline: 6px;
+  }
+
+  .hero-verse {
+    font-size: 17px;
+  }
+
+  .date-card {
+    padding: 12px 14px;
+  }
+
+  .date-card__head-label {
+    font-size: 18px;
+  }
+
+  .date-card__day {
+    font-size: 16px;
+  }
+
+  .date-card__row,
+  .date-card__row-yr {
+    font-size: 13px;
+  }
+
+  .hero-cta {
+    min-height: 42px;
+    font-size: 13px;
+    padding: 10px 12px;
+  }
+
+  .prayer-card {
+    min-height: 420px;
+    padding: 12px 10px;
+  }
+
+  .pcard-time {
+    font-size: 23px;
+  }
+
+  .pcard-pill__text {
+    font-size: 13px;
+  }
+
+  .pcard-name {
+    font-size: 26px;
+  }
+
+  .countdown {
+    padding: 10px;
+    gap: 8px;
+  }
+
+  .countdown__grid {
+    gap: 6px;
+    min-height: 56px;
+  }
+
+  .countdown__val,
+  .countdown__sep {
+    font-size: 24px;
+  }
+
+  .countdown__unit {
+    font-size: 10px;
+  }
+
+  .qibla-card {
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .qibla-card__head {
+    min-height: 112px;
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .qibla-card__degree {
+    top: 8px;
+    font-size: 30px;
+  }
+
+  .qibla-card__title {
+    font-size: 15px;
+    gap: 6px;
+  }
+
+  .qibla-card__note {
+    font-size: 11.5px;
+    padding: 4px 9px;
+  }
+
+  .qibla-city-btn {
+    min-height: 28px;
+    padding: 6px 10px;
+    font-size: 11px;
+  }
+
+  .qibla-visual {
+    min-height: 214px;
+  }
+
+  .qibla-compass {
+    --qibla-compass-size: min(100%, 244px);
+  }
+
+  .qibla-compass__label {
+    font-size: 26px;
+  }
+
+  .qibla-compass__label--e {
+    right: -14px;
+  }
+
+  .qibla-compass__label--w {
+    left: -14px;
+  }
+
+  .qibla-visual__decor--left,
+  .qibla-visual__decor--right {
+    display: none;
+  }
+}
+
+/* Daily Prayer Section (Figma parity: node 2201:7925) */
+.daily-sec {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--Background-50);
+  padding-block-start: 48px;
+  padding-block-end: clamp(96px, 10vw, 196px);
+}
+
+.daily-sec > .container-xl {
+  position: relative;
+  z-index: 1;
+}
+
+.daily-sec::before,
+.daily-sec::after {
+  content: "";
+  position: absolute;
+  inset-block-end: 0;
+  pointer-events: none;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: bottom;
+  opacity: 0.16;
+}
+
+.daily-sec::before {
+  inset-inline-start: 0;
+  inline-size: min(34vw, 348px);
+  block-size: min(34vw, 348px);
+  transform: translateY(48px);
+  background-image: url("../assets/icons/Daily-Prayer/prayer-decor-reading.svg");
+}
+
+.daily-sec::after {
+  inset-inline-end: -24px;
+  inline-size: min(29vw, 300px);
+  block-size: min(29vw, 300px);
+  background-image: url("../assets/icons/Daily-Prayer/prayer-decor-ramadhan.svg");
+}
+
+.daily-sec .daily-sec__meta-prefix,
+.daily-sec .daily-sec__meta-value {
+  color: inherit;
+  font: inherit;
+  line-height: inherit;
+}
+
+.daily-sec .ps-track {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: clamp(10px, 1vw, 24px);
+  align-items: stretch;
+}
+
+.daily-sec .ps-card {
+  --daily-card-bg-position-y: -64px;
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  inline-size: 100%;
+  min-block-size: 264px;
+  aspect-ratio: 324 / 264;
+  border-radius: 12px;
+  overflow: hidden;
+  color: var(--white);
+  padding: 24px;
+  background-color: #2a2718;
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  background-position: center var(--daily-card-bg-position-y);
+  box-shadow: none;
+}
+
+.daily-sec .ps-card--fajr {
+  --daily-card-bg-position-y: -64px;
+  background-image: url("../assets/icons/Daily-Prayer/prayer-card-fajr-bg.svg");
+}
+
+.daily-sec .ps-card--dhuhr {
+  --daily-card-bg-position-y: -64px;
+  background-image: url("../assets/icons/Daily-Prayer/prayer-card-dhuhr-bg.svg");
+}
+
+.daily-sec .ps-card--asr {
+  --daily-card-bg-position-y: -96px;
+  background-image: url("../assets/icons/Daily-Prayer/prayer-card-asr-bg.svg");
+}
+
+.daily-sec .ps-card--maghrib {
+  --daily-card-bg-position-y: 12px;
+  background-image: url("../assets/icons/Daily-Prayer/prayer-card-maghrib-bg.svg");
+}
+
+.daily-sec .ps-card--isha {
+  --daily-card-bg-position-y: 44px;
+  background-image: url("../assets/icons/Daily-Prayer/prayer-card-isha-bg.svg");
+}
+
+.daily-sec .ps-card--active {
+  transform: none;
+  outline: none;
+  box-shadow:
+    inset 0 0 0 6px var(--Primary-500),
+    0 4px 8px -4px rgba(18, 66, 53, 0.16),
+    0 0 8px 0 rgba(108, 53, 27, 0.32);
+}
+
+.daily-sec .ps-card__inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-start;
+  gap: 16px;
+  inline-size: 100%;
+}
+
+.daily-sec .ps-card__name {
+  inline-size: 100%;
+  margin: 0;
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 24px;
+  text-align: right;
+}
+
+.daily-sec .ps-card__time-wrap {
+  inline-size: 100%;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.daily-sec .ps-card__time {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-inline-size: min(100%, 199px);
+  border-radius: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  color: var(--white);
+  direction: ltr;
+  font-family: var(--font-heading);
+  font-size: clamp(32px, 2.1vw, 40px);
+  font-weight: 600;
+  line-height: 1;
+  padding: 16px;
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .daily-sec .ps-track {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .daily-sec .ps-card {
+    min-block-size: 236px;
+    padding: 20px;
+  }
+
+  .daily-sec .ps-card__name {
+    font-size: 22px;
+    line-height: 22px;
+  }
+
+  .daily-sec .ps-card__time {
+    min-inline-size: min(100%, 178px);
+    padding: 13px 16px;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .daily-sec {
+    padding-block-end: 96px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .daily-sec .ps-track {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    overflow: visible;
+  }
+
+  .daily-sec .ps-card {
+    min-block-size: 220px;
+    padding: 18px;
+  }
+
+  .daily-sec .ps-card__name {
+    font-size: 21px;
+    line-height: 22px;
+  }
+
+  .daily-sec .ps-card__time {
+    min-inline-size: min(100%, 172px);
+    font-size: clamp(28px, 4.4vw, 34px);
+    padding: 12px 14px;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .daily-sec {
+    padding-block-start: 36px;
+    padding-block-end: 72px;
+  }
+
+  .daily-sec::before {
+    inline-size: 220px;
+    block-size: 220px;
+    transform: translateY(32px);
+  }
+
+  .daily-sec::after {
+    inset-inline-end: -16px;
+    inline-size: 190px;
+    block-size: 190px;
+  }
+
+  .daily-sec .ps-card__inner {
+    align-items: flex-end;
+  }
+
+  .daily-sec .ps-track {
+    display: flex;
+    direction: rtl;
+    gap: 10px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-inline-start: 0;
+    padding-inline-end: 16px;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline-start: 0;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .daily-sec .ps-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .daily-sec .ps-card {
+    direction: rtl;
+    flex: 0 0 clamp(210px, 52vw, 290px);
+    min-block-size: 192px;
+    border-radius: 10px;
+    padding: 16px;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+
+  .daily-sec .ps-card__name {
+    font-size: 20px;
+    line-height: 20px;
+  }
+
+  .daily-sec .ps-card__time {
+    min-inline-size: min(100%, 156px);
+    font-size: clamp(26px, 8vw, 32px);
+    padding: 11px;
+  }
+}
+
+@media (max-width: 360px) {
+  .daily-sec {
+    padding-block-start: 32px;
+    padding-block-end: 64px;
+  }
+
+  .daily-sec::before {
+    inline-size: 180px;
+    block-size: 180px;
+    transform: translateY(26px);
+  }
+
+  .daily-sec::after {
+    inset-inline-end: -12px;
+    inline-size: 160px;
+    block-size: 160px;
+  }
+
+  .daily-sec .ps-card {
+    flex: 0 0 clamp(206px, 78vw, 236px);
+    min-block-size: 184px;
+    border-radius: 10px;
+    padding: 14px;
+  }
+
+  .daily-sec .ps-card__name {
+    font-size: 19px;
+    line-height: 19px;
+  }
+
+  .daily-sec .ps-card__time {
+    min-inline-size: min(100%, 146px);
+    font-size: clamp(24px, 8vw, 30px);
+    padding: 10px 11px;
   }
 }

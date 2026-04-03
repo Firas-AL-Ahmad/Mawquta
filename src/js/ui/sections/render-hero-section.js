@@ -1,19 +1,20 @@
 const DEFAULT_HERO_VIEW_MODEL = {
-  locationLabel: "دمشق، سوريا",
+  locationLabel: "\u062F\u0645\u0634\u0642\u060C \u0633\u0648\u0631\u064A\u0627",
   verseText:
-    "إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ كِتَابًا مَوْقُوتًا",
-  dayLabel: "الثلاثاء",
-  hijriDateLabel: "6 رمضان 1448",
-  gregorianDateLabel: "10 أيلول 2026",
-  nextPrayerLabel: "العصر",
-  nextPrayerTime: "04:09 PM",
-  countdownLabel: "الوقت المتبقي",
+    "\u0625\u0646 \u0627\u0644\u0635\u0644\u0627\u0629 \u0643\u0627\u0646\u062A \u0639\u0644\u0649 \u0627\u0644\u0645\u0624\u0645\u0646\u064A\u0646 \u0643\u062A\u0627\u0628\u0627 \u0645\u0648\u0642\u0648\u062A\u0627",
+  dayLabel: "\u0627\u0644\u062B\u0644\u0627\u062B\u0627\u0621",
+  hijriDateLabel: "6 \u0631\u0645\u0636\u0627\u0646 1448",
+  gregorianDateLabel: "10 \u0627\u064A\u0648\u0644 2026",
+  nextPrayerLabel: "\u0627\u0644\u0639\u0635\u0631",
+  nextPrayerTime: "15:42 PM",
+  countdownLabel: "\u0627\u0644\u0648\u0642\u062A \u0627\u0644\u0645\u062A\u0628\u0642\u064A",
   countdown: {
     hours: "01",
     minutes: "24",
     seconds: "45",
   },
-  ctaText: "تحديد مدينة أخرى",
+  ctaText:
+    "\u062A\u062D\u062F\u064A\u062F \u0645\u062F\u064A\u0646\u0629 \u0623\u062E\u0631\u0649",
 };
 
 function safeText(value, fallback) {
@@ -108,6 +109,14 @@ function buildDateRowMarkup(dateLabel) {
   return `<span class="date-card__row-r"><span class="date-card__row-num">${number}</span><span>${month}</span></span><span class="date-card__row-yr">${year}</span>`;
 }
 
+function setDateRow(rootElement, selector, dateLabel) {
+  const dateRow = rootElement.querySelector(selector);
+  if (!dateRow || typeof dateLabel !== "string") {
+    return;
+  }
+  dateRow.innerHTML = buildDateRowMarkup(dateLabel);
+}
+
 export function renderHeroSection(rootElement, viewModel) {
   if (!rootElement) {
     return null;
@@ -116,23 +125,79 @@ export function renderHeroSection(rootElement, viewModel) {
   const hero = normalizeHeroViewModel(viewModel);
 
   rootElement.innerHTML = `
-    <section class="hero" id="hero" aria-label="القسم الرئيسي">
-      <span class="hero__basmala" aria-hidden="true">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</span>
+    <section class="hero" id="hero" aria-label="\u0642\u0633\u0645 \u0627\u0644\u0628\u0637\u0644">
+      <span class="hero__corner hero__corner--top-left" aria-hidden="true"></span>
+      <span class="hero__corner hero__corner--top-right" aria-hidden="true"></span>
+      <span class="hero__corner hero__corner--botom-left" aria-hidden="true"></span>
+      <span class="hero__corner hero__corner--botom-right" aria-hidden="true"></span>
+      <span class="hero__lantern" aria-hidden="true"></span>
+      <span class="hero__center-pattern" aria-hidden="true"></span>
+      <span class="hero__basmala" aria-hidden="true"></span>
 
-      <div class="hero__inner container-xl">
-        <div class="row g-3 g-lg-4 align-items-stretch">
-          <div class="col-12 col-lg-6 d-flex col-hero-right order-2 order-lg-1">
-            <div class="hero-right w-100">
-              <div class="loc-chip" aria-label="الموقع الحالي">
+      <div class="hero__inner">
+        <div class="hero__layout">
+          <div class="hero__pane hero__pane--card">
+            <div class="hero-left">
+              <article class="prayer-card" aria-label="\u0627\u0644\u0635\u0644\u0627\u0629 \u0627\u0644\u0642\u0627\u062F\u0645\u0629">
+                <div class="prayer-card__gloss" aria-hidden="true"></div>
+
+                <div class="pcard-header">
+                  <p class="pcard-time" data-hero-next-prayer-time>${hero.nextPrayerTime}</p>
+
+                  <div class="pcard-meta">
+                    <span class="pcard-pill">
+                      <span class="pcard-pill__dot" aria-hidden="true"></span>
+                      <span class="pcard-pill__text">\u0627\u0644\u0635\u0644\u0627\u0629 \u0627\u0644\u0642\u0627\u062F\u0645\u0629</span>
+                    </span>
+
+                    <h1 class="pcard-name" data-hero-next-prayer-label>${hero.nextPrayerLabel}</h1>
+                  </div>
+                </div>
+
+                <section class="countdown" aria-live="polite" aria-label="\u0627\u0644\u0648\u0642\u062A \u0627\u0644\u0645\u062A\u0628\u0642\u064A \u0644\u0644\u0635\u0644\u0627\u0629 \u0627\u0644\u0642\u0627\u062F\u0645\u0629">
+                  <p class="countdown__label" data-hero-countdown-label>${hero.countdownLabel}</p>
+
+                  <div class="countdown__grid" data-hero-countdown>
+                    <div class="countdown__item">
+                      <span class="countdown__val" data-hero-countdown-hours>${hero.countdown.hours}</span>
+                      <span class="countdown__unit">Hr</span>
+                    </div>
+
+                    <span class="countdown__sep" aria-hidden="true">:</span>
+
+                    <div class="countdown__item">
+                      <span class="countdown__val" data-hero-countdown-minutes>${hero.countdown.minutes}</span>
+                      <span class="countdown__unit">Min</span>
+                    </div>
+
+                    <span class="countdown__sep" aria-hidden="true">:</span>
+
+                    <div class="countdown__item">
+                      <span class="countdown__val" data-hero-countdown-seconds>${hero.countdown.seconds}</span>
+                      <span class="countdown__unit">Sec</span>
+                    </div>
+                  </div>
+                </section>
+              </article>
+            </div>
+          </div>
+
+          <div class="hero__pane hero__pane--content">
+            <div class="hero-right">
+              <div class="loc-chip" aria-label="\u0627\u0644\u0645\u0648\u0642\u0639 \u0627\u0644\u062D\u0627\u0644\u064A">
                 <span class="loc-chip__icon" aria-hidden="true"></span>
                 <span class="loc-chip__text" data-hero-location>${hero.locationLabel}</span>
               </div>
 
-              <p class="hero-verse" data-hero-verse>${hero.verseText}</p>
+              <div class="hero-verse-wrap" aria-label="\u0622\u064A\u0629 \u0642\u0631\u0622\u0646\u064A\u0629">
+                <span class="hero-verse__ornament hero-verse__ornament--right" aria-hidden="true"></span>
+                <p class="hero-verse" data-hero-verse>${hero.verseText}</p>
+                <span class="hero-verse__ornament hero-verse__ornament--left" aria-hidden="true"></span>
+              </div>
 
-              <article class="date-card" aria-label="ملخص اليوم">
+              <article class="date-card" aria-label="\u0627\u0644\u062A\u0627\u0631\u064A\u062E">
                 <div class="date-card__head">
-                  <span class="date-card__head-label">اليوم</span>
+                  <span class="date-card__head-label">\u0627\u0644\u064A\u0648\u0645</span>
                   <span class="date-card__cal" aria-hidden="true"></span>
                 </div>
 
@@ -144,52 +209,6 @@ export function renderHeroSection(rootElement, viewModel) {
               <button type="button" class="hero-cta" data-hero-change-city>
                 ${hero.ctaText}
               </button>
-            </div>
-          </div>
-
-          <div class="col-12 col-lg-6 d-flex col-hero-left order-1 order-lg-2">
-            <div class="hero-left w-100">
-              <article class="prayer-card w-100" aria-label="الصلاة القادمة">
-                <div class="prayer-card__gloss" aria-hidden="true"></div>
-
-                <div class="pcard-header">
-                  <p class="pcard-time" data-hero-next-prayer-time>${hero.nextPrayerTime}</p>
-
-                  <div class="pcard-meta">
-                    <span class="pcard-pill">
-                      <span class="pcard-pill__dot" aria-hidden="true"></span>
-                      <span class="pcard-pill__text">الصلاة القادمة</span>
-                    </span>
-
-                    <h1 class="pcard-name" data-hero-next-prayer-label>${hero.nextPrayerLabel}</h1>
-                  </div>
-                </div>
-
-                <section class="countdown" aria-live="polite" aria-label="الوقت المتبقي للصلاة القادمة">
-                  <p class="countdown__label" data-hero-countdown-label>${hero.countdownLabel}</p>
-
-                  <div class="countdown__grid" data-hero-countdown>
-                    <div class="countdown__item">
-                      <span class="countdown__val" data-hero-countdown-hours>${hero.countdown.hours}</span>
-                      <span class="countdown__unit">HR</span>
-                    </div>
-
-                    <span class="countdown__sep" aria-hidden="true">:</span>
-
-                    <div class="countdown__item">
-                      <span class="countdown__val" data-hero-countdown-minutes>${hero.countdown.minutes}</span>
-                      <span class="countdown__unit">MIN</span>
-                    </div>
-
-                    <span class="countdown__sep" aria-hidden="true">:</span>
-
-                    <div class="countdown__item">
-                      <span class="countdown__val" data-hero-countdown-seconds>${hero.countdown.seconds}</span>
-                      <span class="countdown__unit">SEC</span>
-                    </div>
-                  </div>
-                </section>
-              </article>
             </div>
           </div>
         </div>
@@ -227,19 +246,51 @@ export function updateHeroSectionLiveState(rootElement, updates = {}) {
     }
   };
 
-  if (updates.locationLabel) setTextContent(selectors.location, updates.locationLabel);
-  if (updates.verseText) setTextContent(selectors.verse, updates.verseText);
-  if (updates.dayLabel) setTextContent(selectors.dayLabel, updates.dayLabel);
-  if (updates.nextPrayerLabel) setTextContent(selectors.nextPrayerLabel, updates.nextPrayerLabel);
-  if (updates.nextPrayerTime) setTextContent(selectors.nextPrayerTime, updates.nextPrayerTime);
-  if (updates.countdownLabel) setTextContent(selectors.countdownLabel, updates.countdownLabel);
-  if (updates.ctaText) setTextContent(selectors.ctaButton, updates.ctaText);
+  if (updates.locationLabel) {
+    setTextContent(selectors.location, updates.locationLabel);
+  }
+  if (updates.verseText) {
+    setTextContent(selectors.verse, updates.verseText);
+  }
+  if (updates.dayLabel) {
+    setTextContent(selectors.dayLabel, updates.dayLabel);
+  }
+  if (updates.hijriDateLabel) {
+    setDateRow(rootElement, selectors.hijriDate, updates.hijriDateLabel);
+  }
+  if (updates.gregorianDateLabel) {
+    setDateRow(rootElement, selectors.gregorianDate, updates.gregorianDateLabel);
+  }
+  if (updates.nextPrayerLabel) {
+    setTextContent(selectors.nextPrayerLabel, updates.nextPrayerLabel);
+  }
+  if (updates.nextPrayerTime) {
+    setTextContent(selectors.nextPrayerTime, updates.nextPrayerTime);
+  }
+  if (updates.countdownLabel) {
+    setTextContent(selectors.countdownLabel, updates.countdownLabel);
+  }
+  if (updates.ctaText) {
+    setTextContent(selectors.ctaButton, updates.ctaText);
+  }
 
   if (updates.countdown) {
     const { hours, minutes, seconds } = updates.countdown;
-    if (hours !== undefined) setTextContent(selectors.countdownHours, safeCountdownPart(hours, "00"));
-    if (minutes !== undefined) setTextContent(selectors.countdownMinutes, safeCountdownPart(minutes, "00"));
-    if (seconds !== undefined) setTextContent(selectors.countdownSeconds, safeCountdownPart(seconds, "00"));
+    if (hours !== undefined) {
+      setTextContent(selectors.countdownHours, safeCountdownPart(hours, "00"));
+    }
+    if (minutes !== undefined) {
+      setTextContent(
+        selectors.countdownMinutes,
+        safeCountdownPart(minutes, "00"),
+      );
+    }
+    if (seconds !== undefined) {
+      setTextContent(
+        selectors.countdownSeconds,
+        safeCountdownPart(seconds, "00"),
+      );
+    }
   }
 
   return rootElement;

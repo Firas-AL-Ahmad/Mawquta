@@ -12,29 +12,25 @@ const STATIC_DAILY_PRAYER_VIEW_MODEL = {
       name: "الفجر",
       time: "05:11 AM",
       tone: "fajr",
-      icon: "moon",
     },
     {
       key: "dhuhr",
       name: "الظهر",
       time: "12:31 PM",
       tone: "dhuhr",
-      icon: "sun",
     },
-    { key: "asr", name: "العصر", time: "04:09 PM", tone: "asr", icon: "sun" },
+    { key: "asr", name: "العصر", time: "04:09 PM", tone: "asr" },
     {
       key: "maghrib",
       name: "المغرب",
       time: "06:57 PM",
       tone: "maghrib",
-      icon: "stars",
     },
     {
       key: "isha",
       name: "العشاء",
       time: "08:27 PM",
       tone: "isha",
-      icon: "moon",
     },
   ],
 };
@@ -76,6 +72,26 @@ function normalizeDailyPrayerViewModel(viewModel) {
   };
 }
 
+function parseStatusLabel(statusLabel) {
+  const raw = safeText(statusLabel, STATIC_DAILY_PRAYER_VIEW_MODEL.statusLabel);
+  const separatorIndex = raw.indexOf(":");
+
+  if (separatorIndex === -1) {
+    return {
+      prefix: "آخر تحديث:",
+      value: raw,
+    };
+  }
+
+  const prefix = safeText(raw.slice(0, separatorIndex), "آخر تحديث");
+  const value = safeText(raw.slice(separatorIndex + 1), raw);
+
+  return {
+    prefix: `${prefix}:`,
+    value,
+  };
+}
+
 export function renderDailyPrayerSection(
   rootElement,
   viewModel = STATIC_DAILY_PRAYER_VIEW_MODEL,
@@ -85,20 +101,24 @@ export function renderDailyPrayerSection(
   }
 
   const model = normalizeDailyPrayerViewModel(viewModel);
+  const status = parseStatusLabel(model.statusLabel);
 
   rootElement.innerHTML = `
     <section class="daily-sec" id="daily" aria-label="مواقيت الصلاة اليومية">
       <div class="container-xl">
-        <div class="sec-head">
-          <div class="sec-city">
-            <div class="sec-city__eyebrow">
+        <div class="sec-head daily-sec__head">
+          <div class="sec-city daily-sec__city">
+            <div class="sec-city__eyebrow daily-sec__eyebrow">
               <span class="sec-city__eyebrow-icon" aria-hidden="true"></span>
               <span>${model.eyebrowLabel}</span>
             </div>
-            <h2 class="sec-city__name" data-daily-city>${model.locationLabel}</h2>
-            <span class="sec-city__meta">${model.statusLabel}</span>
+            <h2 class="sec-city__name daily-sec__name" data-daily-city>${model.locationLabel}</h2>
+            <span class="sec-city__meta daily-sec__meta">
+              <span class="daily-sec__meta-value">${status.value}</span>
+              <span class="daily-sec__meta-prefix">${status.prefix}</span>
+            </span>
           </div>
-          <span class="sec-badge">${model.badgeLabel}</span>
+          <span class="sec-badge daily-sec__badge">${model.badgeLabel}</span>
         </div>
 
         <div class="ps-track" role="list" aria-label="أوقات الصلوات اليومية">
