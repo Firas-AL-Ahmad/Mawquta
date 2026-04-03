@@ -32,32 +32,88 @@ function normalizeQiblaViewModel(viewModel) {
   };
 }
 
-export function renderQiblaSection(rootElement, viewModel = DEFAULT_QIBLA_VIEW_MODEL) {
+export function renderQiblaSection(
+  rootElement,
+  viewModel = DEFAULT_QIBLA_VIEW_MODEL,
+) {
   if (!rootElement) {
     return null;
   }
 
   const qibla = normalizeQiblaViewModel(viewModel);
+  const modalId = "qiblaCityModal";
+  const modalLabelId = "qiblaCityModalTitle";
 
   rootElement.innerHTML = `
     <section class="qibla-sec" id="qibla" aria-label="اتجاه القبلة">
       <div class="container-xl">
         <div class="qibla-card">
           <div class="qibla-card__head">
-            <button type="button" class="qibla-city-btn">${qibla.actionLabel}</button>
-
             <div class="qibla-card__heading">
               <h2 class="qibla-card__title">
-                <span>${qibla.headingLabel}</span>
-                <span class="qibla-card__title-icon" aria-hidden="true"></span>
+              <span class="qibla-card__title-icon" aria-hidden="true"></span>
+              <span>${qibla.headingLabel}</span>
               </h2>
               <p class="qibla-card__note">${qibla.note}</p>
             </div>
 
             <p class="qibla-card__degree" data-qibla-deg>${qibla.degreeText}</p>
+
+            <button
+              type="button"
+              class="qibla-city-btn"
+              data-bs-toggle="modal"
+              data-bs-target="#${modalId}"
+            >
+              ${qibla.actionLabel}
+            </button>
           </div>
 
           ${renderQibla(qibla)}
+        </div>
+      </div>
+
+      <div
+        class="modal fade qibla-city-modal"
+        id="${modalId}"
+        tabindex="-1"
+        aria-labelledby="${modalLabelId}"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered qibla-city-modal__dialog">
+          <div class="modal-content qibla-city-modal__content">
+            <div class="modal-header qibla-city-modal__header">
+              <h3 class="modal-title qibla-city-modal__title" id="${modalLabelId}">
+                اختيار المدينة
+              </h3>
+              <button
+                type="button"
+                class="qibla-city-modal__close"
+                data-bs-dismiss="modal"
+                aria-label="إغلاق"
+              >
+                إغلاق
+              </button>
+            </div>
+
+            <div class="modal-body qibla-city-modal__body">
+              <p class="qibla-city-modal__note">
+                هذه نافذة شكلية حالياً وستُربط لاحقاً بميزة البحث واختيار المدينة.
+              </p>
+
+              <div class="qibla-city-modal__fake-input" aria-hidden="true">
+                ابحث عن مدينة...
+              </div>
+
+              <button
+                type="button"
+                class="qibla-city-modal__confirm"
+                data-bs-dismiss="modal"
+              >
+                تم
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </section>
