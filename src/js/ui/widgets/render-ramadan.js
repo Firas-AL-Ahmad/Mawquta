@@ -13,16 +13,16 @@ const FIRST_SECTION_STATIC = {
 };
 
 const MONTH_TABLE_ICON_PATHS = {
-  isha: "assets/icons/Ramadan/MonthTable/header-isha.svg",
-  maghrib: "assets/icons/Ramadan/MonthTable/header-maghrib.svg",
-  asr: "assets/icons/Ramadan/MonthTable/header-asr.svg",
-  dhuhr: "assets/icons/Ramadan/MonthTable/header-dhuhr.svg",
-  fajr: "assets/icons/Ramadan/MonthTable/header-fajr.svg",
-  date: "assets/icons/Ramadan/MonthTable/header-date.svg",
-  day: "assets/icons/Ramadan/MonthTable/header-day.svg",
+  isha: "assets/icons/Weekly-Prayer/isha.svg",
+  maghrib: "assets/icons/Weekly-Prayer/maghrib.svg",
+  asr: "assets/icons/Weekly-Prayer/asr.svg",
+  dhuhr: "assets/icons/Weekly-Prayer/dhuhr.svg",
+  fajr: "assets/icons/Weekly-Prayer/fajr.svg",
+  date: "assets/icons/Weekly-Prayer/date.svg",
+  day: "assets/icons/Weekly-Prayer/today.svg",
   ramadan: "assets/icons/Ramadan/moon&stars.svg",
-  download: "assets/icons/Ramadan/MonthTable/action-download.svg",
-  share: "assets/icons/Ramadan/MonthTable/action-share.svg",
+  download: "assets/icons/Ramadan/action-download.svg",
+  share: "assets/icons/Ramadan/action-share.svg",
 };
 
 const DEFAULT_MONTH_ROWS = (() => {
@@ -164,24 +164,21 @@ function normalizeMonthRow(row, index) {
   };
 }
 
+function iconMarkup(iconPath, className = "th-ic") {
+  return `<span class="${className}" aria-hidden="true"><img src="${iconPath}" alt="" loading="lazy" decoding="async" /></span>`;
+}
+
 function renderRamadanTableHeaderCell(label, iconPath) {
-  return `
-    <span class="rt-th-label">
-      <span class="rt-th-icon" aria-hidden="true">
-        <img src="${iconPath}" alt="" loading="lazy" decoding="async" />
-      </span>
-      <span>${label}</span>
-    </span>
-  `;
+  return `<span class="ws-th-label">${iconMarkup(iconPath)}<span>${label}</span></span>`;
 }
 
 function renderRamadanTimeCell(value, columnKey, activeColumns) {
   const safeValue = getStringOrFallback(value, "--:--");
   if (!activeColumns.has(columnKey)) {
-    return safeValue;
+    return `<td>${safeValue}</td>`;
   }
 
-  return `<span class="rt-time-pill">${safeValue}</span>`;
+  return `<td class="td--active"><span class="time-pill">${safeValue}</span></td>`;
 }
 
 export function renderRamadanCountdown(viewModel = {}) {
@@ -311,11 +308,11 @@ export function renderRamadanMonthTable(viewModel = {}) {
 
       return `
         <tr class="${rowClassName}">
-          <td>${renderRamadanTimeCell(row.isha, "isha", activeColumns)}</td>
-          <td>${renderRamadanTimeCell(row.maghrib, "maghrib", activeColumns)}</td>
-          <td>${renderRamadanTimeCell(row.asr, "asr", activeColumns)}</td>
-          <td>${renderRamadanTimeCell(row.dhuhr, "dhuhr", activeColumns)}</td>
-          <td>${renderRamadanTimeCell(row.fajr, "fajr", activeColumns)}</td>
+          ${renderRamadanTimeCell(row.isha, "isha", activeColumns)}
+          ${renderRamadanTimeCell(row.maghrib, "maghrib", activeColumns)}
+          ${renderRamadanTimeCell(row.asr, "asr", activeColumns)}
+          ${renderRamadanTimeCell(row.dhuhr, "dhuhr", activeColumns)}
+          ${renderRamadanTimeCell(row.fajr, "fajr", activeColumns)}
           <td class="td-date">${row.date}</td>
           <td class="td-day">${row.dayName}</td>
           <td class="td-num">${row.ramadanDay}</td>
@@ -326,21 +323,35 @@ export function renderRamadanMonthTable(viewModel = {}) {
 
   const mobileCardsMarkup = rows
     .map((row) => {
-      const todayPill = row.today ? '<span class="rt-mobile-pill">اليوم</span>' : "";
+      const activeColumns = new Set(
+        row.activeColumns.length
+          ? row.activeColumns
+          : row.today
+            ? ["maghrib", "fajr"]
+            : [],
+      );
+      const todayPill = row.today ? '<span class="ws-mobile-pill">اليوم</span>' : "";
+      const prayerItemClass = (columnKey) =>
+        activeColumns.has(columnKey)
+          ? "ws-mobile-item ws-mobile-item--active"
+          : "ws-mobile-item";
 
       return `
-        <article class="rt-mobile-card" aria-label="إمساكية ${row.dayName || "-"}">
-          <div class="rt-mobile-head">
-            <div>
-              <h3 class="rt-mobile-title">رمضان ${row.ramadanDay || "-"} - ${row.dayName || "-"}</h3>
-              <span class="rt-mobile-date">${row.date || "-"}</span>
+        <article class="ws-mobile-card" aria-label="إمساكية ${row.dayName || "-"}">
+          <div class="ws-mobile-head">
+            <div class="ws-mobile-title-wrap">
+              <h3 class="ws-mobile-title">${iconMarkup(MONTH_TABLE_ICON_PATHS.day, "ws-mobile-head-icon")}رمضان ${row.ramadanDay || "-"} - ${row.dayName || "-"}</h3>
+              <span class="ws-mobile-date">${iconMarkup(MONTH_TABLE_ICON_PATHS.date, "ws-mobile-meta-icon")}${row.date || "-"}</span>
             </div>
             ${todayPill}
           </div>
 
-          <dl class="rt-mobile-grid">
-            <div class="rt-mobile-item"><dt>الفجر</dt><dd>${row.fajr || "--:--"}</dd></div>
-            <div class="rt-mobile-item rt-mobile-item--iftar"><dt>المغرب</dt><dd>${row.maghrib || "--:--"}</dd></div>
+          <dl class="ws-mobile-grid">
+            <div class="${prayerItemClass("fajr")}"><dt>${iconMarkup(MONTH_TABLE_ICON_PATHS.fajr, "ws-mobile-item-icon")}الفجر</dt><dd>${row.fajr || "--:--"}</dd></div>
+            <div class="${prayerItemClass("dhuhr")}"><dt>${iconMarkup(MONTH_TABLE_ICON_PATHS.dhuhr, "ws-mobile-item-icon")}الظهر</dt><dd>${row.dhuhr || "--:--"}</dd></div>
+            <div class="${prayerItemClass("asr")}"><dt>${iconMarkup(MONTH_TABLE_ICON_PATHS.asr, "ws-mobile-item-icon")}العصر</dt><dd>${row.asr || "--:--"}</dd></div>
+            <div class="${prayerItemClass("maghrib")}"><dt>${iconMarkup(MONTH_TABLE_ICON_PATHS.maghrib, "ws-mobile-item-icon")}المغرب</dt><dd>${row.maghrib || "--:--"}</dd></div>
+            <div class="${prayerItemClass("isha")}"><dt>${iconMarkup(MONTH_TABLE_ICON_PATHS.isha, "ws-mobile-item-icon")}العشاء</dt><dd>${row.isha || "--:--"}</dd></div>
           </dl>
         </article>
       `;
@@ -378,10 +389,10 @@ export function renderRamadanMonthTable(viewModel = {}) {
         </div>
       </div>
 
-      <div class="rt-card">
-        <div class="rt-card__meta">
-          <span class="rt-range-chip">
-            <span class="rt-range-chip__text" data-rt-range>${rangeText}</span>
+      <div class="ws-card">
+        <div class="ws-card-top">
+          <span class="ws-range">
+            <span class="ws-range__text" data-rt-range>${rangeText}</span>
           </span>
 
           <p class="rt-location-line">
@@ -390,8 +401,8 @@ export function renderRamadanMonthTable(viewModel = {}) {
           </p>
         </div>
 
-        <div class="rt-wrap">
-          <table class="rt-table" aria-label="إمساكية شهر رمضان كاملة">
+        <div class="ws-wrap">
+          <table class="ws-table" aria-label="إمساكية شهر رمضان كاملة">
             <thead>
               <tr>${headerMarkup}</tr>
             </thead>
@@ -399,7 +410,7 @@ export function renderRamadanMonthTable(viewModel = {}) {
           </table>
         </div>
 
-        <div class="rt-mobile-list" aria-label="إمساكية رمضان - عرض الهاتف">
+        <div class="ws-mobile-list" aria-label="إمساكية رمضان - عرض الهاتف">
           ${mobileCardsMarkup}
         </div>
       </div>
