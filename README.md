@@ -4,12 +4,10 @@ Mawquta is an Arabic-first prayer web application with a static frontend (`src/`
 
 ## Current Shipped Scope (Confirmed)
 
-- Daily prayer times by selected city
-- Live countdown for the next prayer
-- 7-day prayer table (week view)
-- Qibla direction by city coordinates
-- Ramadan daily summary (day/imsak/iftar) from current week data
-- City picker with search suggestions
+- Static Prayer / Qibla / Ramadan section rendering in the current runtime path
+- Static content view models for hero, daily, weekly, qibla, and ramadan sections
+- Serverless city-search endpoint (`GET /api/geocode`) available for API-side verification
+- UI interaction scaffolding (navigation, tab toggles, modal triggers) without API hydration
 
 ## Runtime Topology (Confirmed)
 
@@ -17,11 +15,23 @@ Mawquta is an Arabic-first prayer web application with a static frontend (`src/`
 - Frontend orchestrator: `src/js/app.js`
 - Serverless geocode route: `GET /api/geocode` (`api/geocode.js`)
 
+## Current Phase Policy (Static UI + Separate API)
+
+- UI runtime path (`src/js/app.js` + `src/js/ui/*`) must remain static-content driven.
+- No `fetch`/`axios`, no `api/services` imports, and no `localStorage` hydration inside UI runtime files.
+- API and services (`api/*`, `src/js/api/*`, `src/js/services/*`) can evolve independently.
+- UI-API wiring is intentionally deferred to a dedicated future phase: **UI-API Integration**.
+- Use this guard before merges:
+
+```bash
+npm run check:ui-static-boundary
+```
+
 ## Requirements
 
 - Node.js + npm
 - Internet access (external API calls)
-- `GEONAMES_USERNAME` environment variable for serverless geocode
+- `GEONAMES_USERNAME` - required by `api/geocode.js`
 
 ## Local Development
 
@@ -47,15 +57,23 @@ npm run vercel:dev
 
 This provides Vercel-like routing and the `/api/geocode` serverless function, and is the recommended mode for validating real runtime behavior.
 
+### 3) Enforce static UI boundary (required in this phase)
+
+```bash
+npm run check:ui-static-boundary
+```
+
 ## Environment Variables
 
 Set in local Vercel environment (or deployment environment):
 
-- `GEONAMES_USERNAME` — required by `api/geocode.js`
+- `GEONAMES_USERNAME` - required by `api/geocode.js`
 
 If this variable is missing, city search endpoint returns an error response.
 
 ## Deployment Notes
+
+> See also: [docs/HANDOFF.md](docs/HANDOFF.md) for the full operational runbook.
 
 - Routing assumptions are defined in `vercel.json`.
 - The project behavior currently depends on Vercel-style rewrites for serving `src/index.html`, static assets under `src/`, and `/api/*` functions.
@@ -94,6 +112,7 @@ If this variable is missing, city search endpoint returns an error response.
 - No automated tests are currently configured.
 - No lint/format/typecheck scripts are currently configured.
 - Some files under `src/js/ui/components/*`, `src/js/ui/interactions/*`, and `src/js/state/legacy/*` are legacy/placeholder-oriented and not part of the active runtime path in `app.js`.
+- UI/API separation for this phase is guarded by `npm run check:ui-static-boundary`.
 
 ## Scope Clarification
 
