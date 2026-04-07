@@ -1,4 +1,5 @@
 :root {
+  /* ========== Color Tokens ========== */
   --white: #ffffff;
 
   --Primary-50: #effaf5;
@@ -49,6 +50,7 @@
   --Decor-Isha-Start: #4b4464;
   --Decor-Isha-End: #2e385f;
 
+  /* ========== Typography & Motion Foundations ========== */
   --font-heading: "Reem Kufi", sans-serif;
   --font-body: "Noto Kufi Arabic", sans-serif;
   --font-quote: "Amiri Quran", serif;
@@ -77,6 +79,104 @@
   --size-body-md: clamp(14px, 0.82rem + 0.16vw, 16px);
   --size-body-sm: clamp(12px, 0.74rem + 0.1vw, 14px);
 
+  /* ========== Design System (Global UI Sizing) ========== */
+  /* Minimal alias set used across sections.css */
+  --ui-font-3xs: 11px;
+  --ui-font-2xs: 12px;
+  --ui-font-xs: 13px;
+  --ui-font-sm: 14px;
+  --ui-font-md: 16px;
+  --ui-font-body-sm: var(--size-body-sm);
+  --ui-font-title-sm: var(--size-title-sm);
+  --ui-font-title-md: var(--size-title-md);
+  --ui-font-title-lg: var(--size-title-lg);
+  --ui-font-header-link: clamp(12.5px, 0.74rem + 0.16vw, 14px);
+  --ui-font-header-link-compact: clamp(12.5px, 0.72rem + 0.1vw, 13.5px);
+  --ui-font-header-link-mobile: clamp(13px, 0.78rem + 0.2vw, 14.5px);
+  --ui-font-header-link-sm: 13px;
+  --ui-font-header-link-xs: 12.5px;
+  --ui-font-header-chip: clamp(12px, 0.71rem + 0.14vw, 13px);
+  --ui-font-header-chip-compact: clamp(11.5px, 0.69rem + 0.12vw, 12.5px);
+  --ui-font-header-chip-xs: 12.5px;
+  --ui-font-header-option: clamp(11.5px, 0.68rem + 0.14vw, 13px);
+  --ui-font-header-option-xs: 12.5px;
+  --ui-font-lang-code: clamp(9.5px, 0.54rem + 0.08vw, 10.5px);
+  --ui-font-badge-fluid: clamp(12px, 0.7rem + 0.2vw, 14px);
+  --ui-font-control-fluid: clamp(13px, 0.74rem + 0.14vw, 14px);
+  --ui-font-section-title: clamp(18px, 0.98rem + 0.5vw, 22px);
+  --ui-font-section-meta: clamp(12px, 0.66rem + 0.18vw, 13px);
+  --ui-font-qibla-title: clamp(18px, 0.98rem + 0.5vw, 21px);
+  --ui-font-ramadan-table-title: clamp(18px, 0.95rem + 0.35vw, 20px);
+
+  --ui-weight-regular: 400;
+  --ui-weight-medium: 500;
+  --ui-weight-semibold: 600;
+  --ui-weight-bold: 700;
+  --ui-weight-extrabold: 800;
+  --ui-weight-black: 900;
+
+  --ui-lh-snug: 1.2;
+  --ui-lh-normal: 1.25;
+  --ui-lh-relaxed: 1.3;
+  --ui-lh-ui: 1.35;
+  --ui-lh-meta: 1.4;
+  --ui-lh-compact: 1.15;
+  --ui-lh-body: var(--Body-lineHeight);
+
+  --ui-icon-chip: clamp(14px, 0.82rem + 0.16vw, 16px);
+  --ui-icon-flag-w: 18px;
+  --ui-icon-flag-h: 13px;
+  --ui-icon-qibla-title: 28px;
+
+  --ui-space-0-5: 2px;
+  --ui-space-1: var(--space-1);
+  --ui-space-1-25: 5px;
+  --ui-space-1-5: 6px;
+  --ui-space-2: var(--space-2);
+  --ui-space-2-25: 9px;
+  --ui-space-2-5: 10px;
+  --ui-space-3: var(--space-3);
+  --ui-space-3-5: 14px;
+  --ui-space-4: var(--space-4);
+  --ui-space-4-5: 18px;
+  --ui-space-5: var(--space-5);
+  --ui-space-6: var(--space-6);
+  --ui-space-8: var(--space-8);
+  --ui-space-12: var(--space-12);
+  --ui-space-header-inner-gap: clamp(6px, 0.35rem + 0.45vw, 12px);
+  --ui-space-header-nav-gap: clamp(6px, 0.25rem + 0.45vw, 12px);
+  --ui-space-header-controls-gap: clamp(4px, 0.2rem + 0.28vw, 8px);
+  --ui-space-header-link-x: clamp(8px, 0.35rem + 0.45vw, 12px);
+  --ui-space-header-link-x-compact: clamp(8px, 0.4rem + 0.25vw, 11px);
+  --ui-space-header-link-y: 5px;
+  --ui-space-header-chip-x: clamp(8px, 0.38rem + 0.25vw, 10px);
+  --ui-space-header-chip-x-compact: clamp(7px, 0.34rem + 0.2vw, 9px);
+  --ui-space-header-chip-y: 4px;
+  --ui-space-meta-pill:
+    clamp(3px, 0.16rem + 0.18vw, 5px) clamp(10px, 0.56rem + 0.24vw, 12px);
+  --ui-space-section-head-gap: var(--space-4);
+
+  --ui-radius-2xs: 2px;
+  --ui-radius-xs: 6px;
+  --ui-radius-sm: var(--radius-sm);
+  --ui-radius-md: var(--radius-md);
+  --ui-radius-lg: var(--radius-lg);
+  --ui-radius-pill: var(--radius-chip);
+  --ui-radius-control-sm: 10px;
+  --ui-radius-control-xs: 7px;
+
+  --ui-control-h-2xs: 34px;
+  --ui-control-h-xs: 38px;
+  --ui-control-h-sm: var(--size-touch-sm);
+  --ui-control-h-md: var(--size-touch-md);
+  --ui-control-h-lg: var(--size-touch-lg);
+  --ui-control-h-action-lg: 56px;
+  --ui-control-h-table-action: 48px;
+  --ui-header-inner-min-h: clamp(54px, 3.15rem + 0.5vw, 58px);
+
+  --ui-container-wide-max: 1600px;
+
+  /* ========== Semantic App Tokens ========== */
   --color-bg: var(--Background-Page);
   --color-surface: var(--white);
   --color-surface-muted: var(--Background-50);
@@ -89,6 +189,7 @@
   --color-border: color-mix(in srgb, var(--Background-50) 72%, var(--Text-600));
   --color-focus: var(--Secondary-500);
 
+  /* ========== Legacy Typographic Tokens (Backwards Compatibility) ========== */
   --Body-fontFamily: var(--font-body);
   --Body-fontSize: 16px;
   --Body-fontWeight: 400;
@@ -131,6 +232,7 @@
   --Quote-lineHeight: 26px;
   --Quote-letterSpacing: 0;
 
+  /* ========== Legacy Spacing / Radius / Layout Tokens ========== */
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
@@ -168,6 +270,7 @@
   --section-padding-block: var(--space-10);
   --section-gap: var(--space-section-md);
 
+  /* ========== Decorations & Layering ========== */
   --decor-opacity-desktop: 0.16;
   --decor-opacity-tablet: 0.13;
   --decor-opacity-mobile: 0.1;
