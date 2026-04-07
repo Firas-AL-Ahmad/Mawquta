@@ -48,20 +48,20 @@ export function renderQiblaSection(
     <section class="qibla-sec" id="qibla" aria-label="اتجاه القبلة">
       <div class="container-xl">
         <div class="qibla-card">
-          <div class="qibla-card__head">
-            <div class="qibla-card__heading">
-              <h2 class="qibla-card__title">
-              <span class="qibla-card__title-icon" aria-hidden="true"></span>
+          <div class="qibla-card__head sec-head">
+            <div class="qibla-card__heading sec-head__main">
+              <h2 class="qibla-card__title sec-head__title">
+              <span class="qibla-card__title-icon sec-head__icon" aria-hidden="true"></span>
               <span>${qibla.headingLabel}</span>
               </h2>
-              <p class="qibla-card__note">${qibla.note}</p>
+              <p class="qibla-card__note sec-head__meta">${qibla.note}</p>
             </div>
 
-            <p class="qibla-card__degree" data-qibla-deg>${qibla.degreeText}</p>
+            <p class="qibla-card__degree sec-head__aux" data-qibla-deg>${qibla.degreeText}</p>
 
             <button
               type="button"
-              class="qibla-city-btn"
+              class="qibla-city-btn sec-head__action"
               data-bs-toggle="modal"
               data-bs-target="#${modalId}"
             >

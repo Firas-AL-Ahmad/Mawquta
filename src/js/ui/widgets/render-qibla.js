@@ -16,7 +16,14 @@ export function renderQibla(viewModel = {}) {
 
   return `
     <div class="qibla-visual" data-qibla-visual aria-label="بوصلة القبلة">
-      <span class="qibla-visual__decor qibla-visual__decor--left" aria-hidden="true"></span>
+      <img
+        class="qibla-visual__decor qibla-visual__decor--left"
+        src="./assets/icons/Qibla/qibla-left-Sujud.svg"
+        alt=""
+        aria-hidden="true"
+        loading="lazy"
+        decoding="async"
+      />
 
       <div
         class="qibla-compass qibla-compass--asset"
@@ -33,7 +40,14 @@ export function renderQibla(viewModel = {}) {
         />
       </div>
 
-      <span class="qibla-visual__decor qibla-visual__decor--right" aria-hidden="true"></span>
+      <img
+        class="qibla-visual__decor qibla-visual__decor--right"
+        src="./assets/icons/Qibla/qibla-right-tasbee.svg"
+        alt=""
+        aria-hidden="true"
+        loading="lazy"
+        decoding="async"
+      />
     </div>
   `;
 }

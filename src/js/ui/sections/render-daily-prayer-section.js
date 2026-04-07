@@ -107,18 +107,18 @@ export function renderDailyPrayerSection(
     <section class="daily-sec" id="daily" aria-label="مواقيت الصلاة اليومية">
       <div class="container-xl">
         <div class="sec-head daily-sec__head">
-          <div class="sec-city daily-sec__city">
+          <div class="sec-city daily-sec__city sec-head__main">
             <div class="sec-city__eyebrow daily-sec__eyebrow">
-              <span class="sec-city__eyebrow-icon" aria-hidden="true"></span>
+              <span class="sec-city__eyebrow-icon sec-head__icon" aria-hidden="true"></span>
               <span>${model.eyebrowLabel}</span>
             </div>
-            <h2 class="sec-city__name daily-sec__name" data-daily-city>${model.locationLabel}</h2>
-            <span class="sec-city__meta daily-sec__meta">
+            <h2 class="sec-city__name daily-sec__name sec-head__title" data-daily-city>${model.locationLabel}</h2>
+            <span class="sec-city__meta daily-sec__meta sec-head__meta">
               <span class="daily-sec__meta-value">${status.value}</span>
               <span class="daily-sec__meta-prefix">${status.prefix}</span>
             </span>
           </div>
-          <span class="sec-badge daily-sec__badge">${model.badgeLabel}</span>
+          <span class="sec-badge daily-sec__badge sec-head__badge">${model.badgeLabel}</span>
         </div>
 
         <div class="ps-track" role="list" aria-label="أوقات الصلوات اليومية">

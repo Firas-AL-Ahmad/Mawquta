@@ -54,8 +54,28 @@
   --font-quote: "Amiri Quran", serif;
 
   --tr: 180ms ease;
+  --transition-fast: var(--tr);
   --rcard: 16px;
   --rpill: 8px;
+
+  --size-icon-xs: 16px;
+  --size-icon-sm: 20px;
+  --size-icon-md: 24px;
+  --size-icon-lg: 32px;
+  --size-icon-xl: 40px;
+
+  --size-touch-sm: 40px;
+  --size-touch-md: 44px;
+  --size-touch-lg: 52px;
+
+  --size-title-xl: clamp(32px, 1.55rem + 1.15vw, 48px);
+  --size-title-lg: clamp(24px, 1.1rem + 0.8vw, 34px);
+  --size-title-md: clamp(20px, 0.98rem + 0.45vw, 26px);
+  --size-title-sm: clamp(17px, 0.9rem + 0.32vw, 22px);
+
+  --size-body-lg: clamp(16px, 0.92rem + 0.2vw, 18px);
+  --size-body-md: clamp(14px, 0.82rem + 0.16vw, 16px);
+  --size-body-sm: clamp(12px, 0.74rem + 0.1vw, 14px);
 
   --color-bg: var(--Background-Page);
   --color-surface: var(--white);
@@ -121,16 +141,42 @@
   --space-10: 40px;
   --space-12: 48px;
   --space-16: 64px;
+  --space-section-sm: clamp(24px, 1.1rem + 1.6vw, 36px);
+  --space-section-md: clamp(32px, 1.4rem + 2vw, 48px);
+  --space-section-lg: clamp(40px, 1.9rem + 2.4vw, 64px);
+  --space-card-sm: clamp(12px, 0.65rem + 0.45vw, 16px);
+  --space-card-md: clamp(16px, 0.85rem + 0.72vw, 24px);
+  --space-card-lg: clamp(20px, 1rem + 1vw, 32px);
+  --space-gap-sm: clamp(8px, 0.45rem + 0.26vw, 12px);
+  --space-gap-md: clamp(12px, 0.6rem + 0.45vw, 16px);
+  --space-gap-lg: clamp(16px, 0.85rem + 0.72vw, 24px);
 
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
   --radius-xl: 20px;
   --radius-round: 9999px;
+  --radius-card: clamp(12px, 0.7rem + 0.4vw, 20px);
+  --radius-chip: 999px;
+
+  --shadow-soft: 0 4px 8px -4px rgba(18, 66, 53, 0.16);
+  --shadow-card: 0 8px 24px -14px rgba(18, 66, 53, 0.28);
+  --shadow-strong: 0 12px 30px -18px rgba(7, 22, 18, 0.38);
 
   --container-max-width: 1152px;
   --container-padding-inline: var(--space-4);
   --section-padding-block: var(--space-10);
+  --section-gap: var(--space-section-md);
+
+  --decor-opacity-desktop: 0.16;
+  --decor-opacity-tablet: 0.13;
+  --decor-opacity-mobile: 0.1;
+  --decor-opacity-xs: 0.07;
+  --decor-scale-desktop: 1;
+  --decor-scale-tablet: 0.9;
+  --decor-scale-mobile: 0.76;
+  --decor-offset-desktop: 0;
+  --decor-offset-mobile: -6px;
 
   --z-base: 1;
   --z-dropdown: 20;

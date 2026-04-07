@@ -854,6 +854,64 @@
   margin-bottom: 26px;
 }
 
+.sec-head__main {
+  min-inline-size: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 6px;
+}
+
+.sec-head__title {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: clamp(18px, 0.98rem + 0.5vw, 22px);
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.sec-head__meta {
+  margin: 0;
+  min-inline-size: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  border-radius: 999px;
+  font-family: var(--font-body);
+}
+
+.sec-head__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 34px;
+  border-radius: 999px;
+  padding: 6px 20px;
+  font-family: var(--font-body);
+  font-size: clamp(12px, 0.7rem + 0.2vw, 14px);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.sec-head__icon {
+  display: inline-block;
+  flex: 0 0 auto;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.sec-head__aux {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  white-space: nowrap;
+}
+
 .sec-city {
   display: flex;
   flex-direction: column;
@@ -911,6 +969,60 @@
   font-weight: 700;
   border-radius: var(--rpill);
   padding: 6px 20px;
+}
+
+/* Shared section primitives for consistent behavior across sections */
+.sec-head__badge,
+.sec-badge,
+.daily-sec .daily-sec__badge,
+.weekly-sec .weekly-sec__badge {
+  min-height: 34px;
+  border-radius: 999px;
+  padding: 6px 20px;
+  font-family: var(--font-body);
+  font-size: clamp(12px, 0.7rem + 0.2vw, 14px);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.sec-head__action,
+.btn-more,
+.r-tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  font-family: var(--font-body);
+  font-size: clamp(13px, 0.74rem + 0.14vw, 14px);
+  font-weight: 700;
+  line-height: 1.25;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    filter var(--tr),
+    transform var(--tr),
+    background var(--tr),
+    border-color var(--tr),
+    box-shadow var(--tr);
+}
+
+.sec-head__action:hover,
+.btn-more:hover {
+  filter: brightness(0.96);
+}
+
+.sec-head__action:active,
+.btn-more:active {
+  transform: translateY(1px);
+}
+
+.sec-head__action:focus-visible,
+.btn-more:focus-visible,
+.r-tab:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--Secondary-500) 24%, transparent),
+    0 0 0 4px color-mix(in srgb, var(--Secondary-500) 56%, transparent);
 }
 
 .daily-sec .daily-sec__head,
@@ -979,9 +1091,9 @@
 
 .daily-sec .daily-sec__name,
 .weekly-sec .weekly-sec__name {
-  font-size: 36px;
+  font-size: clamp(28px, 1.4rem + 1.1vw, 36px);
   font-weight: 900;
-  line-height: 1;
+  line-height: 1.15;
   color: var(--Primary-700);
   white-space: nowrap;
   text-align: left;
@@ -989,24 +1101,21 @@
 
 .daily-sec .daily-sec__meta,
 .weekly-sec .weekly-sec__meta {
-  font-size: 11.5px;
+  font-size: clamp(11.5px, 0.66rem + 0.18vw, 13px);
   font-weight: 500;
   color: color-mix(in srgb, var(--Text-600) 85%, var(--Primary-900));
   background: #e6ebe5;
-  border-radius: 6px;
-  padding: 3px 10px;
+  border-radius: 999px;
+  padding: clamp(3px, 0.16rem + 0.18vw, 5px)
+    clamp(10px, 0.56rem + 0.24vw, 12px);
+  line-height: 1.4;
   text-align: left;
 }
 
 .daily-sec .daily-sec__badge,
 .weekly-sec .weekly-sec__badge {
   background: var(--Secondary-500);
-  border-radius: 8px;
-  padding: 7px 22px;
-  font-size: 13.9px;
-  font-weight: 700;
   align-self: flex-start;
-  white-space: nowrap;
 }
 
 .daily-sec,
@@ -1568,587 +1677,714 @@
   gap: 8px;
 }
 
-.qibla-sec {
-  background: transparent;
-}
-.qibla-card__head {
+.ramadan-sec {
   position: relative;
-  direction: ltr;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 18px;
-  padding: 16px;
-  border-radius: 16px;
-  background: var(--Background-50);
-  min-height: 86px;
   overflow: hidden;
+  isolation: isolate;
+  background: #f8f7f4;
+  --ramadan-radius-shell: clamp(16px, 0.9rem + 0.35vw, 24px);
+  --ramadan-topbar-gap: clamp(12px, 0.65rem + 0.8vw, 20px);
+  --ramadan-chip-min-h: clamp(68px, 3.9rem + 0.85vw, 80px);
+  --ramadan-chip-pad-inline: clamp(14px, 0.7rem + 0.8vw, 24px);
+  --ramadan-chip-font-size: clamp(14px, 0.78rem + 0.3vw, 16px);
+  --ramadan-summary-gap: clamp(10px, 0.55rem + 0.35vw, 14px);
+  --ramadan-icon-size: clamp(20px, 1rem + 0.35vw, 24px);
+  --ramadan-month-size: clamp(30px, 1.5rem + 1.3vw, 48px);
+  --ramadan-title-size: clamp(18px, 0.95rem + 0.5vw, 24px);
+  --ramadan-pill-size: clamp(30px, 1.1rem + 2vw, 52px);
+  --ramadan-timer-size: clamp(40px, 1.65rem + 2vw, 64px);
+  --ramadan-progress-edge-size: clamp(12px, 0.68rem + 0.45vw, 18px);
+  --ramadan-progress-value-size: clamp(20px, 1rem + 0.9vw, 34px);
 }
 
-.qibla-card {
+.ramadan-sec > .container-xl {
   position: relative;
+  z-index: 2;
+}
+
+.ramadan-sec::before,
+.ramadan-sec::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  background-repeat: no-repeat;
+  background-size: contain;
+  z-index: 1;
+}
+
+.ramadan-sec::before {
+  top: 0;
+  left: 0;
+  width: 192px;
+  height: 332px;
+  background-image: url("../assets/icons/Ramadan/left-crescent-pattern.svg");
+}
+
+.ramadan-sec::after {
+  top: 0;
+  right: 0;
+  width: 132px;
+  height: 372px;
+  background-image: url("../assets/icons/Ramadan/right-crescent-pattern.svg");
+}
+
+.ramadan-topbar {
+  direction: ltr;
+  display: grid;
+  grid-template-areas: "action date city summary";
+  grid-template-columns:
+    auto minmax(220px, 1fr) minmax(220px, 1fr)
+    minmax(300px, 1.15fr);
+  align-items: start;
+  gap: var(--ramadan-topbar-gap);
+  margin-bottom: clamp(14px, 0.75rem + 0.4vw, 18px);
+}
+
+.ramadan-topbar__action-shell {
+  grid-area: action;
+  justify-self: start;
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(4px, 0.22rem + 0.12vw, 5px);
+  border: 1px solid #eaeeec;
+  border-radius: 12px;
   background: #d3dad5;
-  border: none;
-  border-radius: 16px;
   box-shadow: 0 4px 8px -4px rgba(18, 66, 53, 0.16);
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
 }
 
-.qibla-card__heading {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 8px;
-  text-align: right;
-  direction: rtl;
-  /* margin-inline-start: auto; */
-  max-inline-size: min(100%, 640px);
-}
-
-.qibla-city-btn {
+.ramadan-topbar__action {
+  min-height: 44px;
+  min-inline-size: clamp(108px, 6.8vw, 130px);
+  padding: 10px 18px;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   background: var(--Secondary-500);
   color: var(--white);
-  padding: 8px 16px;
-  min-height: 32px;
-  font-family: var(--Body-fontFamily);
-  font-size: 14px;
+  font-family: var(--font-body);
+  font-size: clamp(13px, 0.72rem + 0.15vw, 14px);
   font-weight: 700;
-  line-height: 1;
-  cursor: pointer;
+  line-height: 1.25;
   white-space: nowrap;
+  cursor: pointer;
   transition:
     filter var(--tr),
     transform var(--tr);
 }
 
-.qibla-city-btn:hover {
-  filter: brightness(0.96);
-}
-
-.qibla-city-btn:active {
-  transform: translateY(1px);
-}
-
-.qibla-city-btn:focus-visible {
-  outline: none;
-  box-shadow:
-    0 0 0 2px color-mix(in srgb, var(--Secondary-500) 25%, transparent),
-    0 0 0 4px color-mix(in srgb, var(--Secondary-500) 65%, transparent);
-}
-
-.qibla-card__title {
-  margin: 0;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: clamp(19px, 1.2rem + 0.35vw, 24px);
-  font-weight: 700;
-  line-height: 1.3;
-  color: var(--Secondary-500);
-}
-.qibla-card__title-icon {
-  width: 32px;
-  height: 32px;
-  flex-shrink: 0;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' fill='none'%3E%3Ccircle cx='16' cy='16' r='13.5' stroke='%23124235' stroke-width='2'/%3E%3Cpath d='M16 7l3.8 7.1H12.2L16 7z' fill='%23DD9730'/%3E%3Ccircle cx='16' cy='16' r='2.2' fill='%23124235'/%3E%3C/svg%3E")
-    center/contain no-repeat;
-}
-.qibla-card__note {
-  margin: 0;
-  display: inline-flex;
+.ramadan-topbar__chip {
+  position: relative;
+  min-block-size: var(--ramadan-chip-min-h);
+  border: 1px solid var(--Secondary-500);
+  border-radius: 14px;
+  background: var(--white);
+  overflow: hidden;
+  display: flex;
   align-items: center;
   justify-content: flex-end;
-  background: rgba(15, 82, 51, 0.08);
-  color: #64748b;
-  border-radius: 100px;
-  padding: 4px 12px;
-  font-size: clamp(12px, 0.72rem + 0.2vw, 14px);
-  font-weight: 400;
-  line-height: 1.6;
-  white-space: nowrap;
+  padding-block: clamp(12px, 0.65rem + 0.5vw, 24px);
+  padding-inline: var(--ramadan-chip-pad-inline);
 }
 
-.qibla-card__degree {
-  position: absolute;
-  left: 50%;
-  top: 16px;
-  transform: translateX(-50%);
-  margin: 0;
-  font-family: "Reem Kufi", var(--font-heading);
-  font-size: clamp(36px, 2.25rem + 0.65vw, 48px);
-  font-weight: 700;
-  line-height: 1;
-  color: var(--Secondary-500);
-  letter-spacing: 0;
-}
-
-.qibla-visual {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 296px;
-  padding: 8px 16px;
-  /* overflow: hidden; */
-}
-
-.qibla-compass {
-  --qibla-compass-size: clamp(260px, 31vw, 432px);
-  position: relative;
-  width: var(--qibla-compass-size);
-  height: var(--qibla-compass-size);
-  border-radius: 50%;
-  background: linear-gradient(145deg, #95899b 0%, #7f7485 100%);
-  box-shadow:
-    inset -5px -7px 0 rgba(88, 73, 94, 0.32),
-    inset 5px 7px 0 rgba(184, 175, 189, 0.5);
-}
-
-.qibla-compass::before {
+.ramadan-topbar__chip::before {
   content: "";
   position: absolute;
-  inset: 18px;
-  border-radius: 50%;
-  background: conic-gradient(
-    from 338deg,
-    #e8dfca 0deg,
-    #f3eee2 84deg,
-    #f7f4ec 360deg
-  );
-  box-shadow:
-    inset 0 0 0 1px rgba(139, 126, 143, 0.32),
-    inset 0 -3px 6px rgba(139, 126, 143, 0.2);
-}
-
-.qibla-compass__label {
-  position: absolute;
-  z-index: 3;
-  font-family: "Fredoka One", var(--Body-fontFamily);
-  font-size: clamp(34px, 2.1rem + 0.45vw, 40px);
-  line-height: 1;
-  font-weight: 400;
-  color: var(--Secondary-500);
-}
-
-.qibla-compass__label--n {
-  top: -5px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.qibla-compass__label--s {
-  bottom: -8px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.qibla-compass__label--e {
-  right: -24px;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.qibla-compass__label--w {
-  left: -24px;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.qibla-compass__ticks {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-}
-
-.qibla-compass__ticks span {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 8px;
-  height: clamp(10px, 0.45rem + 0.45vw, 14px);
-  border-radius: 999px;
-  background: #8d8192;
-  transform: translate(-50%, -50%) rotate(0deg)
-    translateY(calc(var(--qibla-compass-size) * -0.37));
-}
-
-.qibla-compass__ticks span:nth-child(2) {
-  transform: translate(-50%, -50%) rotate(45deg)
-    translateY(calc(var(--qibla-compass-size) * -0.37));
-}
-
-.qibla-compass__ticks span:nth-child(3) {
-  transform: translate(-50%, -50%) rotate(90deg)
-    translateY(calc(var(--qibla-compass-size) * -0.37));
-}
-
-.qibla-compass__ticks span:nth-child(4) {
-  transform: translate(-50%, -50%) rotate(135deg)
-    translateY(calc(var(--qibla-compass-size) * -0.37));
-}
-
-.qibla-compass__ticks span:nth-child(5) {
-  transform: translate(-50%, -50%) rotate(180deg)
-    translateY(calc(var(--qibla-compass-size) * -0.37));
-}
-
-.qibla-compass__ticks span:nth-child(6) {
-  transform: translate(-50%, -50%) rotate(225deg)
-    translateY(calc(var(--qibla-compass-size) * -0.37));
-}
-
-.qibla-compass__ticks span:nth-child(7) {
-  transform: translate(-50%, -50%) rotate(270deg)
-    translateY(calc(var(--qibla-compass-size) * -0.37));
-}
-
-.qibla-compass__ticks span:nth-child(8) {
-  transform: translate(-50%, -50%) rotate(315deg)
-    translateY(calc(var(--qibla-compass-size) * -0.37));
-}
-
-.qibla-compass__needle {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  z-index: 2;
-  width: 0;
-  height: 0;
-  transform: translate(-50%, -100%) rotate(var(--needle-rotation, 0deg));
-  transform-origin: 50% 100%;
-}
-
-.qibla-compass__needle::before {
-  content: "";
-  position: absolute;
-  left: -13px;
-  top: -42px;
-  border-left: 13px solid transparent;
-  border-right: 13px solid transparent;
-  border-bottom: 38px solid #fece85;
-}
-
-.qibla-compass__needle::after {
-  content: "";
-  position: absolute;
-  left: -7px;
-  top: -4px;
-  width: 14px;
-  height: calc(var(--qibla-compass-size) * 0.33);
-  background: linear-gradient(180deg, #f5c979 0%, #e0a74f 100%);
-  border-radius: 7px 7px 0 0;
-}
-
-.qibla-compass__kaaba {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  z-index: 3;
-  width: clamp(54px, 3.2rem + 0.45vw, 66px);
-  height: clamp(66px, 3.9rem + 0.45vw, 76px);
-  transform: translate(-50%, -8%);
-}
-
-.qibla-compass__kaaba-body {
-  position: absolute;
-  inset: 22px 0 0;
-  border-radius: 2px 2px 3px 3px;
-  background: #5b5162;
-}
-
-.qibla-compass__kaaba-roof {
-  position: absolute;
-  inset: 16px 0 auto;
-  height: 8px;
-  border-radius: 2px 2px 0 0;
-  background: #79707f;
-}
-
-.qibla-compass__kaaba-band {
-  position: absolute;
-  inset: 24px 0 auto;
-  height: 8px;
-  background: #f2be64;
-}
-
-.qibla-compass__kaaba-door {
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  transform: translateX(-50%);
-  width: 15px;
-  height: 27px;
-  border-radius: 2px 2px 0 0;
-  background: #7a6f83;
-}
-
-.qibla-visual__decor {
-  position: absolute;
-  opacity: 0.16;
+  inset-inline-start: clamp(-76px, -4.8vw, -58px);
+  inset-block-start: clamp(-48px, -3.2vw, -36px);
+  width: clamp(164px, 11vw, 200px);
+  height: clamp(164px, 11vw, 200px);
+  background: url("../assets/icons/Ramadan/pattern-city&history.svg")
+    center/contain no-repeat;
   pointer-events: none;
 }
 
-.qibla-visual__decor--left {
-  left: 10px;
-  bottom: -6px;
-  width: clamp(130px, 9.5vw, 182px);
-  height: clamp(82px, 6.2vw, 120px);
-  background:
-    radial-gradient(
-      95px 82px at 54% 100%,
-      rgba(83, 114, 106, 0.65) 0 64%,
-      transparent 64%
-    ),
-    radial-gradient(
-      64px 52px at 25% 48%,
-      rgba(83, 114, 106, 0.55) 0 86%,
-      transparent 86%
-    ),
-    linear-gradient(180deg, rgba(123, 111, 92, 0.6) 0 18%, transparent 18% 100%);
-  border-radius: 16px;
+.ramadan-topbar__chip > * {
+  position: relative;
+  z-index: 1;
 }
 
-.qibla-visual__decor--left::before,
-.qibla-visual__decor--left::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  border-radius: 4px;
-  background: rgba(84, 113, 106, 0.62);
+.ramadan-topbar__chip--date {
+  grid-area: date;
+  inline-size: clamp(220px, 17vw, 276px);
 }
 
-.qibla-visual__decor--left::before {
-  left: -8px;
-  width: 16px;
-  height: 34px;
+.ramadan-topbar__chip--city {
+  grid-area: city;
+  inline-size: clamp(220px, 17vw, 276px);
 }
 
-.qibla-visual__decor--left::after {
-  right: -10px;
-  width: 16px;
-  height: 34px;
+.ramadan-topbar__chip-content {
+  inline-size: 100%;
+  direction: rtl;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: clamp(10px, 0.5rem + 0.45vw, 14px);
+  white-space: nowrap;
 }
 
-.qibla-visual__decor--right {
-  right: 24px;
-  bottom: 12px;
-  width: 96px;
-  height: 148px;
-  border: 6px dotted rgba(184, 162, 139, 0.82);
-  border-radius: 57% 43% 62% 38% / 68% 52% 48% 32%;
-  transform: rotate(13deg);
+.ramadan-topbar__chip-label-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: clamp(6px, 0.35rem + 0.2vw, 8px);
 }
 
-.qibla-visual__decor--right::before,
-.qibla-visual__decor--right::after {
-  content: "";
-  position: absolute;
+.ramadan-topbar__chip-label,
+.ramadan-topbar__chip-value {
+  font-family: var(--font-body);
+  font-size: var(--ramadan-chip-font-size);
+  font-weight: 700;
+  line-height: 1.35;
 }
 
-.qibla-visual__decor--right::before {
-  right: -2px;
-  top: 38px;
-  width: 48px;
-  height: 77px;
-  border: 6px dotted rgba(184, 162, 139, 0.82);
-  border-radius: 56% 44% 60% 40% / 62% 54% 46% 38%;
-  transform: rotate(8deg);
+.ramadan-topbar__chip-label {
+  color: var(--Primary-900);
 }
 
-.qibla-visual__decor--right::after {
-  left: 36px;
-  bottom: -54px;
-  width: 14px;
-  height: 58px;
-  background: linear-gradient(180deg, rgba(184, 162, 139, 0.78), transparent);
-  transform: rotate(18deg);
-  border-radius: 12px;
+.ramadan-topbar__chip-value {
+  color: var(--Secondary-500);
 }
 
-.ramadan-head {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
-  margin-bottom: 24px;
+.ramadan-topbar__icon {
+  inline-size: var(--ramadan-icon-size);
+  block-size: var(--ramadan-icon-size);
+  flex: 0 0 var(--ramadan-icon-size);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
-.ramadan-city {
+
+.ramadan-topbar__icon--calendar {
+  background-image: url("../assets/icons/Weekly-Prayer/date.svg");
+}
+
+.ramadan-topbar__icon--location {
+  background-image: url("../assets/icons/Header/location-icon.svg");
+}
+
+.ramadan-topbar__summary {
+  grid-area: summary;
+  direction: rtl;
+  inline-size: min(100%, 440px);
+  justify-self: end;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 4px;
+  gap: var(--ramadan-summary-gap);
 }
-.ramadan-eyebrow {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--Primary-700);
-}
-.ramadan-eyebrow svg {
-  width: 16px;
-  height: 16px;
-}
-.ramadan-month {
-  font-size: 26px;
-  font-weight: 900;
-  color: var(--Primary-500);
-}
-.ramadan-meta {
-  font-size: 12px;
-  color: var(--Text-600);
-  background: rgba(18, 66, 53, 0.05);
-  border-radius: 6px;
-  padding: 2px 9px;
-}
-.ramadan-badge {
-  background: var(--Primary-500);
-  color: var(--white);
-  border-radius: var(--rpill);
-  padding: 5px 16px;
-  font-size: 13px;
-  font-weight: 700;
-}
-.ramadan-tabs {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
-}
-.r-tab {
+
+.ramadan-topbar__blessing {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  padding: 6px 14px;
-  border-radius: var(--rpill);
-  border: none;
-  background: var(--Background-50);
-  color: var(--Primary-900);
-  font-size: 13px;
-  font-weight: 700;
-}
-.r-tab--active {
-  background: var(--Secondary-500);
-  color: var(--white);
-}
-.rcard__times {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  border-bottom: 1px solid var(--color-border);
-}
-.rcard__time-block {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  padding: 20px 16px;
-}
-.rcard__time-block:first-child {
-  border-inline-end: 1px solid var(--color-border);
-}
-.rcard__time-label {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--Primary-700);
-}
-.rcard__time-label svg {
-  width: 14px;
-  height: 14px;
-}
-.rcard__time-val {
-  font-size: 30px;
-  font-weight: 900;
-  color: var(--Primary-700);
-  direction: ltr;
-}
-.rcard__countdown {
-  padding: 16px 20px;
-  background: color-mix(in srgb, var(--Background-50) 60%, var(--white));
-  border-bottom: 1px solid var(--color-border);
-}
-.rcard__countdown-label {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--Primary-700);
-  margin-bottom: 10px;
-}
-.rcd-grid {
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  gap: 12px;
-  direction: ltr;
-}
-.rcd-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-}
-.rcd-val {
-  font-size: 34px;
-  font-weight: 800;
-  color: var(--Primary-700);
-}
-.rcd-unit {
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--Text-600);
-}
-.rcd-sep {
-  font-size: 28px;
-  font-weight: 600;
-  color: var(--Primary-700);
-  opacity: 0.6;
-}
-.rcard__progress {
-  padding: 14px 20px;
-}
-.rprog {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-.rprog__labels {
-  display: flex;
-  justify-content: space-between;
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--Text-600);
-}
-.rprog__bar {
-  height: 6px;
-  background: var(--color-border);
+  justify-content: flex-end;
+  gap: clamp(6px, 0.34rem + 0.25vw, 8px);
   border-radius: 999px;
+  background: var(--white);
+  padding: clamp(6px, 0.35rem + 0.25vw, 8px)
+    clamp(12px, 0.6rem + 0.4vw, 16px);
+}
+
+.ramadan-topbar__blessing-label {
+  color: var(--Secondary-500);
+  font-family: var(--font-body);
+  font-size: clamp(13px, 0.72rem + 0.1vw, 14px);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.ramadan-topbar__blessing-icon {
+  inline-size: var(--ramadan-icon-size);
+  block-size: var(--ramadan-icon-size);
+  display: block;
+}
+
+.ramadan-topbar__month {
+  margin: 0;
+  color: var(--Primary-700);
+  font-family: var(--font-body);
+  font-size: var(--ramadan-month-size);
+  font-weight: 700;
+  line-height: 1.1;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.ramadan-topbar__meta {
+  inline-size: 100%;
+  min-block-size: clamp(30px, 1.75rem + 0.3vw, 34px);
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: clamp(6px, 0.35rem + 0.2vw, 8px);
+  border-radius: 999px;
+  background: rgba(15, 82, 51, 0.08);
+  padding: clamp(4px, 0.2rem + 0.15vw, 6px)
+    clamp(10px, 0.55rem + 0.3vw, 12px);
+}
+
+.ramadan-topbar__meta-prefix,
+.ramadan-topbar__meta-value {
+  color: #64748b;
+  font-family: var(--font-body);
+  font-size: clamp(13px, 0.72rem + 0.35vw, 16px);
+  font-weight: 400;
+  line-height: 1.35;
+  text-align: right;
+}
+
+.ramadan-topbar__meta-value {
+  min-inline-size: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ramadan-first {
+  direction: rtl;
+}
+
+.ramadan-first__shell {
+  border-radius: var(--ramadan-radius-shell);
+  background: #c3ccc6;
+  padding: clamp(10px, 0.6rem + 0.5vw, 16px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, 0.6rem + 0.4vw, 16px);
+}
+
+.ramadan-first__times {
+  direction: rtl;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(10px, 0.55rem + 0.3vw, 12px);
+}
+
+.ramadan-first-time {
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
+  border: 1px solid var(--Secondary-500);
+  background: var(--white);
+  min-height: clamp(76px, 4.55rem + 0.35vw, 84px);
+}
+
+.ramadan-first-time::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block: 0;
+  width: min(46%, 216px);
+  background: url("../assets/icons/Ramadan/suhoor-time-background.svg")
+    left center/cover no-repeat;
+  pointer-events: none;
+}
+
+.ramadan-first-time__inner {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(8px, 0.45rem + 0.15vw, 10px);
+  padding: clamp(10px, 0.58rem + 0.28vw, 14px)
+    clamp(12px, 0.7rem + 0.6vw, 18px);
+}
+
+.ramadan-first-time__label-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: clamp(6px, 0.35rem + 0.2vw, 8px);
+}
+
+.ramadan-first-time__label {
+  color: var(--Primary-700);
+  font-family: var(--font-body);
+  font-size: var(--ramadan-title-size);
+  font-weight: 700;
+  line-height: 1.3;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.ramadan-first-time__pill {
+  direction: ltr;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: clamp(96px, 5.7rem + 1.4vw, 128px);
+  min-height: clamp(46px, 2.65rem + 0.75vw, 58px);
+  border-radius: 14px;
+  border: 2px solid #becfca;
+  background: rgba(201, 209, 205, 0.85);
+  color: var(--Secondary-500);
+  font-family: "Reem Kufi", var(--font-heading);
+  font-size: var(--ramadan-pill-size);
+  font-weight: 700;
+  line-height: 1;
+  padding: clamp(5px, 0.3rem + 0.12vw, 6px)
+    clamp(10px, 0.55rem + 0.35vw, 14px);
+}
+
+.ramadan-first-time__icon {
+  inline-size: var(--ramadan-icon-size);
+  block-size: var(--ramadan-icon-size);
+  flex: 0 0 var(--ramadan-icon-size);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.ramadan-first-time__icon--imsak {
+  background-image: url("../assets/icons/Weekly-Prayer/dhuhr.svg");
+}
+
+.ramadan-first-time__icon--iftar {
+  background-image: url("../assets/icons/Weekly-Prayer/maghrib.svg");
+}
+
+.ramadan-first__countdown {
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
+  border: 1px solid var(--Secondary-500);
+  background: var(--white);
+  padding: clamp(10px, 0.58rem + 0.35vw, 16px)
+    clamp(10px, 0.6rem + 0.3vw, 16px)
+    clamp(12px, 0.72rem + 0.3vw, 20px);
+}
+
+.ramadan-first__countdown::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("../assets/icons/Ramadan/suhoor-time-background.svg")
+    center/cover no-repeat;
+  pointer-events: none;
+}
+
+.ramadan-first__countdown > * {
+  position: relative;
+  z-index: 1;
+}
+
+.ramadan-first__countdown-head {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(6px, 0.35rem + 0.2vw, 8px);
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.ramadan-first__countdown-title {
+  margin: 0;
+  color: var(--Primary-700);
+  font-family: var(--font-body);
+  font-size: var(--ramadan-title-size);
+  font-weight: 700;
+  line-height: 1.3;
+  text-align: center;
+}
+
+.ramadan-first__countdown-icon {
+  inline-size: var(--ramadan-icon-size);
+  block-size: var(--ramadan-icon-size);
+  flex: 0 0 var(--ramadan-icon-size);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: url("../assets/icons/Ramadan/moon&stars.svg") center/contain
+    no-repeat;
+}
+
+.ramadan-first__countdown-icon::before {
+  content: none;
+}
+
+.ramadan-first__timer {
+  margin-inline: auto;
+  width: min(100%, 360px);
+  min-height: clamp(96px, 5.75rem + 0.9vw, 110px);
+  border-radius: 16px;
+  border: 2px solid #becfca;
+  background: rgba(201, 209, 205, 0.92);
+  padding: clamp(10px, 0.55rem + 0.35vw, 12px)
+    clamp(8px, 0.4rem + 0.9vw, 22px);
+  direction: ltr;
+  display: inline-flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: clamp(10px, 0.55rem + 0.4vw, 14px);
+}
+
+.ramadan-first__timer-part {
+  min-width: clamp(50px, 2.8rem + 0.65vw, 62px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(4px, 0.2rem + 0.2vw, 6px);
+}
+
+.ramadan-first__timer-value {
+  color: var(--Secondary-500);
+  font-family: "Reem Kufi", var(--font-heading);
+  font-size: var(--ramadan-timer-size);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.ramadan-first__timer-unit {
+  color: #b36324;
+  font-family: var(--font-body);
+  font-size: clamp(14px, 0.78rem + 0.4vw, 20px);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.ramadan-first__timer-sep {
+  color: var(--Secondary-500);
+  font-family: "Reem Kufi", var(--font-heading);
+  font-size: var(--ramadan-timer-size);
+  font-weight: 700;
+  line-height: 0.9;
+  margin-bottom: clamp(11px, 0.62rem + 0.35vw, 16px);
+}
+
+.ramadan-first__progress {
+  margin-top: clamp(10px, 0.56rem + 0.3vw, 14px);
+}
+
+.ramadan-first__progress-row {
+  direction: ltr;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(6px, 0.35rem + 0.35vw, 10px);
+  margin-bottom: 8px;
+}
+
+.ramadan-first__progress-edge {
+  display: inline-flex;
+  align-items: center;
+  gap: clamp(4px, 0.24rem + 0.2vw, 6px);
+  color: var(--Secondary-500);
+  font-family: "Reem Kufi", var(--font-heading);
+  font-size: var(--ramadan-progress-edge-size);
+  font-weight: 600;
+  line-height: 1;
+}
+
+.ramadan-first__progress-value {
+  color: var(--Secondary-500);
+  font-family: var(--font-body);
+  font-size: var(--ramadan-progress-value-size);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.ramadan-first__progress-icon {
+  inline-size: var(--ramadan-icon-size);
+  block-size: var(--ramadan-icon-size);
+  flex: 0 0 var(--ramadan-icon-size);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.ramadan-first__progress-icon--start {
+  background-image: url("../assets/icons/Weekly-Prayer/maghrib.svg");
+}
+
+.ramadan-first__progress-icon--end {
+  background-image: url("../assets/icons/Weekly-Prayer/asr.svg");
+}
+
+.ramadan-first__progress-track {
+  position: relative;
+  height: 16px;
+  border-radius: 999px;
+  background: #d4ddda;
   overflow: hidden;
 }
-.rprog__fill {
-  height: 100%;
-  border-radius: 999px;
-  background: linear-gradient(90deg, var(--Primary-500), var(--Secondary-500));
+
+.ramadan-first__progress-fill {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-end: 0;
+  border-radius: inherit;
+  background: #17654e;
 }
-.rprog__pct {
-  text-align: center;
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--Primary-700);
+
+.r-tab {
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: var(--rpill);
+  border: 1px solid color-mix(in srgb, var(--Secondary-500) 40%, transparent);
+  background: var(--Background-50);
+  color: var(--Primary-900);
+  transition:
+    background var(--tr),
+    border-color var(--tr),
+    color var(--tr),
+    transform var(--tr),
+    box-shadow var(--tr);
+}
+
+.r-tab:hover {
+  background: color-mix(in srgb, var(--Background-50) 82%, var(--Secondary-500) 18%);
+}
+
+.r-tab:active {
+  transform: translateY(1px);
+}
+
+@media (min-width: 768px) and (max-width: 1199.98px) {
+  .ramadan-sec {
+    --ramadan-topbar-gap: 14px;
+    --ramadan-chip-min-h: 72px;
+    --ramadan-chip-pad-inline: 18px;
+    --ramadan-month-size: clamp(32px, 3.4vw, 42px);
+    --ramadan-pill-size: clamp(32px, 2.4vw, 42px);
+  }
+
+  .ramadan-topbar {
+    grid-template-areas:
+      "summary summary summary"
+      "city date action";
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+  }
+
+  .ramadan-topbar__summary {
+    inline-size: 100%;
+    justify-self: stretch;
+  }
+
+  .ramadan-topbar__chip {
+    inline-size: 100%;
+  }
+
+  .ramadan-topbar__action {
+    min-inline-size: 120px;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .ramadan-sec {
+    --ramadan-topbar-gap: 12px;
+    --ramadan-chip-min-h: 68px;
+    --ramadan-chip-pad-inline: 14px;
+    --ramadan-chip-font-size: 15px;
+    --ramadan-icon-size: 22px;
+    --ramadan-month-size: clamp(30px, 8vw, 40px);
+    --ramadan-title-size: clamp(18px, 4.8vw, 22px);
+    --ramadan-pill-size: clamp(30px, 8vw, 38px);
+    --ramadan-timer-size: clamp(42px, 10vw, 54px);
+    --ramadan-progress-edge-size: 13px;
+    --ramadan-progress-value-size: 24px;
+  }
+
+  .ramadan-sec::before {
+    width: 132px;
+    height: 228px;
+  }
+
+  .ramadan-sec::after {
+    width: 92px;
+    height: 260px;
+  }
+
+  .ramadan-topbar {
+    grid-template-areas:
+      "summary"
+      "city"
+      "date"
+      "action";
+    grid-template-columns: minmax(0, 1fr);
+    margin-bottom: 14px;
+  }
+
+  .ramadan-topbar__summary,
+  .ramadan-topbar__chip {
+    inline-size: 100%;
+    justify-self: stretch;
+  }
+
+  .ramadan-topbar__meta {
+    border-radius: 12px;
+  }
+
+  .ramadan-topbar__meta-value {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+  }
+
+  .ramadan-topbar__chip::before {
+    inset-inline-start: -60px;
+    inset-block-start: -44px;
+    width: 170px;
+    height: 170px;
+  }
+
+  .ramadan-topbar__chip-content {
+    flex-wrap: wrap;
+  }
+
+  .ramadan-topbar__action-shell {
+    justify-self: start;
+    border-radius: 10px;
+    padding: 4px;
+  }
+
+  .ramadan-topbar__action {
+    min-height: 38px;
+    min-inline-size: 108px;
+    padding: 8px 14px;
+  }
+
+  .ramadan-first__times {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .ramadan-first__countdown {
+    border-radius: 14px;
+  }
+
+  .ramadan-first__timer {
+    width: 100%;
+  }
+
+  .ramadan-first__progress-track {
+    height: 14px;
+  }
+}
+
+@media (max-width: 399.98px) {
+  .ramadan-sec {
+    --ramadan-month-size: clamp(26px, 8vw, 32px);
+    --ramadan-chip-font-size: 14px;
+    --ramadan-icon-size: 20px;
+    --ramadan-timer-size: clamp(36px, 9vw, 44px);
+    --ramadan-progress-edge-size: 11px;
+    --ramadan-progress-value-size: 20px;
+  }
+
+  .ramadan-topbar__action {
+    min-height: 34px;
+    min-inline-size: 98px;
+    font-size: 13px;
+    padding: 7px 12px;
+  }
+
+  .ramadan-first__timer {
+    min-height: 88px;
+  }
 }
 .ramadan-table-head {
+  direction: rtl;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -2156,16 +2392,54 @@
   flex-wrap: wrap;
   margin-bottom: 16px;
 }
+
+.ramadan-table-head__content {
+  min-inline-size: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.ramadan-table-head__actions {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  flex-wrap: wrap;
+}
 .ramadan-table-title {
-  font-size: 19px;
+  font-size: clamp(18px, 0.95rem + 0.35vw, 20px);
   font-weight: 800;
+  line-height: 1.25;
   color: var(--Primary-900);
 }
 .ramadan-table-sub {
-  font-size: 13px;
+  font-size: clamp(12px, 0.68rem + 0.2vw, 13px);
+  line-height: 1.45;
   color: var(--Text-600);
   margin-top: 4px;
 }
+
+.r-tab--active,
+.r-tab[aria-selected="true"] {
+  background: var(--Secondary-500);
+  color: var(--white);
+  border-color: transparent;
+}
+
+.rt-today-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--Secondary-50) 72%, var(--white));
+  color: var(--Primary-700);
+  font-size: 11.5px;
+  font-weight: 700;
+  line-height: 1.2;
+  padding: 4px 10px;
+}
+
 .rt-more-btn {
   display: flex;
   justify-content: center;
@@ -2183,6 +2457,32 @@
   font-size: 14px;
   font-weight: 700;
   color: var(--Secondary-500);
+}
+
+@media (max-width: 767.98px) {
+  .ramadan-table-head {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .ramadan-table-head__actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+  }
+
+  .ramadan-table-head__actions .r-tab {
+    width: 100%;
+    min-height: 38px;
+    padding-inline: 10px;
+  }
+}
+
+@media (max-width: 399.98px) {
+  .ramadan-table-head__actions {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 .site-footer {
@@ -3383,84 +3683,6 @@
     border-top: none;
   }
 
-  .qibla-card {
-    padding: 16px;
-    gap: 16px;
-  }
-
-  .qibla-card__head {
-    min-height: 104px;
-    padding: 12px 12px 10px;
-  }
-
-  .qibla-card__heading {
-    gap: 6px;
-  }
-
-  .qibla-card__degree {
-    top: 10px;
-  }
-
-  .qibla-card__title {
-    font-size: clamp(16px, 0.95rem + 0.45vw, 19px);
-  }
-
-  .qibla-card__title-icon {
-    width: 24px;
-    height: 24px;
-  }
-
-  .qibla-card__note {
-    max-inline-size: min(100%, 420px);
-    white-space: normal;
-    border-radius: 12px;
-  }
-
-  .qibla-city-btn {
-    min-height: 30px;
-    padding: 7px 12px;
-    font-size: 12px;
-  }
-
-  .qibla-visual {
-    min-height: 246px;
-    padding: 6px 8px;
-  }
-
-  .qibla-compass {
-    --qibla-compass-size: min(100%, 292px);
-  }
-
-  .qibla-compass__label {
-    font-size: clamp(28px, 1.7rem + 0.35vw, 34px);
-  }
-
-  .qibla-compass__label--e {
-    right: -18px;
-  }
-
-  .qibla-compass__label--w {
-    left: -18px;
-  }
-
-  .qibla-visual__decor--left {
-    left: 2px;
-    width: 114px;
-    height: 72px;
-  }
-
-  .qibla-visual__decor--right {
-    right: 8px;
-    width: 74px;
-    height: 118px;
-    border-width: 5px;
-  }
-
-  .qibla-visual__decor--right::before {
-    width: 36px;
-    height: 58px;
-    border-width: 5px;
-  }
 }
 
 @media (max-width: 399.98px) {
@@ -3550,62 +3772,6 @@
     font-size: 10px;
   }
 
-  .qibla-card {
-    /* padding: 12px; */
-    gap: 12px;
-  }
-
-  .qibla-card__head {
-    min-height: 112px;
-    padding: 10px;
-    gap: 10px;
-  }
-
-  .qibla-card__degree {
-    top: 8px;
-    font-size: 30px;
-  }
-
-  .qibla-card__title {
-    font-size: 15px;
-    gap: 6px;
-  }
-
-  .qibla-card__note {
-    font-size: 11.5px;
-    padding: 4px 9px;
-  }
-
-  .qibla-city-btn {
-    min-height: 28px;
-    padding: 6px 10px;
-    font-size: 11px;
-  }
-
-  .qibla-visual {
-    min-height: 214px;
-  }
-
-  .qibla-compass {
-    --qibla-compass-size: min(100%, 244px);
-  }
-
-  .qibla-compass__label {
-    font-size: 26px;
-  }
-
-  .qibla-compass__label--e {
-    right: -14px;
-  }
-
-  .qibla-compass__label--w {
-    left: -14px;
-  }
-
-  .qibla-visual__decor--left,
-  .qibla-visual__decor--right {
-    display: none;
-  }
 }
 
 /* Daily Prayer Section (Figma parity: node 2201:7925) */
@@ -4025,14 +4191,6 @@
     transform var(--tr);
 }
 
-.qibla-sec .qibla-city-btn:hover {
-  filter: brightness(0.96);
-}
-
-.qibla-sec .qibla-city-btn:active {
-  transform: translateY(1px);
-}
-
 .qibla-sec .qibla-city-btn:focus-visible {
   outline: none;
   box-shadow:
@@ -4096,7 +4254,8 @@
 
 .qibla-sec .qibla-visual__decor {
   position: absolute;
-  opacity: 1;
+  display: block;
+  object-fit: contain;
   pointer-events: none;
 }
 
@@ -4109,8 +4268,8 @@
   border: none;
   border-radius: 0;
   transform: none;
-  background: url("../assets/icons/Qibla/qibla-left-Sujud.svg") left
-    bottom/contain no-repeat;
+  background: none;
+  object-position: left bottom;
 }
 
 .qibla-sec .qibla-visual__decor--left::before,
@@ -4127,8 +4286,8 @@
   border-radius: 0;
   transform: none;
   mix-blend-mode: normal;
-  background: url("../assets/icons/Qibla/qibla-right-tasbee.svg") right
-    bottom/contain no-repeat;
+  background: none;
+  object-position: right bottom;
 }
 
 .qibla-sec .qibla-visual__decor--right::before,
@@ -4326,9 +4485,9 @@
   .qibla-sec .qibla-city-btn {
     grid-area: action;
     justify-self: end;
-    min-height: 34px;
+    min-height: 38px;
     border-radius: 10px;
-    padding: 7px 11px;
+    padding: 8px 13px;
     font-size: 12px;
   }
 
@@ -4401,8 +4560,8 @@
   }
 
   .qibla-sec .qibla-city-btn {
-    min-height: 30px;
-    padding: 6px 9px;
+    min-height: 34px;
+    padding: 7px 11px;
     font-size: 11px;
   }
 
@@ -4425,5 +4584,760 @@
 
   .qibla-city-modal__body {
     padding: 12px 14px 14px;
+  }
+}
+
+/* Ramadan Month Table (Figma node: 2257:12899) */
+.ramadan-table-sec {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  direction: rtl;
+  background: #f8f7f4;
+  padding-block: 48px 24px;
+}
+
+.ramadan-table-sec > * {
+  position: relative;
+  z-index: 1;
+}
+
+.ramadan-table-sec::after {
+  content: "";
+  position: absolute;
+  inset-inline-end: 0;
+  inset-block-start: 0;
+  inline-size: 300px;
+  block-size: 300px;
+  background: url("../assets/icons/Ramadan/MonthTable/decor-lantern.svg")
+    center/contain no-repeat;
+  opacity: 0.16;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ramadan-table-sec .ramadan-table-head {
+  margin-bottom: 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  text-align: center;
+}
+
+.ramadan-table-sec .ramadan-table-head__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.ramadan-table-sec .ramadan-table-title {
+  margin: 0;
+  color: var(--Primary-700);
+  font-family: var(--font-body);
+  font-size: clamp(30px, 1.6rem + 0.85vw, 48px);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.ramadan-table-sec .ramadan-table-head__chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 32px;
+  background: var(--white);
+}
+
+.ramadan-table-sec .ramadan-table-head__chip-item {
+  color: var(--Secondary-500);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.ramadan-table-sec .ramadan-table-head__chip-icon {
+  inline-size: 24px;
+  block-size: 24px;
+}
+
+.ramadan-table-sec .ramadan-table-head__actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 48px;
+}
+
+.ramadan-table-sec .ramadan-table-action {
+  border: none;
+  inline-size: 224px;
+  min-block-size: 56px;
+  border-radius: 16px;
+  background: var(--Secondary-500);
+  color: var(--white);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px 48px;
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.25;
+  cursor: pointer;
+  transition:
+    filter var(--tr),
+    transform var(--tr);
+}
+
+.ramadan-table-sec .ramadan-table-action:hover {
+  filter: brightness(0.96);
+}
+
+.ramadan-table-sec .ramadan-table-action:active {
+  transform: translateY(1px);
+}
+
+.ramadan-table-sec .ramadan-table-action img {
+  inline-size: 24px;
+  block-size: 24px;
+}
+
+.ramadan-table-sec .rt-card {
+  border-radius: 24px;
+  border: 1px solid rgba(15, 82, 51, 0.1);
+  background: #d3dad5;
+  box-shadow:
+    0 4px 8px -4px rgba(18, 66, 53, 0.16),
+    0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+.ramadan-table-sec .rt-card__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 24px;
+  border-bottom: 1px solid rgba(15, 82, 51, 0.1);
+}
+
+.ramadan-table-sec .rt-range-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: #effaf5;
+  padding: 4px 12px;
+  white-space: nowrap;
+}
+
+.ramadan-table-sec .rt-range-chip__text {
+  color: #64748b;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 22px;
+  direction: ltr;
+}
+
+.ramadan-table-sec .rt-location-line {
+  margin: 0;
+  display: inline-flex;
+  align-items: baseline;
+  justify-content: flex-end;
+  gap: 8px;
+  color: var(--Primary-900);
+  font-family: var(--font-quote);
+  font-size: clamp(20px, 1.1rem + 0.45vw, 24px);
+  line-height: 1.2;
+  text-align: right;
+}
+
+.ramadan-table-sec .rt-location-line strong {
+  color: var(--Secondary-500);
+  font-family: var(--font-body);
+  font-size: inherit;
+  font-weight: 700;
+}
+
+.ramadan-table-sec .rt-wrap {
+  overflow-x: auto;
+}
+
+.ramadan-table-sec .rt-table {
+  width: 100%;
+  min-width: 1060px;
+  border-collapse: separate;
+  border-spacing: 0;
+  direction: ltr;
+}
+
+.ramadan-table-sec .rt-table thead tr {
+  background: var(--Background-Table-Header);
+}
+
+.ramadan-table-sec .rt-table th {
+  padding: 24px 18px;
+  text-align: center;
+  white-space: nowrap;
+  border-bottom: 1px solid rgba(15, 82, 51, 0.1);
+  color: #64748b;
+  font-family: var(--font-body);
+  font-size: clamp(16px, 0.8rem + 0.45vw, 20px);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.ramadan-table-sec .rt-th-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.ramadan-table-sec .rt-th-icon {
+  inline-size: 24px;
+  block-size: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 24px;
+}
+
+.ramadan-table-sec .rt-th-icon img {
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.ramadan-table-sec .rt-table tbody td {
+  padding: 16px 18px;
+  text-align: center;
+  white-space: nowrap;
+  border-bottom: 1px solid rgba(15, 82, 51, 0.05);
+  color: #475569;
+  font-family: "Reem Kufi", var(--font-heading);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.ramadan-table-sec .rt-table tbody td.td-date,
+.ramadan-table-sec .rt-table tbody td.td-day,
+.ramadan-table-sec .rt-table tbody td.td-num {
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.5;
+  direction: rtl;
+  unicode-bidi: plaintext;
+}
+
+.ramadan-table-sec .rt-table tbody td.td-num {
+  color: #334155;
+}
+
+.ramadan-table-sec .rt-table tbody tr.row--today {
+  background: #b7c8c1;
+}
+
+.ramadan-table-sec .rt-table tbody tr.row--today td {
+  color: #0f5233;
+  font-weight: 700;
+}
+
+.ramadan-table-sec .rt-table tbody tr.row--today td:last-child {
+  position: relative;
+}
+
+.ramadan-table-sec .rt-table tbody tr.row--today td:last-child::after {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  inset-inline-end: 0;
+  inline-size: 4px;
+  background: #17654e;
+}
+
+.ramadan-table-sec .rt-time-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-inline-size: 126px;
+  min-block-size: 28px;
+  border-radius: 8px;
+  padding: 4px 18px;
+  color: var(--white);
+  font-family: "Reem Kufi", var(--font-heading);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+  background-color: var(--Secondary-500);
+  background-image: url("../assets/icons/Ramadan/MonthTable/current-prayer-pattern.svg");
+  background-repeat: repeat;
+  background-size: 246px 48px;
+  box-shadow: 0 4px 12px -2px rgba(196, 123, 43, 0.38);
+}
+
+.ramadan-table-sec .rt-mobile-list {
+  padding: 16px;
+  gap: 12px;
+}
+
+.ramadan-table-sec .rt-mobile-card {
+  border-radius: 14px;
+  border: 1px solid rgba(15, 82, 51, 0.12);
+  background: #f8fafc;
+}
+
+.ramadan-table-sec .rt-mobile-title {
+  color: var(--Primary-900);
+  font-family: var(--font-body);
+  font-size: 15px;
+}
+
+.ramadan-table-sec .rt-mobile-date {
+  color: #64748b;
+  font-family: var(--font-body);
+}
+
+.ramadan-table-sec .rt-mobile-pill {
+  background: #effaf5;
+  color: #17654e;
+}
+
+.ramadan-table-sec .rt-mobile-item {
+  border-color: rgba(15, 82, 51, 0.1);
+  background: var(--white);
+}
+
+.ramadan-table-sec .rt-mobile-item dt {
+  color: #64748b;
+}
+
+.ramadan-table-sec .rt-mobile-item dd {
+  color: #124235;
+}
+
+.ramadan-table-sec .rt-mobile-item--iftar dd {
+  color: var(--Secondary-500);
+}
+
+.ramadan-table-sec .rt-more-btn {
+  padding: 28px 0 0;
+  border: none;
+}
+
+.ramadan-table-sec .btn-more--filled {
+  border: none;
+  min-inline-size: 224px;
+  min-block-size: 52px;
+  border-radius: 16px;
+  padding: 16px 48px;
+  background: var(--Secondary-500);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.ramadan-table-sec .btn-more--filled:hover {
+  filter: brightness(0.96);
+}
+
+.ramadan-table-sec .btn-more--filled:active {
+  transform: translateY(1px);
+}
+
+@media (max-width: 1199.98px) {
+  .ramadan-table-sec {
+    padding-block: 40px 20px;
+  }
+
+  .ramadan-table-sec .ramadan-table-head {
+    margin-bottom: 36px;
+  }
+
+  .ramadan-table-sec .ramadan-table-head__actions {
+    gap: 16px;
+  }
+
+  .ramadan-table-sec .ramadan-table-action {
+    inline-size: 208px;
+  }
+
+  .ramadan-table-sec .rt-card__meta {
+    padding: 18px;
+  }
+
+  .ramadan-table-sec .rt-table th {
+    padding: 18px 14px;
+  }
+
+  .ramadan-table-sec .rt-table tbody td {
+    padding: 14px 12px;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .ramadan-table-sec {
+    padding-block: 32px 16px;
+  }
+
+  .ramadan-table-sec::after {
+    inline-size: 160px;
+    block-size: 160px;
+    opacity: 0.12;
+  }
+
+  .ramadan-table-sec .ramadan-table-head {
+    margin-bottom: 20px;
+    gap: 12px;
+  }
+
+  .ramadan-table-sec .ramadan-table-head__content {
+    gap: 10px;
+  }
+
+  .ramadan-table-sec .ramadan-table-head__actions {
+    inline-size: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .ramadan-table-sec .ramadan-table-action {
+    inline-size: 100%;
+    min-block-size: 48px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-size: 14px;
+  }
+
+  .ramadan-table-sec .rt-card__meta {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 14px;
+  }
+
+  .ramadan-table-sec .rt-location-line {
+    font-size: 18px;
+    line-height: 1.35;
+  }
+
+  .ramadan-table-sec .rt-more-btn {
+    padding-top: 16px;
+  }
+
+  .ramadan-table-sec .btn-more--filled {
+    min-inline-size: min(100%, 280px);
+    min-block-size: 48px;
+    border-radius: 12px;
+    padding: 12px 18px;
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 399.98px) {
+  .ramadan-table-sec .ramadan-table-head__actions {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .ramadan-table-sec .ramadan-table-title {
+    font-size: clamp(24px, 6.6vw, 30px);
+  }
+}
+
+/* Unified Scale Normalization Layer (Safe Medium) */
+.site-header__link,
+.hdr-chip,
+.hdr-toggle,
+.hdr-lang__trigger,
+.sec-head__action,
+.r-tab,
+.btn-more,
+.hero-cta,
+.qibla-sec .qibla-city-btn,
+.ramadan-table-sec .ramadan-table-action,
+.ramadan-table-sec .btn-more--filled {
+  min-height: var(--size-touch-md);
+}
+
+.site-header__link,
+.hdr-chip,
+.hdr-lang__option,
+.sec-head__badge,
+.sec-head__meta,
+.sec-head__action,
+.r-tab,
+.btn-more,
+.hero-cta,
+.qibla-sec .qibla-city-btn,
+.ramadan-table-sec .ramadan-table-action,
+.ramadan-table-sec .btn-more--filled {
+  font-size: var(--size-body-sm);
+  line-height: 1.35;
+}
+
+.sec-head__title {
+  font-size: var(--size-title-sm);
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+
+.daily-sec .daily-sec__name,
+.weekly-sec .weekly-sec__name,
+.ramadan-table-sec .ramadan-table-title {
+  line-height: 1.15;
+  letter-spacing: 0;
+}
+
+.daily-sec .daily-sec__name,
+.weekly-sec .weekly-sec__name {
+  font-size: var(--size-title-lg);
+}
+
+.qibla-sec .qibla-card__title {
+  font-size: var(--size-title-sm);
+  line-height: 1.3;
+  letter-spacing: 0;
+}
+
+.th-ic,
+.ws-mobile-head-icon,
+.ws-mobile-meta-icon,
+.ws-mobile-item-icon,
+.ramadan-table-sec .rt-th-icon,
+.ramadan-table-sec .ramadan-table-action img {
+  inline-size: var(--size-icon-md);
+  block-size: var(--size-icon-md);
+  flex-basis: var(--size-icon-md);
+}
+
+.ws-card,
+.rt-card,
+.qibla-sec .qibla-card {
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-soft);
+}
+
+.daily-sec,
+.weekly-sec,
+.qibla-sec,
+.ramadan-sec,
+.ramadan-table-sec {
+  padding-block-start: var(--space-section-md);
+}
+
+.weekly-sec,
+.qibla-sec,
+.ramadan-sec,
+.ramadan-table-sec {
+  padding-block-end: var(--space-section-md);
+}
+
+.site-footer {
+  padding-block-start: var(--space-section-md);
+}
+
+.sec-head,
+.ramadan-table-sec .ramadan-table-head,
+.qibla-sec .qibla-card__head,
+.daily-sec .ps-track,
+.weekly-sec .ws-card-top {
+  gap: var(--space-gap-md);
+}
+
+.ws-table th,
+.ws-table td,
+.rt-table th,
+.rt-table td {
+  line-height: 1.35;
+}
+
+.ws-table td,
+.rt-table td {
+  font-size: var(--size-body-sm);
+}
+
+.ws-wrap,
+.rt-wrap {
+  overscroll-behavior-inline: contain;
+  scrollbar-width: thin;
+}
+
+.ws-wrap::-webkit-scrollbar,
+.rt-wrap::-webkit-scrollbar {
+  height: 5px;
+}
+
+.ws-wrap::-webkit-scrollbar-track,
+.rt-wrap::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.ws-wrap::-webkit-scrollbar-thumb,
+.rt-wrap::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--Primary-900) 16%, transparent);
+  border-radius: 999px;
+}
+
+.hero__corner,
+.hero__lantern,
+.hero__center-pattern,
+.weekly-sec::before,
+.weekly-sec::after,
+.daily-sec::before,
+.daily-sec::after,
+.ramadan-sec::before,
+.ramadan-sec::after,
+.ramadan-table-sec::after,
+.site-footer::before,
+.footer-content::after {
+  opacity: var(--decor-opacity-desktop);
+}
+
+@media (max-width: 1199.98px) {
+  .daily-sec,
+  .weekly-sec,
+  .qibla-sec,
+  .ramadan-sec,
+  .ramadan-table-sec,
+  .site-footer {
+    padding-block-start: var(--space-section-sm);
+  }
+
+  .weekly-sec,
+  .qibla-sec,
+  .ramadan-sec,
+  .ramadan-table-sec {
+    padding-block-end: var(--space-section-sm);
+  }
+
+  .hero__corner,
+  .hero__lantern,
+  .hero__center-pattern,
+  .weekly-sec::before,
+  .weekly-sec::after,
+  .daily-sec::before,
+  .daily-sec::after,
+  .ramadan-sec::before,
+  .ramadan-sec::after,
+  .ramadan-table-sec::after,
+  .site-footer::before,
+  .footer-content::after {
+    opacity: var(--decor-opacity-tablet);
+  }
+
+  .ramadan-table-sec .ramadan-table-head__actions {
+    gap: var(--space-gap-md);
+  }
+}
+
+@media (max-width: 991.98px) {
+  .site-header__inner {
+    min-height: var(--size-touch-lg);
+  }
+
+  .daily-sec .daily-sec__name,
+  .weekly-sec .weekly-sec__name {
+    font-size: var(--size-title-md);
+  }
+
+  .qibla-sec .qibla-card__title {
+    font-size: clamp(16px, 0.92rem + 0.36vw, 20px);
+  }
+
+  .hero__corner,
+  .hero__lantern,
+  .hero__center-pattern,
+  .weekly-sec::before,
+  .weekly-sec::after,
+  .daily-sec::before,
+  .daily-sec::after,
+  .ramadan-sec::before,
+  .ramadan-sec::after,
+  .ramadan-table-sec::after,
+  .site-footer::before,
+  .footer-content::after {
+    opacity: var(--decor-opacity-mobile);
+  }
+}
+
+@media (max-width: 767.98px) {
+  .sec-head,
+  .ramadan-table-sec .ramadan-table-head,
+  .qibla-sec .qibla-card__head,
+  .daily-sec .ps-track,
+  .weekly-sec .ws-card-top {
+    gap: var(--space-gap-sm);
+  }
+
+  .site-header__link,
+  .hdr-chip,
+  .hdr-toggle,
+  .hdr-lang__trigger,
+  .sec-head__action,
+  .r-tab,
+  .btn-more,
+  .hero-cta,
+  .qibla-sec .qibla-city-btn,
+  .ramadan-table-sec .ramadan-table-action,
+  .ramadan-table-sec .btn-more--filled {
+    min-height: var(--size-touch-sm);
+    font-size: var(--size-body-sm);
+  }
+
+  .th-ic,
+  .ws-mobile-head-icon,
+  .ws-mobile-meta-icon,
+  .ws-mobile-item-icon,
+  .ramadan-table-sec .rt-th-icon,
+  .ramadan-table-sec .ramadan-table-action img {
+    inline-size: var(--size-icon-sm);
+    block-size: var(--size-icon-sm);
+    flex-basis: var(--size-icon-sm);
+  }
+
+  .hero__center-pattern,
+  .weekly-sec::before,
+  .weekly-sec::after,
+  .daily-sec::before,
+  .daily-sec::after,
+  .ramadan-sec::before,
+  .ramadan-sec::after,
+  .ramadan-table-sec::after,
+  .site-footer::before,
+  .footer-content::after {
+    opacity: var(--decor-opacity-mobile) !important;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .hero__corner,
+  .ramadan-table-sec::after,
+  .footer-content::after {
+    display: none !important;
+  }
+
+  .hero__lantern,
+  .hero__center-pattern,
+  .weekly-sec::before,
+  .weekly-sec::after,
+  .daily-sec::before,
+  .daily-sec::after,
+  .ramadan-sec::before,
+  .ramadan-sec::after,
+  .site-footer::before {
+    opacity: var(--decor-opacity-xs) !important;
   }
 }
