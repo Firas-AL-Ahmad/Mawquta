@@ -12,12 +12,12 @@ Mawquta is an Arabic-first prayer web application with a static frontend (`src/`
 ## Runtime Topology (Confirmed)
 
 - Frontend entry: `src/index.html`
-- Frontend orchestrator: `src/js/app.js`
+- Frontend orchestrator: `src/js/app/main.js`
 - Serverless geocode route: `GET /api/geocode` (`api/geocode.js`)
 
 ## Current Phase Policy (Static UI + Separate API)
 
-- UI runtime path (`src/js/app.js` + `src/js/ui/*`) must remain static-content driven.
+- UI runtime path (`src/js/app/main.js` + `src/js/ui/*`) must remain static-content driven.
 - No `fetch`/`axios`, no `api/services` imports, and no `localStorage` hydration inside UI runtime files.
 - API and services (`api/*`, `src/js/api/*`, `src/js/services/*`) can evolve independently.
 - UI-API wiring is intentionally deferred to a dedicated future phase: **UI-API Integration**.
@@ -106,7 +106,7 @@ If this variable is missing, city search endpoint returns an error response.
 
 - No automated tests are currently configured.
 - No lint/format/typecheck scripts are currently configured.
-- Some files under `src/js/legacy/ui-stubs/components/*`, `src/js/legacy/ui-stubs/interactions/*`, and `src/js/legacy/state/*` are legacy/placeholder-oriented and not part of the active runtime path in `app.js`.
+- Legacy stubs were removed from `src/js/legacy`; active runtime now lives entirely under `src/js/app`, `src/js/ui`, `src/js/api`, `src/js/services`, and `src/js/utils`.
 - UI/API separation for this phase is guarded by `npm run check:ui-static-boundary`.
 
 ## Scope Clarification

@@ -25,14 +25,14 @@
   left: 0;
   width: 264px;
   height: 264px;
-  background-image: url("../../assets/icons/weekly-prayer/kabah-1.svg");
+  background-image: url("../../assets/icons/sections/weekly-prayer/kabah-1.svg");
 }
 
 .weekly-sec::after {
   right: 0;
   width: 230px;
   height: 230px;
-  background-image: url("../../assets/icons/weekly-prayer/shalat-1.svg");
+  background-image: url("../../assets/icons/sections/weekly-prayer/shalat-1.svg");
 }
 
 
@@ -224,7 +224,7 @@
   border-radius: var(--ui-radius-sm);
   padding: var(--ui-space-1-5) var(--ui-space-5);
   background-color: var(--Secondary-500);
-  background-image: url("../../assets/icons/weekly-prayer/current-prayer.svg");
+  background-image: url("../../assets/icons/shared/prayer/current-prayer.svg");
   background-repeat: repeat;
   background-position: center;
   background-size: 246px 48px;

@@ -4,7 +4,7 @@ import {
   requireLatitude,
   requireLongitude,
 } from "../utils/validation.util.js";
-import { CONFIG } from "../config.js";
+import { CONFIG } from "../config/app.config.js";
 
 // import axios from "axios";
 

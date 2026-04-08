@@ -1,15 +1,15 @@
 /* index.css - single public stylesheet entry point */
-@import "./tokens.css";
-@import "./base.css";
+@import "./foundations/tokens.css";
+@import "./foundations/reset.css";
 @import "./layout/shell.css";
 @import "./components/primitives.css";
 @import "./sections/header.css";
 @import "./sections/hero.css";
-@import "./sections/shared.css";
+@import "./shared/section-primitives.css";
 @import "./sections/weekly-prayer.css";
 @import "./sections/footer.css";
 @import "./sections/daily-prayer.css";
 @import "./sections/qibla.css";
 @import "./sections/ramadan.css";
-@import "./sections/normalization.css";
+@import "./foundations/normalize-ui.css";
 @import "./utilities/helpers.css";

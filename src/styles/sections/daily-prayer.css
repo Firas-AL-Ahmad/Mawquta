@@ -30,14 +30,14 @@
   inline-size: min(34vw, 348px);
   block-size: min(34vw, 348px);
   transform: translateY(48px);
-  background-image: url("../../assets/icons/daily-prayer/prayer-decor-reading.svg");
+  background-image: url("../../assets/icons/sections/daily-prayer/prayer-decor-reading.svg");
 }
 
 .daily-sec::after {
   inset-inline-end: -24px;
   inline-size: min(29vw, 300px);
   block-size: min(29vw, 300px);
-  background-image: url("../../assets/icons/daily-prayer/prayer-decor-ramadhan.svg");
+  background-image: url("../../assets/icons/sections/daily-prayer/prayer-decor-ramadhan.svg");
 }
 
 .daily-sec .daily-sec__meta-prefix,
@@ -75,27 +75,27 @@
 
 .daily-sec .ps-card--fajr {
   --daily-card-bg-position-y: -64px;
-  background-image: url("../../assets/icons/daily-prayer/prayer-card-fajr-bg.svg");
+  background-image: url("../../assets/icons/sections/daily-prayer/prayer-card-fajr-bg.svg");
 }
 
 .daily-sec .ps-card--dhuhr {
   --daily-card-bg-position-y: -64px;
-  background-image: url("../../assets/icons/daily-prayer/prayer-card-dhuhr-bg.svg");
+  background-image: url("../../assets/icons/sections/daily-prayer/prayer-card-dhuhr-bg.svg");
 }
 
 .daily-sec .ps-card--asr {
   --daily-card-bg-position-y: -96px;
-  background-image: url("../../assets/icons/daily-prayer/prayer-card-asr-bg.svg");
+  background-image: url("../../assets/icons/sections/daily-prayer/prayer-card-asr-bg.svg");
 }
 
 .daily-sec .ps-card--maghrib {
   --daily-card-bg-position-y: 12px;
-  background-image: url("../../assets/icons/daily-prayer/prayer-card-maghrib-bg.svg");
+  background-image: url("../../assets/icons/sections/daily-prayer/prayer-card-maghrib-bg.svg");
 }
 
 .daily-sec .ps-card--isha {
   --daily-card-bg-position-y: 44px;
-  background-image: url("../../assets/icons/daily-prayer/prayer-card-isha-bg.svg");
+  background-image: url("../../assets/icons/sections/daily-prayer/prayer-card-isha-bg.svg");
 }
 
 .daily-sec .ps-card--active {

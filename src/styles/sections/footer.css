@@ -3,7 +3,7 @@
   isolation: isolate;
   overflow: hidden;
   background-color: var(--Primary-700);
-  background-image: url("../../assets/icons/footer/footer-pattern-bg.svg");
+  background-image: url("../../assets/icons/sections/footer/footer-pattern-bg.svg");
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -26,7 +26,7 @@
   left: 0;
   width: 190px;
   height: 220px;
-  background-image: url("../../assets/icons/footer/palmen-bg.svg");
+  background-image: url("../../assets/icons/sections/footer/palmen-bg.svg");
   background-position: bottom left;
   opacity: 0.85;
   z-index: -1;
@@ -40,7 +40,7 @@
   bottom: 0;
   width: 548px;
   height: 156px;
-  background-image: url("../../assets/icons/footer/mosques-bg.svg");
+  background-image: url("../../assets/icons/sections/footer/mosques-bg.svg");
   background-repeat: no-repeat;
   background-size: contain;
   background-position: bottom right;

@@ -13,7 +13,7 @@ import {
 } from "../utils/validation.util.js";
 
 import { getCache, setCache } from "../utils/cache.util.js";
-import { CONFIG } from "../config.js";
+import { CONFIG } from "../config/app.config.js";
 
 /* =========================================================
    Constants

@@ -67,7 +67,7 @@
   inline-size: var(--ui-icon-qibla-title);
   block-size: var(--ui-icon-qibla-title);
   flex: 0 0 var(--ui-icon-qibla-title);
-  background: url("../../assets/icons/qibla/qibla-heading-icon.svg") center/contain
+  background: url("../../assets/icons/sections/qibla/qibla-heading-icon.svg") center/contain
     no-repeat;
 }
 

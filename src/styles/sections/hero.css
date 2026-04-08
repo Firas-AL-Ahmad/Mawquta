@@ -41,25 +41,25 @@
 .hero__corner--top-left {
   top: 0;
   left: 116px;
-  background-image: url("../../assets/icons/hero/top-left-corners.svg");
+  background-image: url("../../assets/icons/sections/hero/top-left-corners.svg");
 }
 
 .hero__corner--top-right {
   top: 0;
   right: 0;
-  background-image: url("../../assets/icons/hero/top-right-corners.svg");
+  background-image: url("../../assets/icons/sections/hero/top-right-corners.svg");
 }
 
 .hero__corner--botom-left {
   bottom: 0;
   left: 116px;
-  background-image: url("../../assets/icons/hero/bottom-left-corners.svg");
+  background-image: url("../../assets/icons/sections/hero/bottom-left-corners.svg");
 }
 
 .hero__corner--botom-right {
   bottom: 0;
   right: 0;
-  background-image: url("../../assets/icons/hero/bottom-right-corners.svg");
+  background-image: url("../../assets/icons/sections/hero/bottom-right-corners.svg");
 }
 
 .hero__lantern {
@@ -67,7 +67,7 @@
   height: 372px;
   top: 0;
   left: 132px;
-  background: url("../../assets/icons/hero/ramadan-lantern.svg")
+  background: url("../../assets/icons/sections/hero/ramadan-lantern.svg")
     center/contain no-repeat;
   opacity: 0.18;
   z-index: 1;
@@ -78,7 +78,7 @@
   aspect-ratio: 1 / 1;
   left: clamp(0px, 37.92vw, 728px);
   top: clamp(260px, 54.34%, 476px);
-  background: url("../../assets/icons/hero/center-pattern.svg")
+  background: url("../../assets/icons/sections/hero/center-pattern.svg")
     center/contain no-repeat;
   opacity: 0.2;
 }
@@ -89,7 +89,7 @@
   top: 32px;
   left: 50%;
   transform: translateX(-50%);
-  background: url("../../assets/icons/hero/bism-allah-alrahman-alrahim.svg")
+  background: url("../../assets/icons/sections/hero/bism-allah-alrahman-alrahim.svg")
     center/contain no-repeat;
   opacity: 1;
   z-index: 1;
@@ -169,7 +169,7 @@
   width: 32px;
   height: 32px;
   flex-shrink: 0;
-  background: url("../../assets/icons/hero/hero-location-icon.svg")
+  background: url("../../assets/icons/sections/hero/hero-location-icon.svg")
     center/contain no-repeat;
 }
 
@@ -213,11 +213,11 @@
 }
 
 .hero-verse__ornament--right {
-  background-image: url("../../assets/icons/hero/quran-pattern-left.svg");
+  background-image: url("../../assets/icons/sections/hero/quran-pattern-left.svg");
 }
 
 .hero-verse__ornament--left {
-  background-image: url("../../assets/icons/hero/quran-pattern-right.svg");
+  background-image: url("../../assets/icons/sections/hero/quran-pattern-right.svg");
 }
 
 .date-card {
@@ -243,7 +243,7 @@
   width: 200px;
   height: 200px;
   pointer-events: none;
-  background: url("../../assets/icons/hero/center-pattern.svg")
+  background: url("../../assets/icons/sections/hero/center-pattern.svg")
     center/contain no-repeat;
   opacity: 0.22;
 }
@@ -266,7 +266,7 @@
 .date-card__cal {
   width: 32px;
   height: 32px;
-  background: url("../../assets/icons/hero/hero-calendar-icon.svg")
+  background: url("../../assets/icons/sections/hero/hero-calendar-icon.svg")
     center/contain no-repeat;
 }
 
@@ -343,7 +343,7 @@
   min-height: var(--hero-card-height);
   border-radius: 24px;
   overflow: hidden;
-  background: url("../../assets/icons/hero/current-prayer-isha.svg")
+  background: url("../../assets/icons/sections/hero/current-prayer-isha.svg")
     center/cover no-repeat;
   color: var(--white);
   display: flex;
