@@ -22,3 +22,5 @@ async function searchCitiesGeoNames({ geonamesQuery, maxRows = 8 }) {
 }
 
 export { searchCitiesGeoNames };
+
+

@@ -9,7 +9,7 @@ export function renderHeader(rootElement) {
         <a href="#hero-section" class="site-header__brand" aria-label="مواقتا — الصفحة الرئيسية">
           <img
             class="site-header__brand-image"
-            src="./assets/icons/Header/header-logo-Light.svg"
+            src="./assets/icons/header/header-logo-light.svg"
             alt="مواقتا"
             width="128"
             height="40"
@@ -65,7 +65,7 @@ export function renderHeader(rootElement) {
               >
                 <img
                   class="hdr-lang__flag"
-                  src="./assets/icons/Header/flag-SY.svg"
+                  src="./assets/icons/header/flag-sy.svg"
                   alt=""
                   width="20"
                   height="15"
@@ -95,11 +95,11 @@ export function renderHeader(rootElement) {
                   data-lang-value="ar"
                   data-lang-label="العربية"
                   data-lang-code="SY"
-                  data-lang-flag="./assets/icons/Header/flag-SY.svg"
+                  data-lang-flag="./assets/icons/header/flag-sy.svg"
                 >
                   <img
                     class="hdr-lang__flag"
-                    src="./assets/icons/Header/flag-SY.svg"
+                    src="./assets/icons/header/flag-sy.svg"
                     alt=""
                     width="20"
                     height="15"
@@ -119,11 +119,11 @@ export function renderHeader(rootElement) {
                   data-lang-value="en"
                   data-lang-label="English"
                   data-lang-code="US"
-                  data-lang-flag="./assets/icons/Header/flag-US.svg"
+                  data-lang-flag="./assets/icons/header/flag-us.svg"
                 >
                   <img
                     class="hdr-lang__flag"
-                    src="./assets/icons/Header/flag-US.svg"
+                    src="./assets/icons/header/flag-us.svg"
                     alt=""
                     width="20"
                     height="15"
@@ -139,7 +139,7 @@ export function renderHeader(rootElement) {
             <button type="button" class="hdr-chip hdr-chip--icon" aria-label="تبديل السمة">
               <img
                 class="hdr-chip__icon"
-                src="./assets/icons/Header/header-moon-icon.svg"
+                src="./assets/icons/header/header-moon-icon.svg"
                 alt=""
                 width="18"
                 height="18"
@@ -155,3 +155,4 @@ export function renderHeader(rootElement) {
 
   return rootElement;
 }
+

@@ -75,13 +75,13 @@ const DEFAULT_WEEK_ROWS = [
 ];
 
 const WEEKLY_ICON_PATHS = {
-  day: "assets/icons/Weekly-Prayer/today.svg",
-  date: "assets/icons/Weekly-Prayer/date.svg",
-  fajr: "assets/icons/Weekly-Prayer/fajr.svg",
-  dhuhr: "assets/icons/Weekly-Prayer/dhuhr.svg",
-  asr: "assets/icons/Weekly-Prayer/asr.svg",
-  maghrib: "assets/icons/Weekly-Prayer/maghrib.svg",
-  isha: "assets/icons/Weekly-Prayer/isha.svg",
+  day: "assets/icons/weekly-prayer/today.svg",
+  date: "assets/icons/weekly-prayer/date.svg",
+  fajr: "assets/icons/weekly-prayer/fajr.svg",
+  dhuhr: "assets/icons/weekly-prayer/dhuhr.svg",
+  asr: "assets/icons/weekly-prayer/asr.svg",
+  maghrib: "assets/icons/weekly-prayer/maghrib.svg",
+  isha: "assets/icons/weekly-prayer/isha.svg",
 };
 
 function iconMarkup(iconPath, className = "th-ic") {
@@ -187,3 +187,4 @@ export function renderPrayerWeek(viewModel = {}) {
     </div>
   `;
 }
+

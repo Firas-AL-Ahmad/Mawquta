@@ -73,8 +73,6 @@ If this variable is missing, city search endpoint returns an error response.
 
 ## Deployment Notes
 
-> See also: [docs/HANDOFF.md](docs/HANDOFF.md) for the full operational runbook.
-
 - Routing assumptions are defined in `vercel.json`.
 - The project behavior currently depends on Vercel-style rewrites for serving `src/index.html`, static assets under `src/`, and `/api/*` functions.
 - The active city-search runtime path is `GET /api/geocode` (serverless), not direct client calls to GeoNames.
@@ -91,18 +89,15 @@ If this variable is missing, city search endpoint returns an error response.
 .
 ├─ api/
 │  └─ geocode.js
+├─ docs/
+│  ├─ blueprints/
+│  ├─ design/
+│  └─ api/
 ├─ src/
 │  ├─ index.html
-│  ├─ css/
-│  ├─ assets/
-│  └─ js/
-│     ├─ app.js
-│     ├─ config.js
-│     ├─ api/
-│     ├─ services/
-│     ├─ ui/
-│     ├─ utils/
-│     └─ state/legacy/
+│  ├─ js/
+│  ├─ styles/
+│  └─ assets/
 ├─ package.json
 └─ vercel.json
 ```
@@ -111,9 +106,13 @@ If this variable is missing, city search endpoint returns an error response.
 
 - No automated tests are currently configured.
 - No lint/format/typecheck scripts are currently configured.
-- Some files under `src/js/ui/components/*`, `src/js/ui/interactions/*`, and `src/js/state/legacy/*` are legacy/placeholder-oriented and not part of the active runtime path in `app.js`.
+- Some files under `src/js/legacy/ui-stubs/components/*`, `src/js/legacy/ui-stubs/interactions/*`, and `src/js/legacy/state/*` are legacy/placeholder-oriented and not part of the active runtime path in `app.js`.
 - UI/API separation for this phase is guarded by `npm run check:ui-static-boundary`.
 
 ## Scope Clarification
 
 This repository currently prioritizes runtime stability and documentation truthfulness over feature expansion.
+
+
+
+

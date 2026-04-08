@@ -1,0 +1,628 @@
+.hero {
+  --hero-reference-height: 876px;
+  --hero-viewport-height: calc(100dvh - var(--app-header-height, 58px));
+  --hero-height: min(var(--hero-reference-height), var(--hero-viewport-height));
+  --hero-pane-pad-y: clamp(30px, 10.96vh, 96px);
+  --hero-pane-pad-side: clamp(24px, 5vw, 96px);
+  --hero-card-height: clamp(
+    500px,
+    calc(var(--hero-height) - (var(--hero-pane-pad-y) * 2)),
+    684px
+  );
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  height: var(--hero-height);
+  margin: 0;
+  background: transparent;
+  display: flex;
+  align-items: stretch;
+}
+
+.hero__corner,
+.hero__lantern,
+.hero__center-pattern,
+.hero__basmala {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+.hero__corner {
+  width: 116px;
+  height: 116px;
+  opacity: 0.08;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.hero__corner--top-left {
+  top: 0;
+  left: 116px;
+  background-image: url("../../assets/icons/hero/top-left-corners.svg");
+}
+
+.hero__corner--top-right {
+  top: 0;
+  right: 0;
+  background-image: url("../../assets/icons/hero/top-right-corners.svg");
+}
+
+.hero__corner--botom-left {
+  bottom: 0;
+  left: 116px;
+  background-image: url("../../assets/icons/hero/bottom-left-corners.svg");
+}
+
+.hero__corner--botom-right {
+  bottom: 0;
+  right: 0;
+  background-image: url("../../assets/icons/hero/bottom-right-corners.svg");
+}
+
+.hero__lantern {
+  width: 132px;
+  height: 372px;
+  top: 0;
+  left: 132px;
+  background: url("../../assets/icons/hero/ramadan-lantern.svg")
+    center/contain no-repeat;
+  opacity: 0.18;
+  z-index: 1;
+}
+
+.hero__center-pattern {
+  width: clamp(440px, 41.67vw, 800px);
+  aspect-ratio: 1 / 1;
+  left: clamp(0px, 37.92vw, 728px);
+  top: clamp(260px, 54.34%, 476px);
+  background: url("../../assets/icons/hero/center-pattern.svg")
+    center/contain no-repeat;
+  opacity: 0.2;
+}
+
+.hero__basmala {
+  width: 324px;
+  height: 72px;
+  top: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: url("../../assets/icons/hero/bism-allah-alrahman-alrahim.svg")
+    center/contain no-repeat;
+  opacity: 1;
+  z-index: 1;
+}
+
+.hero__inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+}
+
+.hero__layout {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  direction: ltr;
+  align-items: stretch;
+}
+
+.hero__pane {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  min-width: 0;
+  height: 100%;
+}
+
+.hero__pane--card {
+  flex: 0 1 clamp(500px, 37.5vw, 720px);
+  justify-content: flex-start;
+  padding-block: var(--hero-pane-pad-y);
+  padding-inline-start: var(--hero-pane-pad-side);
+  padding-inline-end: 8px;
+}
+
+.hero__pane--content {
+  flex: 1 1 auto;
+  justify-content: flex-end;
+  padding-block: var(--hero-pane-pad-y);
+  padding-inline-start: 8px;
+  padding-inline-end: var(--hero-pane-pad-side);
+}
+
+.hero-right {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-start;
+  gap: 16px;
+  height: 100%;
+  width: 100%;
+  text-align: right;
+}
+
+.hero-left {
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-start;
+  width: 100%;
+  height: 100%;
+}
+
+.loc-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  background: var(--white);
+  border: none;
+  border-radius: 32px;
+  padding: 8px 16px;
+}
+
+.loc-chip__icon {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  background: url("../../assets/icons/hero/hero-location-icon.svg")
+    center/contain no-repeat;
+}
+
+.loc-chip__text {
+  font-size: clamp(14px, 0.95vw, 16px);
+  font-weight: 700;
+  color: #dd9730;
+  line-height: 22px;
+  white-space: nowrap;
+}
+
+.hero-verse-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  max-width: min(100%, 814px);
+  padding-block: 32px;
+}
+
+.hero-verse {
+  font-family: "Reem Kufi", var(--font-heading);
+  font-size: clamp(32px, 2.5vw, 48px);
+  line-height: 1.5;
+  color: var(--Primary-700);
+  font-weight: 600;
+  margin: 0;
+  text-align: right;
+  white-space: normal;
+}
+
+.hero-verse__ornament {
+  pointer-events: none;
+  user-select: none;
+  width: 56px;
+  height: 72px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  flex-shrink: 0;
+}
+
+.hero-verse__ornament--right {
+  background-image: url("../../assets/icons/hero/quran-pattern-left.svg");
+}
+
+.hero-verse__ornament--left {
+  background-image: url("../../assets/icons/hero/quran-pattern-right.svg");
+}
+
+.date-card {
+  position: relative;
+  overflow: hidden;
+  width: 248px;
+  max-width: 100%;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border-radius: 16px;
+  border: 1px solid #dd9730;
+  background: var(--white);
+  box-shadow: 0 4px 8px -4px rgba(18, 66, 53, 0.16);
+}
+
+.date-card::before {
+  content: "";
+  position: absolute;
+  left: -76px;
+  top: 60px;
+  width: 200px;
+  height: 200px;
+  pointer-events: none;
+  background: url("../../assets/icons/hero/center-pattern.svg")
+    center/contain no-repeat;
+  opacity: 0.22;
+}
+
+.date-card__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0;
+}
+
+.date-card__head-label {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--Primary-900);
+  line-height: 24px;
+}
+
+.date-card__cal {
+  width: 32px;
+  height: 32px;
+  background: url("../../assets/icons/hero/hero-calendar-icon.svg")
+    center/contain no-repeat;
+}
+
+.date-card__day {
+  font-size: 20px;
+  font-weight: 700;
+  color: #dd9730;
+  line-height: 20px;
+  margin: 0;
+}
+
+.date-card__row {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--Text-900);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  line-height: 22px;
+  gap: 8px;
+}
+
+.date-card__row-r {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.date-card__row-num {
+  font-weight: 800;
+}
+
+.date-card__row-yr {
+  color: var(--Text-900);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.hero-cta {
+  width: 248px;
+  max-width: 100%;
+  min-height: 52px;
+  border: none;
+  border-radius: 16px;
+  background: var(--Secondary-500);
+  color: var(--white);
+  font-family: var(--Body-fontFamily);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 20px;
+  padding: 16px 24px;
+  box-shadow: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition:
+    filter var(--tr),
+    transform var(--tr);
+}
+
+.hero-cta:hover {
+  filter: brightness(0.96);
+}
+
+.hero-cta:active {
+  transform: translateY(1px);
+}
+
+.prayer-card {
+  position: relative;
+  width: min(100%, 616px);
+  height: var(--hero-card-height);
+  min-height: var(--hero-card-height);
+  border-radius: 24px;
+  overflow: hidden;
+  background: url("../../assets/icons/hero/current-prayer-isha.svg")
+    center/cover no-repeat;
+  color: var(--white);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 24px;
+  padding-block: clamp(24px, 5.48vh, 48px);
+  padding-inline: clamp(20px, 1.67vw, 32px);
+  box-shadow: 0 4px 8px -4px rgba(18, 66, 53, 0.16);
+}
+
+.prayer-card__gloss {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(18, 66, 53, 0.04) 0%,
+    rgba(18, 66, 53, 0.01) 33%,
+    rgba(18, 66, 53, 0.12) 100%
+  );
+}
+
+.pcard-header {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.pcard-time {
+  font-family: "Reem Kufi", var(--font-heading);
+  font-size: clamp(30px, 2.1vw, 40px);
+  font-weight: 700;
+  line-height: 40px;
+  direction: ltr;
+  margin: 0;
+}
+
+.pcard-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 24px;
+}
+
+.pcard-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--white);
+  border: 1px solid #dd9730;
+  border-radius: 24px;
+  padding: 8px 16px 16px;
+}
+
+.pcard-pill__dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--Secondary-500);
+}
+
+.pcard-pill__text {
+  font-family: "Amiri Quran", var(--Body-fontFamily);
+  font-size: clamp(20px, 1.25vw, 24px);
+  font-weight: 400;
+  color: var(--Secondary-500);
+  line-height: 18px;
+}
+
+.pcard-name {
+  font-size: clamp(36px, 2.5vw, 48px);
+  font-weight: 700;
+  line-height: 48px;
+  margin: 0;
+}
+
+.countdown {
+  position: relative;
+  z-index: 1;
+  align-self: flex-start;
+  width: min(100%, 380px);
+  min-height: clamp(148px, 20.55vh, 180px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 24px clamp(16px, 2.5vw, 48px);
+  backdrop-filter: blur(12px);
+}
+
+.countdown__label {
+  font-size: 16px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.96);
+  line-height: 24px;
+  margin: 0;
+}
+
+.countdown__grid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  direction: ltr;
+  min-height: 84px;
+}
+
+.countdown__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.countdown__val {
+  font-family: "Reem Kufi", var(--font-heading);
+  font-size: clamp(44px, 3.34vw, 64px);
+  font-weight: 700;
+  line-height: 64px;
+}
+
+.countdown__unit {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 12px;
+  opacity: 1;
+}
+
+.countdown__sep {
+  font-family: "Reem Kufi", var(--font-heading);
+  font-size: clamp(44px, 3.34vw, 64px);
+  font-weight: 600;
+  line-height: 64px;
+  opacity: 1;
+}
+
+@media (min-width: 1500px) {
+  .hero-verse {
+    white-space: nowrap;
+  }
+}
+
+@media (min-width: 1200px) and (max-width: 1499.98px) {
+  .hero {
+    --hero-pane-pad-y: clamp(28px, 8.2vh, 72px);
+    --hero-pane-pad-side: clamp(28px, 4vw, 72px);
+  }
+
+  .hero__pane--card {
+    flex-basis: min(620px, 42%);
+  }
+
+  .hero__center-pattern {
+    width: clamp(420px, 37vw, 680px);
+    left: clamp(220px, 36vw, 640px);
+    top: clamp(290px, 56%, 470px);
+  }
+
+  .hero-right {
+    gap: 14px;
+  }
+
+  .hero-verse-wrap {
+    gap: 6px;
+    max-width: min(100%, 760px);
+    padding-block: 22px;
+  }
+
+  .hero-verse {
+    font-size: clamp(34px, 2.35vw, 44px);
+    line-height: 1.42;
+  }
+
+  .prayer-card {
+    width: min(100%, 580px);
+  }
+
+  .countdown {
+    width: min(100%, 360px);
+  }
+}
+
+.sec-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 26px;
+}
+
+.sec-head__main {
+  min-inline-size: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 6px;
+}
+
+.sec-head__title {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--ui-font-section-title);
+  font-weight: var(--ui-weight-bold);
+  line-height: var(--ui-lh-relaxed);
+}
+
+.sec-head__meta {
+  margin: 0;
+  min-inline-size: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--ui-space-2);
+  border-radius: var(--ui-radius-pill);
+  font-family: var(--font-body);
+}
+
+.sec-head__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--ui-control-h-2xs);
+  border-radius: var(--ui-radius-pill);
+  padding: var(--ui-space-1-5) var(--ui-space-5);
+  font-family: var(--font-body);
+  font-size: var(--ui-font-badge-fluid);
+  font-weight: var(--ui-weight-bold);
+  line-height: var(--ui-lh-snug);
+}
+
+.sec-head__icon {
+  display: inline-block;
+  flex: 0 0 auto;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.sec-head__aux {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.sec-city {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--ui-space-1);
+}
+
+.sec-city__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: var(--ui-space-1-25);
+  font-size: var(--ui-font-2xs);
+  font-weight: var(--ui-weight-semibold);
+  color: var(--Primary-700);
+}
+
+.sec-city__eyebrow-icon {
+  width: 16px;
+  height: 16px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2317654e'%3E%3Cpath d='M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z'/%3E%3C/svg%3E")
+    center/contain no-repeat;
+}
+
+

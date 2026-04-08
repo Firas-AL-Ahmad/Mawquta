@@ -199,7 +199,7 @@ function renderRamadanTopbar(topbar) {
           <span class="ramadan-topbar__blessing-label">${topbar.blessingLabel}</span>
           <img
             class="ramadan-topbar__blessing-icon sec-head__icon"
-            src="./assets/icons/Ramadan/moon&stars.svg"
+            src="./assets/icons/ramadan/moon-and-stars.svg"
             alt=""
             loading="lazy"
             decoding="async"
@@ -259,3 +259,5 @@ export function renderRamadanSection(
 
   return rootElement;
 }
+
+

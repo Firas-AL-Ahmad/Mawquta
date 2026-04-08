@@ -20,3 +20,5 @@ export async function getQiblaByCoords(latitude, longitude) {
     longitude: data.longitude,
   };
 }
+
+

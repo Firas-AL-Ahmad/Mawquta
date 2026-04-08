@@ -271,3 +271,5 @@ export async function getCurrentWeekByCoords(
 
   return sliceWeekFromTwoMonths(currentMonthDays, nextMonthDays, dateObj);
 }
+
+

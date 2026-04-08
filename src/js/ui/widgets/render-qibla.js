@@ -18,7 +18,7 @@ export function renderQibla(viewModel = {}) {
     <div class="qibla-visual" data-qibla-visual aria-label="بوصلة القبلة">
       <img
         class="qibla-visual__decor qibla-visual__decor--left"
-        src="./assets/icons/Qibla/qibla-left-Sujud.svg"
+        src="./assets/icons/qibla/qibla-left-sujud.svg"
         alt=""
         aria-hidden="true"
         loading="lazy"
@@ -32,7 +32,7 @@ export function renderQibla(viewModel = {}) {
       >
         <img
           class="qibla-compass__asset"
-          src="./assets/icons/Qibla/qibla-compass.svg"
+          src="./assets/icons/qibla/qibla-compass.svg"
           aria-hidden="true"
           alt=""
           loading="lazy"
@@ -42,7 +42,7 @@ export function renderQibla(viewModel = {}) {
 
       <img
         class="qibla-visual__decor qibla-visual__decor--right"
-        src="./assets/icons/Qibla/qibla-right-tasbee.svg"
+        src="./assets/icons/qibla/qibla-right-tasbee.svg"
         alt=""
         aria-hidden="true"
         loading="lazy"
@@ -51,3 +51,4 @@ export function renderQibla(viewModel = {}) {
     </div>
   `;
 }
+

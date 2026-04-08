@@ -13,16 +13,16 @@ const FIRST_SECTION_STATIC = {
 };
 
 const MONTH_TABLE_ICON_PATHS = {
-  isha: "assets/icons/Weekly-Prayer/isha.svg",
-  maghrib: "assets/icons/Weekly-Prayer/maghrib.svg",
-  asr: "assets/icons/Weekly-Prayer/asr.svg",
-  dhuhr: "assets/icons/Weekly-Prayer/dhuhr.svg",
-  fajr: "assets/icons/Weekly-Prayer/fajr.svg",
-  date: "assets/icons/Weekly-Prayer/date.svg",
-  day: "assets/icons/Weekly-Prayer/today.svg",
-  ramadan: "assets/icons/Ramadan/moon&stars.svg",
-  download: "assets/icons/Ramadan/action-download.svg",
-  share: "assets/icons/Ramadan/action-share.svg",
+  isha: "assets/icons/weekly-prayer/isha.svg",
+  maghrib: "assets/icons/weekly-prayer/maghrib.svg",
+  asr: "assets/icons/weekly-prayer/asr.svg",
+  dhuhr: "assets/icons/weekly-prayer/dhuhr.svg",
+  fajr: "assets/icons/weekly-prayer/fajr.svg",
+  date: "assets/icons/weekly-prayer/date.svg",
+  day: "assets/icons/weekly-prayer/today.svg",
+  ramadan: "assets/icons/ramadan/moon-and-stars.svg",
+  download: "assets/icons/ramadan/action-download.svg",
+  share: "assets/icons/ramadan/action-share.svg",
 };
 
 const DEFAULT_MONTH_ROWS = (() => {
@@ -423,3 +423,4 @@ export function renderRamadanMonthTable(viewModel = {}) {
     </section>
   `;
 }
+

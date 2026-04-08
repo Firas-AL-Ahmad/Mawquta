@@ -13,15 +13,15 @@ export function renderFooter(rootElement) {
           <p class="footer-desc">موقع بسيط يساعدك على متابعة مواقيت الصلاة، اتجاه القبلة، وإمساكية رمضان بشكل واضح وسهل الاستخدام.</p>
           <div class="footer-social-inline" aria-label="وسائل التواصل الاجتماعي">
             <a class="footer-social-inline__item" href="#" aria-label="Instagram">
-              <img src="./assets/icons/footer/instegram.svg" alt="" aria-hidden="true" />
+              <img src="./assets/icons/footer/instagram.svg" alt="" aria-hidden="true" />
               <span>@firas_a7mad</span>
             </a>
             <a class="footer-social-inline__item" href="#" aria-label="LinkedIn">
-              <img src="./assets/icons/footer/Linkedin.svg" alt="" aria-hidden="true" />
+              <img src="./assets/icons/footer/linkedin.svg" alt="" aria-hidden="true" />
               <span>Firas AL-Ahmad</span>
             </a>
             <a class="footer-social-inline__item" href="#" aria-label="GitHub">
-              <img src="./assets/icons/footer/GitHub.svg" alt="" aria-hidden="true" />
+              <img src="./assets/icons/footer/github.svg" alt="" aria-hidden="true" />
               <span>Firas AL-Ahmad</span>
             </a>
           </div>
@@ -78,3 +78,4 @@ export function renderFooter(rootElement) {
 
   return rootElement;
 }
+

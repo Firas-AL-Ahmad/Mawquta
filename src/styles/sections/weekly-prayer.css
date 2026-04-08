@@ -1,0 +1,401 @@
+.weekly-sec {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.weekly-sec > .container-xl {
+  position: relative;
+  z-index: 1;
+}
+
+.weekly-sec::before,
+.weekly-sec::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: bottom;
+}
+
+.weekly-sec::before {
+  left: 0;
+  width: 264px;
+  height: 264px;
+  background-image: url("../../assets/icons/weekly-prayer/kabah-1.svg");
+}
+
+.weekly-sec::after {
+  right: 0;
+  width: 230px;
+  height: 230px;
+  background-image: url("../../assets/icons/weekly-prayer/shalat-1.svg");
+}
+
+
+.weekly-sec .ws-card,
+.ramadan-table-sec .ws-card {
+  border-radius: 16px;
+  border-color: color-mix(
+    in srgb,
+    var(--Primary-900) 14%,
+    var(--Background-50)
+  );
+  box-shadow: 0 4px 24px -6px rgba(18, 66, 53, 0.12);
+}
+
+.weekly-sec .ws-card-top,
+.ramadan-table-sec .ws-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 14px 22px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.weekly-sec .ws-sub,
+.ramadan-table-sec .ws-sub {
+  margin-bottom: 0;
+  font-family: var(--font-quote);
+  font-size: var(--ui-font-md);
+  color: var(--Primary-900);
+}
+
+.weekly-sec .ws-range,
+.ramadan-table-sec .ws-range {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  background: var(--Weekly-Chip-Background);
+  border: none;
+}
+
+.weekly-sec .ws-range__text,
+.ramadan-table-sec .ws-range__text {
+  font-family: var(--Body-fontFamily);
+  font-size: var(--Label-fontSize);
+  line-height: var(--Label-lineHeight);
+  font-weight: var(--Label-fontWeight);
+  color: var(--Weekly-Chip-Text);
+  direction: ltr;
+}
+
+.weekly-sec .ws-range__icon,
+.ramadan-table-sec .ws-range__icon {
+  display: none;
+}
+
+.weekly-sec .ws-wrap,
+.ramadan-table-sec .ws-wrap {
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
+}
+
+.weekly-sec .ws-wrap::-webkit-scrollbar,
+.ramadan-table-sec .ws-wrap::-webkit-scrollbar {
+  height: 4px;
+}
+
+.weekly-sec .ws-wrap::-webkit-scrollbar-track,
+.ramadan-table-sec .ws-wrap::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.weekly-sec .ws-wrap::-webkit-scrollbar-thumb,
+.ramadan-table-sec .ws-wrap::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 999px;
+}
+
+.weekly-sec .ws-table,
+.ramadan-table-sec .ws-table {
+  direction: rtl;
+  min-width: 700px;
+}
+
+.weekly-sec .ws-table th,
+.weekly-sec .ws-table td,
+.ramadan-table-sec .ws-table th,
+.ramadan-table-sec .ws-table td {
+  padding: var(--ui-space-3) var(--ui-space-4-5);
+  font-size: var(--ui-font-sm);
+  line-height: var(--ui-lh-relaxed);
+}
+
+.weekly-sec .ws-table th,
+.ramadan-table-sec .ws-table th {
+  font-weight: 700;
+  color: var(--Primary-900);
+  vertical-align: middle;
+}
+
+.weekly-sec .ws-table td,
+.ramadan-table-sec .ws-table td {
+  color: color-mix(in srgb, var(--Primary-900) 72%, var(--Text-600));
+  font-weight: 600;
+  direction: ltr;
+  unicode-bidi: embed;
+  vertical-align: middle;
+}
+
+.weekly-sec .ws-table thead tr,
+.ramadan-table-sec .ws-table thead tr {
+  background: var(--Background-Table-Header);
+  border-bottom-width: 1.5px;
+}
+
+.weekly-sec .ws-table tbody tr,
+.ramadan-table-sec .ws-table tbody tr {
+  border-bottom-color: color-mix(
+    in srgb,
+    var(--Primary-900) 8%,
+    var(--Background-50)
+  );
+  transition: background 160ms ease;
+}
+
+.weekly-sec .ws-table tbody tr:not(.row--today):hover,
+.ramadan-table-sec .ws-table tbody tr:not(.row--today):hover {
+  background: color-mix(in srgb, var(--Secondary-50) 32%, var(--white));
+}
+
+.weekly-sec .ws-table th:first-child {
+  text-align: right;
+}
+
+.weekly-sec .ws-table th:last-child {
+  text-align: left;
+}
+
+.weekly-sec .ws-table td.td-day,
+.ramadan-table-sec .ws-table td.td-day {
+  direction: rtl;
+  unicode-bidi: normal;
+  font-size: var(--ui-font-sm);
+}
+
+.weekly-sec .ws-table td.td-date,
+.ramadan-table-sec .ws-table td.td-date {
+  text-align: left !important;
+  direction: rtl;
+  unicode-bidi: normal;
+  font-size: var(--ui-font-xs);
+}
+
+.weekly-sec .row--today,
+.ramadan-table-sec .row--today {
+  background: var(--Background-Hover);
+  position: relative;
+}
+
+.weekly-sec .row--today td.td-day,
+.ramadan-table-sec .row--today td.td-day {
+  position: relative;
+}
+
+.weekly-sec .row--today td.td-day::before,
+.ramadan-table-sec .row--today td.td-day::before {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  width: 4px;
+  background: var(--Primary-500);
+  border-start-start-radius: 4px;
+  border-end-start-radius: 4px;
+}
+
+.weekly-sec .td--active,
+.ramadan-table-sec .td--active {
+  padding-block: 0 !important;
+}
+
+.weekly-sec .time-pill,
+.ramadan-table-sec .time-pill {
+  border-radius: var(--ui-radius-sm);
+  padding: var(--ui-space-1-5) var(--ui-space-5);
+  background-color: var(--Secondary-500);
+  background-image: url("../../assets/icons/weekly-prayer/current-prayer.svg");
+  background-repeat: repeat;
+  background-position: center;
+  background-size: 246px 48px;
+  min-width: 90px;
+  box-shadow: 0 4px 12px -2px rgba(196, 123, 43, 0.38);
+  transition:
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.weekly-sec .time-pill:hover,
+.ramadan-table-sec .time-pill:hover {
+  box-shadow: 0 6px 18px -2px rgba(196, 123, 43, 0.52);
+  transform: translateY(-1px);
+}
+
+.ws-th-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ui-space-1-5);
+}
+
+.th-ic {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
+}
+
+.th-ic img,
+.ws-mobile-head-icon img,
+.ws-mobile-meta-icon img,
+.ws-mobile-item-icon img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+}
+
+.ws-mobile-title {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--ui-space-1-5);
+}
+
+.ws-mobile-date {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--ui-space-1-25);
+}
+
+.ws-mobile-head-icon,
+.ws-mobile-meta-icon,
+.ws-mobile-item-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
+}
+
+.ws-mobile-item dt {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--ui-space-1-25);
+}
+
+.ws-mobile-list,
+.rt-mobile-list {
+  gap: var(--ui-space-3);
+  padding: var(--ui-space-3-5);
+}
+
+.ws-mobile-card,
+.rt-mobile-card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--ui-radius-md);
+  background: var(--white);
+  padding: var(--ui-space-3-5);
+  display: grid;
+  gap: var(--ui-space-3);
+}
+
+.ws-mobile-head,
+.rt-mobile-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--ui-space-2-5);
+}
+
+.ws-mobile-title,
+.rt-mobile-title {
+  margin: 0;
+  font-size: var(--ui-font-md);
+  font-weight: var(--ui-weight-extrabold);
+  color: var(--Primary-900);
+}
+
+.ws-mobile-date,
+.rt-mobile-date {
+  font-size: var(--ui-font-2xs);
+  color: var(--Text-600);
+}
+
+.ws-mobile-pill,
+.rt-mobile-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--ui-radius-sm);
+  background: color-mix(in srgb, var(--Secondary-50) 72%, var(--white));
+  color: var(--Primary-700);
+  font-size: var(--ui-font-2xs);
+  font-weight: var(--ui-weight-bold);
+  padding: var(--ui-space-1) var(--ui-space-2-5);
+  white-space: nowrap;
+}
+
+.ws-mobile-grid {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.ws-mobile-item,
+.rt-mobile-item {
+  margin: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--ui-radius-control-sm);
+  background: color-mix(in srgb, var(--Background-50) 72%, var(--white));
+  padding: var(--ui-space-2) var(--ui-space-2-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ui-space-1);
+}
+
+.ws-mobile-item dt,
+.rt-mobile-item dt {
+  font-size: var(--ui-font-2xs);
+  font-weight: var(--ui-weight-bold);
+  color: var(--Text-600);
+}
+
+.ws-mobile-item dd,
+.rt-mobile-item dd {
+  margin: 0;
+  font-size: var(--ui-font-sm);
+  font-weight: var(--ui-weight-extrabold);
+  color: var(--Primary-700);
+  direction: ltr;
+}
+
+.ws-mobile-item--active dd,
+.rt-mobile-item--iftar dd {
+  color: var(--Secondary-500);
+}
+
+.rt-mobile-grid {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+
