@@ -1,52 +1,57 @@
-const STATIC_PRAYER_CARDS_MARKUP = `
-  <article class="ps-card ps-card--fajr" role="listitem" aria-label="صلاة الفجر">
-    <div class="ps-card__inner">
-      <h3 class="ps-card__name">الفجر</h3>
-      <div class="ps-card__time-wrap">
-        <span class="ps-card__time">05:11 AM</span>
-      </div>
-    </div>
-  </article>
+const STATIC_PRAYER_CARDS = [
+  {
+    key: "fajr",
+    label: "الفجر",
+    time: "05:11 AM",
+    ariaLabel: "صلاة الفجر",
+  },
+  {
+    key: "dhuhr",
+    label: "الظهر",
+    time: "12:31 PM",
+    ariaLabel: "صلاة الظهر",
+  },
+  {
+    key: "asr",
+    label: "العصر",
+    time: "04:09 PM",
+    ariaLabel: "صلاة العصر - الصلاة الحالية",
+  },
+  {
+    key: "maghrib",
+    label: "المغرب",
+    time: "06:57 PM",
+    ariaLabel: "صلاة المغرب",
+  },
+  {
+    key: "isha",
+    label: "العشاء",
+    time: "08:27 PM",
+    ariaLabel: "صلاة العشاء",
+  },
+];
 
-  <article class="ps-card ps-card--dhuhr" role="listitem" aria-label="صلاة الظهر">
-    <div class="ps-card__inner">
-      <h3 class="ps-card__name">الظهر</h3>
-      <div class="ps-card__time-wrap">
-        <span class="ps-card__time">12:31 PM</span>
-      </div>
-    </div>
-  </article>
+function renderPrayerCard(prayer, activeKey) {
+  const isActive = prayer.key === activeKey;
+  const activeClass = isActive ? " ps-card--active" : "";
+  const activeAttributes = isActive ? ' aria-current="true"' : "";
 
-  <article class="ps-card ps-card--asr ps-card--active" role="listitem" aria-label="صلاة العصر - الصلاة الحالية" aria-current="true">
-    <div class="ps-card__inner">
-      <h3 class="ps-card__name">العصر</h3>
-      <div class="ps-card__time-wrap">
-        <span class="ps-card__time">04:09 PM</span>
+  return `
+    <article class="ps-card ps-card--${prayer.key}${activeClass}" role="listitem" aria-label="${prayer.ariaLabel}"${activeAttributes}>
+      <div class="ps-card__inner">
+        <h3 class="ps-card__name">${prayer.label}</h3>
+        <div class="ps-card__time-wrap">
+          <span class="ps-card__time">${prayer.time}</span>
+        </div>
       </div>
-    </div>
-  </article>
-
-  <article class="ps-card ps-card--maghrib" role="listitem" aria-label="صلاة المغرب">
-    <div class="ps-card__inner">
-      <h3 class="ps-card__name">المغرب</h3>
-      <div class="ps-card__time-wrap">
-        <span class="ps-card__time">06:57 PM</span>
-      </div>
-    </div>
-  </article>
-
-  <article class="ps-card ps-card--isha" role="listitem" aria-label="صلاة العشاء">
-    <div class="ps-card__inner">
-      <h3 class="ps-card__name">العشاء</h3>
-      <div class="ps-card__time-wrap">
-        <span class="ps-card__time">08:27 PM</span>
-      </div>
-    </div>
-  </article>
-`;
+    </article>
+  `;
+}
 
 export function renderPrayerCards(prayers = [], activeKey = "asr") {
   void prayers;
-  void activeKey;
-  return STATIC_PRAYER_CARDS_MARKUP;
+
+  return STATIC_PRAYER_CARDS.map((prayer) =>
+    renderPrayerCard(prayer, activeKey),
+  ).join("\n");
 }
