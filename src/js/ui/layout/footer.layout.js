@@ -1,3 +1,11 @@
+const FOOTER_ICON_PATHS = {
+  logo: "./assets/icons/sections/footer/footer-logo.svg",
+  instagram: "./assets/icons/sections/footer/instagram.svg",
+  linkedin: "./assets/icons/sections/footer/linkedin.svg",
+  github: "./assets/icons/sections/footer/github.svg",
+  mail: "./assets/icons/sections/footer/mail-open.svg",
+  phone: "./assets/icons/sections/footer/calling-02.svg",
+};
 export function renderFooter(rootElement) {
   if (!rootElement) {
     return null;
@@ -8,20 +16,20 @@ export function renderFooter(rootElement) {
       <div class="footer-main-grid">
         <div class="footer-main-col footer-main-col--brand">
           <a href="#hero-section" class="footer-brand" aria-label="مواقتا">
-            <img class="footer-brand__logo-img" src="./assets/icons/sections/footer/footer-logo.svg" alt="شعار مواقتا" />
+            <img class="footer-brand__logo-img" src="${FOOTER_ICON_PATHS.logo}" alt="شعار مواقتا" />
           </a>
           <p class="footer-desc">موقع بسيط يساعدك على متابعة مواقيت الصلاة، اتجاه القبلة، وإمساكية رمضان بشكل واضح وسهل الاستخدام.</p>
           <div class="footer-social-inline" aria-label="وسائل التواصل الاجتماعي">
             <a class="footer-social-inline__item" href="#" aria-label="Instagram">
-              <img src="./assets/icons/sections/footer/instagram.svg" alt="" aria-hidden="true" />
+              <img src="${FOOTER_ICON_PATHS.instagram}" alt="" aria-hidden="true" />
               <span>@firas_a7mad</span>
             </a>
             <a class="footer-social-inline__item" href="#" aria-label="LinkedIn">
-              <img src="./assets/icons/sections/footer/linkedin.svg" alt="" aria-hidden="true" />
+              <img src="${FOOTER_ICON_PATHS.linkedin}" alt="" aria-hidden="true" />
               <span>Firas AL-Ahmad</span>
             </a>
             <a class="footer-social-inline__item" href="#" aria-label="GitHub">
-              <img src="./assets/icons/sections/footer/github.svg" alt="" aria-hidden="true" />
+              <img src="${FOOTER_ICON_PATHS.github}" alt="" aria-hidden="true" />
               <span>Firas AL-Ahmad</span>
             </a>
           </div>
@@ -33,13 +41,13 @@ export function renderFooter(rootElement) {
             <ul class="footer-contact-list">
               <li>
                 <a href="mailto:firas.al.ahmad.mail@gmail.com">
-                  <img src="./assets/icons/sections/footer/mail-open.svg" alt="" aria-hidden="true" />
+                  <img src="${FOOTER_ICON_PATHS.mail}" alt="" aria-hidden="true" />
                   <span>firas.al.ahmad.mail@gmail.com</span>
                 </a>
               </li>
               <li>
                 <a href="tel:+963937302533">
-                  <img src="./assets/icons/sections/footer/calling-02.svg" alt="" aria-hidden="true" />
+                  <img src="${FOOTER_ICON_PATHS.phone}" alt="" aria-hidden="true" />
                   <span>+963 937 302 533</span>
                 </a>
               </li>

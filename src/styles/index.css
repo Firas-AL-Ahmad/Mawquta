@@ -2,7 +2,7 @@
 @import "./foundations/tokens.css";
 @import "./foundations/reset.css";
 @import "./layout/shell.css";
-@import "./components/primitives.css";
+@import "./components/ui-primitives.css";
 @import "./sections/header.css";
 @import "./sections/hero.css";
 @import "./shared/section-primitives.css";

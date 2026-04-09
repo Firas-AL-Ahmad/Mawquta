@@ -21,11 +21,7 @@ Mawquta is an Arabic-first prayer web application with a static frontend (`src/`
 - No `fetch`/`axios`, no `api/services` imports, and no `localStorage` hydration inside UI runtime files.
 - API and services (`api/*`, `src/js/api/*`, `src/js/services/*`) can evolve independently.
 - UI-API wiring is intentionally deferred to a dedicated future phase: **UI-API Integration**.
-- Use this guard before merges:
-
-```bash
-npm run check:ui-static-boundary
-```
+- No dedicated UI static-boundary guard script is currently configured in `package.json`; enforce this via code review.
 
 ## Requirements
 
@@ -57,11 +53,9 @@ npm run vercel:dev
 
 This provides Vercel-like routing and the `/api/geocode` serverless function, and is the recommended mode for validating real runtime behavior.
 
-### 3) Enforce static UI boundary (required in this phase)
+### 3) UI static boundary
 
-```bash
-npm run check:ui-static-boundary
-```
+No dedicated boundary-check script is currently configured in `package.json`; keep enforcement at review time.
 
 ## Environment Variables
 
@@ -81,7 +75,7 @@ If this variable is missing, city search endpoint returns an error response.
 ## Runtime Dependency Notes
 
 - `src/js/api/aladhan.api.js` expects `window.axios` to exist at runtime.
-- `src/index.html` loads Axios CDN before `app.js` to satisfy that requirement.
+- `src/index.html` loads Axios CDN before `src/js/app/main.js` to satisfy that requirement.
 
 ## Project Structure (High-level)
 
@@ -107,7 +101,7 @@ If this variable is missing, city search endpoint returns an error response.
 - No automated tests are currently configured.
 - No lint/format/typecheck scripts are currently configured.
 - Legacy stubs were removed from `src/js/legacy`; active runtime now lives entirely under `src/js/app`, `src/js/ui`, `src/js/api`, `src/js/services`, and `src/js/utils`.
-- UI/API separation for this phase is guarded by `npm run check:ui-static-boundary`.
+- UI/API separation for this phase is currently enforced by structure and code review (no npm guard script is configured).
 
 ## Scope Clarification
 

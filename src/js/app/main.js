@@ -10,8 +10,8 @@ import { renderDailyPrayerSection } from "../ui/sections/daily-prayer.section.js
 import { renderWeeklyPrayerSection } from "../ui/sections/weekly-prayer.section.js";
 import { renderQiblaSection } from "../ui/sections/qibla.section.js";
 import { renderRamadanSection } from "../ui/sections/ramadan.section.js";
-import { bindNavInteractions } from "../ui/interactions/nav.interactions.js";
-import { bindRamadanTabsInteractions } from "../ui/interactions/ramadan-tabs.interactions.js";
+import { bindNavInteractions } from "../ui/interactions/global/nav.interactions.js";
+import { bindRamadanTabsInteractions } from "../ui/interactions/ramadan/ramadan-tabs.interactions.js";
 
 function bootstrapApp() {
   const appRoot = document.getElementById("app");

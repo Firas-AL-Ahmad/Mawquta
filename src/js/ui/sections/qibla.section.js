@@ -1,46 +1,12 @@
-import { renderQibla } from "../components/qibla-visual.component.js";
+import { renderQibla } from "../components/qibla/qibla-visual.component.js";
 
-const DEFAULT_QIBLA_VIEW_MODEL = {
-  headingLabel: "اتجاه القبلة من موقعك الحالي",
-  actionLabel: "اختيار مدينة",
-  degreeText: "165°",
-  note: "اعرف اتجاه القبلة بناءً على موقعك الحالي أو المدينة المحددة",
-  needleRotation: 165,
-};
+export function renderQiblaSection(rootElement, viewModel = {}) {
+  void viewModel;
 
-function safeText(value, fallback) {
-  return typeof value === "string" && value.trim().length > 0
-    ? value.trim()
-    : fallback;
-}
-
-function normalizeQiblaViewModel(viewModel) {
-  const model = viewModel && typeof viewModel === "object" ? viewModel : {};
-
-  return {
-    headingLabel: safeText(
-      model.headingLabel,
-      DEFAULT_QIBLA_VIEW_MODEL.headingLabel,
-    ),
-    actionLabel: safeText(model.actionLabel, DEFAULT_QIBLA_VIEW_MODEL.actionLabel),
-    degreeText: safeText(model.degreeText, DEFAULT_QIBLA_VIEW_MODEL.degreeText),
-    note: safeText(model.note, DEFAULT_QIBLA_VIEW_MODEL.note),
-    needleRotation:
-      Number.isFinite(Number(model.needleRotation))
-        ? Number(model.needleRotation)
-        : DEFAULT_QIBLA_VIEW_MODEL.needleRotation,
-  };
-}
-
-export function renderQiblaSection(
-  rootElement,
-  viewModel = DEFAULT_QIBLA_VIEW_MODEL,
-) {
   if (!rootElement) {
     return null;
   }
 
-  const qibla = normalizeQiblaViewModel(viewModel);
   const modalId = "qiblaCityModal";
   const modalLabelId = "qiblaCityModalTitle";
 
@@ -51,13 +17,13 @@ export function renderQiblaSection(
           <div class="qibla-card__head sec-head">
             <div class="qibla-card__heading sec-head__main">
               <h2 class="qibla-card__title sec-head__title">
-              <span class="qibla-card__title-icon sec-head__icon" aria-hidden="true"></span>
-              <span>${qibla.headingLabel}</span>
+                <span class="qibla-card__title-icon sec-head__icon" aria-hidden="true"></span>
+                <span>اتجاه القبلة من موقعك الحالي</span>
               </h2>
-              <p class="qibla-card__note sec-head__meta">${qibla.note}</p>
+              <p class="qibla-card__note sec-head__meta">زاوية القبلة ثابتة في هذا العرض التجريبي.</p>
             </div>
 
-            <p class="qibla-card__degree sec-head__aux" data-qibla-deg>${qibla.degreeText}</p>
+            <p class="qibla-card__degree sec-head__aux" data-qibla-deg>165°</p>
 
             <button
               type="button"
@@ -65,11 +31,11 @@ export function renderQiblaSection(
               data-bs-toggle="modal"
               data-bs-target="#${modalId}"
             >
-              ${qibla.actionLabel}
+              اختيار المدينة
             </button>
           </div>
 
-          ${renderQibla(qibla)}
+          ${renderQibla()}
         </div>
       </div>
 
@@ -98,11 +64,11 @@ export function renderQiblaSection(
 
             <div class="modal-body qibla-city-modal__body">
               <p class="qibla-city-modal__note">
-                هذه نافذة شكلية حالياً وستُربط لاحقاً بميزة البحث واختيار المدينة.
+                سيتم تفعيل البحث عن المدن لاحقًا.
               </p>
 
               <div class="qibla-city-modal__fake-input" aria-hidden="true">
-                ابحث عن مدينة...
+                أدخل اسم المدينة...
               </div>
 
               <button
@@ -123,5 +89,3 @@ export function renderQiblaSection(
 
   return rootElement;
 }
-
-
