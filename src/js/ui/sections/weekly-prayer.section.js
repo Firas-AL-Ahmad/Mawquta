@@ -1,4 +1,6 @@
 import { renderPrayerWeek } from "../components/weekly-prayer/prayer-week-table.component.js";
+import { renderSectionHeadWithCity } from "../components/section/section-head.component.js";
+import { renderSectionDivider } from "../components/section/section-divider.component.js";
 
 export function renderWeeklyPrayerSection(rootElement, viewModel = {}) {
   void viewModel;
@@ -10,23 +12,26 @@ export function renderWeeklyPrayerSection(rootElement, viewModel = {}) {
   rootElement.innerHTML = `
     <section class="weekly-sec" id="weekly" aria-label="مواقيت الصلاة الأسبوعية">
       <div class="container-xl">
-        <div class="sec-head weekly-sec__head">
-          <div class="sec-city weekly-sec__city sec-head__main">
-            <div class="sec-city__eyebrow weekly-sec__eyebrow">
-              <span class="sec-city__eyebrow-icon sec-head__icon" aria-hidden="true"></span>
-              <span>مواقيت الصلاة في</span>
-            </div>
-            <h2 class="sec-city__name weekly-sec__name sec-head__title" data-weekly-city>دمشق، سوريا</h2>
-            <span class="sec-city__meta weekly-sec__meta sec-head__meta">محدث اليوم</span>
-          </div>
-          <span class="sec-badge weekly-sec__badge sec-head__badge">الأسبوعية</span>
-        </div>
+        ${renderSectionHeadWithCity({
+          headClassName: "weekly-sec__head",
+          cityWrapperClassName: "weekly-sec__city",
+          eyebrowClassName: "weekly-sec__eyebrow",
+          cityTitleClassName: "weekly-sec__name",
+          cityDataAttribute: "data-weekly-city",
+          cityName: "دمشق، سوريا",
+          meta: {
+            className: "sec-city__meta weekly-sec__meta sec-head__meta",
+            text: "محدث اليوم",
+          },
+          badgeClassName: "weekly-sec__badge",
+          badgeText: "الأسبوعية",
+        })}
 
         ${renderPrayerWeek()}
       </div>
     </section>
 
-    <hr class="sec-divider" />
+    ${renderSectionDivider()}
   `;
 
   return rootElement;
