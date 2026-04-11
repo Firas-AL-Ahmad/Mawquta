@@ -1,5 +1,13 @@
 import { scrollToSection, setActiveLink, toSectionFromLink } from "./nav.helpers.js";
 
+function shouldCloseMobileMenuBeforeScroll({ isNavLink, mobileMenu }) {
+  return (
+    isNavLink &&
+    mobileMenu.isMobileViewport() &&
+    mobileMenu.isPanelOpen()
+  );
+}
+
 export function bindHeaderHashLinkInteractions({
   headerHashLinks,
   navLinks,
@@ -19,11 +27,7 @@ export function bindHeaderHashLinkInteractions({
         setActiveLink(navLinks, linkElement);
       }
 
-      if (
-        isNavLink &&
-        mobileMenu.isMobileViewport() &&
-        mobileMenu.isPanelOpen()
-      ) {
+      if (shouldCloseMobileMenuBeforeScroll({ isNavLink, mobileMenu })) {
         mobileMenu.closeThen(() => scrollToSection(targetSection));
         return;
       }

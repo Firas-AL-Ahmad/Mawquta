@@ -5,6 +5,42 @@ import {
   LANG_TRIGGER_SELECTOR,
 } from "./nav.constants.js";
 
+function setOpenState({ triggerButton, menuElement, langDropdown }, isOpen) {
+  triggerButton.setAttribute("aria-expanded", isOpen ? "true" : "false");
+  menuElement.hidden = !isOpen;
+  langDropdown.classList.toggle("is-open", isOpen);
+}
+
+function clearOptionSelection(optionButtons) {
+  optionButtons.forEach((buttonElement) => {
+    buttonElement.classList.remove("is-selected");
+    buttonElement.setAttribute("aria-selected", "false");
+  });
+}
+
+function applyOptionSelection(optionButton) {
+  optionButton.classList.add("is-selected");
+  optionButton.setAttribute("aria-selected", "true");
+}
+
+function updateTriggerContent({ triggerLabel, triggerCode, triggerFlag }, optionButton) {
+  const selectedLabel = optionButton.getAttribute("data-lang-label");
+  const selectedCode = optionButton.getAttribute("data-lang-code");
+  const selectedFlag = optionButton.getAttribute("data-lang-flag");
+
+  if (triggerLabel && selectedLabel) {
+    triggerLabel.textContent = selectedLabel;
+  }
+
+  if (triggerCode && selectedCode) {
+    triggerCode.textContent = selectedCode;
+  }
+
+  if (triggerFlag instanceof HTMLImageElement && selectedFlag) {
+    triggerFlag.src = selectedFlag;
+  }
+}
+
 export function bindLanguageDropdown(headerRoot) {
   const langDropdown = headerRoot.querySelector(LANG_DROPDOWN_SELECTOR);
   if (!(langDropdown instanceof HTMLElement)) {
@@ -26,48 +62,34 @@ export function bindLanguageDropdown(headerRoot) {
     return;
   }
 
-  const setOpenState = (isOpen) => {
-    triggerButton.setAttribute("aria-expanded", isOpen ? "true" : "false");
-    menuElement.hidden = !isOpen;
-    langDropdown.classList.toggle("is-open", isOpen);
+  const state = {
+    triggerButton,
+    menuElement,
+    langDropdown,
   };
 
-  const closeMenu = () => setOpenState(false);
+  const triggerParts = {
+    triggerLabel,
+    triggerCode,
+    triggerFlag,
+  };
+
+  const closeMenu = () => setOpenState(state, false);
 
   triggerButton.addEventListener("click", (event) => {
     event.preventDefault();
     event.stopPropagation();
     const isExpanded = triggerButton.getAttribute("aria-expanded") === "true";
-    setOpenState(!isExpanded);
+    setOpenState(state, !isExpanded);
   });
 
   optionButtons.forEach((optionButton) => {
     optionButton.addEventListener("click", (event) => {
       event.preventDefault();
 
-      optionButtons.forEach((buttonElement) => {
-        buttonElement.classList.remove("is-selected");
-        buttonElement.setAttribute("aria-selected", "false");
-      });
-
-      optionButton.classList.add("is-selected");
-      optionButton.setAttribute("aria-selected", "true");
-
-      const selectedLabel = optionButton.getAttribute("data-lang-label");
-      const selectedCode = optionButton.getAttribute("data-lang-code");
-      const selectedFlag = optionButton.getAttribute("data-lang-flag");
-
-      if (triggerLabel && selectedLabel) {
-        triggerLabel.textContent = selectedLabel;
-      }
-
-      if (triggerCode && selectedCode) {
-        triggerCode.textContent = selectedCode;
-      }
-
-      if (triggerFlag instanceof HTMLImageElement && selectedFlag) {
-        triggerFlag.src = selectedFlag;
-      }
+      clearOptionSelection(optionButtons);
+      applyOptionSelection(optionButton);
+      updateTriggerContent(triggerParts, optionButton);
 
       closeMenu();
     });

@@ -1,3 +1,8 @@
+function setTabSelectedState(tabButton, isActive) {
+  tabButton.classList.toggle("r-tab--active", isActive);
+  tabButton.setAttribute("aria-selected", isActive ? "true" : "false");
+}
+
 export function bindRamadanTabsInteractions(rootElement = document) {
   const tabButtons = rootElement.querySelectorAll("[data-ramadan-tab]");
   if (!tabButtons.length) {
@@ -6,13 +11,9 @@ export function bindRamadanTabsInteractions(rootElement = document) {
 
   tabButtons.forEach((buttonElement) => {
     buttonElement.addEventListener("click", () => {
-      tabButtons.forEach((node) => {
-        node.classList.remove("r-tab--active");
-        node.setAttribute("aria-selected", "false");
+      tabButtons.forEach((tabButton) => {
+        setTabSelectedState(tabButton, tabButton === buttonElement);
       });
-
-      buttonElement.classList.add("r-tab--active");
-      buttonElement.setAttribute("aria-selected", "true");
     });
   });
 }

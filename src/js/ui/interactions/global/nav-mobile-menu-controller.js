@@ -5,7 +5,16 @@ import {
 } from "./nav.constants.js";
 import { getHeaderHeight } from "./nav.helpers.js";
 
-export function createMobileMenuController(headerRoot) {
+function createNoopController() {
+  return {
+    isMobileViewport: () => false,
+    isPanelOpen: () => false,
+    closeMenu: () => {},
+    closeThen: (callback) => callback?.(),
+  };
+}
+
+function getMenuElements(headerRoot) {
   const menuToggleButton = headerRoot.querySelector(".site-header__menu-toggle");
   const panelElement = headerRoot.querySelector(".site-header__panel");
   const navElement = headerRoot.querySelector(".site-header__nav");
@@ -14,35 +23,54 @@ export function createMobileMenuController(headerRoot) {
     panelElement.classList.contains("collapse");
   const menuContainer = usesBootstrapPanel ? panelElement : navElement;
 
-  if (!menuToggleButton || !(menuContainer instanceof HTMLElement)) {
-    return {
-      isMobileViewport: () => false,
-      isPanelOpen: () => false,
-      closeMenu: () => {},
-      closeThen: (callback) => callback?.(),
-    };
+  return {
+    menuToggleButton,
+    menuContainer,
+    usesBootstrapPanel,
+  };
+}
+
+function syncHeaderOffset(headerRoot) {
+  const headerHeight = `${getHeaderHeight()}px`;
+  headerRoot.style.setProperty("--header-offset", headerHeight);
+  document.documentElement.style.setProperty("--app-header-height", headerHeight);
+}
+
+function createViewportMatcher() {
+  return typeof window.matchMedia === "function"
+    ? window.matchMedia(MOBILE_MEDIA_QUERY)
+    : null;
+}
+
+function createBootstrapCollapse(menuContainer, usesBootstrapPanel) {
+  if (!usesBootstrapPanel || !window.bootstrap?.Collapse) {
+    return null;
   }
 
-  const mediaQueryList =
-    typeof window.matchMedia === "function"
-      ? window.matchMedia(MOBILE_MEDIA_QUERY)
-      : null;
+  return window.bootstrap.Collapse.getOrCreateInstance(menuContainer, {
+    toggle: false,
+  });
+}
 
-  const syncHeaderOffset = () => {
-    const headerHeight = `${getHeaderHeight()}px`;
-    headerRoot.style.setProperty("--header-offset", headerHeight);
-    document.documentElement.style.setProperty(
-      "--app-header-height",
-      headerHeight,
-    );
-  };
+function isMenuOpen(menuContainer, bootstrapCollapse) {
+  return bootstrapCollapse
+    ? menuContainer.classList.contains("show")
+    : menuContainer.classList.contains("is-open");
+}
 
-  const bootstrapCollapse =
-    usesBootstrapPanel && window.bootstrap?.Collapse
-      ? window.bootstrap.Collapse.getOrCreateInstance(menuContainer, {
-          toggle: false,
-        })
-      : null;
+export function createMobileMenuController(headerRoot) {
+  const { menuToggleButton, menuContainer, usesBootstrapPanel } =
+    getMenuElements(headerRoot);
+
+  if (!menuToggleButton || !(menuContainer instanceof HTMLElement)) {
+    return createNoopController();
+  }
+
+  const mediaQueryList = createViewportMatcher();
+  const bootstrapCollapse = createBootstrapCollapse(
+    menuContainer,
+    usesBootstrapPanel,
+  );
 
   const isMobileViewport = () => {
     if (mediaQueryList) {
@@ -66,7 +94,7 @@ export function createMobileMenuController(headerRoot) {
   if (!bootstrapCollapse) {
     menuToggleButton.addEventListener("click", (event) => {
       event.preventDefault();
-      syncHeaderOffset();
+      syncHeaderOffset(headerRoot);
 
       const isExpanded = menuToggleButton.getAttribute("aria-expanded") === "true";
 
@@ -117,20 +145,18 @@ export function createMobileMenuController(headerRoot) {
       if (!isMobileViewport()) {
         closeMenu();
       } else {
-        syncHeaderOffset();
+        syncHeaderOffset(headerRoot);
       }
     });
   }
 
-  window.addEventListener("resize", syncHeaderOffset, { passive: true });
-  syncHeaderOffset();
+  window.addEventListener("resize", () => syncHeaderOffset(headerRoot), {
+    passive: true,
+  });
+  syncHeaderOffset(headerRoot);
 
   const closeThen = (callback) => {
-    const isOpen = bootstrapCollapse
-      ? menuContainer.classList.contains("show")
-      : menuContainer.classList.contains("is-open");
-
-    if (!isOpen) {
+    if (!isMenuOpen(menuContainer, bootstrapCollapse)) {
       callback?.();
       return;
     }
@@ -161,10 +187,7 @@ export function createMobileMenuController(headerRoot) {
 
   return {
     isMobileViewport,
-    isPanelOpen: () =>
-      bootstrapCollapse
-        ? menuContainer.classList.contains("show")
-        : menuContainer.classList.contains("is-open"),
+    isPanelOpen: () => isMenuOpen(menuContainer, bootstrapCollapse),
     closeMenu,
     closeThen,
   };

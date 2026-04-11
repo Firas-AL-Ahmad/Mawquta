@@ -8,6 +8,39 @@ import { bindHeaderHashLinkInteractions } from "./nav-hash-links.interactions.js
 import { bindNavScrollSpy } from "./nav-scroll-spy.interactions.js";
 import { setActiveLink, toSectionFromLink } from "./nav.helpers.js";
 
+function collectNavLinks(headerRoot) {
+  return Array.from(headerRoot.querySelectorAll(NAV_LINK_SELECTOR));
+}
+
+function collectHeaderHashLinks(headerRoot) {
+  return Array.from(headerRoot.querySelectorAll(HEADER_HASH_LINK_SELECTOR));
+}
+
+function initializeActiveNavLink(navLinks) {
+  if (navLinks.length === 0) {
+    return;
+  }
+
+  const initiallyActiveLink =
+    navLinks.find((navLink) => navLink.classList.contains("site-header__link--active")) ||
+    navLinks[0];
+
+  setActiveLink(navLinks, initiallyActiveLink);
+}
+
+function mapSectionsToNavLinks(navLinks) {
+  const sectionToLink = new Map();
+
+  navLinks.forEach((navLink) => {
+    const targetSection = toSectionFromLink(navLink);
+    if (targetSection) {
+      sectionToLink.set(targetSection, navLink);
+    }
+  });
+
+  return sectionToLink;
+}
+
 export function bindNavInteractions(headerRoot = document) {
   if (!headerRoot) {
     return undefined;
@@ -15,23 +48,14 @@ export function bindNavInteractions(headerRoot = document) {
 
   bindLanguageDropdown(headerRoot);
 
-  const navLinks = Array.from(headerRoot.querySelectorAll(NAV_LINK_SELECTOR));
-  const headerHashLinks = Array.from(
-    headerRoot.querySelectorAll(HEADER_HASH_LINK_SELECTOR),
-  );
+  const navLinks = collectNavLinks(headerRoot);
+  const headerHashLinks = collectHeaderHashLinks(headerRoot);
 
   if (navLinks.length === 0 && headerHashLinks.length === 0) {
     return undefined;
   }
 
-  if (navLinks.length > 0) {
-    const initiallyActiveLink =
-      navLinks.find((navLink) =>
-        navLink.classList.contains("site-header__link--active"),
-      ) ||
-      navLinks[0];
-    setActiveLink(navLinks, initiallyActiveLink);
-  }
+  initializeActiveNavLink(navLinks);
 
   const mobileMenu = createMobileMenuController(headerRoot);
   bindHeaderHashLinkInteractions({
@@ -40,13 +64,7 @@ export function bindNavInteractions(headerRoot = document) {
     mobileMenu,
   });
 
-  const sectionToLink = new Map();
-  navLinks.forEach((navLink) => {
-    const targetSection = toSectionFromLink(navLink);
-    if (targetSection) {
-      sectionToLink.set(targetSection, navLink);
-    }
-  });
+  const sectionToLink = mapSectionsToNavLinks(navLinks);
 
   if (sectionToLink.size === 0) {
     return undefined;
