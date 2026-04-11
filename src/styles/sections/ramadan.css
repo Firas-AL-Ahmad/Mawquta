@@ -1,3 +1,6 @@
+/* Ramadan section styles */
+
+/* Base section shell */
 .ramadan-sec {
   position: relative;
   overflow: hidden;
@@ -50,6 +53,7 @@
   background-image: url("../../assets/icons/sections/ramadan/right-crescent-pattern.svg");
 }
 
+/* Topbar */
 .ramadan-topbar {
   direction: ltr;
   display: grid;
@@ -265,6 +269,7 @@
   white-space: nowrap;
 }
 
+/* Countdown and first-day cards */
 .ramadan-first {
   direction: rtl;
 }
@@ -538,33 +543,7 @@
   background: #17654e;
 }
 
-.r-tab {
-  gap: var(--ui-space-1-5);
-  padding: var(--ui-space-1-5) var(--ui-space-3-5);
-  border-radius: var(--ui-radius-sm);
-  border: 1px solid color-mix(in srgb, var(--Secondary-500) 40%, transparent);
-  background: var(--Background-50);
-  color: var(--Primary-900);
-  transition:
-    background var(--tr),
-    border-color var(--tr),
-    color var(--tr),
-    transform var(--tr),
-    box-shadow var(--tr);
-}
-
-.r-tab:hover {
-  background: color-mix(
-    in srgb,
-    var(--Background-50) 82%,
-    var(--Secondary-500) 18%
-  );
-}
-
-.r-tab:active {
-  transform: translateY(1px);
-}
-
+/* Responsive overrides: topbar and first-day cards */
 @media (min-width: 768px) and (max-width: 1199.98px) {
   .ramadan-sec {
     padding-block: 40px;
@@ -709,6 +688,8 @@
     min-height: 88px;
   }
 }
+
+/* Month table heading controls */
 .ramadan-table-head {
   direction: rtl;
   display: flex;
@@ -771,18 +752,6 @@
   justify-content: center;
   padding: 20px;
   border-top: 1px solid var(--color-border);
-}
-.btn-more {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--ui-space-1-5);
-  background: none;
-  border: 1.5px solid var(--Secondary-500);
-  border-radius: var(--ui-radius-sm);
-  padding: var(--ui-space-2) 28px;
-  font-size: var(--ui-font-sm);
-  font-weight: var(--ui-weight-bold);
-  color: var(--Secondary-500);
 }
 
 @media (max-width: 767.98px) {
@@ -1221,6 +1190,7 @@
   transform: translateY(1px);
 }
 
+/* Responsive overrides: month table */
 @media (max-width: 1199.98px) {
   .ramadan-table-sec {
     padding-block: 40px 20px;
