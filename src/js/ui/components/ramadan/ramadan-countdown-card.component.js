@@ -26,8 +26,8 @@ function renderRamadanDayTimeCard(cardConfig) {
     <article class="ramadan-first-time ${cardConfig.modifierClass}">
       <div class="ramadan-first-time__inner">
         <span class="ramadan-first-time__label-wrap">
+        <span class="ramadan-first-time__icon ${cardConfig.iconClass}" aria-hidden="true"></span>
           <span class="ramadan-first-time__label">${cardConfig.label}</span>
-          <span class="ramadan-first-time__icon ${cardConfig.iconClass}" aria-hidden="true"></span>
         </span>
         <span class="ramadan-first-time__pill" ${cardConfig.valueDataAttribute}>${cardConfig.value}</span>
       </div>

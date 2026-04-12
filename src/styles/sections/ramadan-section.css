@@ -73,7 +73,8 @@
   align-items: center;
   justify-content: center;
   inline-size: 140px;
-  block-size: 50px;
+  block-size: auto;
+  min-block-size: calc(var(--ui-btn-min-h-sm) + 10px);
   padding: 5px;
   border: 1px solid #eaeeec;
   border-radius: 12px;
@@ -84,18 +85,18 @@
 .ramadan-topbar__action,
 .ramadan-topbar__action.section-head__action {
   inline-size: 130px;
-  block-size: var(--ui-control-h-sm);
+  block-size: var(--ui-btn-min-h-sm);
   min-inline-size: 130px;
-  min-block-size: var(--ui-control-h-sm);
-  padding: var(--ui-space-2) var(--ui-space-6);
+  min-block-size: var(--ui-btn-min-h-sm);
+  padding: var(--ui-btn-pad-y) var(--ui-btn-pad-x-sm);
   border: none;
   border-radius: var(--ui-radius-sm);
   background: var(--Secondary-500);
   color: var(--white);
   font-family: var(--font-body);
-  font-size: var(--ui-font-md);
-  font-weight: var(--ui-weight-regular);
-  line-height: var(--ui-lh-body);
+  font-size: var(--ui-btn-font-size);
+  font-weight: var(--ui-weight-bold);
+  line-height: var(--ui-btn-line-height);
   white-space: nowrap;
   cursor: pointer;
   transition:
@@ -197,10 +198,10 @@
   grid-area: summary;
   direction: rtl;
   inline-size: 424px;
-  justify-self: end;
+  justify-self: start;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: flex-start;
   gap: var(--ramadan-summary-gap);
 }
 
@@ -241,7 +242,7 @@
 }
 
 .ramadan-topbar__meta {
-  inline-size: 100%;
+  /* inline-size: 100%; */
   min-block-size: 32px;
   display: inline-flex;
   align-items: center;
@@ -272,14 +273,20 @@
 /* Countdown and first-day cards */
 .ramadan-first {
   direction: rtl;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .ramadan-first__shell {
   border-radius: var(--ramadan-radius-shell);
+  width: 75%;
   background: #c3ccc6;
   padding: 16px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 12px;
 }
 
@@ -302,10 +309,10 @@
 .ramadan-first-time::before {
   content: "";
   position: absolute;
-  inset-inline-start: 0;
   inset-block: 0;
+  left: 0;
   width: min(42%, 184px);
-  background: url("../../assets/icons/sections/ramadan/suhoor-time-background.svg") left
+  background: url("../../assets/icons/sections/ramadan/suhoor-time-background.svg")
     center/cover no-repeat;
   pointer-events: none;
 }
@@ -375,11 +382,14 @@
 
 .ramadan-first__countdown {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
   overflow: hidden;
   border-radius: 12px;
   border: 1px solid var(--Secondary-500);
   background: var(--white);
-  padding: 14px 16px 16px;
+  padding: 32px 24px 24px;
 }
 
 .ramadan-first__countdown::before {
@@ -422,8 +432,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: url("../../assets/icons/sections/ramadan/moon-and-stars.svg") center/contain
-    no-repeat;
+  background: url("../../assets/icons/sections/ramadan/moon-and-stars.svg")
+    center/contain no-repeat;
 }
 
 .ramadan-first__countdown-icon::before {
@@ -645,9 +655,10 @@
   }
 
   .ramadan-topbar__action {
-    min-height: var(--ui-control-h-xs);
+    min-height: var(--ui-btn-min-h-sm);
     min-inline-size: 108px;
-    padding: var(--ui-space-2) var(--ui-space-3-5);
+    padding: var(--ui-btn-pad-y) var(--ui-btn-pad-x-sm);
+    font-size: var(--ui-btn-font-size-sm);
   }
 
   .ramadan-first__times {
@@ -678,10 +689,10 @@
   }
 
   .ramadan-topbar__action {
-    min-height: var(--ui-control-h-2xs);
+    min-height: var(--ui-control-h-xs);
     min-inline-size: 98px;
-    font-size: var(--ui-font-xs);
-    padding: var(--ui-space-2) var(--ui-space-3);
+    font-size: var(--ui-btn-font-size-sm);
+    padding: var(--ui-btn-pad-y) var(--ui-btn-pad-x-sm);
   }
 
   .ramadan-first__timer {
@@ -749,8 +760,8 @@
 
   .ramadan-table-head__actions .ramadan-table-tab {
     width: 100%;
-    min-height: 38px;
-    padding-inline: 10px;
+    min-height: var(--ui-btn-min-h-sm);
+    padding-inline: var(--ui-btn-pad-x-sm);
   }
 }
 
@@ -759,7 +770,6 @@
     grid-template-columns: minmax(0, 1fr);
   }
 }
-
 
 /* Ramadan Month Table (Figma node: 2257:12899) */
 .ramadan-month-table-section {
@@ -785,7 +795,7 @@
   block-size: 300px;
   background: url("../../assets/icons/sections/ramadan/decor-lantern.svg")
     center/contain no-repeat;
-  opacity: 0.16;
+  opacity: 1;
   pointer-events: none;
   z-index: 0;
 }
@@ -793,20 +803,22 @@
 .ramadan-month-table-section .ramadan-table-head {
   margin-bottom: 48px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
   gap: 16px;
-  text-align: center;
+  text-align: start;
 }
 
 .ramadan-month-table-section .ramadan-table-head__content {
+  min-inline-size: 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
+  justify-content: flex-start;
   gap: 16px;
-  inline-size: 330px;
+  inline-size: auto;
   max-inline-size: 100%;
 }
 
@@ -845,14 +857,15 @@
 .ramadan-month-table-section .ramadan-table-head__actions {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   gap: 48px;
+  margin-inline-start: auto;
 }
 
 .ramadan-month-table-section .ramadan-table-action {
   border: none;
   inline-size: 224px;
-  min-block-size: var(--ui-control-h-action-lg);
+  min-block-size: var(--ui-btn-min-h-lg);
   border-radius: var(--ui-radius-lg);
   background: var(--Secondary-500);
   color: var(--white);
@@ -860,11 +873,11 @@
   align-items: center;
   justify-content: center;
   gap: var(--ui-space-2);
-  padding: var(--ui-space-4) var(--ui-space-12);
+  padding: var(--ui-btn-pad-y) var(--ui-btn-pad-x);
   font-family: var(--font-body);
-  font-size: var(--ui-font-md);
+  font-size: var(--ui-btn-font-size);
   font-weight: var(--ui-weight-bold);
-  line-height: var(--ui-lh-normal);
+  line-height: var(--ui-btn-line-height);
   cursor: pointer;
   transition:
     filter var(--tr),
@@ -912,15 +925,15 @@
 .ramadan-month-table-section .section-more-button--filled {
   border: none;
   min-inline-size: 224px;
-  min-block-size: var(--ui-control-h-lg);
+  min-block-size: var(--ui-btn-min-h-lg);
   border-radius: var(--ui-radius-lg);
-  padding: var(--ui-space-4) var(--ui-space-12);
+  padding: var(--ui-btn-pad-y) var(--ui-btn-pad-x);
   background: var(--Secondary-500);
   color: var(--white);
   font-family: var(--font-body);
-  font-size: var(--ui-font-md);
+  font-size: var(--ui-btn-font-size);
   font-weight: var(--ui-weight-bold);
-  line-height: var(--ui-lh-normal);
+  line-height: var(--ui-btn-line-height);
 }
 
 .ramadan-month-table-section .section-more-button--filled:hover {
@@ -948,7 +961,6 @@
   .ramadan-month-table-section .ramadan-table-action {
     inline-size: 208px;
   }
-
 }
 
 @media (max-width: 767.98px) {
@@ -959,15 +971,21 @@
   .ramadan-month-table-section::after {
     inline-size: 160px;
     block-size: 160px;
-    opacity: 0.12;
+    opacity: 1;
   }
 
   .ramadan-month-table-section .ramadan-table-head {
     margin-bottom: 20px;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
     gap: 12px;
   }
 
   .ramadan-month-table-section .ramadan-table-head__content {
+    inline-size: 100%;
+    max-inline-size: none;
+    align-items: flex-start;
     gap: 10px;
   }
 
@@ -980,10 +998,10 @@
 
   .ramadan-month-table-section .ramadan-table-action {
     inline-size: 100%;
-    min-block-size: var(--ui-control-h-table-action);
-    padding: var(--ui-space-3) var(--ui-space-4);
+    min-block-size: var(--ui-btn-min-h-sm);
+    padding: var(--ui-btn-pad-y) var(--ui-btn-pad-x-sm);
     border-radius: var(--ui-radius-md);
-    font-size: var(--ui-font-sm);
+    font-size: var(--ui-btn-font-size-sm);
   }
 
   .ramadan-month-table-section .ramadan-month-table-location-line {
@@ -997,10 +1015,10 @@
 
   .ramadan-month-table-section .section-more-button--filled {
     min-inline-size: min(100%, 280px);
-    min-block-size: var(--ui-control-h-table-action);
+    min-block-size: var(--ui-btn-min-h-sm);
     border-radius: var(--ui-radius-md);
-    padding: var(--ui-space-3) var(--ui-space-4-5);
-    font-size: var(--ui-font-md);
+    padding: var(--ui-btn-pad-y) var(--ui-btn-pad-x-sm);
+    font-size: var(--ui-btn-font-size-sm);
   }
 }
 
@@ -1013,6 +1031,3 @@
     font-size: clamp(24px, 6.6vw, 30px);
   }
 }
-
-
-

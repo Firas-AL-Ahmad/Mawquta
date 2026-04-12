@@ -8,8 +8,26 @@ const RAMADAN_MOBILE_PRAYERS = [
   { key: "isha", label: "العشاء" },
 ];
 
+function resolveTableHeaderClass(columnKey) {
+  if (
+    columnKey === "day" ||
+    columnKey === "date" ||
+    columnKey === "ramadanDayNumber"
+  ) {
+    return `table-head table-head--${columnKey}`;
+  }
+
+  if (PRAYER_COLUMN_KEYS.has(columnKey)) {
+    return `table-head table-head--prayer table-head--${columnKey}`;
+  }
+
+  return `table-head table-head--${columnKey}`;
+}
+
 function renderRamadanTableHeaderCell(column) {
-  return `<th scope="col"><span class="schedule-table-head-label"><span class="schedule-table-head-icon" aria-hidden="true"><img src="${column.icon}" alt="" loading="lazy" decoding="async" /></span><span>${column.label}</span></span></th>`;
+  const headerClass = resolveTableHeaderClass(column.key);
+
+  return `<th scope="col" class="${headerClass}"><span class="schedule-table-head-label"><span class="schedule-table-head-icon" aria-hidden="true"><img src="${column.icon}" alt="" loading="lazy" decoding="async" /></span><span>${column.label}</span></span></th>`;
 }
 
 function renderRamadanTableHeader(columns) {

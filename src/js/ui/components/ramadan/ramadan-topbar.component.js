@@ -44,8 +44,8 @@ function renderRamadanTopbarSummary(moonAndStarsPath) {
       <h2 class="ramadan-topbar__month section-head__title" data-ramadan-month>رمضان 2026</h2>
 
       <span class="ramadan-topbar__meta section-head__meta">
+      <span class="ramadan-topbar__meta-prefix">آخر تحديث:</span>
         <span class="ramadan-topbar__meta-value">الثلاثاء / 18:00 / 22 مارس 2026</span>
-        <span class="ramadan-topbar__meta-prefix">آخر تحديث:</span>
       </span>
     </div>
   `;
