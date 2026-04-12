@@ -1,0 +1,79 @@
+#app,
+.page-shell {
+  min-height: 100dvh;
+}
+
+:root {
+  --page-side-margin: clamp(16px, 5vw, 96px);
+  --page-max-inline: 1728px;
+}
+
+@media (max-width: 1599.98px) {
+  :root {
+    --page-side-margin: 72px;
+  }
+}
+
+@media (max-width: 1399.98px) {
+  :root {
+    --page-side-margin: 56px;
+  }
+}
+
+@media (max-width: 1199.98px) {
+  :root {
+    --page-side-margin: 40px;
+  }
+}
+
+@media (max-width: 991.98px) {
+  :root {
+    --page-side-margin: 28px;
+  }
+}
+
+@media (max-width: 767.98px) {
+  :root {
+    --page-side-margin: 20px;
+  }
+}
+
+@media (max-width: 575.98px) {
+  :root {
+    --page-side-margin: 14px;
+  }
+}
+
+.page-shell {
+  display: flex;
+  flex-direction: column;
+}
+
+.page-main {
+  flex: 1;
+}
+
+.container,
+.container-sm,
+.container-md,
+.container-lg,
+.container-xl,
+.container-xxl,
+.container-fluid {
+  width: auto !important;
+  max-width: none !important;
+  margin-inline: var(--page-side-margin) !important;
+  padding-inline: 0 !important;
+}
+
+@media (min-width: 1729px) {
+  .container,
+  .container-sm,
+  .container-md,
+  .container-lg,
+  .container-xl,
+  .container-xxl,
+  .container-fluid {
+    margin-inline: calc((100vw - var(--page-max-inline)) / 2) !important;
+  }
+}

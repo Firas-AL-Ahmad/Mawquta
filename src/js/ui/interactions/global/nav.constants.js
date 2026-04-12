@@ -1,0 +1,13 @@
+export const NAV_LINK_SELECTOR = ".site-header__nav .site-header__link[href^='#']";
+export const HEADER_HASH_LINK_SELECTOR = ".site-header a[href^='#']";
+export const ACTIVE_CLASS = "site-header__link--active";
+export const ACTIVE_BOOTSTRAP_CLASS = "active";
+export const MOBILE_MEDIA_QUERY = "(max-width: 991.98px)";
+export const MOBILE_FALLBACK_WIDTH = 992;
+export const SCROLL_OFFSET_GAP = 8;
+export const SCROLL_SPY_REFERENCE_GAP = 20;
+export const COLLAPSE_SCROLL_FALLBACK_MS = 260;
+export const LANG_DROPDOWN_SELECTOR = "[data-lang-dropdown]";
+export const LANG_TRIGGER_SELECTOR = "[data-lang-trigger]";
+export const LANG_MENU_SELECTOR = "[data-lang-menu]";
+export const LANG_OPTION_SELECTOR = "[data-lang-option]";

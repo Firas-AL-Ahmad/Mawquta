@@ -1,0 +1,28 @@
+/* index.css - single public stylesheet entry point */
+
+/* Core */
+@import "./core/tokens.css";
+@import "./core/reset.css";
+@import "./core/normalization.css";
+
+/* Layout */
+@import "./layout/page-shell.css";
+
+/* Shared primitives */
+@import "./primitives/ui-primitives.css";
+@import "./primitives/section-heading.css";
+@import "./primitives/daily-prayer-cards.css";
+@import "./primitives/schedule-table.css";
+@import "./primitives/section-base.css";
+
+/* Section ownership */
+@import "./sections/site-header.css";
+@import "./sections/hero-section.css";
+@import "./sections/daily-prayer-section.css";
+@import "./sections/weekly-prayer-section.css";
+@import "./sections/qibla-section.css";
+@import "./sections/ramadan-section.css";
+@import "./sections/site-footer.css";
+
+/* Utilities */
+@import "./utilities/helpers.css";

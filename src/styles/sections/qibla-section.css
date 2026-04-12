@@ -1,0 +1,507 @@
+/* Qibla Section (Figma parity: node 2229:8094) */
+.qibla-section {
+  background: var(--Background-50);
+  padding-block: 40px;
+}
+
+.qibla-section > .container-xl {
+  position: relative;
+  z-index: 1;
+}
+
+.qibla-section .qibla-card {
+  position: relative;
+  overflow: hidden;
+  background: #d3dad5;
+  border: none;
+  border-radius: 14px;
+  box-shadow: 0 4px 8px -4px rgba(18, 66, 53, 0.16);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+.qibla-section .qibla-card__head {
+  position: relative;
+  direction: rtl;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  grid-template-areas: "heading degree action";
+  align-items: center;
+  gap: 12px;
+  min-height: 74px;
+  padding: 12px;
+  border-radius: 14px;
+  background: var(--Background-50);
+  overflow: hidden;
+}
+
+.qibla-section .qibla-card__heading {
+  grid-area: heading;
+  justify-self: start;
+  min-inline-size: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  gap: 6px;
+  text-align: right;
+  max-inline-size: min(100%, 640px);
+}
+
+.qibla-section .qibla-card__title {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--ui-space-1-5);
+  color: var(--Secondary-500);
+  font-family: var(--font-body);
+  font-size: var(--ui-font-qibla-title);
+  font-weight: var(--ui-weight-bold);
+  line-height: var(--ui-lh-relaxed);
+}
+
+.qibla-section .qibla-card__title-icon {
+  inline-size: var(--ui-icon-qibla-title);
+  block-size: var(--ui-icon-qibla-title);
+  flex: 0 0 var(--ui-icon-qibla-title);
+  background: url("../../assets/icons/sections/qibla/qibla-heading-icon.svg") center/contain
+    no-repeat;
+}
+
+.qibla-section .qibla-card__note {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  background: rgba(15, 82, 51, 0.08);
+  color: #64748b;
+  border-radius: 100px;
+  padding: 3px 10px;
+  font-size: clamp(12px, 0.72rem + 0.2vw, 14px);
+  font-weight: 400;
+  line-height: 1.45;
+  white-space: nowrap;
+}
+
+.qibla-section .qibla-city-btn {
+  grid-area: action;
+  justify-self: end;
+  align-self: center;
+  border: none;
+  border-radius: var(--ui-radius-md);
+  background: var(--Secondary-500);
+  color: var(--white);
+  min-height: var(--ui-control-h-md);
+  padding: var(--ui-space-3) var(--ui-space-4-5);
+  font-family: var(--font-body);
+  font-size: var(--ui-font-sm);
+  font-weight: var(--ui-weight-bold);
+  line-height: var(--ui-lh-normal);
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    filter var(--tr),
+    transform var(--tr);
+}
+
+.qibla-section .qibla-city-btn:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--Secondary-500) 25%, transparent),
+    0 0 0 4px color-mix(in srgb, var(--Secondary-500) 60%, transparent);
+}
+
+.qibla-section .qibla-card__degree {
+  grid-area: degree;
+  justify-self: center;
+  align-self: center;
+  position: static;
+  transform: none;
+  margin: 0;
+  padding: 0;
+  color: var(--Secondary-500);
+  font-family: "Reem Kufi", var(--font-heading);
+  font-size: clamp(32px, 1.8rem + 0.55vw, 40px);
+  font-weight: 600;
+  line-height: 1;
+  z-index: 2;
+}
+
+.qibla-section .qibla-visual {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: clamp(320px, 27vw, 410px);
+  padding: 2px 18px 0;
+  overflow: hidden;
+}
+
+.qibla-section .qibla-compass {
+  --qibla-compass-size: min(100%, 360px);
+  position: relative;
+  inline-size: var(--qibla-compass-size);
+  block-size: var(--qibla-compass-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+.qibla-section .qibla-compass::before {
+  content: none;
+}
+
+.qibla-section .qibla-compass::after {
+  content: none;
+}
+
+.qibla-section .qibla-compass__asset {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: contain;
+}
+
+.qibla-section .qibla-visual__decor {
+  position: absolute;
+  display: block;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.qibla-section .qibla-visual__decor--left {
+  left: -24px;
+  bottom: -24px;
+
+  width: 278px;
+  height: 278px;
+  border: none;
+  border-radius: 0;
+  transform: none;
+  background: none;
+  object-position: left bottom;
+}
+
+.qibla-section .qibla-visual__decor--left::before,
+.qibla-section .qibla-visual__decor--left::after {
+  content: none;
+}
+
+.qibla-section .qibla-visual__decor--right {
+  right: 0;
+  bottom: 0;
+  width: 154px;
+  height: 242px;
+  border: none;
+  border-radius: 0;
+  transform: none;
+  mix-blend-mode: normal;
+  background: none;
+  object-position: right bottom;
+}
+
+.qibla-section .qibla-visual__decor--right::before,
+.qibla-section .qibla-visual__decor--right::after {
+  content: none;
+}
+
+.qibla-city-modal__dialog {
+  max-width: min(100% - 24px, 520px);
+}
+
+.qibla-city-modal__content {
+  background: var(--Background-50);
+  border: none;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px -24px rgba(18, 66, 53, 0.38);
+  direction: rtl;
+}
+
+.qibla-city-modal__header {
+  padding: 16px 18px 10px;
+  border-bottom: 1px solid rgba(18, 66, 53, 0.08);
+}
+
+.qibla-city-modal__title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--Primary-700);
+}
+
+.qibla-city-modal__close {
+  margin: 0;
+  border: none;
+  background: transparent;
+  color: var(--Primary-700);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.qibla-city-modal__body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 14px 18px 18px;
+}
+
+.qibla-city-modal__note {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--Text-600);
+}
+
+.qibla-city-modal__fake-input {
+  border: 1px solid rgba(18, 66, 53, 0.18);
+  border-radius: 12px;
+  padding: 12px 14px;
+  color: #6e7f78;
+  font-size: 14px;
+  background: rgba(255, 255, 255, 0.65);
+}
+
+.qibla-city-modal__confirm {
+  border: none;
+  border-radius: 12px;
+  min-height: 42px;
+  background: var(--Secondary-500);
+  color: var(--white);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .qibla-section .qibla-card {
+    padding: 18px;
+    gap: 30px;
+  }
+
+  .qibla-section .qibla-card__head {
+    min-height: 74px;
+    padding: 12px;
+  }
+
+  .qibla-section .qibla-city-btn {
+    min-height: var(--ui-control-h-sm);
+    padding: var(--ui-space-2-5) var(--ui-space-3-5);
+    font-size: var(--ui-font-xs);
+  }
+
+  .qibla-section .qibla-card__degree {
+    font-size: 36px;
+  }
+
+  .qibla-section .qibla-visual {
+    min-height: 340px;
+    padding-inline: 12px;
+  }
+
+  .qibla-section .qibla-compass {
+    --qibla-compass-size: min(100%, 330px);
+  }
+
+  .qibla-section .qibla-visual__decor--left {
+    width: 218px;
+    height: 218px;
+  }
+
+  .qibla-section .qibla-visual__decor--right {
+    width: 128px;
+    height: 206px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .qibla-section .qibla-card {
+    padding: 16px;
+    gap: 22px;
+  }
+
+  .qibla-section .qibla-card__head {
+    min-height: 82px;
+    padding: 10px 12px 8px;
+  }
+
+  .qibla-section .qibla-card__title {
+    font-size: clamp(16px, 0.95rem + 0.32vw, 20px);
+  }
+
+  .qibla-section .qibla-card__note {
+    font-size: 12px;
+    line-height: 1.5;
+    white-space: normal;
+  }
+
+  .qibla-section .qibla-city-btn {
+    min-height: var(--ui-control-h-sm);
+    padding: var(--ui-space-2) var(--ui-space-3);
+    font-size: var(--ui-font-2xs);
+  }
+
+  .qibla-section .qibla-card__degree {
+    font-size: 32px;
+  }
+
+  .qibla-section .qibla-visual {
+    min-height: 300px;
+    padding-inline: 8px;
+  }
+
+  .qibla-section .qibla-compass {
+    --qibla-compass-size: min(100%, 296px);
+  }
+
+  .qibla-section .qibla-visual__decor--left {
+    left: 4px;
+    width: 176px;
+    height: 176px;
+  }
+
+  .qibla-section .qibla-visual__decor--right {
+    width: 108px;
+    height: 176px;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .qibla-section {
+    padding-block: 30px;
+  }
+
+  .qibla-section .qibla-card {
+    padding: 12px;
+    gap: 16px;
+  }
+
+  .qibla-section .qibla-card__head {
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    grid-template-areas: "heading degree action";
+    align-items: center;
+    gap: 8px 10px;
+    min-height: auto;
+    padding: 10px;
+  }
+
+  .qibla-section .qibla-card__heading {
+    grid-area: heading;
+    justify-self: start;
+    max-inline-size: 100%;
+    gap: 6px;
+  }
+
+  .qibla-section .qibla-city-btn {
+    grid-area: action;
+    justify-self: end;
+    min-height: var(--ui-control-h-xs);
+    border-radius: var(--ui-radius-control-sm);
+    padding: var(--ui-space-2) var(--ui-space-3);
+    font-size: var(--ui-font-2xs);
+  }
+
+  .qibla-section .qibla-card__title {
+    font-size: clamp(15px, 4.2vw, 18px);
+    line-height: 1.35;
+  }
+
+  .qibla-section .qibla-card__title-icon {
+    inline-size: 22px;
+    block-size: 22px;
+    flex-basis: 22px;
+  }
+
+  .qibla-section .qibla-card__note {
+    font-size: var(--ui-font-3xs);
+    line-height: 1.5;
+    white-space: normal;
+    border-radius: var(--ui-radius-control-sm);
+    padding: var(--ui-space-1) var(--ui-space-2);
+  }
+
+  .qibla-section .qibla-card__degree {
+    grid-area: degree;
+    justify-self: center;
+    font-size: 30px;
+  }
+
+  .qibla-section .qibla-visual {
+    min-height: 232px;
+    padding-inline: 6px;
+  }
+
+  .qibla-section .qibla-compass {
+    --qibla-compass-size: min(100%, 224px);
+  }
+
+  .qibla-section .qibla-visual__decor--left {
+    left: 0;
+    bottom: -8px;
+    width: 132px;
+    height: 132px;
+  }
+
+  .qibla-section .qibla-visual__decor--right {
+    right: -2px;
+    bottom: 6px;
+    width: 74px;
+    height: 122px;
+  }
+
+  .qibla-city-modal__dialog {
+    max-width: min(100% - 16px, 520px);
+  }
+}
+
+@media (max-width: 399.98px) {
+  .qibla-section .qibla-card {
+    padding: 10px;
+    gap: 12px;
+  }
+
+  .qibla-section .qibla-card__head {
+    padding: 8px;
+    gap: 6px;
+  }
+
+  .qibla-section .qibla-card__degree {
+    font-size: 26px;
+  }
+
+  .qibla-section .qibla-city-btn {
+    min-height: var(--ui-control-h-2xs);
+    padding: var(--ui-space-2) var(--ui-space-2-5);
+    font-size: var(--ui-font-3xs);
+  }
+
+  .qibla-section .qibla-visual {
+    min-height: 200px;
+  }
+
+  .qibla-section .qibla-compass {
+    --qibla-compass-size: min(100%, 196px);
+  }
+
+  .qibla-section .qibla-visual__decor--left,
+  .qibla-section .qibla-visual__decor--right {
+    display: none;
+  }
+
+  .qibla-city-modal__header {
+    padding: 14px 14px 8px;
+  }
+
+  .qibla-city-modal__body {
+    padding: 12px 14px 14px;
+  }
+}
+
+
+

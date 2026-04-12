@@ -1,0 +1,1018 @@
+/* Ramadan section styles */
+
+/* Base section shell */
+.ramadan-section {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: #f8f7f4;
+  padding-block: 48px;
+  --ramadan-radius-shell: 16px;
+  --ramadan-topbar-gap: 16px;
+  --ramadan-chip-min-h: 80px;
+  --ramadan-chip-pad-inline: 24px;
+  --ramadan-chip-font-size: 16px;
+  --ramadan-summary-gap: 16px;
+  --ramadan-icon-size: 32px;
+  --ramadan-month-size: 32px;
+  --ramadan-title-size: 24px;
+  --ramadan-pill-size: 40px;
+  --ramadan-timer-size: 48px;
+  --ramadan-progress-edge-size: 12px;
+  --ramadan-progress-value-size: 24px;
+}
+
+.ramadan-section > .container-xl {
+  position: relative;
+  z-index: 2;
+}
+
+.ramadan-section::before,
+.ramadan-section::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  background-repeat: no-repeat;
+  background-size: contain;
+  z-index: 1;
+}
+
+.ramadan-section::before {
+  top: 0;
+  left: 0;
+  width: 192px;
+  height: 332px;
+  background-image: url("../../assets/icons/sections/ramadan/left-crescent-pattern.svg");
+}
+
+.ramadan-section::after {
+  top: 0;
+  right: 0;
+  width: 132px;
+  height: 372px;
+  background-image: url("../../assets/icons/sections/ramadan/right-crescent-pattern.svg");
+}
+
+/* Topbar */
+.ramadan-topbar {
+  direction: ltr;
+  display: grid;
+  grid-template-areas: "action date city summary";
+  grid-template-columns: 140px 276px 276px 424px;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--ramadan-topbar-gap);
+  margin-bottom: 16px;
+}
+
+.ramadan-topbar__action-shell {
+  grid-area: action;
+  justify-self: start;
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 140px;
+  block-size: 50px;
+  padding: 5px;
+  border: 1px solid #eaeeec;
+  border-radius: 12px;
+  background: #d3dad5;
+  box-shadow: 0 4px 8px -4px rgba(18, 66, 53, 0.16);
+}
+
+.ramadan-topbar__action,
+.ramadan-topbar__action.section-head__action {
+  inline-size: 130px;
+  block-size: var(--ui-control-h-sm);
+  min-inline-size: 130px;
+  min-block-size: var(--ui-control-h-sm);
+  padding: var(--ui-space-2) var(--ui-space-6);
+  border: none;
+  border-radius: var(--ui-radius-sm);
+  background: var(--Secondary-500);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: var(--ui-font-md);
+  font-weight: var(--ui-weight-regular);
+  line-height: var(--ui-lh-body);
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    filter var(--tr),
+    transform var(--tr);
+}
+
+.ramadan-topbar__chip {
+  position: relative;
+  min-block-size: var(--ramadan-chip-min-h);
+  border: 1px solid var(--Secondary-500);
+  border-radius: 16px;
+  background: var(--white);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-block: 24px;
+  padding-inline: var(--ramadan-chip-pad-inline);
+}
+
+.ramadan-topbar__chip::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: clamp(-76px, -4.8vw, -58px);
+  inset-block-start: clamp(-48px, -3.2vw, -36px);
+  width: clamp(164px, 11vw, 200px);
+  height: clamp(164px, 11vw, 200px);
+  background: url("../../assets/icons/sections/ramadan/pattern-city-and-history.svg")
+    center/contain no-repeat;
+  pointer-events: none;
+}
+
+.ramadan-topbar__chip > * {
+  position: relative;
+  z-index: 1;
+}
+
+.ramadan-topbar__chip--date {
+  grid-area: date;
+  inline-size: 276px;
+}
+
+.ramadan-topbar__chip--city {
+  grid-area: city;
+  inline-size: 276px;
+}
+
+.ramadan-topbar__chip-content {
+  inline-size: 100%;
+  direction: rtl;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 16px;
+  white-space: nowrap;
+}
+
+.ramadan-topbar__chip-label-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ramadan-topbar__chip-label,
+.ramadan-topbar__chip-value {
+  font-family: var(--font-body);
+  font-size: var(--ramadan-chip-font-size);
+  font-weight: 700;
+  line-height: 24px;
+}
+
+.ramadan-topbar__chip-label {
+  color: var(--Primary-900);
+}
+
+.ramadan-topbar__chip-value {
+  color: var(--Secondary-500);
+}
+
+.ramadan-topbar__icon {
+  inline-size: var(--ramadan-icon-size);
+  block-size: var(--ramadan-icon-size);
+  flex: 0 0 var(--ramadan-icon-size);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.ramadan-topbar__icon--calendar {
+  background-image: url("../../assets/icons/sections/ramadan/topbar-calendar-icon.svg");
+}
+
+.ramadan-topbar__icon--location {
+  background-image: url("../../assets/icons/sections/ramadan/topbar-location-icon.svg");
+}
+
+.ramadan-topbar__summary {
+  grid-area: summary;
+  direction: rtl;
+  inline-size: 424px;
+  justify-self: end;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--ramadan-summary-gap);
+}
+
+.ramadan-topbar__blessing {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  border-radius: 999px;
+  background: var(--white);
+  padding: 8px 16px;
+}
+
+.ramadan-topbar__blessing-label {
+  color: var(--Secondary-500);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 16px;
+}
+
+.ramadan-topbar__blessing-icon {
+  inline-size: var(--ramadan-icon-size);
+  block-size: var(--ramadan-icon-size);
+  display: block;
+}
+
+.ramadan-topbar__month,
+.ramadan-topbar__month.section-head__title {
+  margin: 0;
+  color: var(--Primary-700);
+  font-family: var(--font-body);
+  font-size: var(--ramadan-month-size);
+  font-weight: 700;
+  line-height: 32px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.ramadan-topbar__meta {
+  inline-size: 100%;
+  min-block-size: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  border-radius: 999px;
+  background: rgba(15, 82, 51, 0.08);
+  padding: 4px 12px;
+}
+
+.ramadan-topbar__meta-prefix,
+.ramadan-topbar__meta-value {
+  color: #64748b;
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  text-align: right;
+}
+
+.ramadan-topbar__meta-value {
+  min-inline-size: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Countdown and first-day cards */
+.ramadan-first {
+  direction: rtl;
+}
+
+.ramadan-first__shell {
+  border-radius: var(--ramadan-radius-shell);
+  background: #c3ccc6;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ramadan-first__times {
+  direction: rtl;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.ramadan-first-time {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid var(--Secondary-500);
+  background: var(--white);
+  min-height: 84px;
+}
+
+.ramadan-first-time::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block: 0;
+  width: min(42%, 184px);
+  background: url("../../assets/icons/sections/ramadan/suhoor-time-background.svg") left
+    center/cover no-repeat;
+  pointer-events: none;
+}
+
+.ramadan-first-time__inner {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 18px;
+}
+
+.ramadan-first-time__label-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.ramadan-first-time__label {
+  color: var(--Primary-700);
+  font-family: var(--font-body);
+  font-size: var(--ramadan-title-size);
+  font-weight: 700;
+  line-height: 24px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.ramadan-first-time__pill {
+  direction: ltr;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 76px;
+  min-height: 40px;
+  border-radius: 10px;
+  border: 2px solid #becfca;
+  background: rgba(201, 209, 205, 0.85);
+  color: var(--Secondary-500);
+  font-family: "Reem Kufi", var(--font-heading);
+  font-size: var(--ramadan-pill-size);
+  font-weight: 700;
+  line-height: 1;
+  padding: 4px 10px;
+}
+
+.ramadan-first-time__icon {
+  inline-size: 24px;
+  block-size: 24px;
+  flex: 0 0 24px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.ramadan-first-time__icon--imsak {
+  background-image: url("../../assets/icons/sections/ramadan/imsak-time-icon.svg");
+}
+
+.ramadan-first-time__icon--iftar {
+  background-image: url("../../assets/icons/shared/misc/moon-icon.svg");
+}
+
+.ramadan-first__countdown {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid var(--Secondary-500);
+  background: var(--white);
+  padding: 14px 16px 16px;
+}
+
+.ramadan-first__countdown::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("../../assets/icons/sections/ramadan/suhoor-time-background.svg")
+    center/cover no-repeat;
+  pointer-events: none;
+}
+
+.ramadan-first__countdown > * {
+  position: relative;
+  z-index: 1;
+}
+
+.ramadan-first__countdown-head {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.ramadan-first__countdown-title {
+  margin: 0;
+  color: var(--Primary-700);
+  font-family: var(--font-body);
+  font-size: var(--ramadan-title-size);
+  font-weight: 700;
+  line-height: 24px;
+  text-align: center;
+}
+
+.ramadan-first__countdown-icon {
+  inline-size: 24px;
+  block-size: 24px;
+  flex: 0 0 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: url("../../assets/icons/sections/ramadan/moon-and-stars.svg") center/contain
+    no-repeat;
+}
+
+.ramadan-first__countdown-icon::before {
+  content: none;
+}
+
+.ramadan-first__timer {
+  margin-inline: auto;
+  width: min(100%, 248px);
+  min-height: 74px;
+  border-radius: 12px;
+  border: 2px solid #becfca;
+  background: rgba(201, 209, 205, 0.92);
+  padding: 8px 12px;
+  direction: ltr;
+  display: inline-flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 10px;
+}
+
+.ramadan-first__timer-part {
+  min-width: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.ramadan-first__timer-value {
+  color: var(--Secondary-500);
+  font-family: "Reem Kufi", var(--font-heading);
+  font-size: var(--ramadan-timer-size);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.ramadan-first__timer-unit {
+  color: #b36324;
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.ramadan-first__timer-sep {
+  color: var(--Secondary-500);
+  font-family: "Reem Kufi", var(--font-heading);
+  font-size: var(--ramadan-timer-size);
+  font-weight: 700;
+  line-height: 0.9;
+  margin-bottom: 8px;
+}
+
+.ramadan-first__progress {
+  margin-top: 8px;
+}
+
+.ramadan-first__progress-row {
+  direction: ltr;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.ramadan-first__progress-edge {
+  display: inline-flex;
+  align-items: center;
+  gap: clamp(4px, 0.24rem + 0.2vw, 6px);
+  color: var(--Secondary-500);
+  font-family: "Reem Kufi", var(--font-heading);
+  font-size: var(--ramadan-progress-edge-size);
+  font-weight: 600;
+  line-height: 1;
+}
+
+.ramadan-first__progress-value {
+  color: var(--Secondary-500);
+  font-family: var(--font-body);
+  font-size: var(--ramadan-progress-value-size);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.ramadan-first__progress-icon {
+  inline-size: 16px;
+  block-size: 16px;
+  flex: 0 0 16px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.ramadan-first__progress-icon--start {
+  background-image: url("../../assets/icons/shared/misc/moon-icon.svg");
+}
+
+.ramadan-first__progress-icon--end {
+  background-image: url("../../assets/icons/sections/ramadan/imsak-time-icon.svg");
+}
+
+.ramadan-first__progress-track {
+  position: relative;
+  height: 8px;
+  border-radius: 999px;
+  background: #d4ddda;
+  overflow: hidden;
+}
+
+.ramadan-first__progress-fill {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-end: 0;
+  border-radius: inherit;
+  background: #17654e;
+}
+
+/* Responsive overrides: topbar and first-day cards */
+@media (min-width: 768px) and (max-width: 1199.98px) {
+  .ramadan-section {
+    padding-block: 40px;
+    --ramadan-topbar-gap: 14px;
+    --ramadan-chip-min-h: 72px;
+    --ramadan-chip-pad-inline: 18px;
+    --ramadan-month-size: clamp(32px, 3.4vw, 42px);
+    --ramadan-pill-size: clamp(32px, 2.4vw, 42px);
+  }
+
+  .ramadan-topbar {
+    grid-template-areas:
+      "summary summary summary"
+      "city date action";
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+  }
+
+  .ramadan-topbar__summary {
+    inline-size: 100%;
+    justify-self: stretch;
+  }
+
+  .ramadan-topbar__chip {
+    inline-size: 100%;
+  }
+
+  .ramadan-topbar__action {
+    min-inline-size: 120px;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .ramadan-section {
+    padding-block: 32px 24px;
+    --ramadan-topbar-gap: 12px;
+    --ramadan-chip-min-h: 68px;
+    --ramadan-chip-pad-inline: 14px;
+    --ramadan-chip-font-size: 15px;
+    --ramadan-icon-size: 22px;
+    --ramadan-month-size: clamp(30px, 8vw, 40px);
+    --ramadan-title-size: clamp(18px, 4.8vw, 22px);
+    --ramadan-pill-size: clamp(30px, 8vw, 38px);
+    --ramadan-timer-size: clamp(42px, 10vw, 54px);
+    --ramadan-progress-edge-size: 13px;
+    --ramadan-progress-value-size: 24px;
+  }
+
+  .ramadan-section::before {
+    width: 132px;
+    height: 228px;
+  }
+
+  .ramadan-section::after {
+    width: 92px;
+    height: 260px;
+  }
+
+  .ramadan-topbar {
+    grid-template-areas:
+      "summary"
+      "city"
+      "date"
+      "action";
+    grid-template-columns: minmax(0, 1fr);
+    margin-bottom: 14px;
+  }
+
+  .ramadan-topbar__summary,
+  .ramadan-topbar__chip {
+    inline-size: 100%;
+    justify-self: stretch;
+  }
+
+  .ramadan-topbar__meta {
+    border-radius: 12px;
+  }
+
+  .ramadan-topbar__meta-value {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+  }
+
+  .ramadan-topbar__chip::before {
+    inset-inline-start: -60px;
+    inset-block-start: -44px;
+    width: 170px;
+    height: 170px;
+  }
+
+  .ramadan-topbar__chip-content {
+    flex-wrap: wrap;
+  }
+
+  .ramadan-topbar__action-shell {
+    justify-self: start;
+    border-radius: 10px;
+    padding: 4px;
+  }
+
+  .ramadan-topbar__action {
+    min-height: var(--ui-control-h-xs);
+    min-inline-size: 108px;
+    padding: var(--ui-space-2) var(--ui-space-3-5);
+  }
+
+  .ramadan-first__times {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .ramadan-first__countdown {
+    border-radius: 14px;
+  }
+
+  .ramadan-first__timer {
+    width: 100%;
+  }
+
+  .ramadan-first__progress-track {
+    height: 14px;
+  }
+}
+
+@media (max-width: 399.98px) {
+  .ramadan-section {
+    --ramadan-month-size: clamp(26px, 8vw, 32px);
+    --ramadan-chip-font-size: 14px;
+    --ramadan-icon-size: 20px;
+    --ramadan-timer-size: clamp(36px, 9vw, 44px);
+    --ramadan-progress-edge-size: 11px;
+    --ramadan-progress-value-size: 20px;
+  }
+
+  .ramadan-topbar__action {
+    min-height: var(--ui-control-h-2xs);
+    min-inline-size: 98px;
+    font-size: var(--ui-font-xs);
+    padding: var(--ui-space-2) var(--ui-space-3);
+  }
+
+  .ramadan-first__timer {
+    min-height: 88px;
+  }
+}
+
+/* Month table heading controls */
+.ramadan-table-head {
+  direction: rtl;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.ramadan-table-head__content {
+  min-inline-size: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.ramadan-table-head__actions {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.ramadan-table-title {
+  font-size: var(--ui-font-ramadan-table-title);
+  font-weight: var(--ui-weight-extrabold);
+  line-height: var(--ui-lh-normal);
+  color: var(--Primary-900);
+}
+.ramadan-table-tab--active,
+.ramadan-table-tab[aria-selected="true"] {
+  background: var(--Secondary-500);
+  color: var(--white);
+  border-color: transparent;
+}
+
+.ramadan-month-table__more {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  border-top: 1px solid var(--color-border);
+}
+
+@media (max-width: 767.98px) {
+  .ramadan-table-head {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .ramadan-table-head__actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+  }
+
+  .ramadan-table-head__actions .ramadan-table-tab {
+    width: 100%;
+    min-height: 38px;
+    padding-inline: 10px;
+  }
+}
+
+@media (max-width: 399.98px) {
+  .ramadan-table-head__actions {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+
+/* Ramadan Month Table (Figma node: 2257:12899) */
+.ramadan-month-table-section {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  direction: rtl;
+  background: #f8f7f4;
+  padding-block: 48px 24px;
+}
+
+.ramadan-month-table-section > * {
+  position: relative;
+  z-index: 1;
+}
+
+.ramadan-month-table-section::after {
+  content: "";
+  position: absolute;
+  inset-inline-end: 0;
+  inset-block-start: 0;
+  inline-size: 300px;
+  block-size: 300px;
+  background: url("../../assets/icons/sections/ramadan/decor-lantern.svg")
+    center/contain no-repeat;
+  opacity: 0.16;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ramadan-month-table-section .ramadan-table-head {
+  margin-bottom: 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  text-align: center;
+}
+
+.ramadan-month-table-section .ramadan-table-head__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  inline-size: 330px;
+  max-inline-size: 100%;
+}
+
+.ramadan-month-table-section .ramadan-table-title {
+  margin: 0;
+  color: var(--Primary-700);
+  font-family: var(--font-body);
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.ramadan-month-table-section .ramadan-table-head__chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 32px;
+  background: var(--white);
+}
+
+.ramadan-month-table-section .ramadan-table-head__chip-item {
+  color: var(--Secondary-500);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.ramadan-month-table-section .ramadan-table-head__chip-icon {
+  inline-size: 24px;
+  block-size: 24px;
+}
+
+.ramadan-month-table-section .ramadan-table-head__actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 48px;
+}
+
+.ramadan-month-table-section .ramadan-table-action {
+  border: none;
+  inline-size: 224px;
+  min-block-size: var(--ui-control-h-action-lg);
+  border-radius: var(--ui-radius-lg);
+  background: var(--Secondary-500);
+  color: var(--white);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ui-space-2);
+  padding: var(--ui-space-4) var(--ui-space-12);
+  font-family: var(--font-body);
+  font-size: var(--ui-font-md);
+  font-weight: var(--ui-weight-bold);
+  line-height: var(--ui-lh-normal);
+  cursor: pointer;
+  transition:
+    filter var(--tr),
+    transform var(--tr);
+}
+
+.ramadan-month-table-section .ramadan-table-action:hover {
+  filter: brightness(0.96);
+}
+
+.ramadan-month-table-section .ramadan-table-action:active {
+  transform: translateY(1px);
+}
+
+.ramadan-month-table-section .ramadan-table-action img {
+  inline-size: 24px;
+  block-size: 24px;
+}
+
+.ramadan-month-table-section .ramadan-month-table-location-line {
+  margin: 0;
+  display: inline-flex;
+  align-items: baseline;
+  justify-content: flex-end;
+  gap: 8px;
+  color: var(--Primary-900);
+  font-family: var(--font-quote);
+  font-size: clamp(20px, 1.1rem + 0.45vw, 24px);
+  line-height: 1.2;
+  text-align: right;
+}
+
+.ramadan-month-table-section .ramadan-month-table-location-line strong {
+  color: var(--Secondary-500);
+  font-family: var(--font-body);
+  font-size: inherit;
+  font-weight: 700;
+}
+
+.ramadan-month-table-section .ramadan-month-table__more {
+  padding: 28px 0 0;
+  border: none;
+}
+
+.ramadan-month-table-section .section-more-button--filled {
+  border: none;
+  min-inline-size: 224px;
+  min-block-size: var(--ui-control-h-lg);
+  border-radius: var(--ui-radius-lg);
+  padding: var(--ui-space-4) var(--ui-space-12);
+  background: var(--Secondary-500);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: var(--ui-font-md);
+  font-weight: var(--ui-weight-bold);
+  line-height: var(--ui-lh-normal);
+}
+
+.ramadan-month-table-section .section-more-button--filled:hover {
+  filter: brightness(0.96);
+}
+
+.ramadan-month-table-section .section-more-button--filled:active {
+  transform: translateY(1px);
+}
+
+/* Responsive overrides: month table */
+@media (max-width: 1199.98px) {
+  .ramadan-month-table-section {
+    padding-block: 40px 20px;
+  }
+
+  .ramadan-month-table-section .ramadan-table-head {
+    margin-bottom: 36px;
+  }
+
+  .ramadan-month-table-section .ramadan-table-head__actions {
+    gap: 16px;
+  }
+
+  .ramadan-month-table-section .ramadan-table-action {
+    inline-size: 208px;
+  }
+
+}
+
+@media (max-width: 767.98px) {
+  .ramadan-month-table-section {
+    padding-block: 32px 16px;
+  }
+
+  .ramadan-month-table-section::after {
+    inline-size: 160px;
+    block-size: 160px;
+    opacity: 0.12;
+  }
+
+  .ramadan-month-table-section .ramadan-table-head {
+    margin-bottom: 20px;
+    gap: 12px;
+  }
+
+  .ramadan-month-table-section .ramadan-table-head__content {
+    gap: 10px;
+  }
+
+  .ramadan-month-table-section .ramadan-table-head__actions {
+    inline-size: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .ramadan-month-table-section .ramadan-table-action {
+    inline-size: 100%;
+    min-block-size: var(--ui-control-h-table-action);
+    padding: var(--ui-space-3) var(--ui-space-4);
+    border-radius: var(--ui-radius-md);
+    font-size: var(--ui-font-sm);
+  }
+
+  .ramadan-month-table-section .ramadan-month-table-location-line {
+    font-size: 18px;
+    line-height: 1.35;
+  }
+
+  .ramadan-month-table-section .ramadan-month-table__more {
+    padding-top: 16px;
+  }
+
+  .ramadan-month-table-section .section-more-button--filled {
+    min-inline-size: min(100%, 280px);
+    min-block-size: var(--ui-control-h-table-action);
+    border-radius: var(--ui-radius-md);
+    padding: var(--ui-space-3) var(--ui-space-4-5);
+    font-size: var(--ui-font-md);
+  }
+}
+
+@media (max-width: 399.98px) {
+  .ramadan-month-table-section .ramadan-table-head__actions {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .ramadan-month-table-section .ramadan-table-title {
+    font-size: clamp(24px, 6.6vw, 30px);
+  }
+}
+
+
+
