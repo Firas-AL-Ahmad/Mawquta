@@ -12,14 +12,46 @@ export const MONTH_TABLE_ICON_PATHS = {
 };
 
 export const RAMADAN_MONTH_TABLE_COLUMNS = [
-  "العشاء",
-  "المغرب",
-  "العصر",
-  "الظهر",
-  "الفجر",
-  "التاريخ",
-  "اليوم",
-  "رمضان",
+  {
+    key: "ramadanDayNumber",
+    label: "رمضان",
+    icon: MONTH_TABLE_ICON_PATHS.ramadan,
+  },
+  {
+    key: "day",
+    label: "اليوم",
+    icon: MONTH_TABLE_ICON_PATHS.day,
+  },
+  {
+    key: "fajr",
+    label: "الفجر",
+    icon: MONTH_TABLE_ICON_PATHS.fajr,
+  },
+  {
+    key: "dhuhr",
+    label: "الظهر",
+    icon: MONTH_TABLE_ICON_PATHS.dhuhr,
+  },
+  {
+    key: "asr",
+    label: "العصر",
+    icon: MONTH_TABLE_ICON_PATHS.asr,
+  },
+  {
+    key: "maghrib",
+    label: "المغرب",
+    icon: MONTH_TABLE_ICON_PATHS.maghrib,
+  },
+  {
+    key: "isha",
+    label: "العشاء",
+    icon: MONTH_TABLE_ICON_PATHS.isha,
+  },
+  {
+    key: "date",
+    label: "التاريخ",
+    icon: MONTH_TABLE_ICON_PATHS.date,
+  },
 ];
 
 export const RAMADAN_MONTH_TABLE_ROWS = [

@@ -17,16 +17,17 @@ export function renderRamadanMonthTable(viewModel = {}) {
   void viewModel;
 
   return `
-    <section class="ramadan-table-sec" aria-label="جدول شهر رمضان">
+    <section class="ramadan-month-table-section" aria-label="جدول شهر رمضان">
       ${renderRamadanMonthTableHead(MONTH_TABLE_ICON_PATHS)}
 
       ${renderRamadanMonthTableGrid({
         columns: RAMADAN_MONTH_TABLE_COLUMNS,
         rows: RAMADAN_MONTH_TABLE_ROWS,
+        iconPaths: MONTH_TABLE_ICON_PATHS,
       })}
 
-      <div class="rt-more-btn">
-        <button type="button" class="btn-more btn-more--filled" data-rt-load-more>عرض المزيد</button>
+      <div class="ramadan-month-table__more">
+        <button type="button" class="section-more-button section-more-button--filled" data-rt-load-more>عرض المزيد</button>
       </div>
     </section>
   `;

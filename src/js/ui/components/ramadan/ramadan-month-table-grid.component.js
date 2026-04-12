@@ -1,46 +1,126 @@
-function renderRamadanTableHeader(columns) {
-  return columns
-    .map((columnLabel) => `<th scope="col">${columnLabel}</th>`)
-    .join("\n");
+const PRAYER_COLUMN_KEYS = new Set(["fajr", "dhuhr", "asr", "maghrib", "isha"]);
+
+const RAMADAN_MOBILE_PRAYERS = [
+  { key: "fajr", label: "الفجر" },
+  { key: "dhuhr", label: "الظهر" },
+  { key: "asr", label: "العصر" },
+  { key: "maghrib", label: "المغرب" },
+  { key: "isha", label: "العشاء" },
+];
+
+function renderRamadanTableHeaderCell(column) {
+  return `<th scope="col"><span class="schedule-table-head-label"><span class="schedule-table-head-icon" aria-hidden="true"><img src="${column.icon}" alt="" loading="lazy" decoding="async" /></span><span>${column.label}</span></span></th>`;
 }
 
-function renderRamadanTablePrayerCell(row, prayerKey) {
-  const isActiveCell =
-    Array.isArray(row.activePrayerKeys) && row.activePrayerKeys.includes(prayerKey);
+function renderRamadanTableHeader(columns) {
+  return columns.map((column) => renderRamadanTableHeaderCell(column)).join("\n");
+}
 
-  if (isActiveCell) {
-    return `<td class="td--active"><span class="time-pill">${row[prayerKey]}</span></td>`;
+function resolveRamadanCellClass(columnKey) {
+  if (columnKey === "day") {
+    return "table-cell--day";
   }
 
-  return `<td>${row[prayerKey]}</td>`;
+  if (columnKey === "date") {
+    return "table-cell--date";
+  }
+
+  if (columnKey === "ramadanDayNumber") {
+    return "table-cell--number";
+  }
+
+  return "";
 }
 
-function renderRamadanTableRow(row) {
-  const rowClass = row.isToday ? ' class="row--today"' : "";
+function renderRamadanTableCell(row, columnKey) {
+  const isPrayerCell = PRAYER_COLUMN_KEYS.has(columnKey);
+  const isActivePrayerCell =
+    isPrayerCell &&
+    Array.isArray(row.activePrayerKeys) &&
+    row.activePrayerKeys.includes(columnKey);
 
-  return `<tr${rowClass}>${renderRamadanTablePrayerCell(row, "isha")}${renderRamadanTablePrayerCell(row, "maghrib")}${renderRamadanTablePrayerCell(row, "asr")}${renderRamadanTablePrayerCell(row, "dhuhr")}${renderRamadanTablePrayerCell(row, "fajr")}<td class="td-date">${row.date}</td><td class="td-day">${row.day}</td><td class="td-num">${row.ramadanDayNumber}</td></tr>`;
+  if (isActivePrayerCell) {
+    return `<td class="table-cell--active"><span class="table-time-pill">${row[columnKey]}</span></td>`;
+  }
+
+  const cellClass = resolveRamadanCellClass(columnKey);
+  const cellContent = row[columnKey] ?? "";
+
+  if (cellClass) {
+    return `<td class="${cellClass}">${cellContent}</td>`;
+  }
+
+  return `<td>${cellContent}</td>`;
 }
 
-export function renderRamadanMonthTableGrid({ columns, rows }) {
+function renderRamadanTableRow(row, columns) {
+  const rowClass = row.isToday ? ' class="table-row--today"' : "";
+
+  return `<tr${rowClass}>${columns
+    .map((column) => renderRamadanTableCell(row, column.key))
+    .join("")}</tr>`;
+}
+
+function renderRamadanMobilePrayerItem(row, prayerConfig, iconPaths) {
+  const isActivePrayerCell =
+    Array.isArray(row.activePrayerKeys) &&
+    row.activePrayerKeys.includes(prayerConfig.key);
+  const activeClass = isActivePrayerCell ? " weekly-table-mobile-item--active" : "";
+
+  return `<div class="weekly-table-mobile-item${activeClass}"><dt><span class="weekly-table-mobile-item-icon" aria-hidden="true"><img src="${iconPaths[prayerConfig.key]}" alt="" loading="lazy" decoding="async" /></span>${prayerConfig.label}</dt><dd>${row[prayerConfig.key]}</dd></div>`;
+}
+
+function renderRamadanMobileCard(row, iconPaths) {
   return `
-    <div class="ws-card">
-      <div class="ws-card-top">
-        <span class="ws-range"><span class="ws-range__text" data-rt-range>23 - 29 مارس 2026</span></span>
-        <p class="rt-location-line"><span>مواقيت رمضان لمدينة:</span><strong data-rt-city>دمشق، سوريا</strong></p>
+    <article class="weekly-table-mobile-card" aria-label="مواقيت ${row.day}">
+      <div class="weekly-table-mobile-head">
+        <div class="weekly-table-mobile-title-wrap">
+          <h3 class="weekly-table-mobile-title"><span class="weekly-table-mobile-head-icon" aria-hidden="true"><img src="${iconPaths.day}" alt="" loading="lazy" decoding="async" /></span>${row.day}</h3>
+          <span class="weekly-table-mobile-date"><span class="weekly-table-mobile-meta-icon" aria-hidden="true"><img src="${iconPaths.date}" alt="" loading="lazy" decoding="async" /></span>${row.date}</span>
+        </div>
+        <span class="weekly-table-mobile-pill">رمضان ${row.ramadanDayNumber}</span>
       </div>
 
-      <div class="ws-wrap">
-        <table class="ws-table" aria-label="جدول رمضان الثابت">
+      <dl class="weekly-table-mobile-grid">
+        ${RAMADAN_MOBILE_PRAYERS.map((prayerConfig) =>
+          renderRamadanMobilePrayerItem(row, prayerConfig, iconPaths),
+        ).join("\n")}
+      </dl>
+    </article>
+  `;
+}
+
+function renderRamadanMobileList(rows, iconPaths) {
+  return `
+    <div class="weekly-table-mobile-list" aria-label="مواقيت رمضان - عرض الموبايل">
+      ${rows.map((row) => renderRamadanMobileCard(row, iconPaths)).join("\n")}
+    </div>
+  `;
+}
+
+export function renderRamadanMonthTableGrid({ columns, rows, iconPaths }) {
+  return `
+    <div class="schedule-table-card">
+      <div class="schedule-table-card__top">
+        <span class="schedule-table-range"><span class="schedule-table-range__text" data-rt-range>23 - 29 مارس 2026</span></span>
+        <p class="ramadan-month-table-location-line"><span>مواقيت رمضان لمدينة:</span><strong data-rt-city>دمشق، سوريا</strong></p>
+      </div>
+
+      <div class="schedule-table-wrap">
+        <table class="schedule-table" aria-label="جدول رمضان الثابت">
           <thead>
             <tr>
               ${renderRamadanTableHeader(columns)}
             </tr>
           </thead>
           <tbody>
-            ${rows.map((row) => renderRamadanTableRow(row)).join("\n")}
+            ${rows.map((row) => renderRamadanTableRow(row, columns)).join("\n")}
           </tbody>
         </table>
       </div>
+
+      ${renderRamadanMobileList(rows, iconPaths)}
     </div>
   `;
 }
+
