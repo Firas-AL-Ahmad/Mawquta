@@ -49,8 +49,8 @@ export function renderRamadanCountdownCard() {
 
         <div class="ramadan-first__countdown">
           <header class="ramadan-first__countdown-head">
+          <span class="ramadan-first__countdown-icon" aria-hidden="true"></span>
             <h3 class="ramadan-first__countdown-title">الوقت المتبقي للأذان</h3>
-            <span class="ramadan-first__countdown-icon" aria-hidden="true"></span>
           </header>
           <div class="ramadan-first__timer" data-ramadan-countdown>
             ${RAMADAN_COUNTDOWN_PARTS.map((partConfig, index) => {

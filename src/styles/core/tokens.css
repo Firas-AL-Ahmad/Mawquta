@@ -110,6 +110,8 @@
   --ui-font-section-meta: clamp(12px, 0.66rem + 0.18vw, 13px);
   --ui-font-qibla-title: clamp(18px, 0.98rem + 0.5vw, 21px);
   --ui-font-ramadan-table-title: clamp(18px, 0.95rem + 0.35vw, 20px);
+  --ui-font-display-md: clamp(30px, 1.55rem + 0.9vw, 40px);
+  --ui-font-display-lg: clamp(36px, 1.9rem + 1.15vw, 48px);
 
   --ui-weight-regular: 400;
   --ui-weight-medium: 500;
