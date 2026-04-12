@@ -1,17 +1,17 @@
+import { renderSectionHeadChip } from "../section/section-head-chip.component.js";
+
 function renderRamadanTableHeadChip(iconPaths) {
   const chipItems = ["1448هـ", "2026م", "رمضان"];
+  const chipText = chipItems.join(" ");
 
-  return `
-    <span class="ramadan-table-head__chip" aria-label="شهر رمضان">
-      ${chipItems
-        .map(
-          (chipItemText) =>
-            `<span class="ramadan-table-head__chip-item">${chipItemText}</span>`,
-        )
-        .join("\n")}
-      <img class="ramadan-table-head__chip-icon" src="${iconPaths.ramadan}" alt="" loading="lazy" decoding="async" />
-    </span>
-  `;
+  return renderSectionHeadChip({
+    tagName: "span",
+    rootClassName: "ramadan-table-head__chip",
+    text: chipText,
+    iconType: "image",
+    iconSrc: iconPaths.ramadan,
+    iconAlt: "",
+  });
 }
 
 function renderRamadanTableHeadActions(iconPaths) {
@@ -42,8 +42,8 @@ export function renderRamadanMonthTableHead(iconPaths) {
   return `
     <div class="ramadan-table-head">
       <div class="ramadan-table-head__content">
-        <h2 class="ramadan-table-title">جدول شهر رمضان</h2>
         ${renderRamadanTableHeadChip(iconPaths)}
+        <h2 class="ramadan-table-title">جدول شهر رمضان</h2>
       </div>
 
       ${renderRamadanTableHeadActions(iconPaths)}

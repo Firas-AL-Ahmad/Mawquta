@@ -162,30 +162,9 @@
 
 /* Content pane elements */
 .hero-location-chip {
-  display: inline-flex;
-  align-items: center;
+  align-self: flex-end;
+  direction: rtl;
   justify-content: flex-end;
-  gap: 8px;
-  background: var(--white);
-  border: none;
-  border-radius: 32px;
-  padding: 8px 16px;
-}
-
-.hero-location-chip__icon {
-  width: 32px;
-  height: 32px;
-  flex-shrink: 0;
-  background: url("../../assets/icons/sections/hero/hero-location-icon.svg")
-    center/contain no-repeat;
-}
-
-.hero-location-chip__text {
-  font-size: clamp(14px, 0.95vw, 16px);
-  font-weight: 700;
-  color: #dd9730;
-  line-height: 22px;
-  white-space: nowrap;
 }
 
 .hero-verse-wrap {
@@ -594,15 +573,6 @@
     padding-block: 20px;
   }
 
-  .hero-location-chip__icon {
-    width: 26px;
-    height: 26px;
-  }
-
-  .hero-location-chip__text {
-    font-size: 15px;
-  }
-
   .hero-verse {
     font-size: 40px;
     line-height: 1.4;
@@ -736,16 +706,6 @@
 
   .hero-location-chip {
     align-self: flex-end;
-    padding: 8px 14px 8px 11px;
-  }
-
-  .hero-location-chip__icon {
-    width: 24px;
-    height: 24px;
-  }
-
-  .hero-location-chip__text {
-    font-size: clamp(14px, 2.1vw, 17px);
   }
 
   .hero-verse-wrap {
@@ -871,16 +831,6 @@
 
   .hero-right {
     gap: 12px;
-  }
-
-  .hero-location-chip__icon {
-    width: 20px;
-    height: 20px;
-  }
-
-  .hero-location-chip__text {
-    font-size: 14px;
-    line-height: 20px;
   }
 
   .hero-verse {
@@ -1017,22 +967,6 @@
   .hero__pane--card,
   .hero__pane--content {
     padding-inline: 10px;
-  }
-
-  .hero-location-chip {
-    padding-inline: 10px 12px;
-    padding-block: 7px;
-    min-height: 38px;
-  }
-
-  .hero-location-chip__icon {
-    width: 18px;
-    height: 18px;
-  }
-
-  .hero-location-chip__text {
-    font-size: 14px;
-    line-height: 1.35;
   }
 
   .hero-verse-wrap {

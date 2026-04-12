@@ -147,6 +147,14 @@
 
 .site-header__city {
   max-inline-size: clamp(112px, 7.2vw + 36px, 176px);
+  min-height: var(--header-touch-size);
+}
+
+.site-header__city-text {
+  min-inline-size: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .header-chip__text {
@@ -415,6 +423,10 @@
   .site-header__controls .header-chip {
     width: 100%;
     justify-content: flex-start;
+  }
+
+  .site-header__controls .site-header__city {
+    width: 100%;
   }
 
   .site-header__controls .header-chip--icon {

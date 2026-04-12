@@ -1,10 +1,22 @@
+import { renderSectionHeadChip } from "../section/section-head-chip.component.js";
+
 function renderHeroLocationChip() {
-  return `
-    <div class="hero-location-chip" aria-label="الموقع الحالي">
-      <span class="hero-location-chip__icon" aria-hidden="true"></span>
-      <span class="hero-location-chip__text" data-hero-location>دمشق، سوريا</span>
-    </div>
-  `;
+  return renderSectionHeadChip({
+    tagName: "div",
+    rootClassName: "hero-location-chip",
+    rootAttributes: {
+      "aria-label": "الموقع الحالي",
+    },
+    text: "دمشق، سوريا",
+    textClassName: "hero-location-chip__text",
+    textAttributes: {
+      "data-hero-location": true,
+    },
+    iconType: "image",
+    iconClassName: "hero-location-chip__icon",
+    iconSrc: "./assets/icons/sections/hero/hero-location-icon.svg",
+    iconAlt: "",
+  });
 }
 
 function renderHeroVerseBlock() {

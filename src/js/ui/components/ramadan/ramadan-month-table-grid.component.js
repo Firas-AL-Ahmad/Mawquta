@@ -31,7 +31,9 @@ function renderRamadanTableHeaderCell(column) {
 }
 
 function renderRamadanTableHeader(columns) {
-  return columns.map((column) => renderRamadanTableHeaderCell(column)).join("\n");
+  return columns
+    .map((column) => renderRamadanTableHeaderCell(column))
+    .join("\n");
 }
 
 function resolveRamadanCellClass(columnKey) {
@@ -83,7 +85,9 @@ function renderRamadanMobilePrayerItem(row, prayerConfig, iconPaths) {
   const isActivePrayerCell =
     Array.isArray(row.activePrayerKeys) &&
     row.activePrayerKeys.includes(prayerConfig.key);
-  const activeClass = isActivePrayerCell ? " weekly-table-mobile-item--active" : "";
+  const activeClass = isActivePrayerCell
+    ? " weekly-table-mobile-item--active"
+    : "";
 
   return `<div class="weekly-table-mobile-item${activeClass}"><dt><span class="weekly-table-mobile-item-icon" aria-hidden="true"><img src="${iconPaths[prayerConfig.key]}" alt="" loading="lazy" decoding="async" /></span>${prayerConfig.label}</dt><dd>${row[prayerConfig.key]}</dd></div>`;
 }
@@ -120,8 +124,8 @@ export function renderRamadanMonthTableGrid({ columns, rows, iconPaths }) {
   return `
     <div class="schedule-table-card">
       <div class="schedule-table-card__top">
-        <span class="schedule-table-range"><span class="schedule-table-range__text" data-rt-range>23 - 29 مارس 2026</span></span>
-        <p class="ramadan-month-table-location-line"><span>مواقيت رمضان لمدينة:</span><strong data-rt-city>دمشق، سوريا</strong></p>
+       <p class="ramadan-month-table-location-line"><span>مواقيت رمضان لمدينة:</span><strong data-rt-city>دمشق، سوريا</strong></p>
+       <span class="schedule-table-range"><span class="schedule-table-range__text" data-rt-range>23 - 29 مارس 2026</span></span>
       </div>
 
       <div class="schedule-table-wrap">
@@ -141,4 +145,3 @@ export function renderRamadanMonthTableGrid({ columns, rows, iconPaths }) {
     </div>
   `;
 }
-

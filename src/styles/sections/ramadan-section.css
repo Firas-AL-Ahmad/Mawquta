@@ -225,30 +225,6 @@
   gap: var(--ramadan-summary-gap);
 }
 
-.ramadan-topbar__blessing {
-  display: inline-flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: var(--ui-space-2);
-  border-radius: var(--ui-radius-pill);
-  background: var(--white);
-  padding: var(--ui-space-2) var(--ui-space-4);
-}
-
-.ramadan-topbar__blessing-label {
-  color: var(--Secondary-500);
-  font-family: var(--font-body);
-  font-size: var(--ui-font-sm);
-  font-weight: var(--ui-weight-bold);
-  line-height: var(--ui-lh-snug);
-}
-
-.ramadan-topbar__blessing-icon {
-  inline-size: var(--ramadan-icon-size);
-  block-size: var(--ramadan-icon-size);
-  display: block;
-}
-
 .ramadan-topbar__month,
 .ramadan-topbar__month.section-head__title {
   margin: 0;
@@ -677,29 +653,6 @@
   font-size: var(--ui-font-title-lg);
   font-weight: var(--ui-weight-bold);
   line-height: var(--ui-lh-compact);
-}
-
-.ramadan-month-table-section .ramadan-table-head__chip {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--ui-space-2);
-  padding: var(--ui-space-2) var(--ui-space-4);
-  border-radius: var(--ui-radius-pill);
-  background: var(--white);
-}
-
-.ramadan-month-table-section .ramadan-table-head__chip-item {
-  color: var(--Secondary-500);
-  font-family: var(--font-body);
-  font-size: var(--ui-font-sm);
-  font-weight: var(--ui-weight-bold);
-  line-height: var(--ui-lh-snug);
-}
-
-.ramadan-month-table-section .ramadan-table-head__chip-icon {
-  inline-size: var(--size-icon-md);
-  block-size: var(--size-icon-md);
 }
 
 .ramadan-month-table-section .ramadan-table-head__actions {

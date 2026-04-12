@@ -1,3 +1,5 @@
+import { renderSectionHeadChip } from "../section/section-head-chip.component.js";
+
 function renderRamadanTopbarAction() {
   return `
     <div class="ramadan-topbar__action-shell">
@@ -36,10 +38,14 @@ function renderRamadanTopbarChip(chipConfig) {
 function renderRamadanTopbarSummary(moonAndStarsPath) {
   return `
     <div class="ramadan-topbar__summary section-head__main">
-      <span class="ramadan-topbar__blessing section-head__badge">
-        <span class="ramadan-topbar__blessing-label">رمضان مبارك</span>
-        <img class="ramadan-topbar__blessing-icon section-head__icon" src="${moonAndStarsPath}" alt="" loading="lazy" decoding="async" />
-      </span>
+      ${renderSectionHeadChip({
+        tagName: "span",
+        rootClassName: "ramadan-topbar__blessing",
+        text: "رمضان مبارك",
+        iconType: "image",
+        iconSrc: moonAndStarsPath,
+        iconAlt: "",
+      })}
 
       <h2 class="ramadan-topbar__month section-head__title" data-ramadan-month>رمضان 2026</h2>
 
@@ -75,4 +81,3 @@ export function renderRamadanTopbar(iconPaths) {
     </div>
   `;
 }
-

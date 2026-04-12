@@ -1,3 +1,5 @@
+import { renderSectionHeadChip } from "./section-head-chip.component.js";
+
 function renderSectionMeta(metaConfig = {}) {
   if (metaConfig.mode === "paired") {
     return `
@@ -9,6 +11,20 @@ function renderSectionMeta(metaConfig = {}) {
   }
 
   return `<span class="${metaConfig.className}">${metaConfig.text}</span>`;
+}
+
+function resolveEyebrowIconClassName(eyebrowClassName = "") {
+  if (typeof eyebrowClassName !== "string" || eyebrowClassName.length === 0) {
+    return "section-city__eyebrow-icon";
+  }
+
+  const sectionSpecificIconClassName = eyebrowClassName.includes("__eyebrow")
+    ? eyebrowClassName.replace("__eyebrow", "__eyebrow-icon")
+    : "";
+
+  return ["section-city__eyebrow-icon", sectionSpecificIconClassName]
+    .filter(Boolean)
+    .join(" ");
 }
 
 export function renderSectionHeadWithCity({
@@ -26,10 +42,15 @@ export function renderSectionHeadWithCity({
   return `
     <div class="section-head ${headClassName}">
       <div class="section-city ${cityWrapperClassName} section-head__main">
-        <div class="section-city__eyebrow ${eyebrowClassName}">
-          <span class="section-city__eyebrow-icon section-head__icon" aria-hidden="true"></span>
-          <span>${eyebrowText}</span>
-        </div>
+        ${renderSectionHeadChip({
+          tagName: "div",
+          rootClassName: ["section-city__eyebrow", eyebrowClassName]
+            .filter(Boolean)
+            .join(" "),
+          text: eyebrowText,
+          iconType: "decorative",
+          iconClassName: resolveEyebrowIconClassName(eyebrowClassName),
+        })}
         <h2 class="section-city__name ${cityTitleClassName} section-head__title" ${cityDataAttribute}>${cityName}</h2>
         ${renderSectionMeta(meta)}
       </div>
