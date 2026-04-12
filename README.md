@@ -107,6 +107,15 @@ If this variable is missing, city search endpoint returns an error response.
 
 This repository currently prioritizes runtime stability and documentation truthfulness over feature expansion.
 
+## Contributing
+
+- Commit grouping policy source of truth: [`GIT_CHANGE_GROUPING.md`](./GIT_CHANGE_GROUPING.md)
+- Contributor workflow and examples: [`CONTRIBUTING.md`](./CONTRIBUTING.md)
+
+Use small, isolated commits grouped by intent, with commit messages in this format:
+
+`<type>(scope): message`
+
 
 
 

@@ -94,12 +94,12 @@
   border-radius: var(--ui-radius-md);
   background: var(--Secondary-500);
   color: var(--white);
-  min-height: var(--ui-control-h-md);
-  padding: var(--ui-space-3) var(--ui-space-4-5);
+  min-height: var(--ui-btn-min-h);
+  padding: var(--ui-btn-pad-y) var(--ui-btn-pad-x-sm);
   font-family: var(--font-body);
-  font-size: var(--ui-font-sm);
+  font-size: var(--ui-btn-font-size);
   font-weight: var(--ui-weight-bold);
-  line-height: var(--ui-lh-normal);
+  line-height: var(--ui-btn-line-height);
   white-space: nowrap;
   cursor: pointer;
   transition:
@@ -269,13 +269,19 @@
 }
 
 .qibla-city-modal__confirm {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border: none;
   border-radius: 12px;
-  min-height: 42px;
+  min-height: var(--ui-btn-min-h);
+  padding: var(--ui-btn-pad-y) var(--ui-btn-pad-x-sm);
   background: var(--Secondary-500);
   color: var(--white);
-  font-size: 14px;
+  font-family: var(--font-body);
+  font-size: var(--ui-btn-font-size-sm);
   font-weight: 700;
+  line-height: var(--ui-btn-line-height);
   cursor: pointer;
 }
 
@@ -291,9 +297,9 @@
   }
 
   .qibla-section .qibla-city-btn {
-    min-height: var(--ui-control-h-sm);
+    min-height: var(--ui-btn-min-h);
     padding: var(--ui-space-2-5) var(--ui-space-3-5);
-    font-size: var(--ui-font-xs);
+    font-size: var(--ui-btn-font-size-sm);
   }
 
   .qibla-section .qibla-card__degree {
@@ -342,9 +348,9 @@
   }
 
   .qibla-section .qibla-city-btn {
-    min-height: var(--ui-control-h-sm);
+    min-height: var(--ui-btn-min-h-sm);
     padding: var(--ui-space-2) var(--ui-space-3);
-    font-size: var(--ui-font-2xs);
+    font-size: var(--ui-btn-font-size-sm);
   }
 
   .qibla-section .qibla-card__degree {
@@ -401,10 +407,10 @@
   .qibla-section .qibla-city-btn {
     grid-area: action;
     justify-self: end;
-    min-height: var(--ui-control-h-xs);
+    min-height: var(--ui-btn-min-h-sm);
     border-radius: var(--ui-radius-control-sm);
     padding: var(--ui-space-2) var(--ui-space-3);
-    font-size: var(--ui-font-2xs);
+    font-size: var(--ui-btn-font-size-sm);
   }
 
   .qibla-section .qibla-card__title {
@@ -476,9 +482,9 @@
   }
 
   .qibla-section .qibla-city-btn {
-    min-height: var(--ui-control-h-2xs);
+    min-height: var(--ui-control-h-xs);
     padding: var(--ui-space-2) var(--ui-space-2-5);
-    font-size: var(--ui-font-3xs);
+    font-size: var(--ui-font-2xs);
   }
 
   .qibla-section .qibla-visual {

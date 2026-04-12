@@ -103,6 +103,9 @@
   --ui-font-lang-code: clamp(9.5px, 0.54rem + 0.08vw, 10.5px);
   --ui-font-badge-fluid: clamp(12px, 0.7rem + 0.2vw, 14px);
   --ui-font-control-fluid: clamp(13px, 0.74rem + 0.14vw, 14px);
+  --ui-btn-font-size: clamp(13px, 0.74rem + 0.16vw, 15px);
+  --ui-btn-font-size-sm: clamp(12px, 0.7rem + 0.12vw, 14px);
+  --ui-btn-line-height: 1.25;
   --ui-font-section-title: clamp(18px, 0.98rem + 0.5vw, 22px);
   --ui-font-section-meta: clamp(12px, 0.66rem + 0.18vw, 13px);
   --ui-font-qibla-title: clamp(18px, 0.98rem + 0.5vw, 21px);
@@ -170,6 +173,12 @@
   --ui-control-h-sm: var(--size-touch-sm);
   --ui-control-h-md: var(--size-touch-md);
   --ui-control-h-lg: var(--size-touch-lg);
+  --ui-btn-min-h-sm: clamp(38px, 2.15rem + 0.2vw, 42px);
+  --ui-btn-min-h: clamp(42px, 2.35rem + 0.25vw, 48px);
+  --ui-btn-min-h-lg: clamp(44px, 2.5rem + 0.38vw, 52px);
+  --ui-btn-pad-y: clamp(8px, 0.43rem + 0.2vw, 12px);
+  --ui-btn-pad-x-sm: clamp(10px, 0.58rem + 0.3vw, 16px);
+  --ui-btn-pad-x: clamp(14px, 0.75rem + 0.55vw, 24px);
   --ui-control-h-action-lg: 56px;
   --ui-control-h-table-action: 48px;
   --ui-header-inner-min-h: clamp(54px, 3.15rem + 0.5vw, 58px);
@@ -271,10 +280,10 @@
   --section-gap: var(--space-section-md);
 
   /* ========== Decorations & Layering ========== */
-  --decor-opacity-desktop: 0.16;
-  --decor-opacity-tablet: 0.13;
-  --decor-opacity-mobile: 0.1;
-  --decor-opacity-xs: 0.07;
+  --decor-opacity-desktop: 1;
+  --decor-opacity-tablet: 1;
+  --decor-opacity-mobile: 1;
+  --decor-opacity-xs: 1;
   --decor-scale-desktop: 1;
   --decor-scale-tablet: 0.9;
   --decor-scale-mobile: 0.76;

@@ -11,7 +11,7 @@
 }
 
 .site-header__inner {
-  --header-touch-size: 42px;
+  --header-touch-size: var(--ui-btn-min-h-sm);
   display: flex;
   align-items: center;
   gap: var(--ui-space-header-inner-gap);
@@ -120,7 +120,7 @@
   font-family: var(--Body-fontFamily);
   font-size: var(--ui-font-header-chip);
   font-weight: var(--ui-weight-semibold);
-  line-height: var(--ui-lh-compact);
+  line-height: var(--ui-btn-line-height);
   color: var(--Primary-900);
   min-height: var(--header-touch-size);
   cursor: pointer;

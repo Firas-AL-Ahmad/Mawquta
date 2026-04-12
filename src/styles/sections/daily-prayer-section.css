@@ -22,7 +22,7 @@
   background-repeat: no-repeat;
   background-size: contain;
   background-position: bottom;
-  opacity: 0.16;
+  opacity: 1;
 }
 
 .daily-prayer-section::before {

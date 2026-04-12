@@ -4,6 +4,8 @@
 .weekly-prayer-section .schedule-table-card,
 .ramadan-month-table-section .schedule-table-card {
   border-radius: 16px;
+  overflow: hidden;
+  background: var(--white);
   border-color: color-mix(
     in srgb,
     var(--Primary-900) 14%,
@@ -86,7 +88,12 @@
 .ramadan-month-table-section .schedule-table {
   direction: rtl;
   width: 100%;
+
   min-width: 700px;
+}
+
+.ramadan-month-table-section .schedule-table {
+  width: 100%;
 }
 
 .weekly-prayer-section .schedule-table th,
@@ -135,13 +142,20 @@
   background: color-mix(in srgb, var(--Secondary-50) 32%, var(--white));
 }
 
-.weekly-prayer-section .schedule-table th:first-child,
-.ramadan-month-table-section .schedule-table th:first-child {
+.weekly-prayer-section .schedule-table th.table-head--day,
+.weekly-prayer-section .schedule-table th.table-head--ramadanDayNumber,
+.ramadan-month-table-section .schedule-table th.table-head--day,
+.ramadan-month-table-section .schedule-table th.table-head--ramadanDayNumber {
   text-align: right;
 }
 
-.weekly-prayer-section .schedule-table th:last-child,
-.ramadan-month-table-section .schedule-table th:last-child {
+.weekly-prayer-section .schedule-table th.table-head--prayer,
+.ramadan-month-table-section .schedule-table th.table-head--prayer {
+  text-align: center;
+}
+
+.weekly-prayer-section .schedule-table th.table-head--date,
+.ramadan-month-table-section .schedule-table th.table-head--date {
   text-align: left;
 }
 
@@ -216,8 +230,19 @@
 .schedule-table-head-label {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
+  width: 100%;
+  justify-content: flex-start;
   gap: var(--ui-space-1-5);
+}
+
+.weekly-prayer-section .schedule-table th.table-head--prayer .schedule-table-head-label,
+.ramadan-month-table-section .schedule-table th.table-head--prayer .schedule-table-head-label {
+  justify-content: center;
+}
+
+.weekly-prayer-section .schedule-table th.table-head--date .schedule-table-head-label,
+.ramadan-month-table-section .schedule-table th.table-head--date .schedule-table-head-label {
+  justify-content: flex-end;
 }
 
 .schedule-table-head-icon {
@@ -378,4 +403,3 @@
     border-top: none;
   }
 }
-
