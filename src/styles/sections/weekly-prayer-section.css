@@ -1,20 +1,20 @@
 /* Weekly Prayer section surface and ornaments */
 
 /* Base section shell */
-.weekly-sec {
+.weekly-prayer-section {
   position: relative;
   overflow: hidden;
   isolation: isolate;
 }
 
-.weekly-sec > .container-xl {
+.weekly-prayer-section > .container-xl {
   position: relative;
   z-index: 1;
 }
 
 /* Decorative assets */
-.weekly-sec::before,
-.weekly-sec::after {
+.weekly-prayer-section::before,
+.weekly-prayer-section::after {
   content: "";
   position: absolute;
   bottom: 0;
@@ -25,16 +25,17 @@
   background-position: bottom;
 }
 
-.weekly-sec::before {
+.weekly-prayer-section::before {
   left: 0;
   width: 264px;
   height: 264px;
   background-image: url("../../assets/icons/sections/weekly-prayer/kabah-1.svg");
 }
 
-.weekly-sec::after {
+.weekly-prayer-section::after {
   right: 0;
   width: 230px;
   height: 230px;
   background-image: url("../../assets/icons/sections/weekly-prayer/shalat-1.svg");
 }
+

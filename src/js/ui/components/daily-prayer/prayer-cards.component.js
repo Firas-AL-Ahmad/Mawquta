@@ -33,15 +33,15 @@ const STATIC_PRAYER_CARDS = [
 
 function renderPrayerCard(prayer, activeKey) {
   const isActive = prayer.key === activeKey;
-  const activeClass = isActive ? " ps-card--active" : "";
+  const activeClass = isActive ? " daily-prayer-card--active" : "";
   const activeAttributes = isActive ? ' aria-current="true"' : "";
 
   return `
-    <article class="ps-card ps-card--${prayer.key}${activeClass}" role="listitem" aria-label="${prayer.ariaLabel}"${activeAttributes}>
-      <div class="ps-card__inner">
-        <h3 class="ps-card__name">${prayer.label}</h3>
-        <div class="ps-card__time-wrap">
-          <span class="ps-card__time">${prayer.time}</span>
+    <article class="daily-prayer-card daily-prayer-card--${prayer.key}${activeClass}" role="listitem" aria-label="${prayer.ariaLabel}"${activeAttributes}>
+      <div class="daily-prayer-card__inner">
+        <h3 class="daily-prayer-card__name">${prayer.label}</h3>
+        <div class="daily-prayer-card__time-wrap">
+          <span class="daily-prayer-card__time">${prayer.time}</span>
         </div>
       </div>
     </article>

@@ -1,5 +1,5 @@
 /* Daily Prayer Section (Figma parity: node 2201:7925) */
-.daily-sec {
+.daily-prayer-section {
   position: relative;
   overflow: hidden;
   isolation: isolate;
@@ -8,13 +8,13 @@
   padding-block-end: clamp(96px, 10vw, 196px);
 }
 
-.daily-sec > .container-xl {
+.daily-prayer-section > .container-xl {
   position: relative;
   z-index: 1;
 }
 
-.daily-sec::before,
-.daily-sec::after {
+.daily-prayer-section::before,
+.daily-prayer-section::after {
   content: "";
   position: absolute;
   inset-block-end: 0;
@@ -25,7 +25,7 @@
   opacity: 0.16;
 }
 
-.daily-sec::before {
+.daily-prayer-section::before {
   inset-inline-start: 0;
   inline-size: min(34vw, 348px);
   block-size: min(34vw, 348px);
@@ -33,28 +33,28 @@
   background-image: url("../../assets/icons/sections/daily-prayer/prayer-decor-reading.svg");
 }
 
-.daily-sec::after {
+.daily-prayer-section::after {
   inset-inline-end: -24px;
   inline-size: min(29vw, 300px);
   block-size: min(29vw, 300px);
   background-image: url("../../assets/icons/sections/daily-prayer/prayer-decor-ramadhan.svg");
 }
 
-.daily-sec .daily-sec__meta-prefix,
-.daily-sec .daily-sec__meta-value {
+.daily-prayer-section .daily-prayer-section__meta-prefix,
+.daily-prayer-section .daily-prayer-section__meta-value {
   color: inherit;
   font: inherit;
   line-height: inherit;
 }
 
-.daily-sec .ps-track {
+.daily-prayer-section .daily-prayer-cards-track {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: clamp(10px, 1vw, 24px);
   align-items: stretch;
 }
 
-.daily-sec .ps-card {
+.daily-prayer-section .daily-prayer-card {
   --daily-card-bg-position-y: -64px;
   position: relative;
   isolation: isolate;
@@ -73,32 +73,32 @@
   box-shadow: none;
 }
 
-.daily-sec .ps-card--fajr {
+.daily-prayer-section .daily-prayer-card--fajr {
   --daily-card-bg-position-y: -64px;
   background-image: url("../../assets/icons/sections/daily-prayer/prayer-card-fajr-bg.svg");
 }
 
-.daily-sec .ps-card--dhuhr {
+.daily-prayer-section .daily-prayer-card--dhuhr {
   --daily-card-bg-position-y: -64px;
   background-image: url("../../assets/icons/sections/daily-prayer/prayer-card-dhuhr-bg.svg");
 }
 
-.daily-sec .ps-card--asr {
+.daily-prayer-section .daily-prayer-card--asr {
   --daily-card-bg-position-y: -96px;
   background-image: url("../../assets/icons/sections/daily-prayer/prayer-card-asr-bg.svg");
 }
 
-.daily-sec .ps-card--maghrib {
+.daily-prayer-section .daily-prayer-card--maghrib {
   --daily-card-bg-position-y: 12px;
   background-image: url("../../assets/icons/sections/daily-prayer/prayer-card-maghrib-bg.svg");
 }
 
-.daily-sec .ps-card--isha {
+.daily-prayer-section .daily-prayer-card--isha {
   --daily-card-bg-position-y: 44px;
   background-image: url("../../assets/icons/sections/daily-prayer/prayer-card-isha-bg.svg");
 }
 
-.daily-sec .ps-card--active {
+.daily-prayer-section .daily-prayer-card--active {
   transform: none;
   outline: none;
   box-shadow:
@@ -107,7 +107,7 @@
     0 0 8px 0 rgba(108, 53, 27, 0.32);
 }
 
-.daily-sec .ps-card__inner {
+.daily-prayer-section .daily-prayer-card__inner {
   position: relative;
   z-index: 1;
   display: flex;
@@ -118,7 +118,7 @@
   inline-size: 100%;
 }
 
-.daily-sec .ps-card__name {
+.daily-prayer-section .daily-prayer-card__name {
   inline-size: 100%;
   margin: 0;
   color: var(--white);
@@ -129,13 +129,13 @@
   text-align: right;
 }
 
-.daily-sec .ps-card__time-wrap {
+.daily-prayer-section .daily-prayer-card__time-wrap {
   inline-size: 100%;
   display: flex;
   justify-content: flex-start;
 }
 
-.daily-sec .ps-card__time {
+.daily-prayer-section .daily-prayer-card__time {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -154,52 +154,52 @@
 }
 
 @media (min-width: 992px) and (max-width: 1199.98px) {
-  .daily-sec .ps-track {
+  .daily-prayer-section .daily-prayer-cards-track {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 12px;
   }
 
-  .daily-sec .ps-card {
+  .daily-prayer-section .daily-prayer-card {
     min-block-size: 236px;
     padding: 20px;
   }
 
-  .daily-sec .ps-card__name {
+  .daily-prayer-section .daily-prayer-card__name {
     font-size: 22px;
     line-height: 22px;
   }
 
-  .daily-sec .ps-card__time {
+  .daily-prayer-section .daily-prayer-card__time {
     min-inline-size: min(100%, 178px);
     padding: 13px 16px;
   }
 }
 
 @media (max-width: 991.98px) {
-  .daily-sec {
+  .daily-prayer-section {
     padding-block-end: 96px;
   }
 }
 
 @media (min-width: 768px) and (max-width: 991.98px) {
-  .daily-sec .ps-track {
+  .daily-prayer-section .daily-prayer-cards-track {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 12px;
     overflow: visible;
   }
 
-  .daily-sec .ps-card {
+  .daily-prayer-section .daily-prayer-card {
     min-block-size: 220px;
     padding: 18px;
   }
 
-  .daily-sec .ps-card__name {
+  .daily-prayer-section .daily-prayer-card__name {
     font-size: 21px;
     line-height: 22px;
   }
 
-  .daily-sec .ps-card__time {
+  .daily-prayer-section .daily-prayer-card__time {
     min-inline-size: min(100%, 172px);
     font-size: clamp(28px, 4.4vw, 34px);
     padding: 12px 14px;
@@ -207,28 +207,28 @@
 }
 
 @media (max-width: 767.98px) {
-  .daily-sec {
+  .daily-prayer-section {
     padding-block-start: 36px;
     padding-block-end: 72px;
   }
 
-  .daily-sec::before {
+  .daily-prayer-section::before {
     inline-size: 220px;
     block-size: 220px;
     transform: translateY(32px);
   }
 
-  .daily-sec::after {
+  .daily-prayer-section::after {
     inset-inline-end: -16px;
     inline-size: 190px;
     block-size: 190px;
   }
 
-  .daily-sec .ps-card__inner {
+  .daily-prayer-section .daily-prayer-card__inner {
     align-items: flex-end;
   }
 
-  .daily-sec .ps-track {
+  .daily-prayer-section .daily-prayer-cards-track {
     display: flex;
     direction: rtl;
     gap: 10px;
@@ -243,11 +243,11 @@
     -webkit-overflow-scrolling: touch;
   }
 
-  .daily-sec .ps-track::-webkit-scrollbar {
+  .daily-prayer-section .daily-prayer-cards-track::-webkit-scrollbar {
     display: none;
   }
 
-  .daily-sec .ps-card {
+  .daily-prayer-section .daily-prayer-card {
     direction: rtl;
     flex: 0 0 clamp(210px, 52vw, 290px);
     min-block-size: 192px;
@@ -257,12 +257,12 @@
     scroll-snap-stop: always;
   }
 
-  .daily-sec .ps-card__name {
+  .daily-prayer-section .daily-prayer-card__name {
     font-size: 20px;
     line-height: 20px;
   }
 
-  .daily-sec .ps-card__time {
+  .daily-prayer-section .daily-prayer-card__time {
     min-inline-size: min(100%, 156px);
     font-size: clamp(26px, 8vw, 32px);
     padding: 11px;
@@ -270,40 +270,41 @@
 }
 
 @media (max-width: 360px) {
-  .daily-sec {
+  .daily-prayer-section {
     padding-block-start: 32px;
     padding-block-end: 64px;
   }
 
-  .daily-sec::before {
+  .daily-prayer-section::before {
     inline-size: 180px;
     block-size: 180px;
     transform: translateY(26px);
   }
 
-  .daily-sec::after {
+  .daily-prayer-section::after {
     inset-inline-end: -12px;
     inline-size: 160px;
     block-size: 160px;
   }
 
-  .daily-sec .ps-card {
+  .daily-prayer-section .daily-prayer-card {
     flex: 0 0 clamp(206px, 78vw, 236px);
     min-block-size: 184px;
     border-radius: 10px;
     padding: 14px;
   }
 
-  .daily-sec .ps-card__name {
+  .daily-prayer-section .daily-prayer-card__name {
     font-size: 19px;
     line-height: 19px;
   }
 
-  .daily-sec .ps-card__time {
+  .daily-prayer-section .daily-prayer-card__time {
     min-inline-size: min(100%, 146px);
     font-size: clamp(24px, 8vw, 30px);
     padding: 10px 11px;
   }
 }
+
 
 

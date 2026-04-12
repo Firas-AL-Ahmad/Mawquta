@@ -1,8 +1,8 @@
 function renderHeroLocationChip() {
   return `
-    <div class="loc-chip" aria-label="الموقع الحالي">
-      <span class="loc-chip__icon" aria-hidden="true"></span>
-      <span class="loc-chip__text" data-hero-location>دمشق، سوريا</span>
+    <div class="hero-location-chip" aria-label="الموقع الحالي">
+      <span class="hero-location-chip__icon" aria-hidden="true"></span>
+      <span class="hero-location-chip__text" data-hero-location>دمشق، سوريا</span>
     </div>
   `;
 }
@@ -54,3 +54,4 @@ export function renderHeroInfoPanel() {
     </div>
   `;
 }
+

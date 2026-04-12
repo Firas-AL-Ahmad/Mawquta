@@ -2,7 +2,7 @@ export function renderHeaderMenuToggle() {
   return `
     <button
       type="button"
-      class="site-header__menu-toggle hdr-toggle ms-auto d-lg-none"
+      class="site-header__menu-toggle header-menu-toggle ms-auto d-lg-none"
       id="navToggle"
       aria-label="فتح القائمة"
       aria-controls="siteNav"
@@ -12,3 +12,4 @@ export function renderHeaderMenuToggle() {
     </button>
   `;
 }
+

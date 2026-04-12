@@ -1,3 +1,4 @@
 export function renderSectionDivider() {
-  return '<hr class="sec-divider" />';
+  return '<hr class="section-divider" />';
 }
+

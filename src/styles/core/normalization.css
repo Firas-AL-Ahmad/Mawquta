@@ -1,0 +1,253 @@
+/* Unified Scale Normalization Layer (Safe Medium) */
+.site-header__link,
+.header-chip,
+.header-menu-toggle,
+.header-language__trigger,
+.section-head__action,
+.ramadan-table-tab,
+.section-more-button,
+.hero-cta,
+.qibla-section .qibla-city-btn {
+  min-height: var(--ui-control-h-md);
+}
+
+.site-header__link,
+.header-chip,
+.header-language__option,
+.section-head__badge,
+.section-head__meta,
+.section-head__action,
+.ramadan-table-tab,
+.section-more-button,
+.hero-cta,
+.qibla-section .qibla-city-btn {
+  font-size: var(--ui-font-body-sm);
+  line-height: var(--ui-lh-ui);
+}
+
+.section-head__title {
+  font-size: var(--ui-font-title-sm);
+  line-height: var(--ui-lh-snug);
+  letter-spacing: 0;
+}
+
+.daily-prayer-section .daily-prayer-section__name,
+.weekly-prayer-section .weekly-prayer-section__name {
+  line-height: var(--ui-lh-compact);
+  letter-spacing: 0;
+}
+
+.daily-prayer-section .daily-prayer-section__name,
+.weekly-prayer-section .weekly-prayer-section__name {
+  font-size: var(--ui-font-title-lg);
+}
+
+.qibla-section .qibla-card__title {
+  font-size: var(--ui-font-title-sm);
+  line-height: var(--ui-lh-relaxed);
+  letter-spacing: 0;
+}
+
+.schedule-table-head-icon,
+.weekly-table-mobile-head-icon,
+.weekly-table-mobile-meta-icon,
+.weekly-table-mobile-item-icon {
+  inline-size: var(--size-icon-md);
+  block-size: var(--size-icon-md);
+  flex-basis: var(--size-icon-md);
+}
+
+.schedule-table-card,
+.qibla-section .qibla-card {
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-soft);
+}
+
+.daily-prayer-section,
+.weekly-prayer-section,
+.qibla-section {
+  padding-block-start: var(--space-section-md);
+}
+
+.weekly-prayer-section,
+.qibla-section {
+  padding-block-end: var(--space-section-md);
+}
+
+.site-footer {
+  padding-block-start: var(--space-section-md);
+}
+
+.section-head,
+.qibla-section .qibla-card__head,
+.daily-prayer-section .daily-prayer-cards-track,
+.weekly-prayer-section .schedule-table-card__top {
+  gap: var(--space-gap-md);
+}
+
+.schedule-table th,
+.schedule-table td {
+  line-height: var(--ui-lh-ui);
+}
+
+.schedule-table td {
+  font-size: var(--ui-font-body-sm);
+}
+
+.schedule-table-wrap {
+  overscroll-behavior-inline: contain;
+  scrollbar-width: thin;
+}
+
+.schedule-table-wrap::-webkit-scrollbar {
+  height: 5px;
+}
+
+.schedule-table-wrap::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.schedule-table-wrap::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--Primary-900) 16%, transparent);
+  border-radius: 999px;
+}
+
+.hero__corner,
+.hero__lantern,
+.hero__center-pattern,
+.weekly-prayer-section::before,
+.weekly-prayer-section::after,
+.daily-prayer-section::before,
+.daily-prayer-section::after,
+.ramadan-section::before,
+.ramadan-section::after,
+.ramadan-month-table-section::after,
+.site-footer::before,
+.footer-content::after {
+  opacity: var(--decor-opacity-desktop);
+}
+
+@media (max-width: 1199.98px) {
+  .daily-prayer-section,
+  .weekly-prayer-section,
+  .qibla-section,
+  .site-footer {
+    padding-block-start: var(--space-section-sm);
+  }
+
+  .weekly-prayer-section,
+  .qibla-section {
+    padding-block-end: var(--space-section-sm);
+  }
+
+  .hero__corner,
+  .hero__lantern,
+  .hero__center-pattern,
+  .weekly-prayer-section::before,
+  .weekly-prayer-section::after,
+  .daily-prayer-section::before,
+  .daily-prayer-section::after,
+  .ramadan-section::before,
+  .ramadan-section::after,
+  .ramadan-month-table-section::after,
+  .site-footer::before,
+  .footer-content::after {
+    opacity: var(--decor-opacity-tablet);
+  }
+
+}
+
+@media (max-width: 991.98px) {
+  .site-header__inner {
+    min-height: var(--ui-control-h-lg);
+  }
+
+  .daily-prayer-section .daily-prayer-section__name,
+  .weekly-prayer-section .weekly-prayer-section__name {
+    font-size: var(--ui-font-title-md);
+  }
+
+  .qibla-section .qibla-card__title {
+    font-size: clamp(16px, 0.92rem + 0.36vw, 20px);
+  }
+
+  .hero__corner,
+  .hero__lantern,
+  .hero__center-pattern,
+  .weekly-prayer-section::before,
+  .weekly-prayer-section::after,
+  .daily-prayer-section::before,
+  .daily-prayer-section::after,
+  .ramadan-section::before,
+  .ramadan-section::after,
+  .ramadan-month-table-section::after,
+  .site-footer::before,
+  .footer-content::after {
+    opacity: var(--decor-opacity-mobile);
+  }
+}
+
+@media (max-width: 767.98px) {
+  .section-head,
+  .qibla-section .qibla-card__head,
+  .daily-prayer-section .daily-prayer-cards-track,
+  .weekly-prayer-section .schedule-table-card__top {
+    gap: var(--space-gap-sm);
+  }
+
+  .site-header__link,
+  .header-chip,
+  .header-menu-toggle,
+  .header-language__trigger,
+  .section-head__action,
+  .ramadan-table-tab,
+  .section-more-button,
+  .hero-cta,
+  .qibla-section .qibla-city-btn {
+    min-height: var(--ui-control-h-sm);
+    font-size: var(--ui-font-body-sm);
+  }
+
+  .schedule-table-head-icon,
+  .weekly-table-mobile-head-icon,
+  .weekly-table-mobile-meta-icon,
+  .weekly-table-mobile-item-icon {
+    inline-size: var(--size-icon-sm);
+    block-size: var(--size-icon-sm);
+    flex-basis: var(--size-icon-sm);
+  }
+
+  .hero__center-pattern,
+  .weekly-prayer-section::before,
+  .weekly-prayer-section::after,
+  .daily-prayer-section::before,
+  .daily-prayer-section::after,
+  .ramadan-section::before,
+  .ramadan-section::after,
+  .ramadan-month-table-section::after,
+  .site-footer::before,
+  .footer-content::after {
+    opacity: var(--decor-opacity-mobile) !important;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .hero__corner,
+  .ramadan-month-table-section::after,
+  .footer-content::after {
+    display: none !important;
+  }
+
+  .hero__lantern,
+  .hero__center-pattern,
+  .weekly-prayer-section::before,
+  .weekly-prayer-section::after,
+  .daily-prayer-section::before,
+  .daily-prayer-section::after,
+  .ramadan-section::before,
+  .ramadan-section::after,
+  .site-footer::before {
+    opacity: var(--decor-opacity-xs) !important;
+  }
+}
+

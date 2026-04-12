@@ -4,10 +4,10 @@ export function renderAppShell(rootElement) {
   }
 
   rootElement.innerHTML = `
-    <div class="app-shell page-shell" id="app-shell">
+    <div class="page-shell" id="app-shell">
       <header class="site-header" id="site-header" data-mount="header"></header>
 
-      <main class="main-content page-main" id="main-content">
+      <main class="page-main" id="main-content">
         <section id="hero-section" data-mount="hero-section"></section>
         <section id="prayer-section" data-mount="daily-prayer-section"></section>
         <section id="weekly-prayer-section" data-mount="weekly-prayer-section"></section>

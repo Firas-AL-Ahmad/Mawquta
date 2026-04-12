@@ -18,11 +18,7 @@ export function renderQibla(viewModel = {}) {
         decoding="async"
       />
 
-      <div
-        class="qibla-compass qibla-compass--asset"
-        role="img"
-        aria-label="اتجاه القبلة بزاوية 165°"
-      >
+      <div class="qibla-compass" role="img" aria-label="اتجاه القبلة بزاوية 165°">
         <img
           class="qibla-compass__asset"
           src="${QIBLA_ICON_PATHS.compass}"

@@ -1,5 +1,5 @@
 function setTabSelectedState(tabButton, isActive) {
-  tabButton.classList.toggle("r-tab--active", isActive);
+  tabButton.classList.toggle("ramadan-table-tab--active", isActive);
   tabButton.setAttribute("aria-selected", isActive ? "true" : "false");
 }
 

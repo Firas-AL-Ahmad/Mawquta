@@ -10,28 +10,28 @@ export function renderDailyPrayerSection(rootElement, viewModel = {}) {
   }
 
   rootElement.innerHTML = `
-    <section class="daily-sec" id="daily" aria-label="مواقيت الصلاة اليومية">
+    <section class="daily-prayer-section" id="daily" aria-label="مواقيت الصلاة اليومية">
       <div class="container-xl">
         ${renderSectionHeadWithCity({
-          headClassName: "daily-sec__head",
-          cityWrapperClassName: "daily-sec__city",
-          eyebrowClassName: "daily-sec__eyebrow",
-          cityTitleClassName: "daily-sec__name",
+          headClassName: "daily-prayer-section__head",
+          cityWrapperClassName: "daily-prayer-section__city",
+          eyebrowClassName: "daily-prayer-section__eyebrow",
+          cityTitleClassName: "daily-prayer-section__name",
           cityDataAttribute: "data-daily-city",
           cityName: "دمشق، سوريا",
           meta: {
             mode: "paired",
-            className: "sec-city__meta daily-sec__meta sec-head__meta",
-            valueClassName: "daily-sec__meta-value",
+            className: "section-city__meta daily-prayer-section__meta section-head__meta",
+            valueClassName: "daily-prayer-section__meta-value",
             valueText: "متبقي حتى صلاة العصر",
-            prefixClassName: "daily-sec__meta-prefix",
+            prefixClassName: "daily-prayer-section__meta-prefix",
             prefixText: "الحالة:",
           },
-          badgeClassName: "daily-sec__badge",
+          badgeClassName: "daily-prayer-section__badge",
           badgeText: "اليومية",
         })}
 
-        <div class="ps-track" role="list" aria-label="بطاقات الصلوات اليومية">
+        <div class="daily-prayer-cards-track" role="list" aria-label="بطاقات الصلوات اليومية">
           ${renderPrayerCards()}
         </div>
       </div>

@@ -11,12 +11,12 @@ export function renderPrayerWeek(viewModel = {}) {
   void viewModel;
 
   return `
-    <div class="ws-card">
-      <div class="ws-card-top">
-        <p class="ws-sub">الصلاة لسبعة أيام</p>
-        <div class="ws-range" aria-label="نطاق الأسبوع">
-          <span class="ws-range__icon" aria-hidden="true"></span>
-          <span class="ws-range__text" data-weekly-range>23 - 29 مارس 2026</span>
+    <div class="schedule-table-card">
+      <div class="schedule-table-card__top">
+        <p class="schedule-table-subtitle">الصلاة لسبعة أيام</p>
+        <div class="schedule-table-range" aria-label="نطاق الأسبوع">
+          <span class="schedule-table-range__icon" aria-hidden="true"></span>
+          <span class="schedule-table-range__text" data-weekly-range>23 - 29 مارس 2026</span>
         </div>
       </div>
 

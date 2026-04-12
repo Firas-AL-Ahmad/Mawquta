@@ -24,16 +24,17 @@ export function renderSectionHeadWithCity({
   eyebrowText = "مواقيت الصلاة في",
 }) {
   return `
-    <div class="sec-head ${headClassName}">
-      <div class="sec-city ${cityWrapperClassName} sec-head__main">
-        <div class="sec-city__eyebrow ${eyebrowClassName}">
-          <span class="sec-city__eyebrow-icon sec-head__icon" aria-hidden="true"></span>
+    <div class="section-head ${headClassName}">
+      <div class="section-city ${cityWrapperClassName} section-head__main">
+        <div class="section-city__eyebrow ${eyebrowClassName}">
+          <span class="section-city__eyebrow-icon section-head__icon" aria-hidden="true"></span>
           <span>${eyebrowText}</span>
         </div>
-        <h2 class="sec-city__name ${cityTitleClassName} sec-head__title" ${cityDataAttribute}>${cityName}</h2>
+        <h2 class="section-city__name ${cityTitleClassName} section-head__title" ${cityDataAttribute}>${cityName}</h2>
         ${renderSectionMeta(meta)}
       </div>
-      <span class="sec-badge ${badgeClassName} sec-head__badge">${badgeText}</span>
+      <span class="section-badge ${badgeClassName} section-head__badge">${badgeText}</span>
     </div>
   `;
 }
+

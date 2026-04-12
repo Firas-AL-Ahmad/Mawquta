@@ -5,7 +5,7 @@ function renderHeaderLanguageOption(option) {
   return `
     <button
       type="button"
-      class="hdr-lang__option${selectedClass}"
+      class="header-language__option${selectedClass}"
       role="option"
       aria-selected="${ariaSelected}"
       data-lang-option
@@ -15,7 +15,7 @@ function renderHeaderLanguageOption(option) {
       data-lang-flag="${option.flagPath}"
     >
       <img
-        class="hdr-lang__flag"
+        class="header-language__flag"
         src="${option.flagPath}"
         alt=""
         width="20"
@@ -23,8 +23,8 @@ function renderHeaderLanguageOption(option) {
         loading="lazy"
         decoding="async"
       />
-      <span class="hdr-lang__option-label">${option.label}</span>
-      <span class="hdr-lang__option-code">${option.code}</span>
+      <span class="header-language__option-label">${option.label}</span>
+      <span class="header-language__option-code">${option.code}</span>
     </button>
   `;
 }
@@ -35,10 +35,10 @@ export function renderHeaderLanguageDropdown({
   menuId = "headerLanguageMenu",
 }) {
   return `
-    <div class="hdr-lang" data-lang-dropdown>
+    <div class="header-language" data-lang-dropdown>
       <button
         type="button"
-        class="hdr-chip hdr-lang__trigger"
+        class="header-chip header-language__trigger"
         aria-label="اختيار اللغة"
         aria-haspopup="listbox"
         aria-expanded="false"
@@ -46,7 +46,7 @@ export function renderHeaderLanguageDropdown({
         data-lang-trigger
       >
         <img
-          class="hdr-lang__flag"
+          class="header-language__flag"
           src="${currentLanguage.flagPath}"
           alt=""
           width="20"
@@ -55,13 +55,13 @@ export function renderHeaderLanguageDropdown({
           decoding="async"
           data-lang-flag
         />
-        <span class="hdr-lang__label" data-lang-label>${currentLanguage.label}</span>
-        <span class="hdr-lang__code" data-lang-code>${currentLanguage.code}</span>
-        <span class="hdr-lang__chevron" aria-hidden="true"></span>
+        <span class="header-language__label" data-lang-label>${currentLanguage.label}</span>
+        <span class="header-language__code" data-lang-code>${currentLanguage.code}</span>
+        <span class="header-language__chevron" aria-hidden="true"></span>
       </button>
 
       <div
-        class="hdr-lang__menu"
+        class="header-language__menu"
         id="${menuId}"
         role="listbox"
         aria-label="قائمة اللغات"
@@ -73,3 +73,4 @@ export function renderHeaderLanguageDropdown({
     </div>
   `;
 }
+

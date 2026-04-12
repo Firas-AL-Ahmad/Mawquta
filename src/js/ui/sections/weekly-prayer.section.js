@@ -10,20 +10,20 @@ export function renderWeeklyPrayerSection(rootElement, viewModel = {}) {
   }
 
   rootElement.innerHTML = `
-    <section class="weekly-sec" id="weekly" aria-label="مواقيت الصلاة الأسبوعية">
+    <section class="weekly-prayer-section" id="weekly" aria-label="مواقيت الصلاة الأسبوعية">
       <div class="container-xl">
         ${renderSectionHeadWithCity({
-          headClassName: "weekly-sec__head",
-          cityWrapperClassName: "weekly-sec__city",
-          eyebrowClassName: "weekly-sec__eyebrow",
-          cityTitleClassName: "weekly-sec__name",
+          headClassName: "weekly-prayer-section__head",
+          cityWrapperClassName: "weekly-prayer-section__city",
+          eyebrowClassName: "weekly-prayer-section__eyebrow",
+          cityTitleClassName: "weekly-prayer-section__name",
           cityDataAttribute: "data-weekly-city",
           cityName: "دمشق، سوريا",
           meta: {
-            className: "sec-city__meta weekly-sec__meta sec-head__meta",
+            className: "section-city__meta weekly-prayer-section__meta section-head__meta",
             text: "محدث اليوم",
           },
-          badgeClassName: "weekly-sec__badge",
+          badgeClassName: "weekly-prayer-section__badge",
           badgeText: "الأسبوعية",
         })}
 

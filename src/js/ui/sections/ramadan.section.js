@@ -14,7 +14,7 @@ export function renderRamadanSection(rootElement, data = {}) {
   }
 
   rootElement.innerHTML = `
-    <section class="ramadan-sec" id="ramadan" aria-label="قسم رمضان">
+    <section class="ramadan-section" id="ramadan" aria-label="قسم رمضان">
       <div class="container-xl">
         ${renderRamadanTopbar(RAMADAN_SECTION_ICON_PATHS)}
 

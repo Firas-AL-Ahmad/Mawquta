@@ -14,7 +14,7 @@ export function renderQiblaSection(rootElement, viewModel = {}) {
   const modalLabelId = "qiblaCityModalTitle";
 
   rootElement.innerHTML = `
-    <section class="qibla-sec" id="qibla" aria-label="اتجاه القبلة">
+    <section class="qibla-section" id="qibla" aria-label="اتجاه القبلة">
       <div class="container-xl">
         <div class="qibla-card">
           ${renderQiblaCardHead(modalId)}

@@ -1,7 +1,7 @@
 /* Shared section heading and action primitives */
 
 /* Base heading primitives */
-.sec-head {
+.section-head {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -10,7 +10,7 @@
   margin-bottom: 26px;
 }
 
-.sec-head__main {
+.section-head__main {
   min-inline-size: 0;
   display: flex;
   flex-direction: column;
@@ -19,7 +19,7 @@
   gap: 6px;
 }
 
-.sec-head__title {
+.section-head__title {
   margin: 0;
   font-family: var(--font-body);
   font-size: var(--ui-font-section-title);
@@ -27,7 +27,7 @@
   line-height: var(--ui-lh-relaxed);
 }
 
-.sec-head__meta {
+.section-head__meta {
   margin: 0;
   min-inline-size: 0;
   display: inline-flex;
@@ -38,7 +38,7 @@
   font-family: var(--font-body);
 }
 
-.sec-head__icon {
+.section-head__icon {
   display: inline-block;
   flex: 0 0 auto;
   background-position: center;
@@ -46,7 +46,7 @@
   background-size: contain;
 }
 
-.sec-head__aux {
+.section-head__aux {
   margin: 0;
   display: inline-flex;
   align-items: center;
@@ -56,14 +56,14 @@
 }
 
 /* City meta primitives */
-.sec-city {
+.section-city {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   gap: var(--ui-space-1);
 }
 
-.sec-city__eyebrow {
+.section-city__eyebrow {
   display: flex;
   align-items: center;
   gap: var(--ui-space-1-25);
@@ -72,15 +72,15 @@
   color: var(--Primary-700);
 }
 
-.sec-city__eyebrow-icon {
+.section-city__eyebrow-icon {
   width: 16px;
   height: 16px;
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2317654e'%3E%3Cpath d='M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z'/%3E%3C/svg%3E")
     center/contain no-repeat;
 }
 
-.daily-sec .daily-sec__eyebrow .sec-city__eyebrow-icon,
-.weekly-sec .weekly-sec__eyebrow .sec-city__eyebrow-icon {
+.daily-prayer-section .daily-prayer-section__eyebrow .section-city__eyebrow-icon,
+.weekly-prayer-section .weekly-prayer-section__eyebrow .section-city__eyebrow-icon {
   width: 24px;
   height: 24px;
   flex: 0 0 24px;
@@ -88,13 +88,13 @@
     center/contain no-repeat;
 }
 
-.sec-city__name {
+.section-city__name {
   font-size: 32px;
   font-weight: 900;
   color: var(--Primary-500);
 }
 
-.sec-city__meta {
+.section-city__meta {
   font-size: var(--ui-font-2xs);
   font-weight: var(--ui-weight-medium);
   color: var(--Text-600);
@@ -104,7 +104,7 @@
 }
 
 /* Badge and action controls */
-.sec-badge {
+.section-badge {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -116,10 +116,10 @@
   padding: var(--ui-space-1-5) var(--ui-space-5);
 }
 
-.sec-head__badge,
-.sec-badge,
-.daily-sec .daily-sec__badge,
-.weekly-sec .weekly-sec__badge {
+.section-head__badge,
+.section-badge,
+.daily-prayer-section .daily-prayer-section__badge,
+.weekly-prayer-section .weekly-prayer-section__badge {
   min-height: var(--ui-control-h-2xs);
   border-radius: var(--ui-radius-pill);
   padding: var(--ui-space-1-5) var(--ui-space-5);
@@ -129,9 +129,9 @@
   line-height: var(--ui-lh-snug);
 }
 
-.sec-head__action,
-.btn-more,
-.r-tab {
+.section-head__action,
+.section-more-button,
+.ramadan-table-tab {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -150,26 +150,26 @@
     box-shadow var(--tr);
 }
 
-.sec-head__action:hover,
-.btn-more:hover {
+.section-head__action:hover,
+.section-more-button:hover {
   filter: brightness(0.96);
 }
 
-.sec-head__action:active,
-.btn-more:active {
+.section-head__action:active,
+.section-more-button:active {
   transform: translateY(1px);
 }
 
-.sec-head__action:focus-visible,
-.btn-more:focus-visible,
-.r-tab:focus-visible {
+.section-head__action:focus-visible,
+.section-more-button:focus-visible,
+.ramadan-table-tab:focus-visible {
   outline: none;
   box-shadow:
     0 0 0 2px color-mix(in srgb, var(--Secondary-500) 24%, transparent),
     0 0 0 4px color-mix(in srgb, var(--Secondary-500) 56%, transparent);
 }
 
-.r-tab {
+.ramadan-table-tab {
   gap: var(--ui-space-1-5);
   padding: var(--ui-space-1-5) var(--ui-space-3-5);
   border-radius: var(--ui-radius-sm);
@@ -184,7 +184,7 @@
     box-shadow var(--tr);
 }
 
-.r-tab:hover {
+.ramadan-table-tab:hover {
   background: color-mix(
     in srgb,
     var(--Background-50) 82%,
@@ -192,11 +192,11 @@
   );
 }
 
-.r-tab:active {
+.ramadan-table-tab:active {
   transform: translateY(1px);
 }
 
-.btn-more {
+.section-more-button {
   gap: var(--ui-space-1-5);
   background: none;
   border: 1.5px solid var(--Secondary-500);
@@ -207,21 +207,21 @@
 }
 
 /* Section-scoped heading variants */
-.daily-sec .daily-sec__head,
-.weekly-sec .weekly-sec__head {
+.daily-prayer-section .daily-prayer-section__head,
+.weekly-prayer-section .weekly-prayer-section__head {
   margin-bottom: var(--ui-space-8);
   align-items: flex-start;
   gap: var(--ui-space-section-head-gap);
 }
 
-.daily-sec .daily-sec__city,
-.weekly-sec .weekly-sec__city {
+.daily-prayer-section .daily-prayer-section__city,
+.weekly-prayer-section .weekly-prayer-section__city {
   gap: var(--ui-space-1-25);
   align-items: flex-start;
 }
 
-.daily-sec .daily-sec__eyebrow,
-.weekly-sec .weekly-sec__eyebrow {
+.daily-prayer-section .daily-prayer-section__eyebrow,
+.weekly-prayer-section .weekly-prayer-section__eyebrow {
   display: inline-flex;
   align-self: flex-start;
   justify-content: flex-start;
@@ -234,8 +234,8 @@
   padding: var(--ui-space-1-5) var(--ui-space-3);
 }
 
-.daily-sec .daily-sec__name,
-.weekly-sec .weekly-sec__name {
+.daily-prayer-section .daily-prayer-section__name,
+.weekly-prayer-section .weekly-prayer-section__name {
   font-size: var(--ui-font-title-lg);
   font-weight: var(--ui-weight-black);
   line-height: var(--ui-lh-compact);
@@ -244,8 +244,8 @@
   text-align: left;
 }
 
-.daily-sec .daily-sec__meta,
-.weekly-sec .weekly-sec__meta {
+.daily-prayer-section .daily-prayer-section__meta,
+.weekly-prayer-section .weekly-prayer-section__meta {
   font-size: var(--ui-font-section-meta);
   font-weight: var(--ui-weight-medium);
   color: color-mix(in srgb, var(--Text-600) 85%, var(--Primary-900));
@@ -256,21 +256,21 @@
   text-align: left;
 }
 
-.daily-sec .daily-sec__badge,
-.weekly-sec .weekly-sec__badge {
+.daily-prayer-section .daily-prayer-section__badge,
+.weekly-prayer-section .weekly-prayer-section__badge {
   background: var(--Secondary-500);
   align-self: flex-start;
 }
 
 /* Responsive overrides */
 @media (max-width: 575.98px) {
-  .sec-head {
+  .section-head {
     flex-direction: column-reverse;
     gap: 8px;
   }
 
-  .daily-sec .daily-sec__head,
-  .weekly-sec .weekly-sec__head {
+  .daily-prayer-section .daily-prayer-section__head,
+  .weekly-prayer-section .weekly-prayer-section__head {
     flex-direction: row;
     align-items: flex-start;
     justify-content: space-between;
@@ -278,15 +278,16 @@
     gap: 10px;
   }
 
-  .daily-sec .daily-sec__city,
-  .weekly-sec .weekly-sec__city {
+  .daily-prayer-section .daily-prayer-section__city,
+  .weekly-prayer-section .weekly-prayer-section__city {
     min-inline-size: 0;
     flex: 1 1 auto;
   }
 
-  .daily-sec .daily-sec__badge,
-  .weekly-sec .weekly-sec__badge {
+  .daily-prayer-section .daily-prayer-section__badge,
+  .weekly-prayer-section .weekly-prayer-section__badge {
     flex: 0 0 auto;
     align-self: flex-start;
   }
 }
+

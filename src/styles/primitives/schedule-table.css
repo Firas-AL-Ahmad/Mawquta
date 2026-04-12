@@ -1,8 +1,8 @@
 /* Shared weekly/ramadan table and list primitives */
 
 /* Base table shells */
-.weekly-sec .ws-card,
-.ramadan-table-sec .ws-card {
+.weekly-prayer-section .schedule-table-card,
+.ramadan-month-table-section .schedule-table-card {
   border-radius: 16px;
   border-color: color-mix(
     in srgb,
@@ -12,8 +12,8 @@
   box-shadow: 0 4px 24px -6px rgba(18, 66, 53, 0.12);
 }
 
-.weekly-sec .ws-card-top,
-.ramadan-table-sec .ws-card-top {
+.weekly-prayer-section .schedule-table-card__top,
+.ramadan-month-table-section .schedule-table-card__top {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -23,16 +23,16 @@
   border-bottom: 1px solid var(--color-border);
 }
 
-.weekly-sec .ws-sub,
-.ramadan-table-sec .ws-sub {
+.weekly-prayer-section .schedule-table-subtitle,
+.ramadan-month-table-section .schedule-table-subtitle {
   margin-bottom: 0;
   font-family: var(--font-quote);
   font-size: var(--ui-font-md);
   color: var(--Primary-900);
 }
 
-.weekly-sec .ws-range,
-.ramadan-table-sec .ws-range {
+.weekly-prayer-section .schedule-table-range,
+.ramadan-month-table-section .schedule-table-range {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -43,8 +43,8 @@
   border: none;
 }
 
-.weekly-sec .ws-range__text,
-.ramadan-table-sec .ws-range__text {
+.weekly-prayer-section .schedule-table-range__text,
+.ramadan-month-table-section .schedule-table-range__text {
   font-family: var(--Body-fontFamily);
   font-size: var(--Label-fontSize);
   line-height: var(--Label-lineHeight);
@@ -53,59 +53,60 @@
   direction: ltr;
 }
 
-.weekly-sec .ws-range__icon,
-.ramadan-table-sec .ws-range__icon {
+.weekly-prayer-section .schedule-table-range__icon,
+.ramadan-month-table-section .schedule-table-range__icon {
   display: none;
 }
 
-.weekly-sec .ws-wrap,
-.ramadan-table-sec .ws-wrap {
+.weekly-prayer-section .schedule-table-wrap,
+.ramadan-month-table-section .schedule-table-wrap {
   overflow-x: auto;
   scrollbar-width: thin;
   scrollbar-color: var(--color-border) transparent;
 }
 
-.weekly-sec .ws-wrap::-webkit-scrollbar,
-.ramadan-table-sec .ws-wrap::-webkit-scrollbar {
+.weekly-prayer-section .schedule-table-wrap::-webkit-scrollbar,
+.ramadan-month-table-section .schedule-table-wrap::-webkit-scrollbar {
   height: 4px;
 }
 
-.weekly-sec .ws-wrap::-webkit-scrollbar-track,
-.ramadan-table-sec .ws-wrap::-webkit-scrollbar-track {
+.weekly-prayer-section .schedule-table-wrap::-webkit-scrollbar-track,
+.ramadan-month-table-section .schedule-table-wrap::-webkit-scrollbar-track {
   background: transparent;
 }
 
-.weekly-sec .ws-wrap::-webkit-scrollbar-thumb,
-.ramadan-table-sec .ws-wrap::-webkit-scrollbar-thumb {
+.weekly-prayer-section .schedule-table-wrap::-webkit-scrollbar-thumb,
+.ramadan-month-table-section .schedule-table-wrap::-webkit-scrollbar-thumb {
   background: var(--color-border);
   border-radius: 999px;
 }
 
 /* Table typography and row behavior */
-.weekly-sec .ws-table,
-.ramadan-table-sec .ws-table {
+.weekly-prayer-section .schedule-table,
+.ramadan-month-table-section .schedule-table {
   direction: rtl;
+  width: 100%;
   min-width: 700px;
 }
 
-.weekly-sec .ws-table th,
-.weekly-sec .ws-table td,
-.ramadan-table-sec .ws-table th,
-.ramadan-table-sec .ws-table td {
+.weekly-prayer-section .schedule-table th,
+.weekly-prayer-section .schedule-table td,
+.ramadan-month-table-section .schedule-table th,
+.ramadan-month-table-section .schedule-table td {
   padding: var(--ui-space-3) var(--ui-space-4-5);
   font-size: var(--ui-font-sm);
   line-height: var(--ui-lh-relaxed);
 }
 
-.weekly-sec .ws-table th,
-.ramadan-table-sec .ws-table th {
+.weekly-prayer-section .schedule-table th,
+.ramadan-month-table-section .schedule-table th {
   font-weight: 700;
   color: var(--Primary-900);
   vertical-align: middle;
 }
 
-.weekly-sec .ws-table td,
-.ramadan-table-sec .ws-table td {
+.weekly-prayer-section .schedule-table td,
+.ramadan-month-table-section .schedule-table td {
   color: color-mix(in srgb, var(--Primary-900) 72%, var(--Text-600));
   font-weight: 600;
   direction: ltr;
@@ -113,14 +114,14 @@
   vertical-align: middle;
 }
 
-.weekly-sec .ws-table thead tr,
-.ramadan-table-sec .ws-table thead tr {
+.weekly-prayer-section .schedule-table thead tr,
+.ramadan-month-table-section .schedule-table thead tr {
   background: var(--Background-Table-Header);
   border-bottom-width: 1.5px;
 }
 
-.weekly-sec .ws-table tbody tr,
-.ramadan-table-sec .ws-table tbody tr {
+.weekly-prayer-section .schedule-table tbody tr,
+.ramadan-month-table-section .schedule-table tbody tr {
   border-bottom-color: color-mix(
     in srgb,
     var(--Primary-900) 8%,
@@ -129,47 +130,50 @@
   transition: background 160ms ease;
 }
 
-.weekly-sec .ws-table tbody tr:not(.row--today):hover,
-.ramadan-table-sec .ws-table tbody tr:not(.row--today):hover {
+.weekly-prayer-section .schedule-table tbody tr:not(.table-row--today):hover,
+.ramadan-month-table-section .schedule-table tbody tr:not(.table-row--today):hover {
   background: color-mix(in srgb, var(--Secondary-50) 32%, var(--white));
 }
 
-.weekly-sec .ws-table th:first-child {
+.weekly-prayer-section .schedule-table th:first-child,
+.ramadan-month-table-section .schedule-table th:first-child {
   text-align: right;
 }
 
-.weekly-sec .ws-table th:last-child {
+.weekly-prayer-section .schedule-table th:last-child,
+.ramadan-month-table-section .schedule-table th:last-child {
   text-align: left;
 }
 
-.weekly-sec .ws-table td.td-day,
-.ramadan-table-sec .ws-table td.td-day {
+.weekly-prayer-section .schedule-table td.table-cell--day,
+.ramadan-month-table-section .schedule-table td.table-cell--day,
+.ramadan-month-table-section .schedule-table td.table-cell--number {
   direction: rtl;
   unicode-bidi: normal;
   font-size: var(--ui-font-sm);
 }
 
-.weekly-sec .ws-table td.td-date,
-.ramadan-table-sec .ws-table td.td-date {
+.weekly-prayer-section .schedule-table td.table-cell--date,
+.ramadan-month-table-section .schedule-table td.table-cell--date {
   text-align: left !important;
   direction: rtl;
   unicode-bidi: normal;
   font-size: var(--ui-font-xs);
 }
 
-.weekly-sec .row--today,
-.ramadan-table-sec .row--today {
+.weekly-prayer-section .table-row--today,
+.ramadan-month-table-section .table-row--today {
   background: var(--Background-Hover);
   position: relative;
 }
 
-.weekly-sec .row--today td.td-day,
-.ramadan-table-sec .row--today td.td-day {
+.weekly-prayer-section .table-row--today td.table-cell--day,
+.ramadan-month-table-section .table-row--today td.table-cell--day {
   position: relative;
 }
 
-.weekly-sec .row--today td.td-day::before,
-.ramadan-table-sec .row--today td.td-day::before {
+.weekly-prayer-section .table-row--today td.table-cell--day::before,
+.ramadan-month-table-section .table-row--today td.table-cell--day::before {
   content: "";
   position: absolute;
   inset-block: 0;
@@ -180,14 +184,14 @@
   border-end-start-radius: 4px;
 }
 
-.weekly-sec .td--active,
-.ramadan-table-sec .td--active {
+.weekly-prayer-section .table-cell--active,
+.ramadan-month-table-section .table-cell--active {
   padding-block: 0 !important;
 }
 
 /* Active time pill */
-.weekly-sec .time-pill,
-.ramadan-table-sec .time-pill {
+.weekly-prayer-section .table-time-pill,
+.ramadan-month-table-section .table-time-pill {
   border-radius: var(--ui-radius-sm);
   padding: var(--ui-space-1-5) var(--ui-space-5);
   background-color: var(--Secondary-500);
@@ -202,21 +206,21 @@
     transform 160ms ease;
 }
 
-.weekly-sec .time-pill:hover,
-.ramadan-table-sec .time-pill:hover {
+.weekly-prayer-section .table-time-pill:hover,
+.ramadan-month-table-section .table-time-pill:hover {
   box-shadow: 0 6px 18px -2px rgba(196, 123, 43, 0.52);
   transform: translateY(-1px);
 }
 
 /* Header and icon helpers */
-.ws-th-label {
+.schedule-table-head-label {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--ui-space-1-5);
 }
 
-.th-ic {
+.schedule-table-head-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -225,33 +229,41 @@
   flex: 0 0 24px;
 }
 
-.th-ic img,
-.ws-mobile-head-icon img,
-.ws-mobile-meta-icon img,
-.ws-mobile-item-icon img {
+.schedule-table-head-icon img,
+.weekly-table-mobile-head-icon img,
+.weekly-table-mobile-meta-icon img,
+.weekly-table-mobile-item-icon img {
   width: 100%;
   height: 100%;
   display: block;
   object-fit: contain;
 }
 
-.ws-mobile-title {
+.weekly-table-mobile-title {
   display: inline-flex;
   align-items: center;
   justify-content: flex-end;
   gap: var(--ui-space-1-5);
 }
 
-.ws-mobile-date {
+.weekly-table-mobile-title-wrap {
+  min-inline-size: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--ui-space-1);
+}
+
+.weekly-table-mobile-date {
   display: inline-flex;
   align-items: center;
   justify-content: flex-end;
   gap: var(--ui-space-1-25);
 }
 
-.ws-mobile-head-icon,
-.ws-mobile-meta-icon,
-.ws-mobile-item-icon {
+.weekly-table-mobile-head-icon,
+.weekly-table-mobile-meta-icon,
+.weekly-table-mobile-item-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -260,7 +272,7 @@
   flex: 0 0 24px;
 }
 
-.ws-mobile-item dt {
+.weekly-table-mobile-item dt {
   display: inline-flex;
   align-items: center;
   justify-content: flex-end;
@@ -268,15 +280,13 @@
 }
 
 /* Mobile list/card primitives */
-.ws-mobile-list,
-.rt-mobile-list {
+.weekly-table-mobile-list {
   display: none;
   gap: var(--ui-space-3);
   padding: var(--ui-space-3-5);
 }
 
-.ws-mobile-card,
-.rt-mobile-card {
+.weekly-table-mobile-card {
   border: 1px solid var(--color-border);
   border-radius: var(--ui-radius-md);
   background: var(--white);
@@ -285,30 +295,26 @@
   gap: var(--ui-space-3);
 }
 
-.ws-mobile-head,
-.rt-mobile-head {
+.weekly-table-mobile-head {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: var(--ui-space-2-5);
 }
 
-.ws-mobile-title,
-.rt-mobile-title {
+.weekly-table-mobile-title {
   margin: 0;
   font-size: var(--ui-font-md);
   font-weight: var(--ui-weight-extrabold);
   color: var(--Primary-900);
 }
 
-.ws-mobile-date,
-.rt-mobile-date {
+.weekly-table-mobile-date {
   font-size: var(--ui-font-2xs);
   color: var(--Text-600);
 }
 
-.ws-mobile-pill,
-.rt-mobile-pill {
+.weekly-table-mobile-pill {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -321,15 +327,14 @@
   white-space: nowrap;
 }
 
-.ws-mobile-grid {
+.weekly-table-mobile-grid {
   margin: 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 8px;
 }
 
-.ws-mobile-item,
-.rt-mobile-item {
+.weekly-table-mobile-item {
   margin: 0;
   border: 1px solid var(--color-border);
   border-radius: var(--ui-radius-control-sm);
@@ -340,15 +345,13 @@
   gap: var(--ui-space-1);
 }
 
-.ws-mobile-item dt,
-.rt-mobile-item dt {
+.weekly-table-mobile-item dt {
   font-size: var(--ui-font-2xs);
   font-weight: var(--ui-weight-bold);
   color: var(--Text-600);
 }
 
-.ws-mobile-item dd,
-.rt-mobile-item dd {
+.weekly-table-mobile-item dd {
   margin: 0;
   font-size: var(--ui-font-sm);
   font-weight: var(--ui-weight-extrabold);
@@ -356,32 +359,23 @@
   direction: ltr;
 }
 
-.ws-mobile-item--active dd,
-.rt-mobile-item--iftar dd {
+.weekly-table-mobile-item--active dd {
   color: var(--Secondary-500);
-}
-
-.rt-mobile-grid {
-  margin: 0;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
 }
 
 /* Responsive table/list toggles */
 @media (max-width: 575.98px) {
-  .ws-wrap,
-  .rt-wrap {
+  .schedule-table-wrap {
     display: none;
   }
 
-  .ws-mobile-list,
-  .rt-mobile-list {
+  .weekly-table-mobile-list {
     display: grid;
   }
 
-  .rt-more-btn {
+  .ramadan-month-table__more {
     padding-top: 0;
     border-top: none;
   }
 }
+

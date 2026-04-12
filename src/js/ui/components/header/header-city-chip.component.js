@@ -1,8 +1,8 @@
 export function renderHeaderCityChip() {
   return `
-    <button type="button" class="hdr-chip site-header__city" aria-label="تغيير المدينة">
+    <button type="button" class="header-chip site-header__city" aria-label="تغيير المدينة">
       <svg
-        class="hdr-chip__icon"
+        class="header-chip__icon"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
@@ -12,7 +12,8 @@ export function renderHeaderCityChip() {
         <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
         <circle cx="12" cy="9" r="2.5"/>
       </svg>
-      <span class="hdr-chip__text">دمشق، سوريا</span>
+      <span class="header-chip__text">دمشق، سوريا</span>
     </button>
   `;
 }
+

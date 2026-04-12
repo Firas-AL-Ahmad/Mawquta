@@ -6,24 +6,24 @@ const DEFAULT_COUNTDOWN_PARTS = [
 
 function renderCountdownPart(part) {
   return `
-    <div class="countdown__item">
-      <span class="countdown__val" ${part.valueDataAttribute}>${part.value}</span>
-      <span class="countdown__unit">${part.unit}</span>
+    <div class="hero-countdown__item">
+      <span class="hero-countdown__value" ${part.valueDataAttribute}>${part.value}</span>
+      <span class="hero-countdown__unit">${part.unit}</span>
     </div>
   `;
 }
 
 export function renderHeroCountdown() {
   return `
-    <section class="countdown" aria-live="polite" aria-label="الوقت المتبقي للصلاة القادمة">
-      <p class="countdown__label" data-hero-countdown-label>الوقت المتبقي</p>
+    <section class="hero-countdown" aria-live="polite" aria-label="الوقت المتبقي للصلاة القادمة">
+      <p class="hero-countdown__label" data-hero-countdown-label>الوقت المتبقي</p>
 
-      <div class="countdown__grid" data-hero-countdown>
+      <div class="hero-countdown__grid" data-hero-countdown>
         ${DEFAULT_COUNTDOWN_PARTS.map((part, index) => {
           const partMarkup = renderCountdownPart(part);
           const separatorMarkup =
             index < DEFAULT_COUNTDOWN_PARTS.length - 1
-              ? '<span class="countdown__sep" aria-hidden="true">:</span>'
+              ? '<span class="hero-countdown__separator" aria-hidden="true">:</span>'
               : "";
 
           return `${partMarkup}${separatorMarkup}`;
@@ -32,3 +32,4 @@ export function renderHeroCountdown() {
     </section>
   `;
 }
+

@@ -1,8 +1,8 @@
 export function renderHeaderThemeToggle(themeIconPath) {
   return `
-    <button type="button" class="hdr-chip hdr-chip--icon" aria-label="تبديل السمة">
+    <button type="button" class="header-chip header-chip--icon" aria-label="تبديل السمة">
       <img
-        class="hdr-chip__icon"
+        class="header-chip__icon"
         src="${themeIconPath}"
         alt=""
         width="18"
@@ -13,3 +13,4 @@ export function renderHeaderThemeToggle(themeIconPath) {
     </button>
   `;
 }
+
