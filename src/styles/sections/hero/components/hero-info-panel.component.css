@@ -1,0 +1,162 @@
+/* Content pane elements */
+.hero-location-chip {
+  align-self: flex-end;
+  direction: rtl;
+  justify-content: flex-end;
+}
+
+.hero-verse-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  max-width: min(100%, 814px);
+  padding-block: 32px;
+}
+
+.hero-verse {
+  font-family: "Reem Kufi", var(--font-heading);
+  font-size: clamp(32px, 2.5vw, 48px);
+  line-height: 1.5;
+  color: var(--Primary-700);
+  font-weight: 600;
+  margin: 0;
+  text-align: right;
+  white-space: normal;
+}
+
+.hero-verse__ornament {
+  pointer-events: none;
+  user-select: none;
+  width: 56px;
+  height: 72px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  flex-shrink: 0;
+}
+
+.hero-verse__ornament--right {
+  background-image: url("../../../../assets/icons/sections/hero/quran-pattern-left.svg");
+}
+
+.hero-verse__ornament--left {
+  background-image: url("../../../../assets/icons/sections/hero/quran-pattern-right.svg");
+}
+
+/* Date panel and CTA */
+.date-card {
+  position: relative;
+  overflow: hidden;
+  width: 248px;
+  max-width: 100%;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border-radius: 16px;
+  border: 1px solid #dd9730;
+  background: var(--white);
+  box-shadow: 0 4px 8px -4px rgba(18, 66, 53, 0.16);
+}
+
+.date-card::before {
+  content: "";
+  position: absolute;
+  left: -76px;
+  top: 60px;
+  width: 200px;
+  height: 200px;
+  pointer-events: none;
+  background: url("../../../../assets/icons/sections/hero/center-pattern.svg")
+    center/contain no-repeat;
+  opacity: 1;
+}
+
+.date-card__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0;
+}
+
+.date-card__head-label {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--Primary-900);
+  line-height: 24px;
+}
+
+.date-card__cal {
+  width: 32px;
+  height: 32px;
+  background: url("../../../../assets/icons/sections/hero/hero-calendar-icon.svg")
+    center/contain no-repeat;
+}
+
+.date-card__day {
+  font-size: 20px;
+  font-weight: 700;
+  color: #dd9730;
+  line-height: 20px;
+  margin: 0;
+}
+
+.date-card__row {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--Text-900);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  line-height: 22px;
+  gap: 8px;
+}
+
+.date-card__row-r {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.date-card__row-num {
+  font-weight: 800;
+}
+
+.date-card__row-yr {
+  color: var(--Text-900);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.hero-cta {
+  width: 248px;
+  max-width: 100%;
+  min-height: var(--ui-btn-min-h-lg);
+  border: none;
+  border-radius: 16px;
+  background: var(--Secondary-500);
+  color: var(--white);
+  font-family: var(--Body-fontFamily);
+  font-size: var(--ui-btn-font-size);
+  font-weight: 700;
+  line-height: var(--ui-btn-line-height);
+  padding: var(--ui-btn-pad-y) var(--ui-btn-pad-x);
+  box-shadow: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition:
+    filter var(--tr),
+    transform var(--tr);
+}
+
+.hero-cta:hover {
+  filter: brightness(0.96);
+}
+
+.hero-cta:active {
+  transform: translateY(1px);
+}

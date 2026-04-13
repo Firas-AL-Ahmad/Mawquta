@@ -15,6 +15,17 @@ Mawquta is an Arabic-first prayer web application with a static frontend (`src/`
 - Frontend orchestrator: `src/js/app/main.js`
 - Serverless geocode route: `GET /api/geocode` (`api/geocode.js`)
 
+## UI Architecture (Current)
+
+- Vanilla JS module architecture (no React/framework runtime).
+- Section-owned rendering and interactions live under `src/js/ui/sections/<section>/`.
+- Cross-section reusable UI is limited to `src/js/ui/shared/components/*`.
+- Cross-section rendering helpers are limited to `src/js/ui/shared/primitives/*`.
+- Styles are organized by ownership:
+  - section styles: `src/styles/sections/<section>/`
+  - shared styles: `src/styles/shared/*`
+  - top-level style entry: `src/styles/index.css`
+
 ## Current Phase Policy (Static UI + Separate API)
 
 - UI runtime path (`src/js/app/main.js` + `src/js/ui/*`) must remain static-content driven.
@@ -90,7 +101,13 @@ If this variable is missing, city search endpoint returns an error response.
 ├─ src/
 │  ├─ index.html
 │  ├─ js/
+│  │  ├─ app/
+│  │  ├─ ui/
+│  │  │  ├─ sections/
+│  │  │  └─ shared/
 │  ├─ styles/
+│  │  ├─ sections/
+│  │  └─ shared/
 │  └─ assets/
 ├─ package.json
 └─ vercel.json
@@ -107,6 +124,14 @@ If this variable is missing, city search endpoint returns an error response.
 
 This repository currently prioritizes runtime stability and documentation truthfulness over feature expansion.
 
+## Contributing
+
+- Commit grouping policy source of truth: [`GIT_CHANGE_GROUPING.md`](./GIT_CHANGE_GROUPING.md)
+- Contributor workflow and examples: [`CONTRIBUTING.md`](./CONTRIBUTING.md)
+
+Use small, isolated commits grouped by intent, with commit messages in this format:
+
+`<type>(scope): message`
 
 
 

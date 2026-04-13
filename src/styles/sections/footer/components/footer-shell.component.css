@@ -1,0 +1,58 @@
+/* Footer section styles */
+
+/* Base shell */
+.site-footer {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background-color: var(--Primary-700);
+  background-image: url("../../../../assets/icons/sections/footer/footer-pattern-bg.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  color: var(--white);
+  padding-block: 52px 0;
+  margin: 0;
+  border: none;
+}
+.site-footer::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  pointer-events: none;
+  background-repeat: no-repeat;
+  background-size: contain;
+  z-index: 1;
+}
+
+.site-footer::before {
+  left: 0;
+  width: 190px;
+  height: 220px;
+  background-image: url("../../../../assets/icons/sections/footer/palmen-bg.svg");
+  background-position: bottom left;
+  opacity: 1;
+  z-index: -1;
+}
+
+.footer-content::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  right: -96px;
+  bottom: 0;
+  width: 548px;
+  height: 156px;
+  background-image: url("../../../../assets/icons/sections/footer/mosques-bg.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: bottom right;
+  opacity: 1;
+  z-index: -2;
+}
+
+.footer-content {
+  position: relative;
+  z-index: 2;
+  padding-bottom: 24px;
+}

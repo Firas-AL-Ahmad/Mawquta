@@ -1,0 +1,337 @@
+/* Shared section heading and action primitives */
+
+/* Base heading primitives */
+.section-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 26px;
+}
+
+.section-head__main {
+  min-inline-size: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  justify-content: center;
+  gap: 6px;
+}
+
+.section-head__title {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--ui-font-section-title);
+  font-weight: var(--ui-weight-bold);
+  line-height: var(--ui-lh-relaxed);
+}
+
+.section-head__meta {
+  margin: 0;
+  min-inline-size: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--ui-space-2);
+  border-radius: var(--ui-radius-pill);
+  font-family: var(--font-body);
+}
+
+.section-head__icon {
+  display: inline-block;
+  flex: 0 0 auto;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.section-head__aux {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* City meta primitives */
+.section-city {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--ui-space-1);
+}
+
+.section-head-chip {
+  display: inline-flex;
+  align-self: flex-start;
+  justify-content: flex-start;
+  align-items: center;
+  gap: var(--ui-space-2);
+  background: var(--white);
+  border-radius: var(--ui-radius-pill);
+  padding: var(--ui-space-1-5) var(--ui-space-3);
+  font-family: var(--font-body);
+  font-size: var(--ui-font-2xs);
+  font-weight: var(--ui-weight-semibold);
+  line-height: var(--ui-lh-snug);
+  color: var(--Primary-700);
+}
+
+.section-head-chip[type="button"],
+button.section-head-chip {
+  border: none;
+  cursor: pointer;
+  appearance: none;
+}
+
+.section-head-chip:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--Secondary-500) 24%, transparent),
+    0 0 0 4px color-mix(in srgb, var(--Secondary-500) 56%, transparent);
+}
+
+.section-head-chip__text {
+  color: inherit;
+  font: inherit;
+  line-height: inherit;
+}
+
+.section-city__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ui-space-2);
+  font-size: var(--ui-font-2xs);
+  font-weight: var(--ui-weight-semibold);
+  color: var(--Primary-700);
+}
+
+.section-head-chip__icon,
+.section-city__eyebrow-icon {
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2317654e'%3E%3Cpath d='M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z'/%3E%3C/svg%3E")
+    center/contain no-repeat;
+}
+
+img.section-head-chip__icon {
+  background: none;
+  object-fit: contain;
+}
+
+.daily-prayer-section__eyebrow-icon {
+  background: url("../../../../assets/icons/shared/prayer/prayer-rug.svg")
+    center/contain no-repeat;
+}
+
+.weekly-prayer-section__eyebrow-icon {
+  background: url("../../../../assets/icons/shared/prayer/prayer-rug.svg")
+    center/contain no-repeat;
+}
+
+.site-header__city-icon {
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2317654e' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z'/%3E%3Ccircle cx='12' cy='9' r='2.5'/%3E%3C/svg%3E")
+    center/contain no-repeat;
+}
+
+.section-city__name {
+  font-size: 32px;
+  font-weight: 900;
+  color: var(--Primary-500);
+}
+
+.section-city__meta {
+  font-size: var(--ui-font-2xs);
+  font-weight: var(--ui-weight-medium);
+  color: var(--Text-600);
+  background: rgba(18, 66, 53, 0.05);
+  border-radius: var(--ui-radius-xs);
+  padding: var(--ui-space-0-5) var(--ui-space-2-25);
+}
+
+/* Badge and action controls */
+.section-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--Primary-500);
+  color: var(--white);
+  font-size: var(--ui-font-sm);
+  font-weight: var(--ui-weight-bold);
+  border-radius: var(--ui-radius-sm);
+  padding: var(--ui-space-1-5) var(--ui-space-5);
+}
+
+.section-head__badge,
+.section-badge,
+.daily-prayer-section .daily-prayer-section__badge,
+.weekly-prayer-section .weekly-prayer-section__badge {
+  min-height: var(--ui-control-h-2xs);
+  border-radius: var(--ui-radius-pill);
+  padding: var(--ui-space-1-5) var(--ui-space-5);
+  font-family: var(--font-body);
+  font-size: var(--ui-font-badge-fluid);
+  font-weight: var(--ui-weight-bold);
+  line-height: var(--ui-lh-snug);
+}
+
+.section-head__action,
+.section-more-button,
+.ramadan-table-tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--ui-btn-min-h);
+  padding: var(--ui-btn-pad-y) var(--ui-btn-pad-x-sm);
+  font-family: var(--font-body);
+  font-size: var(--ui-btn-font-size);
+  font-weight: var(--ui-weight-bold);
+  line-height: var(--ui-btn-line-height);
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    filter var(--tr),
+    transform var(--tr),
+    background var(--tr),
+    border-color var(--tr),
+    box-shadow var(--tr);
+}
+
+.section-head__action:hover,
+.section-more-button:hover {
+  filter: brightness(0.96);
+}
+
+.section-head__action:active,
+.section-more-button:active {
+  transform: translateY(1px);
+}
+
+.section-head__action:focus-visible,
+.section-more-button:focus-visible,
+.ramadan-table-tab:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--Secondary-500) 24%, transparent),
+    0 0 0 4px color-mix(in srgb, var(--Secondary-500) 56%, transparent);
+}
+
+.ramadan-table-tab {
+  gap: var(--ui-space-1-5);
+  border-radius: var(--ui-radius-sm);
+  border: 1px solid color-mix(in srgb, var(--Secondary-500) 40%, transparent);
+  background: var(--Background-50);
+  color: var(--Primary-900);
+  transition:
+    background var(--tr),
+    border-color var(--tr),
+    color var(--tr),
+    transform var(--tr),
+    box-shadow var(--tr);
+}
+
+.ramadan-table-tab:hover {
+  background: color-mix(
+    in srgb,
+    var(--Background-50) 82%,
+    var(--Secondary-500) 18%
+  );
+}
+
+.ramadan-table-tab:active {
+  transform: translateY(1px);
+}
+
+.section-more-button {
+  gap: var(--ui-space-1-5);
+  background: none;
+  border: 1.5px solid var(--Secondary-500);
+  border-radius: var(--ui-radius-sm);
+  padding: var(--ui-btn-pad-y) var(--ui-btn-pad-x);
+  font-size: var(--ui-btn-font-size);
+  color: var(--Secondary-500);
+}
+
+/* Section-scoped heading variants */
+.daily-prayer-section .daily-prayer-section__head,
+.weekly-prayer-section .weekly-prayer-section__head {
+  margin-bottom: var(--ui-space-8);
+  align-items: flex-start;
+  gap: var(--ui-space-section-head-gap);
+}
+
+.daily-prayer-section .daily-prayer-section__city,
+.weekly-prayer-section .weekly-prayer-section__city {
+  gap: var(--ui-space-1-25);
+  align-items: flex-start;
+}
+
+.daily-prayer-section .daily-prayer-section__name,
+.weekly-prayer-section .weekly-prayer-section__name {
+  font-size: var(--ui-font-title-lg);
+  font-weight: var(--ui-weight-black);
+  line-height: var(--ui-lh-compact);
+  color: var(--Primary-700);
+  white-space: nowrap;
+  text-align: left;
+}
+
+.daily-prayer-section .daily-prayer-section__meta,
+.weekly-prayer-section .weekly-prayer-section__meta {
+  font-size: var(--ui-font-section-meta);
+  font-weight: var(--ui-weight-medium);
+  color: color-mix(in srgb, var(--Text-600) 85%, var(--Primary-900));
+  background: #e6ebe5;
+  border-radius: var(--ui-radius-pill);
+  padding: var(--ui-space-meta-pill);
+  line-height: var(--ui-lh-meta);
+  text-align: left;
+}
+
+.daily-prayer-section .daily-prayer-section__badge,
+.weekly-prayer-section .weekly-prayer-section__badge {
+  background: var(--Secondary-500);
+  align-self: flex-start;
+}
+
+/* Responsive overrides */
+@media (max-width: 767.98px) {
+  .section-head__action,
+  .section-more-button,
+  .ramadan-table-tab {
+    min-height: var(--ui-btn-min-h-sm);
+    padding: var(--ui-btn-pad-y) var(--ui-btn-pad-x-sm);
+    font-size: var(--ui-btn-font-size-sm);
+  }
+}
+
+@media (max-width: 575.98px) {
+  .section-head {
+    flex-direction: column-reverse;
+    gap: 8px;
+  }
+
+  .daily-prayer-section .daily-prayer-section__head,
+  .weekly-prayer-section .weekly-prayer-section__head {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    gap: 10px;
+  }
+
+  .daily-prayer-section .daily-prayer-section__city,
+  .weekly-prayer-section .weekly-prayer-section__city {
+    min-inline-size: 0;
+    flex: 1 1 auto;
+  }
+
+  .daily-prayer-section .daily-prayer-section__badge,
+  .weekly-prayer-section .weekly-prayer-section__badge {
+    flex: 0 0 auto;
+    align-self: flex-start;
+  }
+}

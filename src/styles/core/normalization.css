@@ -1,14 +1,17 @@
 /* Unified Scale Normalization Layer (Safe Medium) */
 .site-header__link,
 .header-chip,
-.header-menu-toggle,
 .header-language__trigger,
 .section-head__action,
 .ramadan-table-tab,
 .section-more-button,
 .hero-cta,
-.qibla-section .qibla-city-btn {
-  min-height: var(--ui-control-h-md);
+.qibla-section .qibla-city-btn,
+.ramadan-topbar__action,
+.ramadan-month-table-section .ramadan-table-action,
+.ramadan-month-table-section .section-more-button--filled,
+.qibla-city-modal__confirm {
+  min-height: var(--ui-btn-min-h);
 }
 
 .site-header__link,
@@ -23,6 +26,20 @@
 .qibla-section .qibla-city-btn {
   font-size: var(--ui-font-body-sm);
   line-height: var(--ui-lh-ui);
+}
+
+.btn,
+.section-head__action,
+.ramadan-table-tab,
+.section-more-button,
+.hero-cta,
+.qibla-section .qibla-city-btn,
+.ramadan-topbar__action,
+.ramadan-month-table-section .ramadan-table-action,
+.ramadan-month-table-section .section-more-button--filled,
+.qibla-city-modal__confirm {
+  font-size: var(--ui-btn-font-size);
+  line-height: var(--ui-btn-line-height);
 }
 
 .section-head__title {
@@ -195,17 +212,21 @@
     gap: var(--space-gap-sm);
   }
 
+  .btn,
   .site-header__link,
   .header-chip,
-  .header-menu-toggle,
   .header-language__trigger,
   .section-head__action,
   .ramadan-table-tab,
   .section-more-button,
   .hero-cta,
-  .qibla-section .qibla-city-btn {
-    min-height: var(--ui-control-h-sm);
-    font-size: var(--ui-font-body-sm);
+  .qibla-section .qibla-city-btn,
+  .ramadan-topbar__action,
+  .ramadan-month-table-section .ramadan-table-action,
+  .ramadan-month-table-section .section-more-button--filled,
+  .qibla-city-modal__confirm {
+    min-height: var(--ui-btn-min-h-sm);
+    font-size: var(--ui-btn-font-size-sm);
   }
 
   .schedule-table-head-icon,
@@ -232,7 +253,6 @@
 }
 
 @media (max-width: 575.98px) {
-  .hero__corner,
   .ramadan-month-table-section::after,
   .footer-content::after {
     display: none !important;

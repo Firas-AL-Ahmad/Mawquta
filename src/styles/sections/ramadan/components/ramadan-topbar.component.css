@@ -1,0 +1,190 @@
+/* Topbar */
+.ramadan-topbar {
+  direction: ltr;
+  display: grid;
+  grid-template-areas: "action date city summary";
+  grid-template-columns: 140px 276px 276px 424px;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--ramadan-topbar-gap);
+  margin-bottom: var(--ui-space-4);
+}
+
+.ramadan-topbar__action-shell {
+  grid-area: action;
+  justify-self: start;
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 140px;
+  block-size: auto;
+  min-block-size: calc(var(--ui-btn-min-h) + var(--ui-space-2));
+  padding: var(--ui-space-1);
+  border: 1px solid
+    color-mix(in srgb, var(--Primary-900) 10%, var(--Background-50));
+  border-radius: var(--ui-radius-md);
+  background: var(--ramadan-surface-soft);
+  box-shadow: var(--shadow-soft);
+}
+
+.ramadan-topbar__action,
+.ramadan-topbar__action.section-head__action {
+  inline-size: 130px;
+  block-size: var(--ui-btn-min-h);
+  min-inline-size: 130px;
+  min-block-size: var(--ui-btn-min-h);
+  padding: var(--ui-btn-pad-y) var(--ui-btn-pad-x-sm);
+  border: none;
+  border-radius: var(--ui-radius-sm);
+  background: var(--Secondary-500);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: var(--ui-btn-font-size);
+  font-weight: var(--ui-weight-bold);
+  line-height: var(--ui-btn-line-height);
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    filter var(--tr),
+    transform var(--tr);
+}
+
+.ramadan-topbar__chip {
+  position: relative;
+  border: 1px solid var(--Secondary-500);
+  border-radius: var(--ui-radius-lg);
+  background: var(--white);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 24px;
+}
+
+.ramadan-topbar__chip::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: clamp(-76px, -4.8vw, -58px);
+  inset-block-start: clamp(-48px, -3.2vw, -36px);
+  width: clamp(164px, 11vw, 200px);
+  height: clamp(164px, 11vw, 200px);
+  background: url("../../../../assets/icons/sections/ramadan/pattern-city-and-history.svg")
+    center/contain no-repeat;
+  pointer-events: none;
+}
+
+.ramadan-topbar__chip > * {
+  position: relative;
+  z-index: 1;
+}
+
+.ramadan-topbar__chip--date {
+  grid-area: date;
+  inline-size: 276px;
+}
+
+.ramadan-topbar__chip--city {
+  grid-area: city;
+  inline-size: 276px;
+}
+
+.ramadan-topbar__chip-content {
+  inline-size: 100%;
+  direction: rtl;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--ui-space-4);
+  white-space: nowrap;
+}
+
+.ramadan-topbar__chip-label-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ui-space-2);
+}
+
+.ramadan-topbar__chip-label,
+.ramadan-topbar__chip-value {
+  font-family: var(--font-body);
+  font-size: var(--ramadan-chip-font-size);
+  font-weight: var(--ui-weight-bold);
+  line-height: var(--ui-lh-relaxed);
+}
+
+.ramadan-topbar__chip-label {
+  color: var(--Primary-900);
+}
+
+.ramadan-topbar__chip-value {
+  color: var(--Secondary-500);
+}
+
+.ramadan-topbar__icon {
+  inline-size: var(--ramadan-icon-size);
+  block-size: var(--ramadan-icon-size);
+  flex: 0 0 var(--ramadan-icon-size);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.ramadan-topbar__icon--calendar {
+  background-image: url("../../../../assets/icons/sections/ramadan/topbar-calendar-icon.svg");
+}
+
+.ramadan-topbar__icon--location {
+  background-image: url("../../../../assets/icons/sections/ramadan/topbar-location-icon.svg");
+}
+
+.ramadan-topbar__summary {
+  grid-area: summary;
+  direction: rtl;
+  inline-size: 424px;
+  justify-self: start;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--ramadan-summary-gap);
+}
+
+.ramadan-topbar__month,
+.ramadan-topbar__month.section-head__title {
+  margin: 0;
+  color: var(--Primary-700);
+  font-family: var(--font-body);
+  font-size: var(--ramadan-month-size);
+  font-weight: var(--ui-weight-black);
+  line-height: var(--ui-lh-compact);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.ramadan-topbar__meta {
+  min-block-size: calc(var(--ui-control-h-xs) - var(--ui-space-1-5));
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--ui-space-2);
+  border-radius: var(--ui-radius-pill);
+  background: color-mix(in srgb, var(--Primary-800) 8%, var(--Background-50));
+  padding: var(--ui-space-1) var(--ui-space-3);
+}
+
+.ramadan-topbar__meta-prefix,
+.ramadan-topbar__meta-value {
+  color: var(--ramadan-muted-text);
+  font-family: var(--font-body);
+  font-size: var(--ui-font-sm);
+  font-weight: var(--ui-weight-medium);
+  line-height: var(--ui-lh-ui);
+  text-align: right;
+}
+
+.ramadan-topbar__meta-value {
+  min-inline-size: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
