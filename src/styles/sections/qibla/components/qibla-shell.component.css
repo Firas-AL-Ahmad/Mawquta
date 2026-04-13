@@ -1,0 +1,23 @@
+/* Qibla Section (Figma parity: node 2229:8094) */
+.qibla-section {
+  background: var(--Background-50);
+  padding-block: 40px;
+}
+
+.qibla-section > .container-xl {
+  position: relative;
+  z-index: 1;
+}
+
+.qibla-section .qibla-card {
+  position: relative;
+  overflow: hidden;
+  background: #d3dad5;
+  border: none;
+  border-radius: 14px;
+  box-shadow: 0 4px 8px -4px rgba(18, 66, 53, 0.16);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}

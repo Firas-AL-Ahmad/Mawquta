@@ -1,0 +1,32 @@
+/* Mobile toggle */
+.header-menu-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 3px;
+  align-items: center;
+  justify-content: center;
+  width: var(--header-touch-size);
+  height: var(--header-touch-size);
+  background: var(--Background-50);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition:
+    background var(--tr),
+    box-shadow var(--tr);
+}
+
+.header-menu-toggle span {
+  display: block;
+  width: 16px;
+  height: 2px;
+  background: var(--Primary-900);
+  border-radius: 2px;
+}
+
+.header-menu-toggle:focus-visible {
+  outline: none;
+  box-shadow:
+    inset 0 0 0 2px var(--Secondary-500),
+    0 0 0 2px color-mix(in srgb, var(--Secondary-500) 55%, transparent);
+}

@@ -8,21 +8,20 @@
 /* Layout */
 @import "./layout/page-shell.css";
 
-/* Shared primitives */
-@import "./primitives/ui-primitives.css";
-@import "./primitives/section-heading.css";
-@import "./primitives/daily-prayer-cards.css";
-@import "./primitives/schedule-table.css";
-@import "./primitives/section-base.css";
+/* Shared primitives/components */
+@import "./shared/primitives/ui-primitives.css";
+@import "./shared/primitives/section-base.css";
+@import "./shared/components/section/section-heading.css";
+@import "./shared/components/schedule/schedule-table.css";
 
 /* Section ownership */
-@import "./sections/site-header.css";
-@import "./sections/hero-section.css";
-@import "./sections/daily-prayer-section.css";
-@import "./sections/weekly-prayer-section.css";
-@import "./sections/qibla-section.css";
-@import "./sections/ramadan-section.css";
-@import "./sections/site-footer.css";
+@import "./sections/header/index.css";
+@import "./sections/hero/index.css";
+@import "./sections/daily-prayer/index.css";
+@import "./sections/weekly-prayer/index.css";
+@import "./sections/qibla/index.css";
+@import "./sections/ramadan/index.css";
+@import "./sections/footer/index.css";
 
 /* Utilities */
 @import "./utilities/helpers.css";

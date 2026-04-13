@@ -29,13 +29,13 @@
   left: 0;
   width: 264px;
   height: 264px;
-  background-image: url("../../assets/icons/sections/weekly-prayer/kabah-1.svg");
+  background-image: url("../../../assets/icons/sections/weekly-prayer/kabah-1.svg");
 }
 
 .weekly-prayer-section::after {
   right: 0;
   width: 230px;
   height: 230px;
-  background-image: url("../../assets/icons/sections/weekly-prayer/shalat-1.svg");
+  background-image: url("../../../assets/icons/sections/weekly-prayer/shalat-1.svg");
 }
 
