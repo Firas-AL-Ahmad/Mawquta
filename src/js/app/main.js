@@ -3,15 +3,15 @@
 ========================================================= */
 
 import { renderAppShell } from "../ui/layout/app-shell.layout.js";
-import { renderHeader } from "../ui/layout/header.layout.js";
-import { renderFooter } from "../ui/layout/footer.layout.js";
-import { renderHeroSection } from "../ui/sections/hero.section.js";
-import { renderDailyPrayerSection } from "../ui/sections/daily-prayer.section.js";
-import { renderWeeklyPrayerSection } from "../ui/sections/weekly-prayer.section.js";
-import { renderQiblaSection } from "../ui/sections/qibla.section.js";
-import { renderRamadanSection } from "../ui/sections/ramadan.section.js";
-import { bindNavInteractions } from "../ui/interactions/global/nav.interactions.js";
-import { bindRamadanTabsInteractions } from "../ui/interactions/ramadan/ramadan-tabs.interactions.js";
+import { renderHeaderSection } from "../ui/sections/header/header.section.js";
+import { renderFooterSection } from "../ui/sections/footer/footer.section.js";
+import { renderHeroSection } from "../ui/sections/hero/hero.section.js";
+import { renderDailyPrayerSection } from "../ui/sections/daily-prayer/daily-prayer.section.js";
+import { renderWeeklyPrayerSection } from "../ui/sections/weekly-prayer/weekly-prayer.section.js";
+import { renderQiblaSection } from "../ui/sections/qibla/qibla.section.js";
+import { renderRamadanSection } from "../ui/sections/ramadan/ramadan.section.js";
+import { bindHeaderNavInteractions } from "../ui/sections/header/interactions/nav.interactions.js";
+import { bindRamadanTabsInteractions } from "../ui/sections/ramadan/interactions/ramadan-tabs.interactions.js";
 
 function bootstrapApp() {
   const appRoot = document.getElementById("app");
@@ -32,15 +32,15 @@ function bootstrapApp() {
   const appRamadanRoot = document.getElementById("ramadan-section");
   const appFooterRoot = document.getElementById("site-footer");
 
-  renderHeader(appHeaderRoot);
-  bindNavInteractions(appHeaderRoot);
+  renderHeaderSection(appHeaderRoot);
+  bindHeaderNavInteractions(appHeaderRoot);
 
   renderHeroSection(appHeroRoot);
   renderDailyPrayerSection(appDailyPrayerRoot);
   renderWeeklyPrayerSection(appWeeklyPrayerRoot);
   renderQiblaSection(appQiblaRoot);
   renderRamadanSection(appRamadanRoot);
-  renderFooter(appFooterRoot);
+  renderFooterSection(appFooterRoot);
 
   bindRamadanTabsInteractions(document);
 }
