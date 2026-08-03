@@ -5,12 +5,13 @@ function renderHeroLocationChip() {
     tagName: "div",
     rootClassName: "hero-location-chip",
     rootAttributes: {
-      "aria-label": "الموقع الحالي",
+      "aria-label": "الموقع المختار",
     },
     text: "دمشق، سوريا",
     textClassName: "hero-location-chip__text",
     textAttributes: {
       "data-hero-location": true,
+      "data-global-location-display": true,
     },
     iconType: "image",
     iconClassName: "hero-location-chip__icon",
@@ -50,7 +51,15 @@ function renderHeroDateCard() {
 
 function renderHeroChangeCityButton() {
   return `
-    <button type="button" class="hero-cta" data-hero-change-city>
+    <button
+      type="button"
+      class="hero-cta"
+      data-hero-change-city
+      data-global-location-control
+      data-bs-toggle="modal"
+      data-bs-target="#qiblaCityModal"
+      aria-controls="qiblaCityModal"
+    >
       تحديد مدينة أخرى
     </button>
   `;
