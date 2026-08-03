@@ -44,6 +44,7 @@ export default async function handler(req, res) {
         const country = x?.countryName || "";
         const lat = Number(x?.lat);
         const lon = Number(x?.lng);
+        const timezone = String(x?.timezone?.timeZoneId || "").trim();
 
         return {
           label: country ? `${city}, ${country}` : city,
@@ -51,6 +52,7 @@ export default async function handler(req, res) {
           country,
           lat,
           lon,
+          timezone,
         };
       })
       .filter(

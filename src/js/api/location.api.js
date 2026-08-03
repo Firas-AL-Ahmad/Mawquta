@@ -14,6 +14,26 @@ const geoAxios = window.axios.create({
   timeout: 10000,
 });
 
+function resolveTimezone(data) {
+  const directTimezone =
+    data?.timezone || data?.timeZone || data?.timezoneId || data?.timeZoneId;
+
+  if (typeof directTimezone === "string" && directTimezone.trim()) {
+    return directTimezone.trim();
+  }
+
+  const informative = Array.isArray(data?.localityInfo?.informative)
+    ? data.localityInfo.informative
+    : [];
+  const timezoneEntry = informative.find((item) =>
+    String(item?.description || "")
+      .toLowerCase()
+      .includes("time zone"),
+  );
+
+  return String(timezoneEntry?.name || timezoneEntry?.isoName || "").trim();
+}
+
 // Get current coordinates using Geolocation API
 export function getCurrentCoords(options = {}) {
   return new Promise((resolve, reject) => {
@@ -66,7 +86,9 @@ export async function reverseGeocodeToCityCountry(
   const city = data.city || data.locality || data.principalSubdivision || "";
 
   const country = data.countryName || "";
-  return { city, country, raw: data };
+  const timezone = resolveTimezone(data);
+
+  return { city, country, timezone };
 }
 
 
