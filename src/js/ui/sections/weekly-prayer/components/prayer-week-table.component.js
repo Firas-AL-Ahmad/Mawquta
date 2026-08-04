@@ -1,30 +1,32 @@
 import {
   WEEKLY_ICON_PATHS,
-  WEEKLY_MOBILE_CARD,
   WEEKLY_TABLE_COLUMNS,
-  WEEKLY_TABLE_ROWS,
 } from "./weekly-prayer.constants.js";
 import { renderWeeklyPrayerTable } from "./weekly-prayer-table.component.js";
 import { renderWeeklyPrayerMobileList } from "./weekly-prayer-mobile-list.component.js";
 
-export function renderWeeklyPrayerTableCard() {
+export function renderWeeklyPrayerTableCard({
+  rangeText,
+  rows,
+  mobileCard,
+}) {
   return `
     <div class="schedule-table-card">
       <div class="schedule-table-card__top">
         <p class="schedule-table-subtitle">الصلاة لسبعة أيام</p>
         <div class="schedule-table-range" aria-label="نطاق الأسبوع">
           <span class="schedule-table-range__icon" aria-hidden="true"></span>
-          <span class="schedule-table-range__text" data-weekly-range>23 - 29 مارس 2026</span>
+          <span class="schedule-table-range__text" data-weekly-range>${rangeText}</span>
         </div>
       </div>
 
       ${renderWeeklyPrayerTable({
         columns: WEEKLY_TABLE_COLUMNS,
-        rows: WEEKLY_TABLE_ROWS,
+        rows,
       })}
 
       ${renderWeeklyPrayerMobileList({
-        mobileCard: WEEKLY_MOBILE_CARD,
+        mobileCard,
         iconPaths: WEEKLY_ICON_PATHS,
       })}
     </div>
