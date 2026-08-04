@@ -12,8 +12,14 @@ import { renderQiblaSection } from "../ui/sections/qibla/qibla.section.js";
 import { renderRamadanSection } from "../ui/sections/ramadan/ramadan.section.js";
 import { bindHeaderNavInteractions } from "../ui/sections/header/interactions/nav.interactions.js";
 import { bindRamadanTabsInteractions } from "../ui/sections/ramadan/interactions/ramadan-tabs.interactions.js";
+import { createLocationService } from "../services/location.service.js";
+import { bindLocationPickerInteractions } from "../ui/sections/qibla/interactions/location-picker.interactions.js";
+
+const locationService = createLocationService();
 
 function bootstrapApp() {
+  locationService.initialize();
+
   const appRoot = document.getElementById("app");
   if (!appRoot) {
     console.warn(
@@ -43,6 +49,7 @@ function bootstrapApp() {
   renderFooterSection(appFooterRoot);
 
   bindRamadanTabsInteractions(document);
+  bindLocationPickerInteractions(document, locationService);
 }
 
 bootstrapApp();
