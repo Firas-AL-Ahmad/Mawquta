@@ -8,11 +8,16 @@ import { renderFooterSection } from "../ui/sections/footer/footer.section.js";
 import { renderHeroSection } from "../ui/sections/hero/hero.section.js";
 import { renderDailyPrayerSection } from "../ui/sections/daily-prayer/daily-prayer.section.js";
 import { renderWeeklyPrayerSection } from "../ui/sections/weekly-prayer/weekly-prayer.section.js";
+import { createWeeklyPrayerRuntime } from "../ui/sections/weekly-prayer/weekly-prayer.runtime.js";
 import { renderQiblaSection } from "../ui/sections/qibla/qibla.section.js";
 import { renderRamadanSection } from "../ui/sections/ramadan/ramadan.section.js";
 import { bindHeaderNavInteractions } from "../ui/sections/header/interactions/nav.interactions.js";
 import { bindRamadanTabsInteractions } from "../ui/sections/ramadan/interactions/ramadan-tabs.interactions.js";
 import { createLocationService } from "../services/location.service.js";
+import {
+  getCurrentWeekByCity,
+  getCurrentWeekByCoords,
+} from "../services/week.service.js";
 import { bindLocationPickerInteractions } from "../ui/sections/qibla/interactions/location-picker.interactions.js";
 
 const locationService = createLocationService();
@@ -47,6 +52,13 @@ function bootstrapApp() {
   renderQiblaSection(appQiblaRoot);
   renderRamadanSection(appRamadanRoot);
   renderFooterSection(appFooterRoot);
+
+  createWeeklyPrayerRuntime({
+    rootElement: appWeeklyPrayerRoot,
+    locationService,
+    getCurrentWeekByCity,
+    getCurrentWeekByCoords,
+  });
 
   bindRamadanTabsInteractions(document);
   bindLocationPickerInteractions(document, locationService);
