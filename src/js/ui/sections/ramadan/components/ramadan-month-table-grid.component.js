@@ -12,6 +12,14 @@ const RAMADAN_MOBILE_PRAYERS = [
   { key: "isha", label: "العشاء" },
 ];
 
+// Maps table column keys to the normalized Ramadan month-row fields so the
+// display rows stay contract-aligned (weekday/gregorianDate/ramadanDay).
+const ROW_FIELD_BY_COLUMN = {
+  ramadanDayNumber: "ramadanDay",
+  day: "weekday",
+  date: "gregorianDate",
+};
+
 function resolveRamadanCellClass(columnKey) {
   if (columnKey === "day") {
     return "table-cell--day";
@@ -39,8 +47,9 @@ function renderRamadanTableCell(row, columnKey) {
     return `<td class="table-cell--active"><span class="table-time-pill">${row[columnKey]}</span></td>`;
   }
 
+  const rowField = ROW_FIELD_BY_COLUMN[columnKey] ?? columnKey;
+  const cellContent = row[rowField] ?? row[columnKey] ?? "";
   const cellClass = resolveRamadanCellClass(columnKey);
-  const cellContent = row[columnKey] ?? "";
 
   if (cellClass) {
     return `<td class="${cellClass}">${cellContent}</td>`;
@@ -61,10 +70,10 @@ function renderRamadanMobileList(rows, iconPaths) {
   return renderScheduleTableMobileList({
     ariaLabel: "مواقيت رمضان - عرض الموبايل",
     cards: rows.map((row) => ({
-      ariaLabel: `مواقيت ${row.day}`,
-      title: row.day,
-      date: row.date,
-      pillText: `رمضان ${row.ramadanDayNumber}`,
+      ariaLabel: `مواقيت ${row.weekday}`,
+      title: row.weekday,
+      date: row.gregorianDate,
+      pillText: `رمضان ${row.ramadanDay}`,
       titleIconPath: iconPaths.day,
       dateIconPath: iconPaths.date,
       prayers: RAMADAN_MOBILE_PRAYERS.map((prayerConfig) => ({
@@ -79,16 +88,22 @@ function renderRamadanMobileList(rows, iconPaths) {
   });
 }
 
-export function renderRamadanMonthTableGrid({ columns, rows, iconPaths }) {
+export function renderRamadanMonthTableGrid({
+  columns,
+  rows,
+  iconPaths,
+  locationLabel = "—",
+  rangeLabel = "—",
+}) {
   return `
     <div class="schedule-table-card">
       <div class="schedule-table-card__top">
-       <p class="ramadan-month-table-location-line"><span>مواقيت رمضان لمدينة:</span><strong data-rt-city>دمشق، سوريا</strong></p>
-       <span class="schedule-table-range"><span class="schedule-table-range__text" data-rt-range>23 - 29 مارس 2026</span></span>
+       <p class="ramadan-month-table-location-line"><span>مواقيت رمضان لمدينة:</span><strong data-rt-city>${locationLabel}</strong></p>
+       <span class="schedule-table-range"><span class="schedule-table-range__text" data-rt-range>${rangeLabel}</span></span>
       </div>
 
       <div class="schedule-table-wrap">
-        <table class="schedule-table" aria-label="جدول رمضان الثابت">
+        <table class="schedule-table" aria-label="جدول رمضان">
           <thead>
             <tr>
               ${renderScheduleTableHeader(columns, {

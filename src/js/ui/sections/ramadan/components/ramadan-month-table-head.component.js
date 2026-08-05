@@ -1,7 +1,11 @@
 import { renderSectionHeadChip } from "../../../shared/components/section/section-head-chip.component.js";
 
 function renderRamadanTableHeadChip(iconPaths) {
-  const chipItems = ["1448هـ", "2026م", "رمضان"];
+  const chipItems = [
+    '<span data-rt-head-hijri>—</span>هـ',
+    '<span data-rt-head-gregorian>—</span>م',
+    "رمضان",
+  ];
   const chipText = chipItems.join(" ");
 
   return renderSectionHeadChip({

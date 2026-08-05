@@ -19,6 +19,8 @@ export function renderRamadanSection(rootElement, sectionData = {}) {
         ${renderRamadanTopbar(RAMADAN_SECTION_ICON_PATHS)}
 
         ${renderRamadanCountdown()}
+
+        <div data-ramadan-data></div>
       </div>
     </section>
 

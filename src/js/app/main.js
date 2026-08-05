@@ -18,12 +18,16 @@ import { createLocationService } from "../services/location.service.js";
 import { createDailyPrayerService } from "../services/daily-prayer.service.js";
 import { createQiblaService } from "../services/qibla.service.js";
 import { createQiblaRuntime } from "../ui/sections/qibla/qibla.runtime.js";
+import { createRamadanService } from "../services/ramadan.service.js";
+import { createRamadanRuntime } from "../ui/sections/ramadan/ramadan.runtime.js";
 import { searchCitySuggestions } from "../services/location-search.service.js";
 import {
   getCurrentWeekByCity,
   getCurrentWeekByCoords,
   getTodayByCity,
   getTodayByCoords,
+  getMonthCalendarByCity,
+  getMonthCalendarByCoords,
 } from "../services/week.service.js";
 import {
   getTimingsByCityAndCountry,
@@ -68,9 +72,17 @@ const qiblaService = createQiblaService({
   geocodeCity: geocodeCityCoordinates,
 });
 
+const ramadanService = createRamadanService({
+  getTodayByCity,
+  getTodayByCoords,
+  getMonthCalendarByCity,
+  getMonthCalendarByCoords,
+});
+
 // Retained for tests and cleanup (destroy()).
 let dailyPrayerRuntime = null;
 let qiblaRuntime = null;
+let ramadanRuntime = null;
 
 function bootstrapApp() {
   locationService.initialize();
@@ -121,6 +133,12 @@ function bootstrapApp() {
     rootElement: appQiblaRoot,
     locationService,
     qiblaService,
+  });
+
+  ramadanRuntime = createRamadanRuntime({
+    rootElement: appRamadanRoot,
+    locationService,
+    ramadanService,
   });
 
   bindRamadanTabsInteractions(document);
