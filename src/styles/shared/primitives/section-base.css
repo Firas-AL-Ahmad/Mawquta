@@ -1,0 +1,16 @@
+/* Shared section-level primitives */
+
+.daily-prayer-section,
+.weekly-prayer-section,
+.qibla-section,
+.ramadan-section,
+.ramadan-month-table-section {
+  margin: 0;
+  border: none;
+}
+
+.section-divider {
+  border: 0;
+  margin: 0;
+}
+

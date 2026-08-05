@@ -1,0 +1,149 @@
+/* Ramadan month table section */
+.ramadan-month-table-section {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  direction: rtl;
+  background: var(--Background-50);
+  padding-block: var(--space-section-md) var(--ui-space-6);
+}
+
+.ramadan-month-table-section > * {
+  position: relative;
+  z-index: 1;
+}
+
+.ramadan-month-table-section::after {
+  content: "";
+  position: absolute;
+  inset-inline-end: 0;
+  inset-block-start: 0;
+  inline-size: 300px;
+  block-size: 300px;
+  background: url("../../../../assets/icons/sections/ramadan/decor-lantern.svg")
+    center/contain no-repeat;
+  opacity: 1;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ramadan-month-table-section .ramadan-table-head {
+  margin-bottom: var(--space-12);
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--ui-space-4);
+  text-align: start;
+}
+
+.ramadan-month-table-section .ramadan-table-head__content {
+  min-inline-size: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: var(--ui-space-4);
+  inline-size: auto;
+  max-inline-size: 100%;
+}
+
+.ramadan-month-table-section .ramadan-table-title {
+  margin: 0;
+  color: var(--Primary-700);
+  font-family: var(--font-body);
+  font-size: var(--ui-font-title-lg);
+  font-weight: var(--ui-weight-bold);
+  line-height: var(--ui-lh-compact);
+}
+
+.ramadan-month-table-section .ramadan-table-head__actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--ui-space-6);
+  margin-inline-start: auto;
+}
+
+.ramadan-month-table-section .ramadan-table-action {
+  border: none;
+  inline-size: 224px;
+  min-block-size: var(--ui-btn-min-h-lg);
+  border-radius: var(--ui-radius-lg);
+  background: var(--Secondary-500);
+  color: var(--white);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ui-space-2);
+  padding: var(--ui-btn-pad-y) var(--ui-btn-pad-x);
+  font-family: var(--font-body);
+  font-size: var(--ui-btn-font-size);
+  font-weight: var(--ui-weight-bold);
+  line-height: var(--ui-btn-line-height);
+  cursor: pointer;
+  transition:
+    filter var(--tr),
+    transform var(--tr);
+}
+
+.ramadan-month-table-section .ramadan-table-action:hover {
+  filter: brightness(0.96);
+}
+
+.ramadan-month-table-section .ramadan-table-action:active {
+  transform: translateY(1px);
+}
+
+.ramadan-month-table-section .ramadan-table-action img {
+  inline-size: var(--size-icon-md);
+  block-size: var(--size-icon-md);
+}
+
+.ramadan-month-table-section .ramadan-month-table-location-line {
+  margin: 0;
+  display: inline-flex;
+  align-items: baseline;
+  justify-content: flex-end;
+  gap: var(--ui-space-2);
+  color: var(--Primary-900);
+  font-family: var(--font-quote);
+  font-size: var(--ui-font-title-md);
+  line-height: var(--ui-lh-relaxed);
+  text-align: right;
+}
+
+.ramadan-month-table-section .ramadan-month-table-location-line strong {
+  color: var(--Secondary-500);
+  font-family: var(--font-body);
+  font-size: inherit;
+  font-weight: var(--ui-weight-bold);
+}
+
+.ramadan-month-table-section .ramadan-month-table__more {
+  padding: calc(var(--ui-space-6) + var(--ui-space-1)) 0 0;
+  border: none;
+}
+
+.ramadan-month-table-section .section-more-button--filled {
+  border: none;
+  min-inline-size: 224px;
+  min-block-size: var(--ui-btn-min-h-lg);
+  border-radius: var(--ui-radius-lg);
+  padding: var(--ui-btn-pad-y) var(--ui-btn-pad-x);
+  background: var(--Secondary-500);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: var(--ui-btn-font-size);
+  font-weight: var(--ui-weight-bold);
+  line-height: var(--ui-btn-line-height);
+}
+
+.ramadan-month-table-section .section-more-button--filled:hover {
+  filter: brightness(0.96);
+}
+
+.ramadan-month-table-section .section-more-button--filled:active {
+  transform: translateY(1px);
+}

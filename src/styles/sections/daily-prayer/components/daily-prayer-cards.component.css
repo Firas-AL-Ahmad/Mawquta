@@ -1,0 +1,112 @@
+/* Shared prayer card primitives */
+
+/* Base track and cards */
+.daily-prayer-cards-track {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.daily-prayer-card {
+  position: relative;
+  border-radius: var(--rcard);
+  overflow: hidden;
+  aspect-ratio: 1/1.08;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px;
+  color: var(--white);
+  box-shadow: 0 6px 20px -4px rgba(0, 0, 0, 0.22);
+  flex: 1;
+}
+
+.daily-prayer-card--active {
+  outline: 3px solid var(--Primary-500);
+  outline-offset: 2px;
+  transform: scale(1.03);
+}
+
+/* Card tone variants */
+.daily-prayer-card--fajr {
+  background: linear-gradient(
+    160deg,
+    var(--Decor-Fajr-Start) 0%,
+    var(--Decor-Fajr-End) 100%
+  );
+}
+
+.daily-prayer-card--dhuhr {
+  background: linear-gradient(
+    160deg,
+    var(--Decor-Dhuhr-Start) 0%,
+    var(--Decor-Dhuhr-End) 100%
+  );
+}
+
+.daily-prayer-card--asr {
+  background: linear-gradient(
+    160deg,
+    var(--Decor-Asr-Start) 0%,
+    var(--Decor-Asr-End) 100%
+  );
+}
+
+.daily-prayer-card--maghrib {
+  background: linear-gradient(
+    160deg,
+    var(--Decor-Maghrib-Start) 0%,
+    var(--Decor-Maghrib-End) 100%
+  );
+}
+
+.daily-prayer-card--isha {
+  background: linear-gradient(
+    160deg,
+    var(--Decor-Isha-Start) 0%,
+    var(--Decor-Isha-End) 100%
+  );
+}
+
+.daily-prayer-card__name {
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.daily-prayer-card__time-wrap {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.daily-prayer-card__time {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.22);
+  border: 1.5px solid rgba(255, 255, 255, 0.38);
+  border-radius: var(--ui-radius-control-sm);
+  padding: var(--ui-space-2) var(--ui-space-4);
+  font-size: 22px;
+  font-weight: var(--ui-weight-extrabold);
+  direction: ltr;
+  width: 100%;
+}
+
+/* Responsive overrides */
+@media (max-width: 575.98px) {
+  .daily-prayer-cards-track {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    overflow: visible;
+  }
+
+  .daily-prayer-card:last-child {
+    grid-column: 1 / -1;
+    max-width: calc(50% - 5px);
+    justify-self: center;
+  }
+}
+

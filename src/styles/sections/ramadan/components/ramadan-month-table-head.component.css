@@ -1,0 +1,46 @@
+/* Month table heading controls */
+.ramadan-table-head {
+  direction: rtl;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ui-space-4);
+  flex-wrap: wrap;
+  margin-bottom: var(--ui-space-4);
+}
+
+.ramadan-table-head__content {
+  min-inline-size: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.ramadan-table-head__actions {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--ui-space-2);
+  flex-wrap: wrap;
+}
+
+.ramadan-table-title {
+  color: var(--Primary-900);
+  font-size: var(--ui-font-ramadan-table-title);
+  font-weight: var(--ui-weight-extrabold);
+  line-height: var(--ui-lh-normal);
+}
+
+.ramadan-table-tab--active,
+.ramadan-table-tab[aria-selected="true"] {
+  background: var(--Secondary-500);
+  color: var(--white);
+  border-color: transparent;
+}
+
+.ramadan-month-table__more {
+  display: flex;
+  justify-content: center;
+  padding: var(--ui-space-5);
+  border-top: 1px solid var(--color-border);
+}

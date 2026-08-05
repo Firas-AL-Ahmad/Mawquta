@@ -1,0 +1,5 @@
+@import "./components/hero-shell.component.css";
+@import "./components/hero-info-panel.component.css";
+@import "./components/hero-next-prayer-card.component.css";
+@import "./components/hero-countdown.component.css";
+@import "./hero.section.css";

@@ -1,17 +1,33 @@
+import { CONFIG } from "../config/app.config.js";
+
 export async function searchCitySuggestions(query, options = {}) {
   const q = String(query || "").trim();
   if (q.length < 3) return [];
 
-  const { maxRows = 8, lang = "en" } = options;
+  const {
+    maxRows = 8,
+    lang = CONFIG.LOCALE.split("-")[0],
+    signal,
+  } = options;
 
-  const url = new URL("/api/geocode", window.location.origin);
-  url.searchParams.set("q", q);
-  url.searchParams.set("limit", String(maxRows));
-  url.searchParams.set("lang", lang);
+  try {
+    const url = new URL("/api/geocode", window.location.origin);
+    url.searchParams.set("q", q);
+    url.searchParams.set("limit", String(maxRows));
+    url.searchParams.set("lang", lang);
 
-  const r = await fetch(url.toString());
-  const data = await r.json();
+    const response = await fetch(url.toString(), { signal });
+    if (!response.ok) {
+      return [];
+    }
 
-  if (!data?.ok) return [];
-  return Array.isArray(data.results) ? data.results : [];
+    const data = await response.json();
+    if (!data?.ok) {
+      return [];
+    }
+
+    return Array.isArray(data.results) ? data.results : [];
+  } catch {
+    return [];
+  }
 }

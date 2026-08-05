@@ -1,0 +1,57 @@
+/* Typography and links */
+.footer-heading {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--Secondary-500);
+  margin-bottom: 12px;
+}
+.footer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0;
+  margin: 0;
+}
+.footer-links a {
+  font-size: 15px;
+  line-height: 22px;
+  color: color-mix(in srgb, var(--white) 90%, transparent);
+  text-decoration: none;
+}
+.footer-links a:hover {
+  color: var(--white);
+}
+
+.footer-contact-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-contact-list a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: color-mix(in srgb, var(--white) 92%, transparent);
+  text-decoration: none;
+  font-size: 15px;
+  line-height: 22px;
+}
+
+.footer-contact-list img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.footer-legal-note {
+  margin: 24px 64px 0;
+  text-align: center;
+  color: color-mix(in srgb, var(--white) 88%, transparent);
+  font-size: 14px;
+  line-height: 24px;
+}

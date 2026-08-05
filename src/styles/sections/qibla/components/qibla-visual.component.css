@@ -1,0 +1,80 @@
+.qibla-section .qibla-visual {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: clamp(320px, 27vw, 410px);
+  padding: 2px 18px 0;
+  overflow: hidden;
+}
+
+.qibla-section .qibla-compass {
+  --qibla-compass-size: min(100%, 360px);
+  position: relative;
+  inline-size: var(--qibla-compass-size);
+  block-size: var(--qibla-compass-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+.qibla-section .qibla-compass::before {
+  content: none;
+}
+
+.qibla-section .qibla-compass::after {
+  content: none;
+}
+
+.qibla-section .qibla-compass__asset {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: contain;
+}
+
+.qibla-section .qibla-visual__decor {
+  position: absolute;
+  display: block;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.qibla-section .qibla-visual__decor--left {
+  left: -24px;
+  bottom: -24px;
+
+  width: 278px;
+  height: 278px;
+  border: none;
+  border-radius: 0;
+  transform: none;
+  background: none;
+  object-position: left bottom;
+}
+
+.qibla-section .qibla-visual__decor--left::before,
+.qibla-section .qibla-visual__decor--left::after {
+  content: none;
+}
+
+.qibla-section .qibla-visual__decor--right {
+  right: 0;
+  bottom: 0;
+  width: 154px;
+  height: 242px;
+  border: none;
+  border-radius: 0;
+  transform: none;
+  mix-blend-mode: normal;
+  background: none;
+  object-position: right bottom;
+}
+
+.qibla-section .qibla-visual__decor--right::before,
+.qibla-section .qibla-visual__decor--right::after {
+  content: none;
+}

@@ -1,0 +1,107 @@
+.qibla-section .qibla-card__head {
+  position: relative;
+  direction: rtl;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  grid-template-areas: "heading degree action";
+  align-items: center;
+  gap: 12px;
+  min-height: 74px;
+  padding: 12px;
+  border-radius: 14px;
+  background: var(--Background-50);
+  overflow: hidden;
+}
+
+.qibla-section .qibla-card__heading {
+  grid-area: heading;
+  justify-self: start;
+  min-inline-size: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  gap: 6px;
+  text-align: right;
+  max-inline-size: min(100%, 640px);
+}
+
+.qibla-section .qibla-card__title {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--ui-space-1-5);
+  color: var(--Secondary-500);
+  font-family: var(--font-body);
+  font-size: var(--ui-font-qibla-title);
+  font-weight: var(--ui-weight-bold);
+  line-height: var(--ui-lh-relaxed);
+}
+
+.qibla-section .qibla-card__title-icon {
+  inline-size: var(--ui-icon-qibla-title);
+  block-size: var(--ui-icon-qibla-title);
+  flex: 0 0 var(--ui-icon-qibla-title);
+  background: url("../../../../assets/icons/sections/qibla/qibla-heading-icon.svg") center/contain
+    no-repeat;
+}
+
+.qibla-section .qibla-card__note {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  background: rgba(15, 82, 51, 0.08);
+  color: #64748b;
+  border-radius: 100px;
+  padding: 3px 10px;
+  font-size: clamp(12px, 0.72rem + 0.2vw, 14px);
+  font-weight: 400;
+  line-height: 1.45;
+  white-space: nowrap;
+}
+
+.qibla-section .qibla-city-btn {
+  grid-area: action;
+  justify-self: end;
+  align-self: center;
+  border: none;
+  border-radius: var(--ui-radius-md);
+  background: var(--Secondary-500);
+  color: var(--white);
+  min-height: var(--ui-btn-min-h);
+  padding: var(--ui-btn-pad-y) var(--ui-btn-pad-x-sm);
+  font-family: var(--font-body);
+  font-size: var(--ui-btn-font-size);
+  font-weight: var(--ui-weight-bold);
+  line-height: var(--ui-btn-line-height);
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    filter var(--tr),
+    transform var(--tr);
+}
+
+.qibla-section .qibla-city-btn:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--Secondary-500) 25%, transparent),
+    0 0 0 4px color-mix(in srgb, var(--Secondary-500) 60%, transparent);
+}
+
+.qibla-section .qibla-card__degree {
+  grid-area: degree;
+  justify-self: center;
+  align-self: center;
+  position: static;
+  transform: none;
+  margin: 0;
+  padding: 0;
+  color: var(--Secondary-500);
+  font-family: "Reem Kufi", var(--font-heading);
+  font-size: clamp(32px, 1.8rem + 0.55vw, 40px);
+  font-weight: 600;
+  line-height: 1;
+  z-index: 2;
+}

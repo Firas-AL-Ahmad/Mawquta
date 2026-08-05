@@ -1,5 +1,16 @@
 // api/geocode.js
 
+function isValidIanaTimezone(timezone) {
+  if (!timezone) return false;
+
+  try {
+    new Intl.DateTimeFormat("en-US", { timeZone: timezone }).format();
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 export default async function handler(req, res) {
   try {
     const q = String(req.query.q || "").trim();
@@ -44,6 +55,7 @@ export default async function handler(req, res) {
         const country = x?.countryName || "";
         const lat = Number(x?.lat);
         const lon = Number(x?.lng);
+        const timezone = String(x?.timezone?.timeZoneId || "").trim();
 
         return {
           label: country ? `${city}, ${country}` : city,
@@ -51,6 +63,7 @@ export default async function handler(req, res) {
           country,
           lat,
           lon,
+          timezone,
         };
       })
       .filter(
@@ -58,7 +71,8 @@ export default async function handler(req, res) {
           s.city &&
           s.country &&
           Number.isFinite(s.lat) &&
-          Number.isFinite(s.lon),
+          Number.isFinite(s.lon) &&
+          isValidIanaTimezone(s.timezone),
       );
 
     // Dedupe by city+country to avoid repeated entries

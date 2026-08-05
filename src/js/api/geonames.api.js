@@ -1,4 +1,4 @@
-import { CONFIG } from "../config.js";
+import { CONFIG } from "../config/app.config.js";
 
 // Create a dedicated axios instance for Geonames API with the base URL and default parameters
 const geonamesAxios = window.axios.create({
@@ -22,3 +22,5 @@ async function searchCitiesGeoNames({ geonamesQuery, maxRows = 8 }) {
 }
 
 export { searchCitiesGeoNames };
+
+

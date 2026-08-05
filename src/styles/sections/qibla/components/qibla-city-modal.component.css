@@ -1,0 +1,73 @@
+.qibla-city-modal__dialog {
+  max-width: min(100% - 24px, 520px);
+}
+
+.qibla-city-modal__content {
+  background: var(--Background-50);
+  border: none;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px -24px rgba(18, 66, 53, 0.38);
+  direction: rtl;
+}
+
+.qibla-city-modal__header {
+  padding: 16px 18px 10px;
+  border-bottom: 1px solid rgba(18, 66, 53, 0.08);
+}
+
+.qibla-city-modal__title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--Primary-700);
+}
+
+.qibla-city-modal__close {
+  margin: 0;
+  border: none;
+  background: transparent;
+  color: var(--Primary-700);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.qibla-city-modal__body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 14px 18px 18px;
+}
+
+.qibla-city-modal__note {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--Text-600);
+}
+
+.qibla-city-modal__fake-input {
+  border: 1px solid rgba(18, 66, 53, 0.18);
+  border-radius: 12px;
+  padding: 12px 14px;
+  color: #6e7f78;
+  font-size: 14px;
+  background: rgba(255, 255, 255, 0.65);
+}
+
+.qibla-city-modal__confirm {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 12px;
+  min-height: var(--ui-btn-min-h);
+  padding: var(--ui-btn-pad-y) var(--ui-btn-pad-x-sm);
+  background: var(--Secondary-500);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: var(--ui-btn-font-size-sm);
+  font-weight: 700;
+  line-height: var(--ui-btn-line-height);
+  cursor: pointer;
+}

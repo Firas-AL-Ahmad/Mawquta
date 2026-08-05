@@ -1,0 +1,86 @@
+{
+  "H1": {
+    "$type": "typography",
+    "$value": {
+      "fontFamily": "Reem Kufi",
+      "fontSize": "32px",
+      "fontWeight": 600,
+      "letterSpacing": "0px",
+      "lineHeight": "40px",
+      "textTransform": "none",
+      "textDecoration": "none"
+    }
+  },
+  "H2": {
+    "$type": "typography",
+    "$value": {
+      "fontFamily": "Reem Kufi",
+      "fontSize": "24px",
+      "fontWeight": 600,
+      "letterSpacing": "0px",
+      "lineHeight": "32px",
+      "textTransform": "none",
+      "textDecoration": "none"
+    }
+  },
+  "H3": {
+    "$type": "typography",
+    "$value": {
+      "fontFamily": "Reem Kufi",
+      "fontSize": "20px",
+      "fontWeight": 500,
+      "letterSpacing": "0px",
+      "lineHeight": "28px",
+      "textTransform": "none",
+      "textDecoration": "none"
+    }
+  },
+  "Body": {
+    "$type": "typography",
+    "$value": {
+      "fontFamily": "Noto Kufi Arabic",
+      "fontSize": "16px",
+      "fontWeight": 400,
+      "letterSpacing": "0px",
+      "lineHeight": "24px",
+      "textTransform": "none",
+      "textDecoration": "none"
+    }
+  },
+  "Label": {
+    "$type": "typography",
+    "$value": {
+      "fontFamily": "Noto Kufi Arabic",
+      "fontSize": "14px",
+      "fontWeight": 500,
+      "letterSpacing": "0px",
+      "lineHeight": "22px",
+      "textTransform": "none",
+      "textDecoration": "none"
+    }
+  },
+  "Caption": {
+    "$type": "typography",
+    "$value": {
+      "fontFamily": "Noto Kufi Arabic",
+      "fontSize": "13px",
+      "fontWeight": 400,
+      "letterSpacing": "0px",
+      "lineHeight": "20px",
+      "textTransform": "none",
+      "textDecoration": "none"
+    }
+  },
+  "Quote": {
+    "$type": "typography",
+    "$value": {
+      "fontFamily": "Amiri Quran",
+      "fontSize": "18px",
+      "fontWeight": 400,
+      "letterSpacing": "0px",
+      "lineHeight": "26px",
+      "textTransform": "none",
+      "textDecoration": "none"
+    }
+  }
+}

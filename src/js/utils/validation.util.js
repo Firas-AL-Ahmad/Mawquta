@@ -26,6 +26,16 @@ export function requireLongitude(longitude) {
   }
 }
 
+export function requireTimezone(timezone) {
+  requireValue(timezone, "timezone");
+
+  try {
+    new Intl.DateTimeFormat("en-US", { timeZone: timezone }).format();
+  } catch {
+    throw new Error("timezone must be a valid IANA timezone!");
+  }
+}
+
 export function requireMonth(month) {
   requireNumber(month, "month");
   if (!Number.isInteger(month) || month < 1 || month > 12) {
@@ -68,3 +78,5 @@ export function requireDateDDMMYYYY(dateStr, fieldName = "date") {
     throw new Error(`${fieldName} year must be a reasonable value`);
   }
 }
+
+

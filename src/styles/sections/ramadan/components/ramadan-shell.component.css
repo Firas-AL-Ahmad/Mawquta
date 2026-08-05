@@ -1,0 +1,75 @@
+/* Ramadan section styles */
+
+/* Base section shell */
+.ramadan-section {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--Background-50);
+  padding-block: var(--space-section-md);
+  --ramadan-radius-shell: var(--ui-radius-lg);
+  --ramadan-topbar-gap: var(--ui-space-4);
+  --ramadan-chip-min-h: calc(var(--ui-btn-min-h-lg) + var(--ui-space-8));
+  --ramadan-chip-pad-inline: var(--ui-space-6);
+  --ramadan-chip-font-size: var(--ui-font-md);
+  --ramadan-summary-gap: var(--ui-space-4);
+  --ramadan-icon-size: var(--size-icon-lg);
+  --ramadan-month-size: var(--ui-font-title-lg);
+  --ramadan-title-size: var(--ui-font-title-md);
+  --ramadan-pill-size: var(--ui-font-display-md);
+  --ramadan-timer-size: var(--ui-font-display-lg);
+  --ramadan-progress-edge-size: var(--ui-font-2xs);
+  --ramadan-progress-value-size: var(--ui-font-title-md);
+  --ramadan-surface-shell: color-mix(
+    in srgb,
+    var(--Primary-900) 20%,
+    var(--Background-50)
+  );
+  --ramadan-surface-soft: color-mix(
+    in srgb,
+    var(--Primary-900) 13%,
+    var(--Background-50)
+  );
+  --ramadan-border-soft: color-mix(
+    in srgb,
+    var(--Primary-900) 20%,
+    var(--Background-50)
+  );
+  --ramadan-muted-text: color-mix(in srgb, var(--Text-600) 88%, var(--white));
+  --ramadan-progress-track: color-mix(
+    in srgb,
+    var(--Primary-900) 12%,
+    var(--Background-50)
+  );
+}
+
+.ramadan-section > .container-xl {
+  position: relative;
+  z-index: 2;
+}
+
+.ramadan-section::before,
+.ramadan-section::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  background-repeat: no-repeat;
+  background-size: contain;
+  z-index: 1;
+}
+
+.ramadan-section::before {
+  top: 0;
+  left: 0;
+  width: 192px;
+  height: 332px;
+  background-image: url("../../../../assets/icons/sections/ramadan/left-crescent-pattern.svg");
+}
+
+.ramadan-section::after {
+  top: 0;
+  right: 0;
+  width: 132px;
+  height: 372px;
+  background-image: url("../../../../assets/icons/sections/ramadan/right-crescent-pattern.svg");
+}

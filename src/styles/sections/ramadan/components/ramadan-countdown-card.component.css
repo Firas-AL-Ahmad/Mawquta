@@ -1,0 +1,282 @@
+/* Countdown and first-day cards */
+.ramadan-first {
+  direction: rtl;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.ramadan-first__shell {
+  width: 75%;
+  border-radius: var(--ramadan-radius-shell);
+  background: var(--ramadan-surface-shell);
+  padding: var(--ui-space-4);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--ui-space-3);
+}
+
+.ramadan-first__times {
+  direction: rtl;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--ui-space-3);
+}
+
+.ramadan-first-time {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--ui-radius-md);
+  border: 1px solid var(--Secondary-500);
+  background: var(--white);
+  min-height: calc(var(--ui-control-h-lg) + var(--ui-space-8));
+}
+
+.ramadan-first-time::before {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  width: min(42%, 184px);
+  background: url("../../../../assets/icons/sections/ramadan/suhoor-time-background.svg")
+    center/cover no-repeat;
+  pointer-events: none;
+}
+
+.ramadan-first-time__inner {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ui-space-2-5);
+  padding: var(--ui-space-3) var(--ui-space-4-5);
+}
+
+.ramadan-first-time__label-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--ui-space-2);
+}
+
+.ramadan-first-time__label {
+  color: var(--Primary-700);
+  font-family: var(--font-body);
+  font-size: var(--ramadan-title-size);
+  font-weight: var(--ui-weight-bold);
+  line-height: var(--ui-lh-normal);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.ramadan-first-time__pill {
+  direction: ltr;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-inline-size: calc(var(--ui-control-h-lg) + var(--ui-space-6));
+  min-block-size: var(--ui-control-h-sm);
+  border-radius: var(--ui-radius-control-sm);
+  border: 2px solid var(--ramadan-border-soft);
+  background: var(--ramadan-surface-shell);
+  color: var(--Secondary-500);
+  font-family: "Reem Kufi", var(--font-heading);
+  font-size: var(--ramadan-pill-size);
+  font-weight: var(--ui-weight-bold);
+  line-height: 1;
+  padding: var(--ui-space-1) var(--ui-space-2-5);
+}
+
+.ramadan-first-time__icon {
+  inline-size: var(--size-icon-md);
+  block-size: var(--size-icon-md);
+  flex: 0 0 var(--size-icon-md);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.ramadan-first-time__icon--imsak {
+  background-image: url("../../../../assets/icons/sections/ramadan/imsak-time-icon.svg");
+}
+
+.ramadan-first-time__icon--iftar {
+  background-image: url("../../../../assets/icons/shared/misc/moon-icon.svg");
+}
+
+.ramadan-first__countdown {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--ui-space-6);
+  overflow: hidden;
+  border-radius: var(--ui-radius-md);
+  border: 1px solid var(--Secondary-500);
+  background: var(--white);
+  padding: var(--ui-space-8) var(--ui-space-6) var(--ui-space-6);
+}
+
+.ramadan-first__countdown::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("../../../../assets/icons/sections/ramadan/suhoor-time-background.svg")
+    center/cover no-repeat;
+  pointer-events: none;
+}
+
+.ramadan-first__countdown > * {
+  position: relative;
+  z-index: 1;
+}
+
+.ramadan-first__countdown-head {
+  width: 100%;
+  margin-bottom: var(--ui-space-2-5);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ui-space-2);
+}
+
+.ramadan-first__countdown-title {
+  margin: 0;
+  color: var(--Primary-700);
+  font-family: var(--font-body);
+  font-size: var(--ramadan-title-size);
+  font-weight: var(--ui-weight-bold);
+  line-height: var(--ui-lh-normal);
+  text-align: center;
+}
+
+.ramadan-first__countdown-icon {
+  inline-size: var(--size-icon-md);
+  block-size: var(--size-icon-md);
+  flex: 0 0 var(--size-icon-md);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: url("../../../../assets/icons/sections/ramadan/moon-and-stars.svg")
+    center/contain no-repeat;
+}
+
+.ramadan-first__countdown-icon::before {
+  content: none;
+}
+
+.ramadan-first__timer {
+  margin-inline: auto;
+  width: min(100%, 248px);
+  min-height: calc(var(--ui-control-h-lg) + var(--ui-space-5) + var(--ui-space-0-5));
+  border-radius: var(--ui-radius-md);
+  border: 2px solid var(--ramadan-border-soft);
+  background: var(--ramadan-surface-shell);
+  padding: var(--ui-space-2) var(--ui-space-3);
+  direction: ltr;
+  display: inline-flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: var(--ui-space-2-5);
+}
+
+.ramadan-first__timer-part {
+  min-inline-size: calc(var(--ui-control-h-sm) + var(--ui-space-2-5));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ui-space-1);
+}
+
+.ramadan-first__timer-value {
+  color: var(--Secondary-500);
+  font-family: "Reem Kufi", var(--font-heading);
+  font-size: var(--ramadan-timer-size);
+  font-weight: var(--ui-weight-bold);
+  line-height: 1;
+}
+
+.ramadan-first__timer-unit {
+  color: color-mix(in srgb, var(--Secondary-700) 72%, var(--Secondary-500));
+  font-family: var(--font-body);
+  font-size: var(--ui-font-3xs);
+  font-weight: var(--ui-weight-bold);
+  line-height: 1;
+}
+
+.ramadan-first__timer-sep {
+  color: var(--Secondary-500);
+  font-family: "Reem Kufi", var(--font-heading);
+  font-size: var(--ramadan-timer-size);
+  font-weight: var(--ui-weight-bold);
+  line-height: 0.9;
+  margin-bottom: var(--ui-space-2);
+}
+
+.ramadan-first__progress {
+  margin-top: var(--ui-space-2);
+}
+
+.ramadan-first__progress-row {
+  direction: ltr;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ui-space-2);
+  margin-bottom: var(--ui-space-1-5);
+}
+
+.ramadan-first__progress-edge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ui-space-1-5);
+  color: var(--Secondary-500);
+  font-family: "Reem Kufi", var(--font-heading);
+  font-size: var(--ramadan-progress-edge-size);
+  font-weight: var(--ui-weight-semibold);
+  line-height: 1;
+}
+
+.ramadan-first__progress-value {
+  color: var(--Secondary-500);
+  font-family: var(--font-body);
+  font-size: var(--ramadan-progress-value-size);
+  font-weight: var(--ui-weight-bold);
+  line-height: 1;
+}
+
+.ramadan-first__progress-icon {
+  inline-size: var(--size-icon-xs);
+  block-size: var(--size-icon-xs);
+  flex: 0 0 var(--size-icon-xs);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.ramadan-first__progress-icon--start {
+  background-image: url("../../../../assets/icons/shared/misc/moon-icon.svg");
+}
+
+.ramadan-first__progress-icon--end {
+  background-image: url("../../../../assets/icons/sections/ramadan/imsak-time-icon.svg");
+}
+
+.ramadan-first__progress-track {
+  position: relative;
+  height: var(--ui-space-2);
+  border-radius: var(--ui-radius-pill);
+  background: var(--ramadan-progress-track);
+  overflow: hidden;
+}
+
+.ramadan-first__progress-fill {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-end: 0;
+  border-radius: inherit;
+  background: var(--Primary-700);
+}

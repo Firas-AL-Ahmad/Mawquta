@@ -13,7 +13,7 @@ import {
 } from "../utils/validation.util.js";
 
 import { getCache, setCache } from "../utils/cache.util.js";
-import { CONFIG } from "../config.js";
+import { CONFIG } from "../config/app.config.js";
 
 /* =========================================================
    Constants
@@ -127,6 +127,30 @@ function sliceWeekFromCurrentMonthOnly(currentMonthDays, dateObj = new Date()) {
    Calendar Fetch Helpers (with Cache)
 ========================================================= */
 /**
+ * In-flight request dedupe so concurrent consumers (Daily and Weekly) that
+ * request the same location+month never fire a duplicate network request.
+ * Shared by the calendar cache key; entries are removed once the fetch
+ * settles, whichever way it settles.
+ */
+const inflightCalendarRequests = new Map();
+
+/**
+ * Returns the in-flight promise for `cacheKey` when present (unless cache
+ * bypass is requested), otherwise runs `fetcher`, records it and returns it.
+ */
+function dedupeFetch(cacheKey, fetcher, bypassCache) {
+  if (!bypassCache && inflightCalendarRequests.has(cacheKey)) {
+    return inflightCalendarRequests.get(cacheKey);
+  }
+
+  const request = fetcher().finally(() => {
+    inflightCalendarRequests.delete(cacheKey);
+  });
+  inflightCalendarRequests.set(cacheKey, request);
+  return request;
+}
+
+/**
  * Fetches a monthly calendar by city/country with optional cache bypass.
  */
 async function fetchMonthlyCalendarByCity({
@@ -144,14 +168,18 @@ async function fetchMonthlyCalendarByCity({
     month,
   });
 
-  let calendarDays = bypassCache ? null : getCache(cacheKey);
+  const calendarDays = bypassCache ? null : getCache(cacheKey);
+  if (calendarDays) return calendarDays;
 
-  if (!calendarDays) {
-    calendarDays = await getMonthlyCalendarByCity(city, country, month, year);
-    setCache(cacheKey, calendarDays, CONFIG.CALENDAR_CACHE_TTL_MS);
-  }
-
-  return calendarDays;
+  return dedupeFetch(
+    cacheKey,
+    async () => {
+      const days = await getMonthlyCalendarByCity(city, country, month, year);
+      setCache(cacheKey, days, CONFIG.CALENDAR_CACHE_TTL_MS);
+      return days;
+    },
+    bypassCache,
+  );
 }
 
 /**
@@ -172,19 +200,23 @@ async function fetchMonthlyCalendarByCoords({
     month,
   });
 
-  let calendarDays = bypassCache ? null : getCache(cacheKey);
+  const calendarDays = bypassCache ? null : getCache(cacheKey);
+  if (calendarDays) return calendarDays;
 
-  if (!calendarDays) {
-    calendarDays = await getMonthlyCalendarByCoords(
-      latitude,
-      longitude,
-      month,
-      year,
-    );
-    setCache(cacheKey, calendarDays, CONFIG.CALENDAR_CACHE_TTL_MS);
-  }
-
-  return calendarDays;
+  return dedupeFetch(
+    cacheKey,
+    async () => {
+      const days = await getMonthlyCalendarByCoords(
+        latitude,
+        longitude,
+        month,
+        year,
+      );
+      setCache(cacheKey, days, CONFIG.CALENDAR_CACHE_TTL_MS);
+      return days;
+    },
+    bypassCache,
+  );
 }
 
 /* =========================================================
@@ -271,3 +303,76 @@ export async function getCurrentWeekByCoords(
 
   return sliceWeekFromTwoMonths(currentMonthDays, nextMonthDays, dateObj);
 }
+
+/**
+ * Returns the single calendar day object for a given date by city/country.
+ * Reuses the same monthly calendar cache as getCurrentWeekByCity so no
+ * duplicate request is fired when the month is already available.
+ */
+export async function getTodayByCity(
+  city,
+  country,
+  dateObj = new Date(),
+  bypassCache = false,
+) {
+  requireValue(city, "city");
+  requireValue(country, "country");
+
+  const { year, month, day } = getDateParts(dateObj);
+
+  const monthDays = await fetchMonthlyCalendarByCity({
+    city,
+    country,
+    year,
+    month,
+    bypassCache,
+  });
+
+  return getDayFromMonthDays(monthDays, year, month, day);
+}
+
+/**
+ * Returns the single calendar day object for a given date by coords.
+ * Reuses the same monthly calendar cache as getCurrentWeekByCoords so no
+ * duplicate request is fired when the month is already available.
+ */
+export async function getTodayByCoords(
+  latitude,
+  longitude,
+  dateObj = new Date(),
+  bypassCache = false,
+) {
+  requireLatitude(latitude);
+  requireLongitude(longitude);
+
+  const { year, month, day } = getDateParts(dateObj);
+
+  const monthDays = await fetchMonthlyCalendarByCoords({
+    latitude,
+    longitude,
+    year,
+    month,
+    bypassCache,
+  });
+
+  return getDayFromMonthDays(monthDays, year, month, day);
+}
+
+/**
+ * Extracts a single day object from a monthly calendar array (0-based index
+ * where index 0 => day 1). Throws when the requested day is missing so callers
+ * can fall back to a direct daily endpoint.
+ */
+function getDayFromMonthDays(monthDays, year, month, day) {
+  const dayIndex = Math.max(0, day - 1);
+  const dayObject = monthDays?.[dayIndex];
+
+  if (!dayObject) {
+    throw new Error(
+      `week.service: no calendar day found for ${year}-${month}-${day}`,
+    );
+  }
+
+  return dayObject;
+}
+
