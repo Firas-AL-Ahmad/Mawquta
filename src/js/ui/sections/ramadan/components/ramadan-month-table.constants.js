@@ -53,29 +53,3 @@ export const RAMADAN_MONTH_TABLE_COLUMNS = [
     icon: MONTH_TABLE_ICON_PATHS.date,
   },
 ];
-
-export const RAMADAN_MONTH_TABLE_ROWS = [
-  {
-    isha: "20:27",
-    maghrib: "18:57",
-    asr: "16:09",
-    dhuhr: "12:31",
-    fajr: "05:11",
-    date: "23/03",
-    day: "الاثنين",
-    ramadanDayNumber: "1",
-    isToday: false,
-  },
-  {
-    isha: "20:29",
-    maghrib: "18:59",
-    asr: "16:10",
-    dhuhr: "12:30",
-    fajr: "05:09",
-    date: "25/03",
-    day: "الأربعاء",
-    ramadanDayNumber: "3",
-    isToday: true,
-    activePrayerKeys: ["maghrib", "fajr"],
-  },
-];

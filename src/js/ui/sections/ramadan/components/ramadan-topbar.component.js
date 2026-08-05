@@ -21,7 +21,7 @@ function renderRamadanTopbarChip(chipConfig) {
     <div class="ramadan-topbar__chip ${chipConfig.chipClassName}">
       <div class="ramadan-topbar__chip-content">
         <span class="ramadan-topbar__chip-label-wrap">
-          <span class="ramadan-topbar__chip-label">${chipConfig.label}</span>
+          <span class="ramadan-topbar__chip-label" ${chipConfig.labelDataAttribute ?? ""}>${chipConfig.label}</span>
           <span class="ramadan-topbar__icon ${chipConfig.iconClassName} section-head__icon" aria-hidden="true"></span>
         </span>
         ${chipConfig.values
@@ -47,11 +47,11 @@ function renderRamadanTopbarSummary(moonAndStarsPath) {
         iconAlt: "",
       })}
 
-      <h2 class="ramadan-topbar__month section-head__title" data-ramadan-month>رمضان 2026</h2>
+      <h2 class="ramadan-topbar__month section-head__title" data-ramadan-month>—</h2>
 
       <span class="ramadan-topbar__meta section-head__meta">
-      <span class="ramadan-topbar__meta-prefix">آخر تحديث:</span>
-        <span class="ramadan-topbar__meta-value">الثلاثاء / 18:00 / 22 مارس 2026</span>
+        <span class="ramadan-topbar__meta-prefix">آخر تحديث:</span>
+        <span class="ramadan-topbar__meta-value" data-ramadan-updated>—</span>
       </span>
     </div>
   `;
@@ -61,15 +61,16 @@ export function renderRamadanTopbar(iconPaths) {
   const topbarChips = [
     {
       chipClassName: "ramadan-topbar__chip--date",
-      label: "اليوم 15",
+      label: "اليوم",
+      labelDataAttribute: "data-ramadan-day-label",
       iconClassName: "ramadan-topbar__icon--calendar",
-      values: ["6", "رمضان"],
+      values: ['<span data-ramadan-day>—</span>'],
     },
     {
       chipClassName: "ramadan-topbar__chip--city",
       label: "المدينة:",
       iconClassName: "ramadan-topbar__icon--location",
-      values: ["دمشق، سوريا"],
+      values: ['<span data-ramadan-city>—</span>'],
     },
   ];
 

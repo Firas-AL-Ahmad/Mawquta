@@ -359,6 +359,57 @@ export async function getTodayByCoords(
 }
 
 /**
+ * Returns the full monthly calendar array (day 1..N) for a given city/country.
+ * Reuses the exact same monthly `cal:*` cache and in-flight dedupe as the week
+ * and today getters, so a consumer (e.g. the Ramadan month table) never issues
+ * a parallel provider request when the month is already being fetched.
+ */
+export async function getMonthCalendarByCity(
+  city,
+  country,
+  dateObj = new Date(),
+  bypassCache = false,
+) {
+  requireValue(city, "city");
+  requireValue(country, "country");
+
+  const { year, month } = getDateParts(dateObj);
+
+  return fetchMonthlyCalendarByCity({
+    city,
+    country,
+    year,
+    month,
+    bypassCache,
+  });
+}
+
+/**
+ * Returns the full monthly calendar array (day 1..N) for a given
+ * latitude/longitude. Reuses the exact same monthly `cal:*` cache and in-flight
+ * dedupe as the week and today getters.
+ */
+export async function getMonthCalendarByCoords(
+  latitude,
+  longitude,
+  dateObj = new Date(),
+  bypassCache = false,
+) {
+  requireLatitude(latitude);
+  requireLongitude(longitude);
+
+  const { year, month } = getDateParts(dateObj);
+
+  return fetchMonthlyCalendarByCoords({
+    latitude,
+    longitude,
+    year,
+    month,
+    bypassCache,
+  });
+}
+
+/**
  * Extracts a single day object from a monthly calendar array (0-based index
  * where index 0 => day 1). Throws when the requested day is missing so callers
  * can fall back to a direct daily endpoint.
