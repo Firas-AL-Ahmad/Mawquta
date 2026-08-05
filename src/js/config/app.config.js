@@ -10,6 +10,19 @@ export const CONFIG = {
   GEONAMES_BASE_URL: "https://secure.geonames.org",
   GEONAMES_USERNAME: "firas_ahmad",
 
+  // Qibla calculation constants
+  KAABA_COORDS: {
+    latitude: 21.4225241,
+    longitude: 39.8261818,
+  },
+
+  // Curated coordinates for the default (coordinate-less) Damascus location
+  // so Qibla computes a local bearing without any geocode request.
+  DEFAULT_LOCATION_COORDS: {
+    latitude: 33.5138,
+    longitude: 36.2765,
+  },
+
   // Constants & Defaults
   STORAGE_KEY: "ms_location",
   DEFAULT_LOCATION: {

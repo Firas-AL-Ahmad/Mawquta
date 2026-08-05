@@ -16,6 +16,9 @@ import { bindHeaderNavInteractions } from "../ui/sections/header/interactions/na
 import { bindRamadanTabsInteractions } from "../ui/sections/ramadan/interactions/ramadan-tabs.interactions.js";
 import { createLocationService } from "../services/location.service.js";
 import { createDailyPrayerService } from "../services/daily-prayer.service.js";
+import { createQiblaService } from "../services/qibla.service.js";
+import { createQiblaRuntime } from "../ui/sections/qibla/qibla.runtime.js";
+import { searchCitySuggestions } from "../services/location-search.service.js";
 import {
   getCurrentWeekByCity,
   getCurrentWeekByCoords,
@@ -37,8 +40,37 @@ const dailyPrayerService = createDailyPrayerService({
   getTimingsByCoords,
 });
 
+// Resolves coordinates for coordinate-less cities through the existing
+// /api/geocode path (GeoNames) used by the picker. Reused by the Qibla
+// service, which dedupes lookups per city within a session.
+async function geocodeCityCoordinates(city, country) {
+  const results = await searchCitySuggestions(city, { lang: "ar" });
+  const best =
+    results.find((r) => r.city === city && r.country === country) ??
+    results.find((r) => r.city === city) ??
+    results[0];
+
+  if (
+    !best ||
+    !Number.isFinite(Number(best.lat)) ||
+    !Number.isFinite(Number(best.lon))
+  ) {
+    throw new Error("تعذر تحديد إحداثيات المدينة");
+  }
+
+  return {
+    latitude: Number(best.lat),
+    longitude: Number(best.lon),
+  };
+}
+
+const qiblaService = createQiblaService({
+  geocodeCity: geocodeCityCoordinates,
+});
+
 // Retained for tests and cleanup (destroy()).
 let dailyPrayerRuntime = null;
+let qiblaRuntime = null;
 
 function bootstrapApp() {
   locationService.initialize();
@@ -83,6 +115,12 @@ function bootstrapApp() {
     heroRootElement: appHeroRoot,
     locationService,
     dailyService: dailyPrayerService,
+  });
+
+  qiblaRuntime = createQiblaRuntime({
+    rootElement: appQiblaRoot,
+    locationService,
+    qiblaService,
   });
 
   bindRamadanTabsInteractions(document);
