@@ -4,8 +4,6 @@ import { renderQiblaCityModal } from "./components/qibla-city-modal.component.js
 import { renderSectionDivider } from "../../shared/components/section/section-divider.component.js";
 
 export function renderQiblaSection(rootElement, sectionData = {}) {
-  void sectionData;
-
   if (!rootElement) {
     return null;
   }
@@ -17,9 +15,11 @@ export function renderQiblaSection(rootElement, sectionData = {}) {
     <section class="qibla-section" id="qibla" aria-label="اتجاه القبلة">
       <div class="container-xl">
         <div class="qibla-card">
-          ${renderQiblaCardHead(modalId)}
+          ${renderQiblaCardHead(modalId, sectionData)}
 
           ${renderQiblaVisual()}
+
+          <div class="qibla-card__data" data-qibla-data aria-live="polite"></div>
         </div>
       </div>
 

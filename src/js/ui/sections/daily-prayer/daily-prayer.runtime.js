@@ -1,7 +1,9 @@
 // src/js/ui/sections/daily-prayer/daily-prayer.runtime.js
 // Orchestrates live daily prayer data: subscribes to the location service,
 // builds the unified Daily contract through daily-prayer.service.js and
-// re-renders the daily section plus the Hero next-prayer card/countdown.
+// re-renders the daily section plus the Hero next-prayer card, countdown and
+// date card. The date card values flow from the same contract's dateInfo block
+// (built from the shared monthly calendar payload); the Hero never fetches.
 //
 // The runtime never requests geolocation itself and never issues Qibla,
 // Ramadan or independent Hero requests. The daily service is injected so this
@@ -150,6 +152,9 @@ export function createDailyPrayerRuntime(options = {}) {
       hours: "--",
       minutes: "--",
       seconds: "--",
+      dayLabel: "—",
+      hijriDate: "—",
+      gregorianDate: "—",
     });
   }
 
@@ -174,12 +179,17 @@ export function createDailyPrayerRuntime(options = {}) {
       : 0;
     const parts = formatRemaining(remainingSeconds);
 
+    const dateInfo = state.contract.dateInfo || null;
+
     updateHeroSectionLiveState(heroRootElement, {
       nextPrayerLabel: state.contract.nextPrayer?.label ?? "—",
       nextPrayerTime: state.contract.nextPrayer?.time ?? "--:--",
       hours: parts.hours,
       minutes: parts.minutes,
       seconds: parts.seconds,
+      dayLabel: dateInfo?.weekdayLabel ?? "—",
+      hijriDate: dateInfo?.hijriLabel ?? "—",
+      gregorianDate: dateInfo?.gregorianLabel ?? "—",
     });
   }
 
