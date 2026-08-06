@@ -38,13 +38,9 @@ function renderHeroDateCard() {
         <span class="date-card__cal" aria-hidden="true"></span>
       </div>
 
-      <p class="date-card__day" data-hero-day-label>الثلاثاء</p>
-      <div class="date-card__row" data-hero-hijri-date>
-        <span class="date-card__row-r"><span class="date-card__row-num">6</span><span>رمضان</span></span><span class="date-card__row-yr">1448</span>
-      </div>
-      <div class="date-card__row" data-hero-gregorian-date>
-        <span class="date-card__row-r"><span class="date-card__row-num">10</span><span>أيلول</span></span><span class="date-card__row-yr">2026</span>
-      </div>
+      <p class="date-card__day" data-hero-day-label>—</p>
+      <div class="date-card__row" data-hero-hijri-date>—</div>
+      <div class="date-card__row" data-hero-gregorian-date>—</div>
     </article>
   `;
 }

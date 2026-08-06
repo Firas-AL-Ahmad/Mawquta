@@ -18,6 +18,7 @@ import {
   computeRemainingSeconds,
 } from "../utils/time.util.js";
 import { PRAYER_LABELS_AR, normalizeTime } from "../utils/prayer-format.util.js";
+import { buildDateInfo } from "../utils/date-format.util.js";
 import {
   requireValue,
   requireLatitude,
@@ -81,6 +82,9 @@ function normalizePrayerTime(rawTime, prayerKey, dateKey) {
  * - locationKey: stable key produced by buildLocationKey
  * - now: current instant used for isPassed/isNext/nextPrayer
  * - nextDayFajr: optional "HH:MM" Fajr of the next day (from calendar data)
+ * - dayData: optional raw calendar day object carrying `date.hijri`/`date.gregorian`
+ *   used to build the dateInfo block for the Hero date card. When omitted the
+ *   Hijri label degrades to a neutral placeholder (no conversion is attempted).
  */
 export function buildDailyContract({
   timings,
@@ -89,6 +93,7 @@ export function buildDailyContract({
   locationKey,
   now = new Date(),
   nextDayFajr = null,
+  dayData = null,
 }) {
   validateTimeZone(timeZone);
 
@@ -178,6 +183,12 @@ export function buildDailyContract({
     locationKey,
     prayers: updatedPrayers,
     nextPrayer,
+    dateInfo: buildDateInfo({
+      dateKey,
+      timeZone,
+      dayData,
+      updatedAt: now,
+    }),
     fetchedAt: now.toISOString(),
   };
 }
@@ -333,9 +344,10 @@ export function createDailyPrayerService(options = {}) {
 
     let contract = null;
     let sourceTimings = null;
+    let dayObject = null;
 
     try {
-      const dayObject = await fetchTodayFromCalendar(location, todayDateObj);
+      dayObject = await fetchTodayFromCalendar(location, todayDateObj);
       if (isValidDay(dayObject)) {
         sourceTimings = dayObject.timings;
         contract = buildDailyContract({
@@ -344,6 +356,7 @@ export function createDailyPrayerService(options = {}) {
           timeZone,
           locationKey,
           now: nowDate,
+          dayData: dayObject,
         });
       }
     } catch {
@@ -391,6 +404,7 @@ export function createDailyPrayerService(options = {}) {
               locationKey,
               now: nowDate,
               nextDayFajr,
+              dayData: dayObject,
             });
           }
         }
