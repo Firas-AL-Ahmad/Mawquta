@@ -43,6 +43,9 @@ export function renderHeroSection(rootElement, sectionData = {}) {
  * - nextPrayerLabel (string)  -> [data-hero-next-prayer-label]
  * - nextPrayerTime  (string)  -> [data-hero-next-prayer-time]  (HH:MM)
  * - hours/minutes/seconds     -> the three [data-hero-countdown-*] values
+ * - dayLabel        (string)  -> [data-hero-day-label]
+ * - hijriDate       (string)  -> [data-hero-hijri-date]
+ * - gregorianDate   (string)  -> [data-hero-gregorian-date]
  */
 export function updateHeroSectionLiveState(rootElement, updates = {}) {
   if (!rootElement) {
@@ -55,6 +58,9 @@ export function updateHeroSectionLiveState(rootElement, updates = {}) {
     hours,
     minutes,
     seconds,
+    dayLabel,
+    hijriDate,
+    gregorianDate,
   } = updates;
 
   const timeEl = rootElement.querySelector("[data-hero-next-prayer-time]");
@@ -62,12 +68,18 @@ export function updateHeroSectionLiveState(rootElement, updates = {}) {
   const hoursEl = rootElement.querySelector("[data-hero-countdown-hours]");
   const minutesEl = rootElement.querySelector("[data-hero-countdown-minutes]");
   const secondsEl = rootElement.querySelector("[data-hero-countdown-seconds]");
+  const dayLabelEl = rootElement.querySelector("[data-hero-day-label]");
+  const hijriDateEl = rootElement.querySelector("[data-hero-hijri-date]");
+  const gregorianDateEl = rootElement.querySelector("[data-hero-gregorian-date]");
 
   if (timeEl && nextPrayerTime != null) timeEl.textContent = nextPrayerTime;
   if (labelEl && nextPrayerLabel != null) labelEl.textContent = nextPrayerLabel;
   if (hoursEl && hours != null) hoursEl.textContent = hours;
   if (minutesEl && minutes != null) minutesEl.textContent = minutes;
   if (secondsEl && seconds != null) secondsEl.textContent = seconds;
+  if (dayLabelEl && dayLabel != null) dayLabelEl.textContent = dayLabel;
+  if (hijriDateEl && hijriDate != null) hijriDateEl.textContent = hijriDate;
+  if (gregorianDateEl && gregorianDate != null) gregorianDateEl.textContent = gregorianDate;
 
   return rootElement;
 }
