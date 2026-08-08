@@ -83,6 +83,29 @@ const ramadanService = createRamadanService({
 let dailyPrayerRuntime = null;
 let qiblaRuntime = null;
 let ramadanRuntime = null;
+let weeklyPrayerRuntime = null;
+let unbindLocationPicker = null;
+
+// Unified teardown ownership: every runtime destroy and interaction unbind is
+// registered exactly once and released together by teardownApp(). Internal and
+// testable only; no unload hook is imposed on the app.
+const cleanups = [];
+
+function registerCleanup(cleanup) {
+  if (typeof cleanup === "function") {
+    cleanups.push(cleanup);
+  }
+}
+
+function teardownApp() {
+  for (const cleanup of cleanups.splice(0)) {
+    try {
+      cleanup();
+    } catch {
+      // Teardown must never throw.
+    }
+  }
+}
 
 function bootstrapApp() {
   locationService.initialize();
@@ -115,12 +138,13 @@ function bootstrapApp() {
   renderRamadanSection(appRamadanRoot);
   renderFooterSection(appFooterRoot);
 
-  createWeeklyPrayerRuntime({
+  weeklyPrayerRuntime = createWeeklyPrayerRuntime({
     rootElement: appWeeklyPrayerRoot,
     locationService,
     getCurrentWeekByCity,
     getCurrentWeekByCoords,
   });
+  registerCleanup(() => weeklyPrayerRuntime.destroy());
 
   dailyPrayerRuntime = createDailyPrayerRuntime({
     rootElement: appDailyPrayerRoot,
@@ -128,21 +152,25 @@ function bootstrapApp() {
     locationService,
     dailyService: dailyPrayerService,
   });
+  registerCleanup(() => dailyPrayerRuntime.destroy());
 
   qiblaRuntime = createQiblaRuntime({
     rootElement: appQiblaRoot,
     locationService,
     qiblaService,
   });
+  registerCleanup(() => qiblaRuntime.destroy());
 
   ramadanRuntime = createRamadanRuntime({
     rootElement: appRamadanRoot,
     locationService,
     ramadanService,
   });
+  registerCleanup(() => ramadanRuntime.destroy());
 
   bindRamadanTabsInteractions(document);
-  bindLocationPickerInteractions(document, locationService);
+  unbindLocationPicker = bindLocationPickerInteractions(document, locationService);
+  registerCleanup(() => unbindLocationPicker?.());
 }
 
 bootstrapApp();
