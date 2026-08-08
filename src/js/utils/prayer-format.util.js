@@ -1,5 +1,5 @@
 // src/js/utils/prayer-format.util.js
-// Shared prayer time formatting helpers used by prayer.service.js and
+// Shared prayer time formatting helpers used by daily-prayer.service.js and
 // weekly-formatter.service.js. Extracted to keep the weekly formatter pure
 // (Node-testable) without pulling in the axios-coupled aladhan.api.js.
 
