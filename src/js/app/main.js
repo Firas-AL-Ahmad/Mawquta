@@ -169,7 +169,10 @@ function bootstrapApp() {
   registerCleanup(() => ramadanRuntime.destroy());
 
   bindRamadanTabsInteractions(document);
-  unbindLocationPicker = bindLocationPickerInteractions(document, locationService);
+  unbindLocationPicker = bindLocationPickerInteractions(
+    document,
+    locationService,
+  );
   registerCleanup(() => unbindLocationPicker?.());
 }
 
