@@ -214,6 +214,19 @@ export function createWeeklyPrayerRuntime(options = {}) {
     }
 
     const location = locationState.location;
+
+    // R1: previous-location cleanup. When the location key actually changes
+    // (A -> B), drop the previous section's data and load key immediately so
+    // the stale A table is never shown under B's loading/error state and a
+    // delayed A result cannot be adopted. Same-location refreshes keep the
+    // last-good data untouched.
+    const previousKey = state.sectionData ? loadKey : null;
+    const nextKey = buildLoadKey(location);
+    if (previousKey && previousKey !== nextKey) {
+      state.sectionData = null;
+      loadKey = null;
+    }
+
     state.location = location;
     void load(location);
   }

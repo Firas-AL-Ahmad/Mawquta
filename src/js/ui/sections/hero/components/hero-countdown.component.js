@@ -1,7 +1,7 @@
 const DEFAULT_COUNTDOWN_PARTS = [
-  { value: "01", unit: "Hr", valueDataAttribute: "data-hero-countdown-hours" },
-  { value: "24", unit: "Min", valueDataAttribute: "data-hero-countdown-minutes" },
-  { value: "45", unit: "Sec", valueDataAttribute: "data-hero-countdown-seconds" },
+  { value: "--", unit: "Hr", valueDataAttribute: "data-hero-countdown-hours" },
+  { value: "--", unit: "Min", valueDataAttribute: "data-hero-countdown-minutes" },
+  { value: "--", unit: "Sec", valueDataAttribute: "data-hero-countdown-seconds" },
 ];
 
 function renderCountdownPart(part) {
